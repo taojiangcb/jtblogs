@@ -6,8 +6,15 @@ cache: npm
 branches:
   only:
     - master # build master branch only
+install: # 在安装项目环境阶段需要运行的命令，一条一行，类似的还有 before_install
+  - source travis_env_init.sh # 执行指定的 shell 脚本来做初始化
 script:
-  - hexo generate # generate static files
+  - hexo clean
+  - hexo generate # Hexo 常规命令，执行清理和生成
+after_success: # 在构建成功后要运行的命令，构建失败不会执行，其他同上
+  - hexo deploy
+notifications: # 设置通知项
+  email: true
 deploy:
   provider: pages
   skip-cleanup: true
