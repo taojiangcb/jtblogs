@@ -7,29 +7,29 @@
     </url>
     
     <url>
-        <loc>https://taojiangcb.github.io/jtblogs/404.html</loc>
-        <lastmod>2019-12-30T02:51:39.689Z</lastmod>
-        <changefreq>weekly</changefreq>
-        <priority>0.8</priority>
-    </url>
-    
-    <url>
         <loc>https://taojiangcb.github.io/jtblogs/tags/</loc>
-        <lastmod>2019-12-30T02:51:30.536Z</lastmod>
+        <lastmod>2019-12-30T03:27:13.085Z</lastmod>
         <changefreq>weekly</changefreq>
         <priority>0.8</priority>
     </url>
     
     <url>
-        <loc>https://taojiangcb.github.io/jtblogs/archive/</loc>
-        <lastmod>2019-12-30T02:51:24.583Z</lastmod>
+        <loc>https://taojiangcb.github.io/jtblogs/404.html</loc>
+        <lastmod>2019-12-30T03:27:13.061Z</lastmod>
         <changefreq>weekly</changefreq>
         <priority>0.8</priority>
     </url>
     
     <url>
         <loc>https://taojiangcb.github.io/jtblogs/about/</loc>
-        <lastmod>2019-12-30T02:51:17.162Z</lastmod>
+        <lastmod>2019-12-30T03:27:13.061Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.8</priority>
+    </url>
+    
+    <url>
+        <loc>https://taojiangcb.github.io/jtblogs/archive/</loc>
+        <lastmod>2019-12-30T03:27:13.061Z</lastmod>
         <changefreq>weekly</changefreq>
         <priority>0.8</priority>
     </url>
