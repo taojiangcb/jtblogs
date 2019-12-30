@@ -3,12 +3,17 @@
 
     <sitemap>
         <loc>https://taojiangcb.github.io/jtblogs/post-sitemap.xml</loc>
-        <lastmod>2019-12-30T04:08:39.931Z</lastmod>
+        <lastmod>2019-12-30T08:12:17.864Z</lastmod>
     </sitemap>
 
     <sitemap>
         <loc>https://taojiangcb.github.io/jtblogs/page-sitemap.xml</loc>
-        <lastmod>2019-12-30T04:08:39.959Z</lastmod>
+        <lastmod>2019-12-30T08:12:17.896Z</lastmod>
+    </sitemap>
+
+    <sitemap>
+        <loc>https://taojiangcb.github.io/jtblogs/tag-sitemap.xml</loc>
+        <lastmod>2019-12-30T08:12:17.864Z</lastmod>
     </sitemap>
 
 </sitemapindex>

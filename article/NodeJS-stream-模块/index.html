@@ -14,11 +14,11 @@
     <script async defer src="https://buttons.github.io/buttons.js"></script>
     <title>
         
-          IFC BFC FFC GFC - 江涛 | Blog
+          NodeJS stream 模块 - 江涛 | Blog
         
     </title>
 
-    <link rel="canonical" href="https://taojiangcb.github.io/jtblogs/jtblogs/article/IFC-BFC-FFC-GFC/">
+    <link rel="canonical" href="https://taojiangcb.github.io/jtblogs/jtblogs/article/NodeJS-stream-模块/">
 
     <!-- Bootstrap Core CSS -->
     <link rel="stylesheet" href="/jtblogs/css/bootstrap.min.css">
@@ -88,14 +88,14 @@
                     <div class="post-heading">
                         <div class="tags">
                             
-                              <a class="tag" href="/jtblogs/tags/#CSS" title="CSS">CSS</a>
+                              <a class="tag" href="/jtblogs/tags/#NodeJs" title="NodeJs">NodeJs</a>
                             
                         </div>
-                        <h1>IFC BFC FFC GFC</h1>
+                        <h1>NodeJS stream 模块</h1>
                         <h2 class="subheading"></h2>
                         <span class="meta">
                             Posted by 江涛 on
-                            2019-12-29
+                            2019-12-30
                         </span>
                     </div>
                 
@@ -212,46 +212,53 @@
                 col-md-10 col-md-offset-1
                 post-container">
 
-                <h1><span id="bfc">BFC</span></h1>
-<p>BFC（Block Formatting Context）格式化上下文，是Web页面中盒模型布局的CSS渲染模式，指一个独立的渲染区域或者说是一个隔离的独立容器。</p>
-<h3><span id="bfc-应用">BFC 应用</span></h3>
+                <h1><span id="nodejs-stream-模块">Nodejs stream 模块</span></h1>
+<h2><span id="流的基本概念">流的基本概念</span></h2>
+<p>起点到终点</p>
+<p>流：逐段，大量数据，大文件<br>
+传统:一次性读取完毕，在处理</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">const rs = fs.createReadStream(&apos;data.txt&apos;);</span><br><span class="line"></span><br><span class="line">//流的逐块传输</span><br><span class="line">rs.on(&apos;data&apos;,chunk=&gt;&#123;</span><br><span class="line">    data += chunk;</span><br><span class="line">&#125;);</span><br><span class="line">rs.on(&apos;end&apos;,()=&gt;&#123;</span><br><span class="line">    console.log(data);</span><br><span class="line">    console.log(&apos;读取成功&apos;)</span><br><span class="line">&#125;)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">//可写流</span><br><span class="line">const ws = fs.createWriteStream(&apos;copy1.mp4&apos;)</span><br><span class="line"></span><br><span class="line">//pipe姿势可读流的方法</span><br><span class="line">rs.pipe(ws)</span><br></pre></td></tr></table></figure>
+<h1><span id="为什么要用流">为什么要用流</span></h1>
+<p>优点：内存效率,时间效率<br>
+大文件进行逐块运输，压榨IO以及内存碎片。因为nodejs内存资源有限，而且请求大块连续内存，可以能就引起内存规整等系列问题性能效率极低。</p>
+<h1><span id="流的类型">流的类型</span></h1>
 <ul>
-<li>防止margin重叠</li>
-<li>清除内部浮动</li>
-<li>自适应两（多）栏布局</li>
-<li>防止字体环绕</li>
-</ul>
-<h3><span id="触发bfc条件">触发BFC条件</span></h3>
+<li>4中类型的流
 <ul>
-<li>根元素</li>
-<li>float的值不为none</li>
-<li>overflow的值不为visible</li>
-<li>display的值为inline-block、table-cell、table-caption</li>
-<li>position的值为absolute、fixed</li>
+<li>可读流</li>
+<li>可写流</li>
+<li>双工流-Duplex   比如: net.socket</li>
+<li>transform 转换流 比如文件压缩，文件解压</li>
+<li></li>
 </ul>
-<h3><span id="自适应两栏布局">⾃适应两栏布局</span></h3>
-<p>根据BFC布局规则：</p>
-<ol>
-<li>每个元素的margin box的左边，与包含块border box的左边相接触(对于从左向右的格式化，否则相反).即使存在浮动也是如此。</li>
-<li>BFC的区域不会与float box重叠</li>
-</ol>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line">&lt;style&gt;</span><br><span class="line">body &#123;</span><br><span class="line">width: 300px;</span><br><span class="line">position: relative;</span><br><span class="line">&#125;</span><br><span class="line">.aside &#123;</span><br><span class="line">width: 100px;</span><br><span class="line">height: 150px;</span><br><span class="line">float: left;</span><br><span class="line">background: #f66;;</span><br><span class="line">&#125;</span><br><span class="line">.main &#123;</span><br><span class="line">height: 200px;</span><br><span class="line">background: #fcc;</span><br><span class="line">&#125;</span><br><span class="line">&lt;/style&gt;</span><br><span class="line">&lt;/head&gt;</span><br><span class="line">&lt;body&gt;</span><br><span class="line">&lt;div class=&quot;aside&quot;&gt;&lt;/div&gt;</span><br><span class="line">&lt;div class=&quot;main&quot;&gt;&lt;/div&gt;</span><br><span class="line">&lt;/body&gt;</span><br></pre></td></tr></table></figure>
-<h3><span id="清除内部浮动">清除内部浮动</span></h3>
-<p>计算BFC的⾼度时，浮动元素也参与计算</p>
-<h3><span id="防止垂直margin重叠">防⽌垂直margin重叠</span></h3>
-<p>Box垂直⽅向的距离有margin决定。属于同⼀个BFC的两个相邻的Box的margin会发⽣重叠</p>
-<h1><span id="ifc">IFC</span></h1>
-<p>IFC(Inline Formatting Context)内联格式化上下⽂。IFC的line box(线框)⾼度有其包<br>
-含的⾏内元素中的最⾼的实际⾼度计算⽽来(不受到垂直⽅向的padding/margin影响)</p>
-<h1><span id="ffc">FFC</span></h1>
-<p>FFC(Flex Formatting Context)⾃适应格式化下上⽂。display为flex或者inline-flex的<br>
-元素将会⽣成⾃适应容器</p>
-<h1><span id="gfc">GFC</span></h1>
-<p>GFC(GridLayout Formatting Context)⽹格格式化上下⽂。当为⼀个元素设置display<br>
-为grid的时候，此元素将会获得⼀个独⽴的渲染区域，我们可以通过在⽹格容器(grid<br>
-container)上定义⽹格定义⾏(grid definition rows)和⽹格定义列(grid definition<br>
-columns)属性各在⽹格项⽬(grid item)上定义⽹格⾏(grid row)和⽹格列(grid columns)<br>
-为每⼀个⽹格项⽬(grid item)定义位置和空间.</p>
+</li>
+</ul>
+<p>stream对象都是 EventEmitter 的实例<br>
+有通用事件</p>
+<ul>
+<li>data</li>
+<li>end</li>
+<li>error</li>
+</ul>
+<h1><span id="如何使用">如何使用</span></h1>
+<h3><span id="可读流">可读流</span></h3>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">const fs = fs.createReadStream(&apos;data.txt&apos;,&#123;encoding:&quot;utf8&quot;,highWaterMark:6)</span><br><span class="line"></span><br><span class="line">//监听数据传输,块，buffer 二进制</span><br><span class="line">//不停进行数据读取,触发data事件</span><br><span class="line">//设置一个缓存区，大小默认16k hightWaterMark </span><br><span class="line">rs.on(&apos;data&apos;,chunk=&gt;&#123;</span><br><span class="line">    ws.write(chunk)</span><br><span class="line">&#125;)</span><br><span class="line"></span><br><span class="line">rs.on(&apos;end&apos;,()=&gt;&#123;</span><br><span class="line">    console.log(&apos;读取完毕&apos;)</span><br><span class="line">&#125;)</span><br><span class="line"></span><br><span class="line">rs.on(&quot;open&quot;,()=&gt;&#123;</span><br><span class="line">    //文件打开</span><br><span class="line">&#125;)</span><br><span class="line"></span><br><span class="line">rs.on(&apos;close&apos;,()=&gt;&#123;</span><br><span class="line">    文件关闭</span><br><span class="line">&#125;)</span><br><span class="line"></span><br><span class="line">rs.on(&apos;error&apos;,(err)=&gt;&#123;</span><br><span class="line">    文件错误</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>可读流有两种模式 自动流flowing 模式,手动流paused模式<br>
+stream.read()</p>
+</blockquote>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">没有 rs.on(&apos;data&apos; (chunk)=&gt;&#123;&#125;) 事件</span><br><span class="line"></span><br><span class="line">let on(&apos;readable&apos;,()=&gt;&#123;</span><br><span class="line">    while((chunk = rs.read()) != null)) &#123;</span><br><span class="line">        data += chunk;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
+<h3><span id="可写流">可写流</span></h3>
+<p>write()</p>
+<h3><span id="duplex">Duplex</span></h3>
+<p>read() write()    net.socket</p>
+<p>transform stream 转换流</p>
+ <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">const trasform = stream.Trasform(&#123;</span><br><span class="line">   transfrom(chunk,encode,cb) &#123;</span><br><span class="line">       this.push(chunk.toString())</span><br><span class="line">       cb();</span><br><span class="line">   &#125;</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
+<h1><span id="链式调用">链式调用</span></h1>
+<p>pipe();</p>
+<h1><span id="逐行读取最佳方案">逐行读取最佳方案</span></h1>
+<p>readling();</p>
+ <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">const readStream = fs.createReadStream(&apos;filename&apos;)</span><br><span class="line">const readL = readLine.createInterface(&#123;input:readStream)</span><br><span class="line"></span><br><span class="line">readL.on(&apos;line&apos;,data=&gt;&#123;</span><br><span class="line">   console.log(data);</span><br><span class="line">&#125;)</span><br><span class="line"></span><br><span class="line">readL.on(&apos;close&apos;,()=&gt;&#123;</span><br><span class="line">    console.log(&apos;读取完成&apos;)</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
 
                 
 
@@ -260,12 +267,12 @@ columns)属性各在⽹格项⽬(grid item)上定义⽹格⾏(grid row)和⽹格
                 <ul class="pager">
                     
                         <li class="previous">
-                            <a href="/jtblogs/article/css专业素养/" data-toggle="tooltip" data-placement="top" title="css专业素养">&larr; Previous Post</a>
+                            <a href="/jtblogs/article/NodeJS-EventLoop/" data-toggle="tooltip" data-placement="top" title="NodeJS EventLoop">&larr; Previous Post</a>
                         </li>
                     
                     
                         <li class="next">
-                            <a href="/jtblogs/article/logj4-的使用/" data-toggle="tooltip" data-placement="top" title="logj4 的使用">Next Post &rarr;</a>
+                            <a href="/jtblogs/article/看透matrix3/" data-toggle="tooltip" data-placement="top" title="看透matrix3">Next Post &rarr;</a>
                         </li>
                     
                 </ul>
@@ -321,7 +328,7 @@ columns)属性各在⽹格项⽬(grid item)上定义⽹格⾏(grid row)和⽹格
         <div id="toc" class="toc-article">
         <strong class="toc-title">Contents</strong>
         
-          <ol class="toc-nav"><li class="toc-nav-item toc-nav-level-1"><a class="toc-nav-link" href="#null"><span class="toc-nav-number">1.</span> <span class="toc-nav-text">BFC</span></a><ol class="toc-nav-child"><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#null"><span class="toc-nav-number">1.0.1.</span> <span class="toc-nav-text">BFC 应用</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#null"><span class="toc-nav-number">1.0.2.</span> <span class="toc-nav-text">触发BFC条件</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#null"><span class="toc-nav-number">1.0.3.</span> <span class="toc-nav-text">⾃适应两栏布局</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#null"><span class="toc-nav-number">1.0.4.</span> <span class="toc-nav-text">清除内部浮动</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#null"><span class="toc-nav-number">1.0.5.</span> <span class="toc-nav-text">防⽌垂直margin重叠</span></a></li></ol></li></ol></li><li class="toc-nav-item toc-nav-level-1"><a class="toc-nav-link" href="#null"><span class="toc-nav-number">2.</span> <span class="toc-nav-text">IFC</span></a></li><li class="toc-nav-item toc-nav-level-1"><a class="toc-nav-link" href="#null"><span class="toc-nav-number">3.</span> <span class="toc-nav-text">FFC</span></a></li><li class="toc-nav-item toc-nav-level-1"><a class="toc-nav-link" href="#null"><span class="toc-nav-number">4.</span> <span class="toc-nav-text">GFC</span></a></li></ol>
+          <ol class="toc-nav"><li class="toc-nav-item toc-nav-level-1"><a class="toc-nav-link" href="#null"><span class="toc-nav-number">1.</span> <span class="toc-nav-text">Nodejs stream 模块</span></a><ol class="toc-nav-child"><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#null"><span class="toc-nav-number">1.1.</span> <span class="toc-nav-text">流的基本概念</span></a></li></ol></li><li class="toc-nav-item toc-nav-level-1"><a class="toc-nav-link" href="#null"><span class="toc-nav-number">2.</span> <span class="toc-nav-text">为什么要用流</span></a></li><li class="toc-nav-item toc-nav-level-1"><a class="toc-nav-link" href="#null"><span class="toc-nav-number">3.</span> <span class="toc-nav-text">流的类型</span></a></li><li class="toc-nav-item toc-nav-level-1"><a class="toc-nav-link" href="#null"><span class="toc-nav-number">4.</span> <span class="toc-nav-text">如何使用</span></a><ol class="toc-nav-child"><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#null"><span class="toc-nav-number">4.0.1.</span> <span class="toc-nav-text">可读流</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#null"><span class="toc-nav-number">4.0.2.</span> <span class="toc-nav-text">可写流</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#null"><span class="toc-nav-number">4.0.3.</span> <span class="toc-nav-text">Duplex</span></a></li></ol></li></ol></li><li class="toc-nav-item toc-nav-level-1"><a class="toc-nav-link" href="#null"><span class="toc-nav-number">5.</span> <span class="toc-nav-text">链式调用</span></a></li><li class="toc-nav-item toc-nav-level-1"><a class="toc-nav-link" href="#null"><span class="toc-nav-number">6.</span> <span class="toc-nav-text">逐行读取最佳方案</span></a></li></ol>
         
         </div>
       </aside>
@@ -341,7 +348,7 @@ columns)属性各在⽹格项⽬(grid item)上定义⽹格⾏(grid row)和⽹格
                     <h5><a href="/jtblogs/tags/">FEATURED TAGS</a></h5>
                     <div class="tags">
                        
-                          <a class="tag" href="/jtblogs/tags/#CSS" title="CSS">CSS</a>
+                          <a class="tag" href="/jtblogs/tags/#NodeJs" title="NodeJs">NodeJs</a>
                         
                     </div>
                 </section>

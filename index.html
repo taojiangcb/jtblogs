@@ -211,6 +211,109 @@
 
 <div class="post-preview">
 
+    <a href="/jtblogs/article/WeakSet-Set-WeakMap-Map/">
+        <h2 class="post-title">
+                                 
+            WeakSet & Set & WeakMap & Map
+        </h2>
+        <h3 class="post-subtitle">
+            
+        </h3>
+        <div class="post-content-preview">
+            集合
+哈希结构 键值对对象
+WeakSet
+WeakSet 中的对象都是弱引⽤用，即垃圾回收机制不不考虑 WeakSet 对该对象的引⽤用，也就是说，如果其
+他对象都不不再引⽤用该对象，那么垃圾回收机制会⾃自动回收该对象所占⽤用的内存，不不考虑该对象还存在于
+WeakSet 之中。
+这是因为垃圾回收机制依赖引⽤用计数，如果⼀一个值的引⽤用次数不不为0 ，垃圾回收机制就不不会释放这块内
+存。结......
+        </div>
+    </a>
+    
+        <p class="post-meta" style="margin: 10px 0;">
+            Posted by 江涛 on
+            2019-12-30
+        </p>
+        <div class="tags">
+            
+              <a href="/jtblogs/tags/#NodeJS" title="NodeJS">NodeJS</a>
+            
+        </div>
+    
+
+</div>
+<hr>
+
+<div class="post-preview">
+
+    <a href="/jtblogs/article/NodeJS-EventLoop/">
+        <h2 class="post-title">
+                                 
+            NodeJS EventLoop
+        </h2>
+        <h3 class="post-subtitle">
+            
+        </h3>
+        <div class="post-content-preview">
+            Event Loop是什么
+event loop是一个执行模型，在不同的地方有不同的实现。浏览器和NodeJS基于不同的技术实现了各自的Event Loop。
+浏览器的Event Loop是在html5的规范中明确定义。
+NodeJS的Event Loop是基于libuv实现的。可以参考Node的官方文档以及libuv的官方文档。
+libuv已经对Event Loop做出了实现，而HTML5......
+        </div>
+    </a>
+    
+        <p class="post-meta" style="margin: 10px 0;">
+            Posted by 江涛 on
+            2019-12-30
+        </p>
+        <div class="tags">
+            
+              <a href="/jtblogs/tags/#NodeJS" title="NodeJS">NodeJS</a>
+            
+        </div>
+    
+
+</div>
+<hr>
+
+<div class="post-preview">
+
+    <a href="/jtblogs/article/NodeJS-stream-模块/">
+        <h2 class="post-title">
+                                 
+            NodeJS stream 模块
+        </h2>
+        <h3 class="post-subtitle">
+            
+        </h3>
+        <div class="post-content-preview">
+            Nodejs stream 模块
+流的基本概念
+起点到终点
+流：逐段，大量数据，大文件
+传统:一次性读取完毕，在处理
+1234567891011121314151617const rs = fs.createReadStream(&apos;data.txt&apos;);//流的逐块传输rs.on(&apos;data&apos;,chunk=&gt;&#123;    data += c......
+        </div>
+    </a>
+    
+        <p class="post-meta" style="margin: 10px 0;">
+            Posted by 江涛 on
+            2019-12-30
+        </p>
+        <div class="tags">
+            
+              <a href="/jtblogs/tags/#NodeJs" title="NodeJs">NodeJs</a>
+            
+        </div>
+    
+
+</div>
+<hr>
+
+<div class="post-preview">
+
     <a href="/jtblogs/article/看透matrix3/">
         <h2 class="post-title">
                                  
@@ -262,6 +365,8 @@
         </p>
         <div class="tags">
             
+              <a href="/jtblogs/tags/#CSS" title="CSS">CSS</a>
+            
         </div>
     
 
@@ -303,6 +408,8 @@ display的值为inline-bl......
         </p>
         <div class="tags">
             
+              <a href="/jtblogs/tags/#CSS" title="CSS">CSS</a>
+            
         </div>
     
 
@@ -334,6 +441,8 @@ log4js 的日志分为九个等级，各个级别的名字和权重如下：(由
             2019-12-29
         </p>
         <div class="tags">
+            
+              <a href="/jtblogs/tags/#NODEJS" title="NODEJS">NODEJS</a>
             
         </div>
     
@@ -376,6 +485,22 @@ log4js 的日志分为九个等级，各个级别的名字和权重如下：(由
     <!-- no hr -->
     <h5><a href="/jtblogs/tags/">FEATURED TAGS</a></h5>
     <div class="tags">
+        
+            
+            <a href="/jtblogs/tags/#CSS" title="CSS" rel="2">CSS</a>
+            
+        
+            
+            <a href="/jtblogs/tags/#NodeJs" title="NodeJs" rel="1">NodeJs</a>
+            
+        
+            
+            <a href="/jtblogs/tags/#NodeJS" title="NodeJS" rel="2">NodeJS</a>
+            
+        
+            
+            <a href="/jtblogs/tags/#NODEJS" title="NODEJS" rel="1">NODEJS</a>
+            
         
     </div>
 </section>
@@ -430,19 +555,23 @@ log4js 的日志分为九个等级，各个级别的名字和权重如下：(由
     <ul>
       
         <li>
+          <a href="/jtblogs/article/WeakSet-Set-WeakMap-Map/">WeakSet &amp; Set &amp; WeakMap &amp; Map</a>
+        </li>
+      
+        <li>
+          <a href="/jtblogs/article/NodeJS-EventLoop/">NodeJS EventLoop</a>
+        </li>
+      
+        <li>
+          <a href="/jtblogs/article/NodeJS-stream-模块/">NodeJS stream 模块</a>
+        </li>
+      
+        <li>
           <a href="/jtblogs/article/看透matrix3/">看透matrix3</a>
         </li>
       
         <li>
           <a href="/jtblogs/article/css专业素养/">css专业素养</a>
-        </li>
-      
-        <li>
-          <a href="/jtblogs/article/IFC-BFC-FFC-GFC/">IFC BFC FFC GFC</a>
-        </li>
-      
-        <li>
-          <a href="/jtblogs/article/logj4-的使用/">logj4 的使用</a>
         </li>
       
     </ul>
@@ -463,7 +592,7 @@ log4js 的日志分为九个等级，各个级别的名字和权重如下：(由
         
     <h5>ARCHIVES</h5>
     <div class="widget">
-      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/jtblogs/archives/2019/12/">December 2019</a><span class="archive-list-count">4</span></li></ul>
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/jtblogs/archives/2019/12/">December 2019</a><span class="archive-list-count">7</span></li></ul>
     </div>
 
         <hr>
