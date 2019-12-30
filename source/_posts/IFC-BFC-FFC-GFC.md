@@ -5,7 +5,7 @@ date: 2019-12-29 23:05:47
 subtitle:
 header-img:
 tags:
-- CSS
+- css
 ---
 # BFC
 BFC（Block Formatting Context）格式化上下文，是Web页面中盒模型布局的CSS渲染模式，指一个独立的渲染区域或者说是一个隔离的独立容器。 

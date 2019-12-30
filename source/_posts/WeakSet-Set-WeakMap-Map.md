@@ -2,7 +2,7 @@
 title: WeakSet & Set & WeakMap & Map
 catalog: true
 tags:
-  - NodeJS
+  - js
 date: 2019-12-30 16:10:01
 subtitle:
 header-img:
