@@ -2,8 +2,13 @@
 <sitemapindex xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
 
     <sitemap>
+        <loc>https://taojiangcb.github.io/jtblogs/post-sitemap.xml</loc>
+        <lastmod>2019-12-30T03:56:33.678Z</lastmod>
+    </sitemap>
+
+    <sitemap>
         <loc>https://taojiangcb.github.io/jtblogs/page-sitemap.xml</loc>
-        <lastmod>2019-12-30T03:41:30.080Z</lastmod>
+        <lastmod>2019-12-30T03:56:33.706Z</lastmod>
     </sitemap>
 
 </sitemapindex>
