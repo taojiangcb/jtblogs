@@ -3,21 +3,28 @@
 
     <url>
         <loc>https://taojiangcb.github.io/jtblogs/tags/css/</loc>
-        <lastmod>2019-12-30T08:25:54.261Z</lastmod>
+        <lastmod>2019-12-30T08:35:42.565Z</lastmod>
         <changefreq>weekly</changefreq>
         <priority>0.2</priority>
     </url>
 
     <url>
         <loc>https://taojiangcb.github.io/jtblogs/tags/js/</loc>
-        <lastmod>2019-12-30T08:25:54.261Z</lastmod>
+        <lastmod>2019-12-30T08:35:42.565Z</lastmod>
         <changefreq>weekly</changefreq>
         <priority>0.2</priority>
     </url>
 
     <url>
         <loc>https://taojiangcb.github.io/jtblogs/tags/nodejs/</loc>
-        <lastmod>2019-12-30T08:25:54.261Z</lastmod>
+        <lastmod>2019-12-30T08:35:42.565Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.2</priority>
+    </url>
+
+    <url>
+        <loc>https://taojiangcb.github.io/jtblogs/tags/webpack/</loc>
+        <lastmod>2019-12-30T08:35:42.565Z</lastmod>
         <changefreq>weekly</changefreq>
         <priority>0.2</priority>
     </url>
