@@ -14,11 +14,11 @@
     <script async defer src="https://buttons.github.io/buttons.js"></script>
     <title>
         
-          自己撸的koa-ioc 插件 - 江涛 | Blog
+          Webpack中的hash值 - 江涛 | Blog
         
     </title>
 
-    <link rel="canonical" href="https://taojiangcb.github.io/jtblogs/jtblogs/article/自己撸的koa-ioc-插件/">
+    <link rel="canonical" href="https://taojiangcb.github.io/jtblogs/jtblogs/article/Webpack中的hash值/">
 
     <!-- Bootstrap Core CSS -->
     <link rel="stylesheet" href="/jtblogs/css/bootstrap.min.css">
@@ -88,10 +88,10 @@
                     <div class="post-heading">
                         <div class="tags">
                             
-                              <a class="tag" href="/jtblogs/tags/#nodejs" title="nodejs">nodejs</a>
+                              <a class="tag" href="/jtblogs/tags/#webpack" title="webpack">webpack</a>
                             
                         </div>
-                        <h1>自己撸的koa-ioc 插件</h1>
+                        <h1>Webpack中的hash值</h1>
                         <h2 class="subheading"></h2>
                         <span class="meta">
                             Posted by 江涛 on
@@ -212,37 +212,42 @@
                 col-md-10 col-md-offset-1
                 post-container">
 
-                <h1><span id="koa-ioc">koa-ioc</span></h1>
-<blockquote>
-<p>ioc middleware for koa</p>
-</blockquote>
+                <h1><span id="文件哈希值">⽂件哈希值</span></h1>
+<p>⽂件哈希值就是打包后输出的⽂件名的后缀</p>
+<p>例如：3.bfb2172c.js app.d3635098.js</p>
+<h1><span id="文件哈希值如何生成">⽂件哈希值如何⽣成</span></h1>
 <ul>
-<li>指定一个服务目录,在启动服务app时,自动灌入服务路由</li>
-<li>基于koa-router二次封装 app.get,app.post,app.put 等均可使用。</li>
-</ul>
-<p><img src="https://raw.githubusercontent.com/taojiangcb/koa-ioc/master/images/logo.png" alt="image"></p>
-<h1><span id="installation">installation</span></h1>
-<p>unsing npm :</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">npm install kao-ioc</span><br></pre></td></tr></table></figure>
-<h1><span id="api-reference">API Reference</span></h1>
-<ul>
-<li>ioc_dir( path : string )
-<ul>
-<li>path : 服务的目录地址</li>
-</ul>
+<li>
+<p>Hash：和整个项⽬的构建相关，只要项⽬⽂件有修改，整个项⽬构建的 hash 值就会更改</p>
+</li>
+<li>
+<p>Chunkhash：和 webpack 打包的 chunk 有关，不同的 entry 会⽣成不同的 chunkhash 值</p>
+</li>
+<li>
+<p>Contenthash：根据⽂件内容来定义 hash ，⽂件内容不变，则 contenthash 不变</p>
 </li>
 </ul>
-<h1><span id="example">example</span></h1>
-<p>Basic usage:</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">project:</span><br><span class="line">  - src</span><br><span class="line">    - app.ts</span><br><span class="line">    - server(dir)</span><br><span class="line">      - testSvr.ts</span><br><span class="line">      - ...(other server files)</span><br></pre></td></tr></table></figure>
-<p>app.ts</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">import koa from &apos;koa&apos;</span><br><span class="line">import &#123; resolve &#125; from &apos;path&apos;;</span><br><span class="line">import &#123;ioc_dir&#125; from &apos;koa-ioc&apos;;</span><br><span class="line"></span><br><span class="line">let app = new koa();</span><br><span class="line">let ioc = ioc_dir(resolve(__dirname, &quot;./server&quot;));</span><br><span class="line"></span><br><span class="line">app.use(ioc);</span><br><span class="line"></span><br><span class="line">app.listen(3100, () =&gt; &#123;</span><br><span class="line">  console.log(&apos;server started...&apos;);</span><br><span class="line">  console.log(&apos;http://localhost:3100&apos;);</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
-<p>testSvr.ts</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">import &#123; Context &#125; from &quot;koa&quot;;</span><br><span class="line"></span><br><span class="line">async function testPost(ctx: Context) &#123;</span><br><span class="line">  console.log(&apos;testPost...&apos;);</span><br><span class="line">  ctx.response.body = &quot;hellow post&quot;;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">async function testGet(ctx: Context) &#123;</span><br><span class="line">  console.log(&apos;testGet...&apos;);</span><br><span class="line">  ctx.response.body = &apos;hello get&apos;;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">module.exports = &#123;</span><br><span class="line">  &apos;POST /testSvr/testPort&apos;: testPost,</span><br><span class="line">  &apos;GET /testSvr/testGet&apos;: testGet,</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<h1><span id="contributing">Contributing</span></h1>
-<p>Please submit all issues and pull requests to the <a href="https://github.com/taojiangcb/koa-ioc.git/" target="_blank" rel="noopener">taojiang/koa-ioc</a> repository!</p>
-<h1><span id="tests">tests</span></h1>
-<p>Run tests using ==npm run test==</p>
+<h1><span id="js-的文件哈希设置">JS 的⽂件哈希设置</span></h1>
+<p>设置 output 的 filename，使⽤ [chunkhash]</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">output: &#123;</span><br><span class="line">    filename: &apos;[name][chunkhash:8].js&apos;,</span><br><span class="line">    path: __dirname + &apos;/dist&apos;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>注意: chunkhash无法和热更新一起使用</p>
+<h1><span id="css-的文件哈希设置">CSS 的⽂件哈希设置</span></h1>
+<p>设置 MiniCssExtractPlugin 的 filename，</p>
+<p>使⽤ [contenthash]</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">npm install mini-css-extract-plugin -D</span><br><span class="line"></span><br><span class="line">const MiniCssExtractPlugin = require(&apos;mini-css-extract-plugin&apos;);</span><br><span class="line">plugins: [</span><br><span class="line">     new MiniCssExtractPlugin(&#123;</span><br><span class="line">         filename: `[name][contenthash:8].css`</span><br><span class="line">     &#125;);</span><br><span class="line">]</span><br></pre></td></tr></table></figure>
+<p>如果想把css提取出来，那么style-loader就不能用了，因为两个是互斥的，所以我们可以这样写:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line">module: &#123;</span><br><span class="line">        rules: [</span><br><span class="line">            &#123;</span><br><span class="line">                test: /\.css$/,</span><br><span class="line">                use: [</span><br><span class="line">                    - &apos;style-loader&apos;,</span><br><span class="line">                    + MiniCssExtractPlugin.loader</span><br><span class="line">                    &apos;css-loader&apos;</span><br><span class="line">                ]</span><br><span class="line">            &#125;,</span><br><span class="line">            &#123;</span><br><span class="line">                test: /\.less$/,</span><br><span class="line">                use: [</span><br><span class="line">                    - &apos;style-loader&apos;,</span><br><span class="line">                    + MiniCssExtractPlugin.loader</span><br><span class="line">                    &apos;css-loader&apos;,</span><br><span class="line">                    &apos;less-loader&apos;</span><br><span class="line">                ]</span><br><span class="line">            &#125;,</span><br><span class="line">        ]</span><br><span class="line">&#125;,</span><br></pre></td></tr></table></figure>
+<p>图片&amp;字体文件哈希设置</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">module: &#123;</span><br><span class="line">rules: [</span><br><span class="line">    &#123;</span><br><span class="line">        test: /\.(png|svg|jpg|gif)$/,</span><br><span class="line">        use: [&#123;</span><br><span class="line">              loader: &apos;file-loader’,</span><br><span class="line">              options: &#123;</span><br><span class="line">                 name: &apos;img/[name][hash:8].[ext] &apos;</span><br><span class="line">              &#125;</span><br><span class="line">        &#125;]</span><br><span class="line">    &#125;</span><br><span class="line">]</span><br></pre></td></tr></table></figure>
+<h1><span id="占位符介绍">占位符介绍</span></h1>
+<ul>
+<li>[ext] 资源名后缀</li>
+<li>[name] 文件名称</li>
+<li>[path] 文件的相对路径</li>
+<li>[folder] 文件所在的文件夹</li>
+<li>[contenthash] 文件的内容hash 默认md5生成</li>
+<li>[hash] 文件内容的hash 默认md5生成</li>
+</ul>
 
                 
 
@@ -250,13 +255,9 @@
                 <!-- Pager -->
                 <ul class="pager">
                     
-                        <li class="previous">
-                            <a href="/jtblogs/article/Webpack-核心概念/" data-toggle="tooltip" data-placement="top" title="Webpack - 核心概念">&larr; Previous Post</a>
-                        </li>
-                    
                     
                         <li class="next">
-                            <a href="/jtblogs/article/Webpack-优化/" data-toggle="tooltip" data-placement="top" title="Webpack 优化">Next Post &rarr;</a>
+                            <a href="/jtblogs/article/Webpack-核心概念/" data-toggle="tooltip" data-placement="top" title="Webpack - 核心概念">Next Post &rarr;</a>
                         </li>
                     
                 </ul>
@@ -312,7 +313,7 @@
         <div id="toc" class="toc-article">
         <strong class="toc-title">Contents</strong>
         
-          <ol class="toc-nav"><li class="toc-nav-item toc-nav-level-1"><a class="toc-nav-link" href="#null"><span class="toc-nav-number">1.</span> <span class="toc-nav-text">koa-ioc</span></a></li><li class="toc-nav-item toc-nav-level-1"><a class="toc-nav-link" href="#null"><span class="toc-nav-number">2.</span> <span class="toc-nav-text">installation</span></a></li><li class="toc-nav-item toc-nav-level-1"><a class="toc-nav-link" href="#null"><span class="toc-nav-number">3.</span> <span class="toc-nav-text">API Reference</span></a></li><li class="toc-nav-item toc-nav-level-1"><a class="toc-nav-link" href="#null"><span class="toc-nav-number">4.</span> <span class="toc-nav-text">example</span></a></li><li class="toc-nav-item toc-nav-level-1"><a class="toc-nav-link" href="#null"><span class="toc-nav-number">5.</span> <span class="toc-nav-text">Contributing</span></a></li><li class="toc-nav-item toc-nav-level-1"><a class="toc-nav-link" href="#null"><span class="toc-nav-number">6.</span> <span class="toc-nav-text">tests</span></a></li></ol>
+          <ol class="toc-nav"><li class="toc-nav-item toc-nav-level-1"><a class="toc-nav-link" href="#null"><span class="toc-nav-number">1.</span> <span class="toc-nav-text">⽂件哈希值</span></a></li><li class="toc-nav-item toc-nav-level-1"><a class="toc-nav-link" href="#null"><span class="toc-nav-number">2.</span> <span class="toc-nav-text">⽂件哈希值如何⽣成</span></a></li><li class="toc-nav-item toc-nav-level-1"><a class="toc-nav-link" href="#null"><span class="toc-nav-number">3.</span> <span class="toc-nav-text">JS 的⽂件哈希设置</span></a></li><li class="toc-nav-item toc-nav-level-1"><a class="toc-nav-link" href="#null"><span class="toc-nav-number">4.</span> <span class="toc-nav-text">CSS 的⽂件哈希设置</span></a></li><li class="toc-nav-item toc-nav-level-1"><a class="toc-nav-link" href="#null"><span class="toc-nav-number">5.</span> <span class="toc-nav-text">占位符介绍</span></a></li></ol>
         
         </div>
       </aside>
@@ -332,7 +333,7 @@
                     <h5><a href="/jtblogs/tags/">FEATURED TAGS</a></h5>
                     <div class="tags">
                        
-                          <a class="tag" href="/jtblogs/tags/#nodejs" title="nodejs">nodejs</a>
+                          <a class="tag" href="/jtblogs/tags/#webpack" title="webpack">webpack</a>
                         
                     </div>
                 </section>
