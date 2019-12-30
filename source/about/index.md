@@ -19,8 +19,8 @@ fixed: false
 >偶尔又嬉皮笑脸，偶尔又特立独行的，双重性格的技术爱好者！
 
 ### 兴趣方向
-
-> NodeJS,Docker,React,CI/CD 相关生态技术研究。
+> 曾经的技术 ActionScript3 Egret Laya 
+> NodeJS,Docker,React,MySql,Redis 相关生态技术研究。
 
 ### 参与社区
 
@@ -30,4 +30,4 @@ fixed: false
 ### 联系我
 
 >Email: jiangtao_qepyou@163.com
-
+>微信:45052736
