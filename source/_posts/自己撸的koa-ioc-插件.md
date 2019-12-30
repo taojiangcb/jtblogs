@@ -83,6 +83,3 @@ Please submit all issues and pull requests to the [taojiang/koa-ioc](https://git
 
 # tests
 Run tests using ==npm run test== 
-
-
-
