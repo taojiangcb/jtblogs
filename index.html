@@ -211,6 +211,75 @@
 
 <div class="post-preview">
 
+    <a href="/jtblogs/article/react-的生命周期/">
+        <h2 class="post-title">
+                                 
+            react 的生命周期
+        </h2>
+        <h3 class="post-subtitle">
+            
+        </h3>
+        <div class="post-content-preview">
+            React 组件生命周期
+
+static getDerivedStateFromProps()
+1static getDerivedStateFromProps(props, state)
+getDerivedStateFromProps 会在调用 render 方法之前调用，并且在初始挂载及后续更新时都会被调用。它应返回一个对象来更新 state，如果返回 null 则不更新任何内容。
+此......
+        </div>
+    </a>
+    
+        <p class="post-meta" style="margin: 10px 0;">
+            Posted by 江涛 on
+            2019-12-31
+        </p>
+        <div class="tags">
+            
+              <a href="/jtblogs/tags/#react" title="react">react</a>
+            
+        </div>
+    
+
+</div>
+<hr>
+
+<div class="post-preview">
+
+    <a href="/jtblogs/article/react-中的api/">
+        <h2 class="post-title">
+                                 
+            react 中的api
+        </h2>
+        <h3 class="post-subtitle">
+            
+        </h3>
+        <div class="post-content-preview">
+            组件
+
+React.Component
+React.PureCompoent
+
+React.PureComponent 与 React.Component 很相似。两者的区别在于 React.Component 并未实现 shouldComponentUpdate()，而 React.PureComponent 中以浅层对比 prop 和 state 的方式来实现了该函数。
+如果赋予 Rea......
+        </div>
+    </a>
+    
+        <p class="post-meta" style="margin: 10px 0;">
+            Posted by 江涛 on
+            2019-12-31
+        </p>
+        <div class="tags">
+            
+              <a href="/jtblogs/tags/#react" title="react">react</a>
+            
+        </div>
+    
+
+</div>
+<hr>
+
+<div class="post-preview">
+
     <a href="/jtblogs/article/Webpack中的hash值/">
         <h2 class="post-title">
                                  
@@ -499,71 +568,6 @@ libuv已经对Event Loop做出了实现，而HTML5......
 </div>
 <hr>
 
-<div class="post-preview">
-
-    <a href="/jtblogs/article/NodeJS-stream-模块/">
-        <h2 class="post-title">
-                                 
-            NodeJS stream 模块
-        </h2>
-        <h3 class="post-subtitle">
-            
-        </h3>
-        <div class="post-content-preview">
-            Nodejs stream 模块
-流的基本概念
-起点到终点
-流：逐段，大量数据，大文件
-传统:一次性读取完毕，在处理
-1234567891011121314151617const rs = fs.createReadStream(&apos;data.txt&apos;);//流的逐块传输rs.on(&apos;data&apos;,chunk=&gt;&#123;    data += c......
-        </div>
-    </a>
-    
-        <p class="post-meta" style="margin: 10px 0;">
-            Posted by 江涛 on
-            2019-12-30
-        </p>
-        <div class="tags">
-            
-              <a href="/jtblogs/tags/#nodejs" title="nodejs">nodejs</a>
-            
-        </div>
-    
-
-</div>
-<hr>
-
-<div class="post-preview">
-
-    <a href="/jtblogs/article/看透matrix3/">
-        <h2 class="post-title">
-                                 
-            看透matrix3
-        </h2>
-        <h3 class="post-subtitle">
-            
-        </h3>
-        <div class="post-content-preview">
-            先看我之前的一个例子:http://47.100.202.222/splitball/
-可以看下工具调试，满屏的matrix3 跳动的热血沸腾的。
-123456789101112131415161718192021222324252627282930/**   a = 控制 X 的宽度*　　b = 控制 Y 的倾斜*　　c = 控制 X 的倾斜*　　d = 控制 Y 的高度*　　tx = 控......
-        </div>
-    </a>
-    
-        <p class="post-meta" style="margin: 10px 0;">
-            Posted by 江涛 on
-            2019-12-29
-        </p>
-        <div class="tags">
-            
-              <a href="/jtblogs/tags/#css" title="css">css</a>
-            
-        </div>
-    
-
-</div>
-<hr>
-
 
 
 <!-- Pager -->
@@ -620,6 +624,10 @@ libuv已经对Event Loop做出了实现，而HTML5......
             <a href="/jtblogs/tags/#webpack" title="webpack" rel="3">webpack</a>
             
         
+            
+            <a href="/jtblogs/tags/#react" title="react" rel="2">react</a>
+            
+        
     </div>
 </section>
 
@@ -673,6 +681,14 @@ libuv已经对Event Loop做出了实现，而HTML5......
     <ul>
       
         <li>
+          <a href="/jtblogs/article/react-的生命周期/">react 的生命周期</a>
+        </li>
+      
+        <li>
+          <a href="/jtblogs/article/react-中的api/">react 中的api</a>
+        </li>
+      
+        <li>
           <a href="/jtblogs/article/Webpack中的hash值/">Webpack中的hash值</a>
         </li>
       
@@ -682,14 +698,6 @@ libuv已经对Event Loop做出了实现，而HTML5......
       
         <li>
           <a href="/jtblogs/article/自己撸的koa-ioc-插件/">自己撸的koa-ioc 插件</a>
-        </li>
-      
-        <li>
-          <a href="/jtblogs/article/Webpack-优化/">Webpack 优化</a>
-        </li>
-      
-        <li>
-          <a href="/jtblogs/article/安全防范-致前端/">安全防范-致前端</a>
         </li>
       
     </ul>
@@ -710,7 +718,7 @@ libuv已经对Event Loop做出了实现，而HTML5......
         
     <h5>ARCHIVES</h5>
     <div class="widget">
-      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/jtblogs/archives/2019/12/">December 2019</a><span class="archive-list-count">13</span></li></ul>
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/jtblogs/archives/2019/12/">December 2019</a><span class="archive-list-count">15</span></li></ul>
     </div>
 
         <hr>

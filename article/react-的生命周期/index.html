@@ -14,11 +14,11 @@
     <script async defer src="https://buttons.github.io/buttons.js"></script>
     <title>
         
-          Webpack中的hash值 - 江涛 | Blog
+          react 的生命周期 - 江涛 | Blog
         
     </title>
 
-    <link rel="canonical" href="https://taojiangcb.github.io/jtblogs/jtblogs/article/Webpack中的hash值/">
+    <link rel="canonical" href="https://taojiangcb.github.io/jtblogs/jtblogs/article/react-的生命周期/">
 
     <!-- Bootstrap Core CSS -->
     <link rel="stylesheet" href="/jtblogs/css/bootstrap.min.css">
@@ -88,14 +88,14 @@
                     <div class="post-heading">
                         <div class="tags">
                             
-                              <a class="tag" href="/jtblogs/tags/#webpack" title="webpack">webpack</a>
+                              <a class="tag" href="/jtblogs/tags/#react" title="react">react</a>
                             
                         </div>
-                        <h1>Webpack中的hash值</h1>
+                        <h1>react 的生命周期</h1>
                         <h2 class="subheading"></h2>
                         <span class="meta">
                             Posted by 江涛 on
-                            2019-12-30
+                            2019-12-31
                         </span>
                     </div>
                 
@@ -212,42 +212,50 @@
                 col-md-10 col-md-offset-1
                 post-container">
 
-                <h1><span id="文件哈希值">⽂件哈希值</span></h1>
-<p>⽂件哈希值就是打包后输出的⽂件名的后缀</p>
-<p>例如：3.bfb2172c.js app.d3635098.js</p>
-<h1><span id="文件哈希值如何生成">⽂件哈希值如何⽣成</span></h1>
-<ul>
-<li>
-<p>Hash：和整个项⽬的构建相关，只要项⽬⽂件有修改，整个项⽬构建的 hash 值就会更改</p>
-</li>
-<li>
-<p>Chunkhash：和 webpack 打包的 chunk 有关，不同的 entry 会⽣成不同的 chunkhash 值</p>
-</li>
-<li>
-<p>Contenthash：根据⽂件内容来定义 hash ，⽂件内容不变，则 contenthash 不变</p>
-</li>
-</ul>
-<h1><span id="js-的文件哈希设置">JS 的⽂件哈希设置</span></h1>
-<p>设置 output 的 filename，使⽤ [chunkhash]</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">output: &#123;</span><br><span class="line">    filename: &apos;[name][chunkhash:8].js&apos;,</span><br><span class="line">    path: __dirname + &apos;/dist&apos;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>注意: chunkhash无法和热更新一起使用</p>
-<h1><span id="css-的文件哈希设置">CSS 的⽂件哈希设置</span></h1>
-<p>设置 MiniCssExtractPlugin 的 filename，</p>
-<p>使⽤ [contenthash]</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">npm install mini-css-extract-plugin -D</span><br><span class="line"></span><br><span class="line">const MiniCssExtractPlugin = require(&apos;mini-css-extract-plugin&apos;);</span><br><span class="line">plugins: [</span><br><span class="line">     new MiniCssExtractPlugin(&#123;</span><br><span class="line">         filename: `[name][contenthash:8].css`</span><br><span class="line">     &#125;);</span><br><span class="line">]</span><br></pre></td></tr></table></figure>
-<p>如果想把css提取出来，那么style-loader就不能用了，因为两个是互斥的，所以我们可以这样写:</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line">module: &#123;</span><br><span class="line">        rules: [</span><br><span class="line">            &#123;</span><br><span class="line">                test: /\.css$/,</span><br><span class="line">                use: [</span><br><span class="line">                    - &apos;style-loader&apos;,</span><br><span class="line">                    + MiniCssExtractPlugin.loader</span><br><span class="line">                    &apos;css-loader&apos;</span><br><span class="line">                ]</span><br><span class="line">            &#125;,</span><br><span class="line">            &#123;</span><br><span class="line">                test: /\.less$/,</span><br><span class="line">                use: [</span><br><span class="line">                    - &apos;style-loader&apos;,</span><br><span class="line">                    + MiniCssExtractPlugin.loader</span><br><span class="line">                    &apos;css-loader&apos;,</span><br><span class="line">                    &apos;less-loader&apos;</span><br><span class="line">                ]</span><br><span class="line">            &#125;,</span><br><span class="line">        ]</span><br><span class="line">&#125;,</span><br></pre></td></tr></table></figure>
-<p>图片&amp;字体文件哈希设置</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">module: &#123;</span><br><span class="line">rules: [</span><br><span class="line">    &#123;</span><br><span class="line">        test: /\.(png|svg|jpg|gif)$/,</span><br><span class="line">        use: [&#123;</span><br><span class="line">              loader: &apos;file-loader’,</span><br><span class="line">              options: &#123;</span><br><span class="line">                 name: &apos;img/[name][hash:8].[ext] &apos;</span><br><span class="line">              &#125;</span><br><span class="line">        &#125;]</span><br><span class="line">    &#125;</span><br><span class="line">]</span><br></pre></td></tr></table></figure>
-<h1><span id="占位符介绍">占位符介绍</span></h1>
-<ul>
-<li>[ext] 资源名后缀</li>
-<li>[name] 文件名称</li>
-<li>[path] 文件的相对路径</li>
-<li>[folder] 文件所在的文件夹</li>
-<li>[contenthash] 文件的内容hash 默认md5生成</li>
-<li>[hash] 文件内容的hash 默认md5生成</li>
-</ul>
+                <h1><span id="react-组件生命周期">React 组件生命周期</span></h1>
+<p><img src="https://github.com/taojiangcb/jtblogs/blob/master/source/img/WechatIMG11593.png?raw=true" alt="image"></p>
+<h1><span id="static-getderivedstatefromprops">static getDerivedStateFromProps()</span></h1>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">static getDerivedStateFromProps(props, state)</span><br></pre></td></tr></table></figure>
+<p>getDerivedStateFromProps 会在调用 render 方法之前调用，并且在初始挂载及后续更新时都会被调用。它应返回一个对象来更新 state，如果返回 null 则不更新任何内容。</p>
+<p>此方法无权访问组件实例。如果你需要，可以通过提取组件 props 的纯函数及 class 之外的状态，在getDerivedStateFromProps()和其他 class 方法之间重用代码。</p>
+<h1><span id="shouldcomponentupdate">shouldComponentUpdate()</span></h1>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">shouldComponentUpdate(nextProps, nextState)</span><br></pre></td></tr></table></figure>
+<p>根据 shouldComponentUpdate() 的返回值，判断 React 组件的输出是否受当前 state 或 props 更改的影响。默认行为是 state 每次发生变化组件都会重新渲染。大部分情况下，你应该遵循默认行为。</p>
+<p>当 props 或 state 发生变化时，shouldComponentUpdate() 会在渲染执行之前被调用。返回值默认为 true。首次渲染或使用 forceUpdate() 时不会调用该方法。</p>
+<p>此方法仅作为性能优化的方式而存在。不要企图依靠此方法来“阻止”渲染，因为这可能会产生 bug。你应该考虑使用内置的 PureComponent 组件，而不是手动编写 shouldComponentUpdate()。PureComponent 会对 props 和 state 进行浅层比较，并减少了跳过必要更新的可能性。</p>
+<p>如果你一定要手动编写此函数，可以将 this.props 与 nextProps 以及 this.state 与nextState 进行比较，并返回 false 以告知 React 可以跳过更新。请注意，返回 false 并不会阻止子组件在 state 更改时重新渲染。</p>
+<p>我们不建议在 shouldComponentUpdate() 中进行深层比较或使用 JSON.stringify()。这样非常影响效率，且会损害性能。</p>
+<p>目前，如果 shouldComponentUpdate() 返回 false，则不会调用 UNSAFE_componentWillUpdate()，render() 和 componentDidUpdate()。后续版本，React 可能会将 shouldComponentUpdate 视为提示而不是严格的指令，并且，当返回 false 时，仍可能导致组件重新渲染。</p>
+<h1><span id="render">render()</span></h1>
+<p>render() 方法是 class 组件中唯一必须实现的方法。</p>
+<p>当 render 被调用时，它会检查 this.props 和 this.state 的变化并返回以下类型之一：</p>
+<p>React 元素。通常通过 JSX 创建。例如，<div> 会被 React 渲染为 DOM 节点，<mycomponent> 会被 React 渲染为自定义组件，无论是 <div> 还是 <mycomponent> 均为 React 元素。<br>
+数组或 fragments。 使得 render 方法可以返回多个元素。欲了解更多详细信息，请参阅 fragments 文档。<br>
+Portals。可以渲染子节点到不同的 DOM 子树中。欲了解更多详细信息，请参阅有关 portals 的文档<br>
+字符串或数值类型。它们在 DOM 中会被渲染为文本节点<br>
+布尔类型或 null。什么都不渲染。（主要用于支持返回 test &amp;&amp; <child> 的模式，其中 test 为布尔类型。)<br>
+render() 函数应该为纯函数，这意味着在不修改组件 state 的情况下，每次调用时都返回相同的结果，并且它不会直接与浏览器交互。</child></mycomponent></div></mycomponent></div></p>
+<p>如需与浏览器进行交互，请在 componentDidMount() 或其他生命周期方法中执行你的操作。保持 render() 为纯函数，可以使组件更容易思考。</p>
+<h1><span id="getsnapshotbeforeupdate">getSnapshotBeforeUpdate()</span></h1>
+<p>getSnapshotBeforeUpdate() 在最近一次渲染输出（提交到 DOM 节点）之前调用。它使得组件能在发生更改之前从 DOM 中捕获一些信息（例如，滚动位置）。此生命周期的任何返回值将作为参数传递给 componentDidUpdate()。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br></pre></td><td class="code"><pre><span class="line">class ScrollingList extends React.Component &#123;</span><br><span class="line">  constructor(props) &#123;</span><br><span class="line">    super(props);</span><br><span class="line">    this.listRef = React.createRef();</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  getSnapshotBeforeUpdate(prevProps, prevState) &#123;</span><br><span class="line">    // 我们是否在 list 中添加新的 items ？</span><br><span class="line">    // 捕获滚动​​位置以便我们稍后调整滚动位置。</span><br><span class="line">    if (prevProps.list.length &lt; this.props.list.length) &#123;</span><br><span class="line">      const list = this.listRef.current;</span><br><span class="line">      return list.scrollHeight - list.scrollTop;</span><br><span class="line">    &#125;</span><br><span class="line">    return null;</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  componentDidUpdate(prevProps, prevState, snapshot) &#123;</span><br><span class="line">    // 如果我们 snapshot 有值，说明我们刚刚添加了新的 items，</span><br><span class="line">    // 调整滚动位置使得这些新 items 不会将旧的 items 推出视图。</span><br><span class="line">    //（这里的 snapshot 是 getSnapshotBeforeUpdate 的返回值）</span><br><span class="line">    if (snapshot !== null) &#123;</span><br><span class="line">      const list = this.listRef.current;</span><br><span class="line">      list.scrollTop = list.scrollHeight - snapshot;</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  render() &#123;</span><br><span class="line">    return (</span><br><span class="line">      &lt;div ref=&#123;this.listRef&#125;&gt;&#123;/* ...contents... */&#125;&lt;/div&gt;</span><br><span class="line">    );</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>在上述示例中，重点是从 getSnapshotBeforeUpdate 读取 scrollHeight 属性，因为 “render” 阶段生命周期（如 render）和 “commit” 阶段生命周期（如 getSnapshotBeforeUpdate 和 componentDidUpdate）之间可能存在延迟。</p>
+<h1><span id="componentdidmount">componentDidMount()</span></h1>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">componentDidMount()</span><br></pre></td></tr></table></figure>
+<p>componentDidMount() 会在组件挂载后（插入 DOM 树中）立即调用。依赖于 DOM 节点的初始化应该放在这里。如需通过网络请求获取数据，此处是实例化请求的好地方。</p>
+<p>这个方法是比较适合添加订阅的地方。如果添加了订阅，请不要忘记在 componentWillUnmount() 里取消订阅</p>
+<p>你可以在 componentDidMount() 里直接调用 setState()。它将触发额外渲染，但此渲染会发生在浏览器更新屏幕之前。如此保证了即使在 render() 两次调用的情况下，用户也不会看到中间状态。请谨慎使用该模式，因为它会导致性能问题。通常，你应该在 constructor() 中初始化 state。如果你的渲染依赖于 DOM 节点的大小或位置，比如实现 modals 和 tooltips 等情况下，你可以使用此方式处理</p>
+<h1><span id="componentdidupdate">componentDidUpdate()</span></h1>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">componentDidUpdate(prevProps, prevState, snapshot)</span><br></pre></td></tr></table></figure>
+<p>componentDidUpdate() 会在更新后会被立即调用。首次渲染不会执行此方法。</p>
+<p>当组件更新后，可以在此处对 DOM 进行操作。如果你对更新前后的 props 进行了比较，也可以选择在此处进行网络请求。（例如，当 props 未发生变化时，则不会执行网络请求）。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">componentDidUpdate(prevProps) &#123;</span><br><span class="line">  // 典型用法（不要忘记比较 props）：</span><br><span class="line">  if (this.props.userID !== prevProps.userID) &#123;</span><br><span class="line">    this.fetchData(this.props.userID);</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>你也可以在 componentDidUpdate() 中直接调用 setState()，但请注意它必须被包裹在一个条件语句里，正如上述的例子那样进行处理，否则会导致死循环。它还会导致额外的重新渲染，虽然用户不可见，但会影响组件性能。不要将 props “镜像”给 state，请考虑直接使用 props。 欲了解更多有关内容，请参阅为什么 props 复制给 state 会产生 bug。</p>
+<p>如果组件实现了 getSnapshotBeforeUpdate() 生命周期（不常用），则它的返回值将作为 componentDidUpdate() 的第三个参数 “snapshot” 参数传递。否则此参数将为 undefined。</p>
+<h1><span id="componentwillunmount">componentWillUnmount()</span></h1>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">componentWillUnmount()</span><br></pre></td></tr></table></figure>
+<p>componentWillUnmount() 会在组件卸载及销毁之前直接调用。在此方法中执行必要的清理操作，例如，清除 timer，取消网络请求或清除在 componentDidMount() 中创建的订阅等。</p>
+<p>componentWillUnmount() 中不应调用 setState()，因为该组件将永远不会重新渲染。组件实例卸载后，将永远不会再挂载它。</p>
 
                 
 
@@ -255,13 +263,9 @@
                 <!-- Pager -->
                 <ul class="pager">
                     
-                        <li class="previous">
-                            <a href="/jtblogs/article/react-中的api/" data-toggle="tooltip" data-placement="top" title="react 中的api">&larr; Previous Post</a>
-                        </li>
-                    
                     
                         <li class="next">
-                            <a href="/jtblogs/article/Webpack-核心概念/" data-toggle="tooltip" data-placement="top" title="Webpack - 核心概念">Next Post &rarr;</a>
+                            <a href="/jtblogs/article/react-中的api/" data-toggle="tooltip" data-placement="top" title="react 中的api">Next Post &rarr;</a>
                         </li>
                     
                 </ul>
@@ -317,7 +321,7 @@
         <div id="toc" class="toc-article">
         <strong class="toc-title">Contents</strong>
         
-          <ol class="toc-nav"><li class="toc-nav-item toc-nav-level-1"><a class="toc-nav-link" href="#null"><span class="toc-nav-number">1.</span> <span class="toc-nav-text">⽂件哈希值</span></a></li><li class="toc-nav-item toc-nav-level-1"><a class="toc-nav-link" href="#null"><span class="toc-nav-number">2.</span> <span class="toc-nav-text">⽂件哈希值如何⽣成</span></a></li><li class="toc-nav-item toc-nav-level-1"><a class="toc-nav-link" href="#null"><span class="toc-nav-number">3.</span> <span class="toc-nav-text">JS 的⽂件哈希设置</span></a></li><li class="toc-nav-item toc-nav-level-1"><a class="toc-nav-link" href="#null"><span class="toc-nav-number">4.</span> <span class="toc-nav-text">CSS 的⽂件哈希设置</span></a></li><li class="toc-nav-item toc-nav-level-1"><a class="toc-nav-link" href="#null"><span class="toc-nav-number">5.</span> <span class="toc-nav-text">占位符介绍</span></a></li></ol>
+          <ol class="toc-nav"><li class="toc-nav-item toc-nav-level-1"><a class="toc-nav-link" href="#null"><span class="toc-nav-number">1.</span> <span class="toc-nav-text">React 组件生命周期</span></a></li><li class="toc-nav-item toc-nav-level-1"><a class="toc-nav-link" href="#null"><span class="toc-nav-number">2.</span> <span class="toc-nav-text">static getDerivedStateFromProps()</span></a></li><li class="toc-nav-item toc-nav-level-1"><a class="toc-nav-link" href="#null"><span class="toc-nav-number">3.</span> <span class="toc-nav-text">shouldComponentUpdate()</span></a></li><li class="toc-nav-item toc-nav-level-1"><a class="toc-nav-link" href="#null"><span class="toc-nav-number">4.</span> <span class="toc-nav-text">render()</span></a></li><li class="toc-nav-item toc-nav-level-1"><a class="toc-nav-link" href="#null"><span class="toc-nav-number">5.</span> <span class="toc-nav-text">getSnapshotBeforeUpdate()</span></a></li><li class="toc-nav-item toc-nav-level-1"><a class="toc-nav-link" href="#null"><span class="toc-nav-number">6.</span> <span class="toc-nav-text">componentDidMount()</span></a></li><li class="toc-nav-item toc-nav-level-1"><a class="toc-nav-link" href="#null"><span class="toc-nav-number">7.</span> <span class="toc-nav-text">componentDidUpdate()</span></a></li><li class="toc-nav-item toc-nav-level-1"><a class="toc-nav-link" href="#null"><span class="toc-nav-number">8.</span> <span class="toc-nav-text">componentWillUnmount()</span></a></li></ol>
         
         </div>
       </aside>
@@ -337,7 +341,7 @@
                     <h5><a href="/jtblogs/tags/">FEATURED TAGS</a></h5>
                     <div class="tags">
                        
-                          <a class="tag" href="/jtblogs/tags/#webpack" title="webpack">webpack</a>
+                          <a class="tag" href="/jtblogs/tags/#react" title="react">react</a>
                         
                     </div>
                 </section>
