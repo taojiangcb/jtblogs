@@ -18,7 +18,7 @@
         
     </title>
 
-    <link rel="canonical" href="https://taojiangcb.github.io/jtblogs/jtblogs/">
+    <link rel="canonical" href="https://taojiangcb.github.io/jtblogs/jtblogs/page/3/">
 
     <!-- Bootstrap Core CSS -->
     <link rel="stylesheet" href="/jtblogs/css/bootstrap.min.css">
@@ -211,332 +211,31 @@
 
 <div class="post-preview">
 
-    <a href="/jtblogs/article/ioc4之小总结/">
+    <a href="/jtblogs/article/logj4-的使用/">
         <h2 class="post-title">
                                  
-            ioc4之小总结
+            logj4 的使用
         </h2>
         <h3 class="post-subtitle">
             
         </h3>
         <div class="post-content-preview">
-            ...
+            log4js 中的概念
+
+level
+这个理解起来不难，就是日志的分级。日志有了分级，log4js 才能更好地为我们展示日志（不同级别的日志在控制台中采用不同的颜色，比如 error 通常是红色的），在生产可以有选择的落盘日志，比如避免一些属于.debug才用的敏感信息被泄露出来。
+log4js 的日志分为九个等级，各个级别的名字和权重如下：(由低到高)
+1234567891011&#123......
         </div>
     </a>
     
         <p class="post-meta" style="margin: 10px 0;">
             Posted by 江涛 on
-            2020-01-20
+            2019-12-29
         </p>
         <div class="tags">
             
-              <a href="/jtblogs/tags/#CSS" title="CSS">CSS</a>
-            
-        </div>
-    
-
-</div>
-<hr>
-
-<div class="post-preview">
-
-    <a href="/jtblogs/article/ioc3之inversify-binding-decorators/">
-        <h2 class="post-title">
-                                 
-            ioc3之inversify-binding-decorators
-        </h2>
-        <h3 class="post-subtitle">
-            
-        </h3>
-        <div class="post-content-preview">
-            provide
-This small utility allows you to declare bindings using decorators:
-
-这个小工具允许你声明绑定使用装饰:
-
-1234567891011121314151617181920212223import &#123; injectable, Container &#125; from &quot;inversify&......
-        </div>
-    </a>
-    
-        <p class="post-meta" style="margin: 10px 0;">
-            Posted by 江涛 on
-            2020-01-20
-        </p>
-        <div class="tags">
-            
-              <a href="/jtblogs/tags/#js" title="js">js</a>
-            
-        </div>
-    
-
-</div>
-<hr>
-
-<div class="post-preview">
-
-    <a href="/jtblogs/article/ioc2之inversify/">
-        <h2 class="post-title">
-                                 
-            ioc之inversify
-        </h2>
-        <h3 class="post-subtitle">
-            
-        </h3>
-        <div class="post-content-preview">
-            配置
-⚠️重要!InversifyJS需要TypeScript &gt;= 2.0，以及tsconfig中的实验者装饰器、emitDecoratorMetadata、类型和lib编译选项。json文件。
-1234567891011&#123;    &quot;compilerOptions&quot;: &#123;        &quot;target&quot;: &quot;es5......
-        </div>
-    </a>
-    
-        <p class="post-meta" style="margin: 10px 0;">
-            Posted by 江涛 on
-            2020-01-20
-        </p>
-        <div class="tags">
-            
-              <a href="/jtblogs/tags/#js" title="js">js</a>
-            
-        </div>
-    
-
-</div>
-<hr>
-
-<div class="post-preview">
-
-    <a href="/jtblogs/article/ioc1之Reflect-Metadata/">
-        <h2 class="post-title">
-                                 
-            ioc1之Reflect  Metadata
-        </h2>
-        <h3 class="post-subtitle">
-            
-        </h3>
-        <div class="post-content-preview">
-            基础
-Reflect Metadata 是 ES7 的一个提案，它主要用来在声明的时候添加和读取元数据。TypeScript 在 1.5+ 的版本已经支持它，你只需要：
-npm i reflect-metadata --save。
-在 tsconfig.json 里配置 emitDecoratorMetadata 选项。
-Reflect Metadata 的 API 可以用于类或者类的属性上......
-        </div>
-    </a>
-    
-        <p class="post-meta" style="margin: 10px 0;">
-            Posted by 江涛 on
-            2020-01-20
-        </p>
-        <div class="tags">
-            
-              <a href="/jtblogs/tags/#js" title="js">js</a>
-            
-        </div>
-    
-
-</div>
-<hr>
-
-<div class="post-preview">
-
-    <a href="/jtblogs/article/nginx-gzip-压缩js配置/">
-        <h2 class="post-title">
-                                 
-            nginx gzip 压缩js配置
-        </h2>
-        <h3 class="post-subtitle">
-            
-        </h3>
-        <div class="post-content-preview">
-            Nginx自带的有gzip模块 http://wiki.nginx.org/NginxChsHttpGzipModule ，这个模块支持在线实时压缩输出数据流。经过良好的配置优化，可以大幅的提升网站的输出效率。
-使用范例
-12345678910111213141516gzip  on;gzip_buffers 16 8k;gzip_comp_level 6;gzip_http_version......
-        </div>
-    </a>
-    
-        <p class="post-meta" style="margin: 10px 0;">
-            Posted by 江涛 on
-            2020-01-01
-        </p>
-        <div class="tags">
-            
-              <a href="/jtblogs/tags/#nginx" title="nginx">nginx</a>
-            
-        </div>
-    
-
-</div>
-<hr>
-
-<div class="post-preview">
-
-    <a href="/jtblogs/article/Grid-网格布局/">
-        <h2 class="post-title">
-                                 
-            Grid 网格布局
-        </h2>
-        <h3 class="post-subtitle">
-            
-        </h3>
-        <div class="post-content-preview">
-            网格布局
-Flex 布局是轴线布局，只能指定&quot;项目&quot;针对轴线的位置，可以看作是一维布局。Grid 布局则是将容器划分成&quot;行&quot;和&quot;列&quot;，产生单元格，然后指定&quot;项目所在&quot;的单元格，可以看作是二维布局。Grid 布局远比 Flex 布局强大。
-display: grid
-display: grid指定一个容器采用网格布......
-        </div>
-    </a>
-    
-        <p class="post-meta" style="margin: 10px 0;">
-            Posted by 江涛 on
-            2020-01-01
-        </p>
-        <div class="tags">
-            
-              <a href="/jtblogs/tags/#css" title="css">css</a>
-            
-        </div>
-    
-
-</div>
-<hr>
-
-<div class="post-preview">
-
-    <a href="/jtblogs/article/react-的生命周期/">
-        <h2 class="post-title">
-                                 
-            react 的生命周期
-        </h2>
-        <h3 class="post-subtitle">
-            
-        </h3>
-        <div class="post-content-preview">
-            React 组件生命周期
-
-static getDerivedStateFromProps()
-1static getDerivedStateFromProps(props, state)
-getDerivedStateFromProps 会在调用 render 方法之前调用，并且在初始挂载及后续更新时都会被调用。它应返回一个对象来更新 state，如果返回 null 则不更新任何内容。
-此......
-        </div>
-    </a>
-    
-        <p class="post-meta" style="margin: 10px 0;">
-            Posted by 江涛 on
-            2019-12-31
-        </p>
-        <div class="tags">
-            
-              <a href="/jtblogs/tags/#react" title="react">react</a>
-            
-        </div>
-    
-
-</div>
-<hr>
-
-<div class="post-preview">
-
-    <a href="/jtblogs/article/react-中的api/">
-        <h2 class="post-title">
-                                 
-            react 中的api
-        </h2>
-        <h3 class="post-subtitle">
-            
-        </h3>
-        <div class="post-content-preview">
-            组件
-
-React.Component
-React.PureCompoent
-
-React.PureComponent 与 React.Component 很相似。两者的区别在于 React.Component 并未实现 shouldComponentUpdate()，而 React.PureComponent 中以浅层对比 prop 和 state 的方式来实现了该函数。
-如果赋予 Rea......
-        </div>
-    </a>
-    
-        <p class="post-meta" style="margin: 10px 0;">
-            Posted by 江涛 on
-            2019-12-31
-        </p>
-        <div class="tags">
-            
-              <a href="/jtblogs/tags/#react" title="react">react</a>
-            
-        </div>
-    
-
-</div>
-<hr>
-
-<div class="post-preview">
-
-    <a href="/jtblogs/article/Webpack中的hash值/">
-        <h2 class="post-title">
-                                 
-            Webpack中的hash值
-        </h2>
-        <h3 class="post-subtitle">
-            
-        </h3>
-        <div class="post-content-preview">
-            ⽂件哈希值
-⽂件哈希值就是打包后输出的⽂件名的后缀
-例如：3.bfb2172c.js app.d3635098.js
-⽂件哈希值如何⽣成
-
-
-Hash：和整个项⽬的构建相关，只要项⽬⽂件有修改，整个项⽬构建的 hash 值就会更改
-
-
-Chunkhash：和 webpack 打包的 chunk 有关，不同的 entry 会⽣成不同的 chunkhash 值
-
-
-Contenthash：根据⽂......
-        </div>
-    </a>
-    
-        <p class="post-meta" style="margin: 10px 0;">
-            Posted by 江涛 on
-            2019-12-30
-        </p>
-        <div class="tags">
-            
-              <a href="/jtblogs/tags/#webpack" title="webpack">webpack</a>
-            
-        </div>
-    
-
-</div>
-<hr>
-
-<div class="post-preview">
-
-    <a href="/jtblogs/article/Webpack-核心概念/">
-        <h2 class="post-title">
-                                 
-            Webpack - 核心概念
-        </h2>
-        <h3 class="post-subtitle">
-            
-        </h3>
-        <div class="post-content-preview">
-            核心概念之 Entry
-Entry 用来指定 webpack 的打包⼊口
-Entry 的⽤法
-单⼊⼝：entry 是⼀个字符串
-123module.exports = &#123;    entry: &apos;./src/index.js&apos;&#125;;
-多⼊⼝：entry 是⼀个对象
-123456module.exports = &#123;    entry: &#123;......
-        </div>
-    </a>
-    
-        <p class="post-meta" style="margin: 10px 0;">
-            Posted by 江涛 on
-            2019-12-30
-        </p>
-        <div class="tags">
-            
-              <a href="/jtblogs/tags/#webpack" title="webpack">webpack</a>
+              <a href="/jtblogs/tags/#nodejs" title="nodejs">nodejs</a>
             
         </div>
     
@@ -550,10 +249,10 @@ Entry 的⽤法
 
 <ul class="pager">
     
-    
-        <li class="next">
-            <a href="/jtblogs/page/2/">Older Posts &rarr;</a>
+        <li class="previous">
+            <a href="/jtblogs/page/2/">&larr; Newer Posts</a>
         </li>
+    
     
 </ul>
 

@@ -211,6 +211,151 @@
 
 <div class="post-preview">
 
+    <a href="/jtblogs/article/自己撸的koa-ioc-插件/">
+        <h2 class="post-title">
+                                 
+            自己撸的koa-ioc 插件
+        </h2>
+        <h3 class="post-subtitle">
+            
+        </h3>
+        <div class="post-content-preview">
+            koa-ioc
+
+ioc middleware for koa
+
+
+指定一个服务目录,在启动服务app时,自动灌入服务路由
+基于koa-router二次封装 app.get,app.post,app.put 等均可使用。
+
+
+installation
+unsing npm :
+1npm install kao-ioc
+API Reference
+
+ioc_dir( path : string......
+        </div>
+    </a>
+    
+        <p class="post-meta" style="margin: 10px 0;">
+            Posted by 江涛 on
+            2019-12-30
+        </p>
+        <div class="tags">
+            
+              <a href="/jtblogs/tags/#nodejs" title="nodejs">nodejs</a>
+            
+        </div>
+    
+
+</div>
+<hr>
+
+<div class="post-preview">
+
+    <a href="/jtblogs/article/Webpack-优化/">
+        <h2 class="post-title">
+                                 
+            Webpack 优化
+        </h2>
+        <h3 class="post-subtitle">
+            
+        </h3>
+        <div class="post-content-preview">
+            webpack 慢的原因
+
+string -&gt; ast -&gt; string/buff,文件过多 n *  string -&gt; ast -&gt; string/buff
+entry 过多 复杂 繁杂 fonts css js
+async import(/***/‘xxx.js’) entry
+
+解决方案
+
+async 插件 speed-measure-webpack-plu......
+        </div>
+    </a>
+    
+        <p class="post-meta" style="margin: 10px 0;">
+            Posted by 江涛 on
+            2019-12-30
+        </p>
+        <div class="tags">
+            
+              <a href="/jtblogs/tags/#webpack" title="webpack">webpack</a>
+            
+        </div>
+    
+
+</div>
+<hr>
+
+<div class="post-preview">
+
+    <a href="/jtblogs/article/安全防范-致前端/">
+        <h2 class="post-title">
+                                 
+            安全防范-致前端
+        </h2>
+        <h3 class="post-subtitle">
+            
+        </h3>
+        <div class="post-content-preview">
+            XSS
+XSS，即 Cross Site Script，中译是跨站脚本攻击；其原本缩写是 CSS，但为了和层叠样式表(Cascading Style Sheet)有所区分，因而在安全领域叫做 XSS。
+XSS 攻击是指攻击者在网站上注入恶意的客户端代码，通过恶意脚本对客户端网页进行篡改，从而在用户浏览网页时，对用户浏览器进行控制或者获取用户隐私数据的一种攻击方式。
+攻击者对客户端网页注入的恶......
+        </div>
+    </a>
+    
+        <p class="post-meta" style="margin: 10px 0;">
+            Posted by 江涛 on
+            2019-12-30
+        </p>
+        <div class="tags">
+            
+              <a href="/jtblogs/tags/#js" title="js">js</a>
+            
+        </div>
+    
+
+</div>
+<hr>
+
+<div class="post-preview">
+
+    <a href="/jtblogs/article/JS中的错误捕获/">
+        <h2 class="post-title">
+                                 
+            JS中的错误捕获
+        </h2>
+        <h3 class="post-subtitle">
+            
+        </h3>
+        <div class="post-content-preview">
+            try catch 捕获
+可以捕获到同步代码的错误，但是异步的微任务或这宏任务就不可以了。
+window.error
+可以捕获到异步队列的任务异常，但是网络请求之类的异常捕获不到。get 请求捕获不到哦。 网络请求捕获不到，io错误之类的。
+1234567&lt;img src =&apos;./a.jpg&apos;&gt; get 请求捕获不到window.onerror = funct......
+        </div>
+    </a>
+    
+        <p class="post-meta" style="margin: 10px 0;">
+            Posted by 江涛 on
+            2019-12-30
+        </p>
+        <div class="tags">
+            
+              <a href="/jtblogs/tags/#js" title="js">js</a>
+            
+        </div>
+    
+
+</div>
+<hr>
+
+<div class="post-preview">
+
     <a href="/jtblogs/article/WeakSet-Set-WeakMap-Map/">
         <h2 class="post-title">
                                  
@@ -418,40 +563,6 @@ display的值为inline-bl......
 </div>
 <hr>
 
-<div class="post-preview">
-
-    <a href="/jtblogs/article/logj4-的使用/">
-        <h2 class="post-title">
-                                 
-            logj4 的使用
-        </h2>
-        <h3 class="post-subtitle">
-            
-        </h3>
-        <div class="post-content-preview">
-            log4js 中的概念
-
-level
-这个理解起来不难，就是日志的分级。日志有了分级，log4js 才能更好地为我们展示日志（不同级别的日志在控制台中采用不同的颜色，比如 error 通常是红色的），在生产可以有选择的落盘日志，比如避免一些属于.debug才用的敏感信息被泄露出来。
-log4js 的日志分为九个等级，各个级别的名字和权重如下：(由低到高)
-1234567891011&#123......
-        </div>
-    </a>
-    
-        <p class="post-meta" style="margin: 10px 0;">
-            Posted by 江涛 on
-            2019-12-29
-        </p>
-        <div class="tags">
-            
-              <a href="/jtblogs/tags/#nodejs" title="nodejs">nodejs</a>
-            
-        </div>
-    
-
-</div>
-<hr>
-
 
 
 <!-- Pager -->
@@ -462,6 +573,10 @@ log4js 的日志分为九个等级，各个级别的名字和权重如下：(由
             <a href="/jtblogs/">&larr; Newer Posts</a>
         </li>
     
+    
+        <li class="next">
+            <a href="/jtblogs/page/3/">Older Posts &rarr;</a>
+        </li>
     
 </ul>
 
@@ -497,7 +612,7 @@ log4js 的日志分为九个等级，各个级别的名字和权重如下：(由
             
         
             
-            <a href="/jtblogs/tags/#js" title="js" rel="3">js</a>
+            <a href="/jtblogs/tags/#js" title="js" rel="6">js</a>
             
         
             
@@ -506,6 +621,10 @@ log4js 的日志分为九个等级，各个级别的名字和权重如下：(由
         
             
             <a href="/jtblogs/tags/#webpack" title="webpack" rel="3">webpack</a>
+            
+        
+            
+            <a href="/jtblogs/tags/#CSS" title="CSS" rel="1">CSS</a>
             
         
             
@@ -569,23 +688,23 @@ log4js 的日志分为九个等级，各个级别的名字和权重如下：(由
     <ul>
       
         <li>
+          <a href="/jtblogs/article/ioc4之小总结/">ioc4之小总结</a>
+        </li>
+      
+        <li>
+          <a href="/jtblogs/article/ioc3之inversify-binding-decorators/">ioc3之inversify-binding-decorators</a>
+        </li>
+      
+        <li>
+          <a href="/jtblogs/article/ioc2之inversify/">ioc之inversify</a>
+        </li>
+      
+        <li>
+          <a href="/jtblogs/article/ioc1之Reflect-Metadata/">ioc1之Reflect  Metadata</a>
+        </li>
+      
+        <li>
           <a href="/jtblogs/article/nginx-gzip-压缩js配置/">nginx gzip 压缩js配置</a>
-        </li>
-      
-        <li>
-          <a href="/jtblogs/article/Grid-网格布局/">Grid 网格布局</a>
-        </li>
-      
-        <li>
-          <a href="/jtblogs/article/react-的生命周期/">react 的生命周期</a>
-        </li>
-      
-        <li>
-          <a href="/jtblogs/article/react-中的api/">react 中的api</a>
-        </li>
-      
-        <li>
-          <a href="/jtblogs/article/Webpack中的hash值/">Webpack中的hash值</a>
         </li>
       
     </ul>
@@ -606,7 +725,7 @@ log4js 的日志分为九个等级，各个级别的名字和权重如下：(由
         
     <h5>ARCHIVES</h5>
     <div class="widget">
-      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/jtblogs/archives/2020/01/">January 2020</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/jtblogs/archives/2019/12/">December 2019</a><span class="archive-list-count">15</span></li></ul>
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/jtblogs/archives/2020/01/">January 2020</a><span class="archive-list-count">6</span></li><li class="archive-list-item"><a class="archive-list-link" href="/jtblogs/archives/2019/12/">December 2019</a><span class="archive-list-count">15</span></li></ul>
     </div>
 
         <hr>
