@@ -212,7 +212,32 @@
                 col-md-10 col-md-offset-1
                 post-container">
 
-                
+                <h1><span id="reflect-metadat">Reflect Metadat</span></h1>
+<p>元编程，借助decorators装饰器在运行时动态修改接口的数据利用Reflect(元编程)给属性注入一些装饰器描述的数据和方法作为注入的基础铺垫</p>
+<h1><span id="inversify">inversify</span></h1>
+<p>基于 Reflect Metadata 反射 + 装饰器实现了注入依赖的接口</p>
+<ul>
+<li>
+<p>@injectable 注入</p>
+</li>
+<li>
+<p>@inject 依赖翻转 = 反射实例 获取到注入的实例</p>
+</li>
+<li>
+<p>Container 容器隔离作用域，通过的容器的操作可以获取相关的注入实例</p>
+</li>
+<li>
+<p>Container.bind 对注入元素一一bind 之后容器才能使用相关的元素</p>
+</li>
+</ul>
+<h1><span id="inversify-binding-decorators">inversify-binding-decorators</span></h1>
+<p>对 inversify 进行跟高级的使用的api 封装</p>
+<ul>
+<li>@provide(实例id,force) 这个和 @injectable 差不多相等，区别在于 injectable 不能多次注入，而provide可以多次注入相同的实例，</li>
+<li>@fluentProvide(实例,别名),这个职称链式调用连续执行注入</li>
+<li>buildProviderModule 对容器进行 bind 操作,对打上@provide和@fluentProvide的装饰器对象一次性灌入到容器内，不需要–执行Container.bind操作</li>
+</ul>
+
                 
 
                 <hr>
@@ -277,7 +302,7 @@
         <div id="toc" class="toc-article">
         <strong class="toc-title">Contents</strong>
         
-          <ol class="nav">none</ol>
+          <ol class="toc-nav"><li class="toc-nav-item toc-nav-level-1"><a class="toc-nav-link" href="#null"><span class="toc-nav-number">1.</span> <span class="toc-nav-text">Reflect Metadat</span></a></li><li class="toc-nav-item toc-nav-level-1"><a class="toc-nav-link" href="#null"><span class="toc-nav-number">2.</span> <span class="toc-nav-text">inversify</span></a></li><li class="toc-nav-item toc-nav-level-1"><a class="toc-nav-link" href="#null"><span class="toc-nav-number">3.</span> <span class="toc-nav-text">inversify-binding-decorators</span></a></li></ol>
         
         </div>
       </aside>
