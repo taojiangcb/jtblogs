@@ -1,5 +1,5 @@
 ---
-title: ioc之inversify
+title: ioc2之inversify
 catalog: true
 tags:
   - js
