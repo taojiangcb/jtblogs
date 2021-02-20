@@ -14,11 +14,11 @@
     <script async defer src="https://buttons.github.io/buttons.js"></script>
     <title>
         
-          江涛 | Blog
+          InstanceOf 的实现 - 江涛 | Blog
         
     </title>
 
-    <link rel="canonical" href="https://taojiangcb.github.io/jtblogs/jtblogs/404.html">
+    <link rel="canonical" href="https://taojiangcb.github.io/jtblogs/jtblogs/article/InstanceOf-的实现/">
 
     <!-- Bootstrap Core CSS -->
     <link rel="stylesheet" href="/jtblogs/css/bootstrap.min.css">
@@ -71,8 +71,8 @@
 <style type="text/css">
     header.intro-header{
         
-            background-image: url('/jtblogs/img/header_img/404.png')
-            /*page*/
+            background-image: url('/jtblogs/img/article_header/article_bg.jpg')
+            /*post*/
         
     }
     
@@ -85,10 +85,18 @@
             <div class="row">
                 <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
                 
-                    <div class="site-heading">
-                        <h1>江涛</h1>
-                        <!--<hr class="small">-->
-                        <span class="subheading">你来到了没有知识的荒原</span>
+                    <div class="post-heading">
+                        <div class="tags">
+                            
+                              <a class="tag" href="/jtblogs/tags/#js" title="js">js</a>
+                            
+                        </div>
+                        <h1>InstanceOf 的实现</h1>
+                        <h2 class="subheading"></h2>
+                        <span class="meta">
+                            Posted by 江涛 on
+                            2021-02-20
+                        </span>
                     </div>
                 
 
@@ -191,24 +199,189 @@
 
 
     <!-- Main Content -->
-    
-<!-- Page Header -->
-<header class="intro-header" style="background-image: url('/jtblogs/img/header_img/404.png')">
+    <!-- Modify by Yu-Hsuan Yen -->
+
+<!-- Post Content -->
+<article>
     <div class="container">
         <div class="row">
-            <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1 ">
-                <div class="site-heading">
-                    <h1>404</h1>
-                    <!--<hr class="small">-->
-                    <span class="subheading">你来到了没有知识的荒原</span>
-                </div>
+
+            <!-- Post Container -->
+            <div class="
+                col-lg-8 col-lg-offset-2
+                col-md-10 col-md-offset-1
+                post-container">
+
+                <h1><span id="instanceof-的实现">Instanceof 的实现</span></h1>
+<p>其实就是比较实例原型是否是对象原型，要注意的是基础类型是不需要比较的。</p>
+<p>基础类型:[‘string’, ‘number’, ‘boolean’, ‘undefine’, ‘symbol’];</p>
+<p>注意的是 <strong>proto</strong> 和 prototype 的关系</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">const instance_of = (L, R) =&gt; &#123;</span><br><span class="line">  const baseTypes = [&apos;string&apos;, &apos;number&apos;, &apos;boolean&apos;, &apos;undefine&apos;, &apos;symbol&apos;];</span><br><span class="line">  if (baseTypes.includes(typeof L)) return false;</span><br><span class="line"></span><br><span class="line">  const RPrototype = R.prototype;   // 对象的原型</span><br><span class="line">  L = L.__proto__;                  // 示例化的原型 </span><br><span class="line"></span><br><span class="line">  while (true) &#123;</span><br><span class="line">    if (L === null) return false;</span><br><span class="line">    if (L === RPrototype) return true;</span><br><span class="line">    L = L.__proto__;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3><span id="原型链关系图">原型链关系图</span></h3>
+<p><img src="./InstanceOf-%E7%9A%84%E5%AE%9E%E7%8E%B0/10231B69-B050-4143-B3AC-EDFF2479E399.png" alt="image"></p>
+
+                
+
+                <hr>
+                <!-- Pager -->
+                <ul class="pager">
+                    
+                    
+                        <li class="next">
+                            <a href="/jtblogs/article/Html-的生命周期/" data-toggle="tooltip" data-placement="top" title="Html 的生命周期">Next Post &rarr;</a>
+                        </li>
+                    
+                </ul>
+
+                <br>
+
+                <!--打赏-->
+                
+                <!--打赏-->
+
+                <br>
+                <!--分享-->
+                
+                    <div class="social-share"  data-wechat-qrcode-helper="" align="center"></div>
+                    <!--  css & js -->
+                    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/social-share.js/1.0.16/css/share.min.css">
+                    <script src="https://cdnjs.cloudflare.com/ajax/libs/social-share.js/1.0.16/js/social-share.min.js"></script>
+                
+                <!--分享-->
+                <br>                       
+                
+                <!-- require APlayer -->
+                
+
+                <!-- duoshuo Share start -->
+                
+                <!-- 多说 Share end-->
+
+                <!-- 多说评论框 start -->
+                
+                <!-- 多说评论框 end -->
+
+                <!-- disqus comment start -->
+                
+                <!-- disqus comment end -->
+
+                
+
+            </div>
+            
+            <!-- Tabe of Content -->
+            <!-- Table of Contents -->
+
+  
+    <style>
+      span.toc-nav-number{
+        display: none
+      }
+    </style>
+  
+    
+      <aside id="sidebar">
+        <div id="toc" class="toc-article">
+        <strong class="toc-title">Contents</strong>
+        
+          <ol class="toc-nav"><li class="toc-nav-item toc-nav-level-1"><a class="toc-nav-link" href="#null"><span class="toc-nav-number">1.</span> <span class="toc-nav-text">Instanceof 的实现</span></a><ol class="toc-nav-child"><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#null"><span class="toc-nav-number">1.0.1.</span> <span class="toc-nav-text">原型链关系图</span></a></li></ol></li></ol></li></ol>
+        
+        </div>
+      </aside>
+    
+
+                
+            <!-- Sidebar Container -->
+            <div class="
+                col-lg-8 col-lg-offset-2
+                col-md-10 col-md-offset-1
+                sidebar-container">
+
+                <!-- Featured Tags -->
+                
+                <section>
+                    <!-- no hr -->
+                    <h5><a href="/jtblogs/tags/">FEATURED TAGS</a></h5>
+                    <div class="tags">
+                       
+                          <a class="tag" href="/jtblogs/tags/#js" title="js">js</a>
+                        
+                    </div>
+                </section>
+                
+
+                <!-- Friends Blog -->
+                
+                <hr>
+                <h5>FRIENDS</h5>
+                <ul class="list-inline">
+
+                    
+                </ul>
+                
             </div>
         </div>
     </div>
-</header>
+</article>
 
+
+
+
+
+
+
+
+<!-- async load function -->
 <script>
-    document.body.classList.add('page-fullscreen');
+    function async(u, c) {
+      var d = document, t = 'script',
+          o = d.createElement(t),
+          s = d.getElementsByTagName(t)[0];
+      o.src = u;
+      if (c) { o.addEventListener('load', function (e) { c(null, e); }, false); }
+      s.parentNode.insertBefore(o, s);
+    }
+</script>
+<!-- anchor-js, Doc:http://bryanbraun.github.io/anchorjs/ -->
+<script>
+    async("https://cdn.bootcss.com/anchor-js/1.1.1/anchor.min.js",function(){
+        anchors.options = {
+          visible: 'hover',
+          placement: 'left',
+          icon: 'ℬ'
+        };
+        anchors.add().remove('.intro-header h1').remove('.subheading').remove('.sidebar-container h5');
+    })
+</script>
+<style>
+    /* place left on bigger screen */
+    @media all and (min-width: 800px) {
+        .anchorjs-link{
+            position: absolute;
+            left: -0.75em;
+            font-size: 1.1em;
+            margin-top : -0.1em;
+        }
+    }
+</style>
+
+
+<!-- chrome Firefox 中文锚点定位失效-->
+<script src="https://cdn.bootcss.com/jquery/3.3.1/jquery.js"></script>
+<!-- smooth scroll behavior polyfill  -->
+<script type="text/javascript" src="/js/smoothscroll.js"></script>
+<script>
+        $('#toc').on('click','a',function(a){
+            // var isChrome = window.navigator.userAgent.indexOf("Chrome") !== -1;
+            // console.log(window.navigator.userAgent,isChrome)
+                // if(isChrome) {
+                    // console.log(a.currentTarget.outerHTML);
+                    // console.log($(a.currentTarget).attr("href"));
+                    //跳转到指定锚点
+                    // document.getElementById(a.target.innerText.toLowerCase()).scrollIntoView(true);
+                    document.getElementById($(a.currentTarget).attr("href").replace("#","")).scrollIntoView({behavior: 'smooth' });
+                // }
+        })  
 </script>
 
 
