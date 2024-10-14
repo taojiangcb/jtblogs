@@ -7,7 +7,7 @@
 $ hexo new "post title with whitespace"
 
 ```
---| --
+--|--
 参数|描述
 -p, --path|	自定义新文章的路径
 -r, --replace|	如果存在同名文章，将其替换
