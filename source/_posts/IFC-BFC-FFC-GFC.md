@@ -13,7 +13,7 @@ BFC（Block Formatting Context）格式化上下文，是Web页面中盒模型�
 ### BFC 应用
 - 防止margin重叠
 - 清除内部浮动
-- 自适应两（多）栏布局
+- 自适应两（多）栏布局 
 - 防止字体环绕
 
 ### 触发BFC条件
