@@ -1,3 +1,6 @@
+# node 版本
+v13.14.0
+
 # 发布文章
 - hexo new [layout] title  新建一篇文章
 
