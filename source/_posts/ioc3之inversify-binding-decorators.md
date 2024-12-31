@@ -3,7 +3,7 @@ title: ioc3之inversify-binding-decorators
 catalog: true
 tags:
   - js
-date: 2020-01-20 11:56:08
+date: 2020-02-01 11:56:08
 subtitle:
 header-img:
 ---

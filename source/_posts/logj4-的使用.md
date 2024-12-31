@@ -1,7 +1,7 @@
 ---
 title: logj4 的使用
 catalog: true
-date: 2019-12-29 22:58:21
+date: 2022-01-29 22:58:21
 subtitle:
 header-img:
 tags:
