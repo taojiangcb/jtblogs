@@ -2,13 +2,6 @@
 <urlset xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:image="http://www.google.com/schemas/sitemap-image/1.1" xsi:schemaLocation="http://www.sitemaps.org/schemas/sitemap/0.9 http://www.sitemaps.org/schemas/sitemap/0.9/sitemap.xsd" xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
 
     <url>
-        <loc>https://taojiangcb.github.io/jtblogs/tags/webpack/</loc>
-        <lastmod>2024-10-14T14:46:07.642Z</lastmod>
-        <changefreq>weekly</changefreq>
-        <priority>0.2</priority>
-    </url>
-
-    <url>
         <loc>https://taojiangcb.github.io/jtblogs/tags/nginx/</loc>
         <lastmod>2024-10-14T14:46:07.646Z</lastmod>
         <changefreq>weekly</changefreq>
@@ -46,6 +39,13 @@
     <url>
         <loc>https://taojiangcb.github.io/jtblogs/tags/react/</loc>
         <lastmod>2024-12-31T16:52:32.997Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.2</priority>
+    </url>
+
+    <url>
+        <loc>https://taojiangcb.github.io/jtblogs/tags/webpack/</loc>
+        <lastmod>2025-01-02T12:03:22.560Z</lastmod>
         <changefreq>weekly</changefreq>
         <priority>0.2</priority>
     </url>
