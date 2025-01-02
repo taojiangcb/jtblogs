@@ -23,6 +23,7 @@ fixed: false
 Email: jiangtao_qepyou@163.com
 微信:45052736
 
-我就 Jo 你可以在 Hello Talk 平台上找到我，也许我们可以成为相互学习的语伴，我目前是 A2 级别，欢迎找我来聊。
+### 学英语
+我是 Jo 你可以在 Hello Talk 平台上找到我，也许我们可以成为相互学习的语伴，我目前是 A2 级别，欢迎来找我来聊。
 I'm Jo. You can find me on the Hello Talk platform. Perhaps we can become language partners for mutual learning. I'm currently at A2 level. Welcome to chat with me.
 
