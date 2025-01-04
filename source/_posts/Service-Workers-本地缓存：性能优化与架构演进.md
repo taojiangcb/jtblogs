@@ -138,6 +138,86 @@ registerRoute(
 
 在这段代码中，通过 `registerRoute` 函数，轻松指定了针对 HTML、CSS、JavaScript 文件以及常见图片格式等资源应用 `CacheFirst` 策略，即优先从缓存中获取资源，如果缓存不存在才去发起网络请求，并且设置了缓存的有效期为 7 天，这样就清晰且高效地实现了缓存配置，无需像之前使用 Service Workers 时那样编写大量繁琐的底层代码。
 
+
+#### 缓存优先 (Cache First)
+缓存优先策略是指优先从缓存中读取资源。如果缓存中有对应的资源，就直接返回缓存中的资源；如果缓存中没有，则从网络请求该资源，并将请求到的资源存储到缓存中以备后用。
+
+##### 优点：
+- 提高资源加载速度，减少网络请求次数。
+- 对于不经常变化的资源效果很好。
+
+##### 缺点：
+- 如果缓存的资源过期或者不再有效，用户可能会看到过期的内容。
+
+##### 示例代码：
+```javascript
+import { registerRoute } from 'workbox-routing';
+import { CacheFirst } from 'workbox-strategies';
+
+registerRoute(
+  ({ request }) => request.destination === 'image', // 例如应用于图片资源
+  new CacheFirst({
+    cacheName: 'images-cache',
+    plugins: [
+      // 配置缓存策略的插件，例如过期时间、最大条目数等
+    ],
+  })
+);
+```
+
+#### 网络优先 (Network First)
+网络优先策略是指优先从网络请求资源。如果网络请求成功，就使用请求到的资源，并将其存储到缓存中；如果网络请求失败（例如离线状态），则回退到缓存中读取资源。
+
+##### 优点：
+- 确保用户始终看到的是最新的内容。
+
+##### 缺点：
+- 如果网络状况不好或请求失败，可能会导致加载延迟。
+
+##### 示例代码：
+```javascript
+import { registerRoute } from 'workbox-routing';
+import { NetworkFirst } from 'workbox-strategies';
+
+registerRoute(
+  ({ request }) => request.destination === 'document', // 例如应用于HTML文档
+  new NetworkFirst({
+    cacheName: 'html-cache',
+    plugins: [
+      // 配置缓存策略的插件，例如过期时间、最大条目数等
+    ],
+  })
+);
+```
+
+#### 后台更新缓存 (Stale-While-Revalidate)
+后台更新缓存策略是指优先使用缓存中的资源，同时在后台发送网络请求更新缓存。这样用户可以快速获取到缓存的资源，而缓存会在后台异步更新，以便下次请求时可以使用最新的资源。
+
+##### 优点：
+- 提供快速响应，同时确保缓存的资源尽可能是最新的。
+- 非常适合需要频繁更新但又希望快速响应的资源。
+
+##### 缺点：
+- 用户第一次访问时可能会看到过期的内容，但下次访问时就会看到更新后的内容。
+
+##### 示例代码：
+```javascript
+import { registerRoute } from 'workbox-routing';
+import { StaleWhileRevalidate } from 'workbox-strategies';
+
+registerRoute(
+  ({ request }) => request.destination === 'script', // 例如应用于JavaScript文件
+  new StaleWhileRevalidate({
+    cacheName: 'scripts-cache',
+    plugins: [
+      // 配置缓存策略的插件，例如过期时间、最大条目数等
+    ],
+  })
+);
+```
+
+以上就是这三种常见的缓存策略的详细解释和示例代码。希望对你有所帮助！如果还有其他问题，欢迎继续提问。
+
 ### （二）缓存更新与管理的改进
 Workbox 提供了更方便的缓存更新机制，例如可以通过配置缓存的过期时间、设置缓存的最大数量等方式，自动管理缓存的生命周期。同时，它还支持后台同步更新缓存，允许在后台默默完成缓存资源的更新，不影响用户正在进行的页面操作，使得缓存更新变得更加智能和高效。
 
