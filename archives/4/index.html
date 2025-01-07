@@ -14,11 +14,11 @@
     <script async defer src="https://buttons.github.io/buttons.js"></script>
     <title>
         
-          Html 的生命周期 - 江涛 | Blog
+          江涛 | Blog
         
     </title>
 
-    <link rel="canonical" href="https://taojiangcb.github.io/jtblogs/jtblogs/article/Html-的生命周期/">
+    <link rel="canonical" href="https://taojiangcb.github.io/jtblogs/jtblogs/archives/4/">
 
     <!-- Bootstrap Core CSS -->
     <link rel="stylesheet" href="/jtblogs/css/bootstrap.min.css">
@@ -71,8 +71,8 @@
 <style type="text/css">
     header.intro-header{
         
-            background-image: url('/jtblogs/img/article_header/article_bg.jpg')
-            /*post*/
+            background-image: url('/jtblogs/img/header_img/home.jpg') 
+            /*config*/
         
     }
     
@@ -85,18 +85,10 @@
             <div class="row">
                 <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
                 
-                    <div class="post-heading">
-                        <div class="tags">
-                            
-                              <a class="tag" href="/jtblogs/tags/#js" title="js">js</a>
-                            
-                        </div>
-                        <h1>Html 的生命周期</h1>
-                        <h2 class="subheading"></h2>
-                        <span class="meta">
-                            Posted by 江涛 on
-                            2021-09-05
-                        </span>
+                    <div class="site-heading">
+                        <h1>江涛</h1>
+                        <!--<hr class="small">-->
+                        <span class="subheading">个人博客</span>
                     </div>
                 
 
@@ -199,223 +191,298 @@
 
 
     <!-- Main Content -->
-    <!-- Modify by Yu-Hsuan Yen -->
+    <!-- Main Content -->
+<div class="container">
+    <div class="row">
+        
 
-<!-- Post Content -->
-<article>
-    <div class="container">
-        <div class="row">
-
-            <!-- Post Container -->
+<!-- USE SIDEBAR -->
+    <!-- Post Container -->
             <div class="
-                col-lg-8 col-lg-offset-2
-                col-md-10 col-md-offset-1
-                post-container">
+                col-lg-8 col-lg-offset-1
+                col-md-8 col-md-offset-1
+                col-sm-12
+                col-xs-12
+                post-container
+            ">
+            
+                <!-- Main Content -->
 
-                <h1><span id="globaleventhandlers">GlobalEventHandlers</span></h1>
-<p>其实就是浏览器开放处理的全局 api 事件 经过业务整理构成了所谓的生命周期<br>
-<a href="https://developer.mozilla.org/zh-CN/docs/Web/API/GlobalEventHandlers" target="_blank" rel="noopener">https://developer.mozilla.org/zh-CN/docs/Web/API/GlobalEventHandlers</a></p>
-<h1><span id="页面的生命周期">页面的生命周期</span></h1>
-<ul>
-<li>DOMContentLoaded — 浏览器已经完全加载了HTML，DOM树已经构建完毕，但是像是 <img> 和样式表等外部资源可能并没有下载完毕。</li>
-<li>load — 浏览器已经加载了所有的资源（图像，样式表等）。</li>
-<li>beforeunload/unload – 当用户离开页面的时候触发。</li>
-</ul>
-<p>JS 会阻碍 dom 的构建 css 会阻塞js 的执行 所以可以利用 async 和defer</p>
-<ul>
-<li>带有async的脚本是优先执行先加载完的脚本，他们在页面中的顺序并不影响他们执行的顺序。</li>
-<li>带有defer的脚本按照他们在页面中出现的顺序依次执行。</li>
-</ul>
-<p>DOMContentLoaded</p>
-<ul>
-<li>带有async的脚本也许会在页面没有完全下载完之前就加载，这种情况会在脚本很小或本缓存，并且页面很大的情况下发生。</li>
-<li>带有defer的脚本会在页面加载和解析完毕后执行，刚好在DOMContentLoaded之前执行。</li>
-</ul>
-<h1><span id="readystate">readyState</span></h1>
-<p>document.readyState属性给了我们加载的信息，有三个可能的值：</p>
-<ul>
-<li>loading 加载 - document仍在加载。</li>
-<li>interactive 互动 - 文档已经完成加载，文档已被解析，但是诸如图像，样式表和框架之类的子资源仍在加载。</li>
-<li>complete - 文档和所有子资源已完成加载。状态表示 load 事件即将被触发。</li>
-</ul>
-<p>有一些情况我们无法确定页面上是否已经加载完毕，比如一个带有async的外部脚本的加载和执行是异步的（注：执行并不是异步的-_-）。在不同的网络状况下，脚本有可能是在页面加载完毕后执行也有可能是在页面加载完毕前执行，我们无法确定。所以我们需要知道页面加载的状况。</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">function work() &#123; /*...*/ &#125;</span><br><span class="line">if (document.readyState == &apos;loading&apos;) &#123;</span><br><span class="line">  document.addEventListener(&apos;DOMContentLoaded&apos;, work);</span><br><span class="line">&#125; else &#123;</span><br><span class="line">  work();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>每当文档的加载状态改变的时候就有一个readystatechange事件被触发，所以我们可以打印所有的状态。</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">// current state</span><br><span class="line">console.log(document.readyState);</span><br><span class="line">// print state changes</span><br><span class="line">document.addEventListener(&apos;readystatechange&apos;, () =&gt; console.log(document.readyState));</span><br></pre></td></tr></table></figure>
-<h1><span id="总结">总结</span></h1>
-<ul>
-<li>在 DOMContentLoaded 之后我没就可以通过 js 访问 dom 元素</li>
-<li>使用 async 和 defer 异步加载执行可以优化 html 的渲染效率</li>
-<li>document.readState 是当前状态，可以使用 readystatechange 中追踪页面的变化状态</li>
+
+<div class="post-preview">
+
+    <a href="/jtblogs/article/看透matrix3/">
+        <h2 class="post-title">
+                                 
+            看透matrix3
+        </h2>
+        <h3 class="post-subtitle">
+            
+        </h3>
+        <div class="post-content-preview">
+            先看我之前的一个例子:http://47.100.202.222/splitball/
+可以看下工具调试，满屏的matrix3 跳动的热血沸腾的。
+123456789101112131415161718192021222324252627282930/**   a = 控制 X 的宽度*　　b = 控制 Y 的倾斜*　　c = 控制 X 的倾斜*　　d = 控制 Y 的高度*　　tx = 控......
+        </div>
+    </a>
+    
+        <p class="post-meta" style="margin: 10px 0;">
+            Posted by 江涛 on
+            2019-12-29
+        </p>
+        <div class="tags">
+            
+              <a href="/jtblogs/tags/#css" title="css">css</a>
+            
+        </div>
+    
+
+</div>
+<hr>
+
+<div class="post-preview">
+
+    <a href="/jtblogs/article/css专业素养/">
+        <h2 class="post-title">
+                                 
+            css专业素养
+        </h2>
+        <h3 class="post-subtitle">
+            
+        </h3>
+        <div class="post-content-preview">
+            cascading style sheet
+层叠样式表
+1.引入css
+1234567891011121314151617181920212223&lt;html lang=&quot;en&quot;&gt;   &lt;head&gt;       &lt;meta charset=&quot;UTF-8&quot;&gt;       &lt;title&gt;Document&lt;......
+        </div>
+    </a>
+    
+        <p class="post-meta" style="margin: 10px 0;">
+            Posted by 江涛 on
+            2019-12-29
+        </p>
+        <div class="tags">
+            
+              <a href="/jtblogs/tags/#css" title="css">css</a>
+            
+        </div>
+    
+
+</div>
+<hr>
+
+<div class="post-preview">
+
+    <a href="/jtblogs/article/IFC-BFC-FFC-GFC/">
+        <h2 class="post-title">
+                                 
+            IFC BFC FFC GFC
+        </h2>
+        <h3 class="post-subtitle">
+            
+        </h3>
+        <div class="post-content-preview">
+            BFC
+BFC（Block Formatting Context）格式化上下文，是Web页面中盒模型布局的CSS渲染模式，指一个独立的渲染区域或者说是一个隔离的独立容器。
+BFC 应用
+
+防止margin重叠
+清除内部浮动
+自适应两（多）栏布局
+防止字体环绕
+
+触发BFC条件
+
+根元素
+float的值不为none
+overflow的值不为visible
+display的值为inline-bl......
+        </div>
+    </a>
+    
+        <p class="post-meta" style="margin: 10px 0;">
+            Posted by 江涛 on
+            2019-12-29
+        </p>
+        <div class="tags">
+            
+              <a href="/jtblogs/tags/#css" title="css">css</a>
+            
+        </div>
+    
+
+</div>
+<hr>
+
+
+
+<!-- Pager -->
+
+<ul class="pager">
+    
+        <li class="previous">
+            <a href="/jtblogs/archives/3/">&larr; Newer Posts</a>
+        </li>
+    
+    
 </ul>
 
-                
 
-                <hr>
-                <!-- Pager -->
-                <ul class="pager">
-                    
-                        <li class="previous">
-                            <a href="/jtblogs/article/logj4-的使用/" data-toggle="tooltip" data-placement="top" title="logj4 的使用">&larr; Previous Post</a>
-                        </li>
-                    
-                    
-                        <li class="next">
-                            <a href="/jtblogs/article/InstanceOf-的实现/" data-toggle="tooltip" data-placement="top" title="InstanceOf 的实现">Next Post &rarr;</a>
-                        </li>
-                    
-                </ul>
 
                 <br>
 
-                <!--打赏-->
-                
-                <!--打赏-->
-
-                <br>
-                <!--分享-->
-                
-                    <div class="social-share"  data-wechat-qrcode-helper="" align="center"></div>
-                    <!--  css & js -->
-                    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/social-share.js/1.0.16/css/share.min.css">
-                    <script src="https://cdnjs.cloudflare.com/ajax/libs/social-share.js/1.0.16/js/social-share.min.js"></script>
-                
-                <!--分享-->
-                <br>                       
-                
                 <!-- require APlayer -->
                 
 
-                <!-- duoshuo Share start -->
+                <!-- 如果开启评论功能 -->
                 
-                <!-- 多说 Share end-->
-
-                <!-- 多说评论框 start -->
-                
-                <!-- 多说评论框 end -->
-
-                <!-- disqus comment start -->
-                
-                <!-- disqus comment end -->
-
-                
-
             </div>
+
+          <!-- Sidebar Container -->
+<div class="
+    col-lg-3 col-lg-offset-0
+    col-md-3 col-md-offset-0
+    col-sm-12
+    col-xs-12
+    sidebar-container
+">
+    
+        <!-- Featured Tags -->
+
+<section>
+    <!-- no hr -->
+    <h5><a href="/jtblogs/tags/">FEATURED TAGS</a></h5>
+    <div class="tags">
+        
             
-            <!-- Tabe of Content -->
-            <!-- Table of Contents -->
-
-  
-    <style>
-      span.toc-nav-number{
-        display: none
-      }
-    </style>
-  
-    
-      <aside id="sidebar">
-        <div id="toc" class="toc-article">
-        <strong class="toc-title">Contents</strong>
+            <a href="/jtblogs/tags/#js" title="js" rel="9">js</a>
+            
         
-          <ol class="toc-nav"><li class="toc-nav-item toc-nav-level-1"><a class="toc-nav-link" href="#null"><span class="toc-nav-number">1.</span> <span class="toc-nav-text">GlobalEventHandlers</span></a></li><li class="toc-nav-item toc-nav-level-1"><a class="toc-nav-link" href="#null"><span class="toc-nav-number">2.</span> <span class="toc-nav-text">页面的生命周期</span></a></li><li class="toc-nav-item toc-nav-level-1"><a class="toc-nav-link" href="#null"><span class="toc-nav-number">3.</span> <span class="toc-nav-text">readyState</span></a></li><li class="toc-nav-item toc-nav-level-1"><a class="toc-nav-link" href="#null"><span class="toc-nav-number">4.</span> <span class="toc-nav-text">总结</span></a></li></ol>
+            
+            <a href="/jtblogs/tags/#css" title="css" rel="5">css</a>
+            
         
-        </div>
-      </aside>
-    
-
-                
-            <!-- Sidebar Container -->
-            <div class="
-                col-lg-8 col-lg-offset-2
-                col-md-10 col-md-offset-1
-                sidebar-container">
-
-                <!-- Featured Tags -->
-                
-                <section>
-                    <!-- no hr -->
-                    <h5><a href="/jtblogs/tags/">FEATURED TAGS</a></h5>
-                    <div class="tags">
-                       
-                          <a class="tag" href="/jtblogs/tags/#js" title="js">js</a>
-                        
-                    </div>
-                </section>
-                
-
-                <!-- Friends Blog -->
-                
-                <hr>
-                <h5>FRIENDS</h5>
-                <ul class="list-inline">
-
-                    
-                </ul>
-                
-            </div>
-        </div>
+            
+            <a href="/jtblogs/tags/#nodejs" title="nodejs" rel="9">nodejs</a>
+            
+        
+            
+            <a href="/jtblogs/tags/#webpack" title="webpack" rel="4">webpack</a>
+            
+        
+            
+            <a href="/jtblogs/tags/#nginx" title="nginx" rel="1">nginx</a>
+            
+        
+            
+            <a href="/jtblogs/tags/#react" title="react" rel="4">react</a>
+            
+        
+            
+            <a href="/jtblogs/tags/#浏览器" title="浏览器" rel="1">浏览器</a>
+            
+        
     </div>
-</article>
+</section>
 
+        <hr>
+    
+        <!-- Short About -->
+<section class="visible-md visible-lg">
+    <h5><a href="/jtblogs/about/">ABOUT ME</a></h5>
+    <div class="short-about">
 
+        
+            <img id = "avatar_pic" src="/jtblogs/img/avatar/ironman.png" />
+        
 
+        
+            <p>Stay hungry,Stay foolish</p>
+        
 
+        <!-- SNS Link -->
+        <ul class="list-inline">
+            
+            
+            
 
+            
 
+            
 
+            
+                <li>
+                    <a target="_blank"  href="https://github.com/taojiangcb">
+                        <span class="fa-stack fa-lg">
+                            <i class="fa fa-circle fa-stack-2x"></i>
+                            <i class="fa fa-github fa-stack-1x fa-inverse"></i>
+                        </span>
+                    </a>
+                </li>
+            
+            
+            
+            
+        </ul>
+    </div>
+</section>
 
-<!-- async load function -->
-<script>
-    function async(u, c) {
-      var d = document, t = 'script',
-          o = d.createElement(t),
-          s = d.getElementsByTagName(t)[0];
-      o.src = u;
-      if (c) { o.addEventListener('load', function (e) { c(null, e); }, false); }
-      s.parentNode.insertBefore(o, s);
-    }
-</script>
-<!-- anchor-js, Doc:http://bryanbraun.github.io/anchorjs/ -->
-<script>
-    async("https://cdn.bootcss.com/anchor-js/1.1.1/anchor.min.js",function(){
-        anchors.options = {
-          visible: 'hover',
-          placement: 'left',
-          icon: 'ℬ'
-        };
-        anchors.add().remove('.intro-header h1').remove('.subheading').remove('.sidebar-container h5');
-    })
-</script>
-<style>
-    /* place left on bigger screen */
-    @media all and (min-width: 800px) {
-        .anchorjs-link{
-            position: absolute;
-            left: -0.75em;
-            font-size: 1.1em;
-            margin-top : -0.1em;
-        }
-    }
-</style>
+        <hr>
+    
+        
+  <h5>RECENT POSTS</h3>
+  <div class="widget">
+    <ul>
+      
+        <li>
+          <a href="/jtblogs/article/提升-React-应用性能：结合使用-welldone-software-why-did-you-render-和-immer/">提升 React 应用性能：结合使用 @welldone-software/why-did-you-render 和 immer</a>
+        </li>
+      
+        <li>
+          <a href="/jtblogs/article/使用-GraphQL-和-AWS-AppSync-结合-Next-js-和-AWS-Lambda-构建现代全栈应用/">使用 GraphQL 和 AWS AppSync 结合 Next.js 和 AWS Lambda 构建现代全栈应用</a>
+        </li>
+      
+        <li>
+          <a href="/jtblogs/article/Service-Workers-本地缓存：性能优化与架构演进/">Service Workers 本地缓存：性能优化与架构演进</a>
+        </li>
+      
+        <li>
+          <a href="/jtblogs/article/CSS-技术演进之路：从基础到前沿的创新之旅/">CSS 技术演进之路：从基础到前沿的创新之旅</a>
+        </li>
+      
+        <li>
+          <a href="/jtblogs/article/探秘-Prepack-与-Webpack：从原理到融合发展/">探秘 Prepack 与 Webpack：从原理到融合发展</a>
+        </li>
+      
+    </ul>
+  </div>
 
+        <hr>
+    
+        <!-- Friends Blog -->
 
-<!-- chrome Firefox 中文锚点定位失效-->
-<script src="https://cdn.bootcss.com/jquery/3.3.1/jquery.js"></script>
-<!-- smooth scroll behavior polyfill  -->
-<script type="text/javascript" src="/js/smoothscroll.js"></script>
-<script>
-        $('#toc').on('click','a',function(a){
-            // var isChrome = window.navigator.userAgent.indexOf("Chrome") !== -1;
-            // console.log(window.navigator.userAgent,isChrome)
-                // if(isChrome) {
-                    // console.log(a.currentTarget.outerHTML);
-                    // console.log($(a.currentTarget).attr("href"));
-                    //跳转到指定锚点
-                    // document.getElementById(a.target.innerText.toLowerCase()).scrollIntoView(true);
-                    document.getElementById($(a.currentTarget).attr("href").replace("#","")).scrollIntoView({behavior: 'smooth' });
-                // }
-        })  
-</script>
+<h5>FRIENDS</h5>
+<ul class="list-inline">
+
+    
+</ul>
+
+        <hr>
+    
+        
+    <h5>ARCHIVES</h5>
+    <div class="widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/jtblogs/archives/2025/01/">January 2025</a><span class="archive-list-count">6</span></li><li class="archive-list-item"><a class="archive-list-link" href="/jtblogs/archives/2024/12/">December 2024</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/jtblogs/archives/2023/05/">May 2023</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/jtblogs/archives/2023/01/">January 2023</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/jtblogs/archives/2022/08/">August 2022</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/jtblogs/archives/2022/07/">July 2022</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/jtblogs/archives/2022/01/">January 2022</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/jtblogs/archives/2021/09/">September 2021</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/jtblogs/archives/2021/02/">February 2021</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/jtblogs/archives/2020/03/">March 2020</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/jtblogs/archives/2020/02/">February 2020</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/jtblogs/archives/2020/01/">January 2020</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/jtblogs/archives/2019/12/">December 2019</a><span class="archive-list-count">10</span></li></ul>
+    </div>
+
+        <hr>
+    
+</div>
+
+        
+    </div>
+</div>
 
 
     <!-- Footer -->
