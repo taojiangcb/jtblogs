@@ -2,57 +2,57 @@
 <urlset xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:image="http://www.google.com/schemas/sitemap-image/1.1" xsi:schemaLocation="http://www.sitemaps.org/schemas/sitemap/0.9 http://www.sitemaps.org/schemas/sitemap/0.9/sitemap.xsd" xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
 
     <url>
-        <loc>https://taojiangcb.github.io/jtblogs/tags/nginx/</loc>
-        <lastmod>2024-10-14T14:46:07.646Z</lastmod>
+        <loc>https://taojiangcb.github.io/jtblogs/tags/HTTP/</loc>
+        <lastmod>2025-01-08T07:58:03.062Z</lastmod>
         <changefreq>weekly</changefreq>
         <priority>0.2</priority>
     </url>
 
     <url>
-        <loc>https://taojiangcb.github.io/jtblogs/tags/%E6%B5%8F%E8%A7%88%E5%99%A8/</loc>
-        <lastmod>2024-12-25T15:22:29.630Z</lastmod>
+        <loc>https://taojiangcb.github.io/jtblogs/tags/nginx/</loc>
+        <lastmod>2025-01-08T07:58:03.071Z</lastmod>
         <changefreq>weekly</changefreq>
         <priority>0.2</priority>
     </url>
 
     <url>
         <loc>https://taojiangcb.github.io/jtblogs/tags/js/</loc>
-        <lastmod>2024-12-31T16:40:59.351Z</lastmod>
+        <lastmod>2025-01-08T07:58:03.075Z</lastmod>
         <changefreq>weekly</changefreq>
         <priority>0.2</priority>
     </url>
 
     <url>
         <loc>https://taojiangcb.github.io/jtblogs/tags/webpack/</loc>
-        <lastmod>2025-01-02T12:03:22.560Z</lastmod>
+        <lastmod>2025-01-08T07:58:03.077Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.2</priority>
+    </url>
+
+    <url>
+        <loc>https://taojiangcb.github.io/jtblogs/tags/%E6%B5%8F%E8%A7%88%E5%99%A8/</loc>
+        <lastmod>2025-01-08T07:58:03.085Z</lastmod>
         <changefreq>weekly</changefreq>
         <priority>0.2</priority>
     </url>
 
     <url>
         <loc>https://taojiangcb.github.io/jtblogs/tags/css/</loc>
-        <lastmod>2025-01-03T15:38:18.661Z</lastmod>
+        <lastmod>2025-01-08T07:58:03.122Z</lastmod>
         <changefreq>weekly</changefreq>
         <priority>0.2</priority>
     </url>
 
     <url>
         <loc>https://taojiangcb.github.io/jtblogs/tags/nodejs/</loc>
-        <lastmod>2025-01-07T13:39:54.812Z</lastmod>
+        <lastmod>2025-01-08T07:58:03.122Z</lastmod>
         <changefreq>weekly</changefreq>
         <priority>0.2</priority>
     </url>
 
     <url>
         <loc>https://taojiangcb.github.io/jtblogs/tags/react/</loc>
-        <lastmod>2025-01-07T13:52:03.897Z</lastmod>
-        <changefreq>weekly</changefreq>
-        <priority>0.2</priority>
-    </url>
-
-    <url>
-        <loc>https://taojiangcb.github.io/jtblogs/tags/HTTP/</loc>
-        <lastmod>2025-01-08T07:27:16.316Z</lastmod>
+        <lastmod>2025-01-08T12:19:31.805Z</lastmod>
         <changefreq>weekly</changefreq>
         <priority>0.2</priority>
     </url>
