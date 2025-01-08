@@ -8,10 +8,6 @@ subtitle:
 header-img:
 ---
 
-好的，我们将进一步润色文章，使其更加吸引读者，并且标题更具吸引力。
-
----
-
 ## 提升 React 应用性能：结合使用 `@welldone-software/why-did-you-render` 和 `immer`
 
 在现代 Web 开发中，性能优化是提升用户体验的关键因素之一。对于使用 React 的开发者来说，识别和解决不必要的组件重新渲染是优化性能的重要一步。今天，我们将介绍两个强大的工具，`@welldone-software/why-did-you-render` 和 `immer`，它们可以帮助我们识别并解决这个问题，从而大幅提升应用性能。
@@ -38,7 +34,7 @@ yarn add @welldone-software/why-did-you-render immer --dev
 
 在项目中创建一个新的文件 `wdyr.tsx` 并添加以下代码来启用 `@welldone-software/why-did-you-render`：
 
-```typescript
+```tsx
 import React from 'react';
 
 // 仅在开发环境中启用
@@ -57,7 +53,7 @@ if (process.env.NODE_ENV === 'development') {
 
 在项目入口文件（例如 `src/index.tsx`）中引入 `wdyr.tsx` 文件：
 
-```typescript
+```tsx
 import './wdyr'; // 必须在 React 之前引入
 import React from 'react';
 import ReactDOM from 'react-dom';
@@ -70,7 +66,7 @@ ReactDOM.render(<App />, document.getElementById('root'));
 
 我们将定义一个通用的 `useImmer` hook 来简化状态管理：
 
-```typescript
+```tsx
 import { produce, Draft, freeze } from 'immer';
 import { useCallback, useState } from 'react';
 
@@ -108,7 +104,7 @@ export default useImmer;
 
 以下是一个未优化的购物车应用：
 
-```typescript
+```tsx
 import React, { useState } from 'react';
 
 // 购物车项目组件
@@ -153,7 +149,7 @@ export default Cart;
 
 现在，我们使用 `immer` 和 `useImmer` hook 来优化这个应用：
 
-```typescript
+```tsx
 import React from 'react';
 import useImmer from './useImmer'; // 引入自定义的 useImmer hook
 

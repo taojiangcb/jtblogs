@@ -234,3 +234,6 @@ deploy:
   repository: https://github.com/taojiangcb/jtblogs
   branch: gh-pages
   message: Update CNAME
+  
+typescript:
+  extension: ts, tsx
