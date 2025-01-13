@@ -237,3 +237,5 @@ deploy:
   
 typescript:
   extension: ts, tsx
+
+favicon: /favicon.ico
