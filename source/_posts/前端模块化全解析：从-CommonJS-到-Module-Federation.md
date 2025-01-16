@@ -2,7 +2,7 @@
 title: 前端模块化全解析：从 CommonJS 到 Module Federation
 catalog: true
 tags:
-  - CSS
+  - webpack
 date: 2025-01-13 12:20:01
 subtitle:
 header-img:
