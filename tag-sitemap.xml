@@ -44,13 +44,6 @@
     </url>
 
     <url>
-        <loc>https://taojiangcb.github.io/jtblogs/tags/nodejs/</loc>
-        <lastmod>2025-01-09T15:30:23.126Z</lastmod>
-        <changefreq>weekly</changefreq>
-        <priority>0.2</priority>
-    </url>
-
-    <url>
         <loc>https://taojiangcb.github.io/jtblogs/tags/webpack/</loc>
         <lastmod>2025-01-13T04:55:02.365Z</lastmod>
         <changefreq>weekly</changefreq>
@@ -58,8 +51,8 @@
     </url>
 
     <url>
-        <loc>https://taojiangcb.github.io/jtblogs/tags/node/</loc>
-        <lastmod>2025-01-16T13:59:01.447Z</lastmod>
+        <loc>https://taojiangcb.github.io/jtblogs/tags/nodejs/</loc>
+        <lastmod>2025-01-16T14:04:18.047Z</lastmod>
         <changefreq>weekly</changefreq>
         <priority>0.2</priority>
     </url>
