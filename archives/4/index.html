@@ -18,7 +18,7 @@
         
     </title>
 
-    <link rel="canonical" href="https://taojiangcb.github.io/jtblogs/jtblogs/page/3/">
+    <link rel="canonical" href="https://taojiangcb.github.io/jtblogs/jtblogs/archives/4/">
 
     <!-- Bootstrap Core CSS -->
     <link rel="stylesheet" href="/jtblogs/css/bootstrap.min.css">
@@ -211,26 +211,26 @@
 
 <div class="post-preview">
 
-    <a href="/jtblogs/article/InstanceOf-的实现/">
+    <a href="/jtblogs/article/JS中的错误捕获/">
         <h2 class="post-title">
                                  
-            InstanceOf 的实现
+            JS中的错误捕获
         </h2>
         <h3 class="post-subtitle">
             
         </h3>
         <div class="post-content-preview">
-            Instanceof 的实现
-其实就是比较实例原型是否是对象原型，要注意的是基础类型是不需要比较的。
-基础类型:[‘string’, ‘number’, ‘boolean’, ‘undefine’, ‘symbol’];
-注意的是 proto 和 prototype 的关系
-12345678910111213const instance_of = (L, R) =&gt; &#123;  c......
+            try catch 捕获
+可以捕获到同步代码的错误，但是异步的微任务或这宏任务就不可以了。
+window.error
+可以捕获到异步队列的任务异常，但是网络请求之类的异常捕获不到。get 请求捕获不到哦。 网络请求捕获不到，io错误之类的。
+1234567&lt;img src =&apos;./a.jpg&apos;&gt; get 请求捕获不到window.onerror = funct......
         </div>
     </a>
     
         <p class="post-meta" style="margin: 10px 0;">
             Posted by 江涛 on
-            2021-02-20
+            2019-12-30
         </p>
         <div class="tags">
             
@@ -244,92 +244,24 @@
 
 <div class="post-preview">
 
-    <a href="/jtblogs/article/浏览器原理3/">
+    <a href="/jtblogs/article/看透matrix3/">
         <h2 class="post-title">
                                  
-            浏览器原理3
+            看透matrix3
         </h2>
         <h3 class="post-subtitle">
             
         </h3>
         <div class="post-content-preview">
-            浏览器原理3
-DOM 树
-从⽹络传给渲染引擎的 HTML ⽂件字节流是⽆法直接被渲染引擎理解的，所以要将其转化为渲染引擎
-能够理解的内部结构，这个结构就是 DOM。
-
-从⻚⾯的视⻆来看，DOM 是⽣成⻚⾯的基础数据结构。
-从 JavaScript 脚本视⻆来看，DOM 提供给 JavaScript 脚本操作的接⼝，通过这套接⼝，
-JavaScript 可以对 DOM 结构进⾏访问，从⽽改变⽂......
+            先看我之前的一个例子:http://47.100.202.222/splitball/
+可以看下工具调试，满屏的matrix3 跳动的热血沸腾的。
+123456789101112131415161718192021222324252627282930/**   a = 控制 X 的宽度*　　b = 控制 Y 的倾斜*　　c = 控制 X 的倾斜*　　d = 控制 Y 的高度*　　tx = 控......
         </div>
     </a>
     
         <p class="post-meta" style="margin: 10px 0;">
             Posted by 江涛 on
-            2020-03-02
-        </p>
-        <div class="tags">
-            
-              <a href="/jtblogs/tags/#浏览器" title="浏览器">浏览器</a>
-            
-        </div>
-    
-
-</div>
-<hr>
-
-<div class="post-preview">
-
-    <a href="/jtblogs/article/nginx-gzip-压缩js配置/">
-        <h2 class="post-title">
-                                 
-            nginx gzip 压缩js配置
-        </h2>
-        <h3 class="post-subtitle">
-            
-        </h3>
-        <div class="post-content-preview">
-            Nginx自带的有gzip模块 http://wiki.nginx.org/NginxChsHttpGzipModule ，这个模块支持在线实时压缩输出数据流。经过良好的配置优化，可以大幅的提升网站的输出效率。
-使用范例
-12345678910111213141516gzip  on;gzip_buffers 16 8k;gzip_comp_level 6;gzip_http_version......
-        </div>
-    </a>
-    
-        <p class="post-meta" style="margin: 10px 0;">
-            Posted by 江涛 on
-            2020-01-01
-        </p>
-        <div class="tags">
-            
-              <a href="/jtblogs/tags/#nginx" title="nginx">nginx</a>
-            
-        </div>
-    
-
-</div>
-<hr>
-
-<div class="post-preview">
-
-    <a href="/jtblogs/article/Grid-网格布局/">
-        <h2 class="post-title">
-                                 
-            Grid 网格布局
-        </h2>
-        <h3 class="post-subtitle">
-            
-        </h3>
-        <div class="post-content-preview">
-            网格布局
-Flex 布局是轴线布局，只能指定&quot;项目&quot;针对轴线的位置，可以看作是一维布局。Grid 布局则是将容器划分成&quot;行&quot;和&quot;列&quot;，产生单元格，然后指定&quot;项目所在&quot;的单元格，可以看作是二维布局。Grid 布局远比 Flex 布局强大。
-display: grid
-display: grid指定一个容器采用网格布......
-        </div>
-    </a>
-    
-        <p class="post-meta" style="margin: 10px 0;">
-            Posted by 江涛 on
-            2020-01-01
+            2019-12-29
         </p>
         <div class="tags">
             
@@ -343,31 +275,29 @@ display: grid指定一个容器采用网格布......
 
 <div class="post-preview">
 
-    <a href="/jtblogs/article/react-的生命周期/">
+    <a href="/jtblogs/article/css专业素养/">
         <h2 class="post-title">
                                  
-            react 的生命周期
+            css专业素养
         </h2>
         <h3 class="post-subtitle">
             
         </h3>
         <div class="post-content-preview">
-            React 组件生命周期
-
-static getDerivedStateFromProps()
-1static getDerivedStateFromProps(props, state)
-getDerivedStateFromProps 会在调用 render 方法之前调用，并且在初始挂载及后续更新时都会被调用。它应返回一个对象来更新 state，如果返回 null 则不更新任何内容。
-此......
+            cascading style sheet
+层叠样式表
+1.引入css
+1234567891011121314151617181920212223&lt;html lang=&quot;en&quot;&gt;   &lt;head&gt;       &lt;meta charset=&quot;UTF-8&quot;&gt;       &lt;title&gt;Document&lt;......
         </div>
     </a>
     
         <p class="post-meta" style="margin: 10px 0;">
             Posted by 江涛 on
-            2019-12-31
+            2019-12-29
         </p>
         <div class="tags">
             
-              <a href="/jtblogs/tags/#react" title="react">react</a>
+              <a href="/jtblogs/tags/#css" title="css">css</a>
             
         </div>
     
@@ -377,188 +307,40 @@ getDerivedStateFromProps 会在调用 render 方法之前调用，并且在初�
 
 <div class="post-preview">
 
-    <a href="/jtblogs/article/react-中的api/">
+    <a href="/jtblogs/article/IFC-BFC-FFC-GFC/">
         <h2 class="post-title">
                                  
-            react 中的api
+            IFC BFC FFC GFC
         </h2>
         <h3 class="post-subtitle">
             
         </h3>
         <div class="post-content-preview">
-            组件
+            BFC
+BFC（Block Formatting Context）格式化上下文，是Web页面中盒模型布局的CSS渲染模式，指一个独立的渲染区域或者说是一个隔离的独立容器。
+BFC 应用
 
-React.Component
-React.PureCompoent
+防止margin重叠
+清除内部浮动
+自适应两（多）栏布局
+防止字体环绕
 
-React.PureComponent 与 React.Component 很相似。两者的区别在于 React.Component 并未实现 shouldComponentUpdate()，而 React.PureComponent 中以浅层对比 prop 和 state 的方式来实现了该函数。
-如果赋予 Rea......
+触发BFC条件
+
+根元素
+float的值不为none
+overflow的值不为visible
+display的值为inline-bl......
         </div>
     </a>
     
         <p class="post-meta" style="margin: 10px 0;">
             Posted by 江涛 on
-            2019-12-31
+            2019-12-29
         </p>
         <div class="tags">
             
-              <a href="/jtblogs/tags/#react" title="react">react</a>
-            
-        </div>
-    
-
-</div>
-<hr>
-
-<div class="post-preview">
-
-    <a href="/jtblogs/article/Webpack中的hash值/">
-        <h2 class="post-title">
-                                 
-            Webpack中的hash值
-        </h2>
-        <h3 class="post-subtitle">
-            
-        </h3>
-        <div class="post-content-preview">
-            ⽂件哈希值
-⽂件哈希值就是打包后输出的⽂件名的后缀
-例如：3.bfb2172c.js app.d3635098.js
-⽂件哈希值如何⽣成
-
-
-Hash：和整个项⽬的构建相关，只要项⽬⽂件有修改，整个项⽬构建的 hash 值就会更改
-
-
-Chunkhash：和 webpack 打包的 chunk 有关，不同的 entry 会⽣成不同的 chunkhash 值
-
-
-Contenthash：根据⽂......
-        </div>
-    </a>
-    
-        <p class="post-meta" style="margin: 10px 0;">
-            Posted by 江涛 on
-            2019-12-30
-        </p>
-        <div class="tags">
-            
-              <a href="/jtblogs/tags/#webpack" title="webpack">webpack</a>
-            
-        </div>
-    
-
-</div>
-<hr>
-
-<div class="post-preview">
-
-    <a href="/jtblogs/article/Webpack-核心概念/">
-        <h2 class="post-title">
-                                 
-            Webpack - 核心概念
-        </h2>
-        <h3 class="post-subtitle">
-            
-        </h3>
-        <div class="post-content-preview">
-            核心概念之 Entry
-Entry 用来指定 webpack 的打包⼊口
-Entry 的⽤法
-单⼊⼝：entry 是⼀个字符串
-123module.exports = &#123;    entry: &apos;./src/index.js&apos;&#125;;
-多⼊⼝：entry 是⼀个对象
-123456module.exports = &#123;    entry: &#123;......
-        </div>
-    </a>
-    
-        <p class="post-meta" style="margin: 10px 0;">
-            Posted by 江涛 on
-            2019-12-30
-        </p>
-        <div class="tags">
-            
-              <a href="/jtblogs/tags/#webpack" title="webpack">webpack</a>
-            
-        </div>
-    
-
-</div>
-<hr>
-
-<div class="post-preview">
-
-    <a href="/jtblogs/article/自己撸的koa-ioc-插件/">
-        <h2 class="post-title">
-                                 
-            自己撸的koa-ioc 插件
-        </h2>
-        <h3 class="post-subtitle">
-            
-        </h3>
-        <div class="post-content-preview">
-            koa-ioc
-
-ioc middleware for koa
-
-
-指定一个服务目录,在启动服务app时,自动灌入服务路由
-基于koa-router二次封装 app.get,app.post,app.put 等均可使用。
-
-
-installation
-unsing npm :
-1npm install kao-ioc
-API Reference
-
-ioc_dir( path : string......
-        </div>
-    </a>
-    
-        <p class="post-meta" style="margin: 10px 0;">
-            Posted by 江涛 on
-            2019-12-30
-        </p>
-        <div class="tags">
-            
-              <a href="/jtblogs/tags/#nodejs" title="nodejs">nodejs</a>
-            
-        </div>
-    
-
-</div>
-<hr>
-
-<div class="post-preview">
-
-    <a href="/jtblogs/article/Webpack-优化/">
-        <h2 class="post-title">
-                                 
-            Webpack 优化
-        </h2>
-        <h3 class="post-subtitle">
-            
-        </h3>
-        <div class="post-content-preview">
-            webpack 慢的原因
-
-string -&gt; ast -&gt; string/buff,文件过多 n *  string -&gt; ast -&gt; string/buff
-entry 过多 复杂 繁杂 fonts css js
-async import(/***/‘xxx.js’) entry
-
-解决方案
-
-async 插件 speed-measure-webpack-plu......
-        </div>
-    </a>
-    
-        <p class="post-meta" style="margin: 10px 0;">
-            Posted by 江涛 on
-            2019-12-30
-        </p>
-        <div class="tags">
-            
-              <a href="/jtblogs/tags/#webpack" title="webpack">webpack</a>
+              <a href="/jtblogs/tags/#css" title="css">css</a>
             
         </div>
     
@@ -573,13 +355,9 @@ async 插件 speed-measure-webpack-plu......
 <ul class="pager">
     
         <li class="previous">
-            <a href="/jtblogs/page/2/">&larr; Newer Posts</a>
+            <a href="/jtblogs/archives/3/">&larr; Newer Posts</a>
         </li>
     
-    
-        <li class="next">
-            <a href="/jtblogs/page/4/">Older Posts &rarr;</a>
-        </li>
     
 </ul>
 
@@ -619,15 +397,15 @@ async 插件 speed-measure-webpack-plu......
             
         
             
-            <a href="/jtblogs/tags/#nodejs" title="nodejs" rel="10">nodejs</a>
-            
-        
-            
-            <a href="/jtblogs/tags/#webpack" title="webpack" rel="5">webpack</a>
+            <a href="/jtblogs/tags/#nodejs" title="nodejs" rel="11">nodejs</a>
             
         
             
             <a href="/jtblogs/tags/#HTTP" title="HTTP" rel="1">HTTP</a>
+            
+        
+            
+            <a href="/jtblogs/tags/#webpack" title="webpack" rel="5">webpack</a>
             
         
             
@@ -695,7 +473,7 @@ async 插件 speed-measure-webpack-plu......
     <ul>
       
         <li>
-          <a href="/jtblogs/article/从-MonoRepo-到私仓-Verdaccio/">(no title)</a>
+          <a href="/jtblogs/article/从-MonoRepo-到私仓-Verdaccio/">从MonoRepo到私仓Verdaccio：实战指南</a>
         </li>
       
         <li>
