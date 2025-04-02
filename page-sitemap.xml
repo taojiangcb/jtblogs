@@ -7,6 +7,41 @@
     </url>
     
     <url>
+        <loc>https://taojiangcb.github.io/jtblogs/EIP%20747.html</loc>
+        <lastmod>2025-04-02T04:13:00.975Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.8</priority>
+    </url>
+    
+    <url>
+        <loc>https://taojiangcb.github.io/jtblogs/EPI-3085.html</loc>
+        <lastmod>2025-04-02T04:10:27.924Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.8</priority>
+    </url>
+    
+    <url>
+        <loc>https://taojiangcb.github.io/jtblogs/EPI-1102.html</loc>
+        <lastmod>2025-04-02T04:10:27.905Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.8</priority>
+    </url>
+    
+    <url>
+        <loc>https://taojiangcb.github.io/jtblogs/EIP-1193.html</loc>
+        <lastmod>2025-04-02T04:10:27.891Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.8</priority>
+    </url>
+    
+    <url>
+        <loc>https://taojiangcb.github.io/jtblogs/EIP-707.html</loc>
+        <lastmod>2025-04-02T04:10:27.861Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.8</priority>
+    </url>
+    
+    <url>
         <loc>https://taojiangcb.github.io/jtblogs/tags/</loc>
         <lastmod>2025-01-08T07:58:03.193Z</lastmod>
         <changefreq>weekly</changefreq>
@@ -14,14 +49,14 @@
     </url>
     
     <url>
-        <loc>https://taojiangcb.github.io/jtblogs/about/</loc>
+        <loc>https://taojiangcb.github.io/jtblogs/archive/</loc>
         <lastmod>2025-01-08T07:58:03.124Z</lastmod>
         <changefreq>weekly</changefreq>
         <priority>0.8</priority>
     </url>
     
     <url>
-        <loc>https://taojiangcb.github.io/jtblogs/archive/</loc>
+        <loc>https://taojiangcb.github.io/jtblogs/about/</loc>
         <lastmod>2025-01-08T07:58:03.124Z</lastmod>
         <changefreq>weekly</changefreq>
         <priority>0.8</priority>
