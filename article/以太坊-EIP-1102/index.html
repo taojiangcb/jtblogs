@@ -14,11 +14,11 @@
     <script async defer src="https://buttons.github.io/buttons.js"></script>
     <title>
         
-          江涛 | Blog
+          以太坊-EIP-1102 - 江涛 | Blog
         
     </title>
 
-    <link rel="canonical" href="https://taojiangcb.github.io/jtblogs/jtblogs/EIP 747.html">
+    <link rel="canonical" href="https://taojiangcb.github.io/jtblogs/jtblogs/article/以太坊-EIP-1102/">
 
     <!-- Bootstrap Core CSS -->
     <link rel="stylesheet" href="/jtblogs/css/bootstrap.min.css">
@@ -71,8 +71,8 @@
 <style type="text/css">
     header.intro-header{
         
-            background-image: url('/jtblogs/img/header_img/archives-widget.jpg')
-            /*page*/
+            background-image: url('/jtblogs/img/article_header/article_bg.jpg')
+            /*post*/
         
     }
     
@@ -85,10 +85,18 @@
             <div class="row">
                 <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
                 
-                    <div class="site-heading">
-                        <h1>江涛</h1>
-                        <!--<hr class="small">-->
-                        <span class="subheading">个人博客</span>
+                    <div class="post-heading">
+                        <div class="tags">
+                            
+                              <a class="tag" href="/jtblogs/tags/#Web3" title="Web3">Web3</a>
+                            
+                        </div>
+                        <h1>以太坊-EIP-1102</h1>
+                        <h2 class="subheading"></h2>
+                        <span class="meta">
+                            Posted by 江涛 on
+                            2025-04-10
+                        </span>
                     </div>
                 
 
@@ -206,231 +214,214 @@
 
 
     <!-- Main Content -->
-    <!-- Main Content -->
-<div class="container">
-    <div class="row">
-        
+    <!-- Modify by Yu-Hsuan Yen -->
 
-<!-- USE SIDEBAR -->
-    <!-- Post Container -->
+<!-- Post Content -->
+<article>
+    <div class="container">
+        <div class="row">
+
+            <!-- Post Container -->
             <div class="
-                col-lg-8 col-lg-offset-1
-                col-md-8 col-md-offset-1
-                col-sm-12
-                col-xs-12
-                post-container
-            ">
-            
-                <p>EIP-747 是一项以太坊改进提案，旨在为以太坊账户引入 <strong>Human-Readable</strong>（可读性强的） <strong>Ethereum Name System (ENS) 地址</strong> 的支持。它的核心目标是简化和改善以太坊地址的使用，特别是通过 ENS 的集成，使得地址更具可读性，从而减少用户在处理和输入地址时可能出现的错误。</p>
+                col-lg-8 col-lg-offset-2
+                col-md-10 col-md-offset-1
+                post-container">
+
+                <p>EIP-1102 是一项以太坊改进提案，旨在解决以太坊浏览器与用户隐私之间的平衡问题。它提出了一种新的方法，让用户在使用 DApp（去中心化应用）时，更加透明地控制和授权哪些信息可以被访问，尤其是在涉及浏览器本地存储的情况下。</p>
 <h3><span id="核心目标">核心目标</span></h3>
-<p>EIP-747 的目标是让 <strong>以太坊地址</strong> 变得更加 <strong>用户友好</strong>，特别是在需要输入长且难以记住的十六进制地址时，改为使用更直观的 <strong>ENS 域名</strong>。这种集成将改善用户体验，降低因地址错误而导致的失误。</p>
+<p>EIP-1102 的目标是 <strong>改善用户隐私控制</strong>，尤其是在用户与以太坊浏览器（例如 MetaMask）互动时，确保用户能够明确知道哪些数据正在被访问，以及它们可以控制是否允许这些访问。</p>
 <h3><span id="关键内容">关键内容</span></h3>
 <ol>
 <li>
-<p><strong>支持 ENS 域名</strong>：<br>
-以太坊账户将能够通过 <strong>ENS 域名</strong> 来识别，而不仅仅是传统的十六进制地址。例如，类似 <code>alice.eth</code> 这样的 ENS 域名将可以代表某个以太坊账户，而不是一个复杂的、长的十六进制地址。这使得用户更加容易记住和分享他们的地址。</p>
+<p><strong>明确授权</strong>：<br>
+EIP-1102 提出，用户与 DApp 进行交互时，必须明确地同意浏览器扩展程序（如 MetaMask）访问他们的以太坊账户。这样，DApp 就能明确获知用户的授权，避免未经授权的访问。</p>
 </li>
 <li>
-<p><strong>用户友好的地址格式</strong>：<br>
-EIP-747 提出的一个关键是引入 <strong>人类可读的地址</strong> 格式，这样用户不必再面对长且难以理解的地址。ENS 域名通过类似域名系统（DNS）的方法来为以太坊账户提供更友好的标识符。</p>
+<p><strong>权限管理</strong>：<br>
+EIP-1102 强调，DApp 应该要求用户授予权限来访问其账户信息，而不是在后台隐性地执行操作。例如，用户应该能够在 DApp 界面上看到他们的账户信息被哪些 DApp 访问，并允许用户随时取消权限。</p>
 </li>
 <li>
-<p><strong>简化地址交互</strong>：<br>
-随着 DApp 和其他以太坊应用的不断普及，用户与智能合约和钱包的交互越来越频繁。EIP-747 旨在简化这一交互流程，特别是对于那些不熟悉技术细节的普通用户来说，使用类似 <code>alice.eth</code> 这样的域名更加便捷和直观。</p>
+<p><strong>隐私保护</strong>：<br>
+通过这种改进，用户可以避免 DApp 不当使用或滥用他们的个人数据（如地址、交易历史等）。该提案的目的是增强用户隐私，并为用户提供更好的隐私保护措施。</p>
 </li>
 <li>
-<p><strong>与现有以太坊地址兼容</strong>：<br>
-该提案强调，ENS 域名与现有的以太坊地址（十六进制地址）完全兼容。即使在没有域名解析的情况下，传统的十六进制地址仍然有效，而通过 ENS 域名的方式将提供一个额外的、更加用户友好的选择。</p>
-</li>
-<li>
-<p><strong>增强地址安全性</strong>：<br>
-使用可读的 ENS 地址还可以帮助减少用户在输入地址时的错误。例如，ENS 域名通常能准确指向某个特定账户，这比记住一长串十六进制字符要容易得多，从而降低了用户由于错误地址导致资产丢失的风险。</p>
+<p><strong>用户交互改进</strong>：<br>
+在与 DApp 交互时，用户应能够清楚地看到请求的权限，并通过简单明了的界面来管理这些权限。这样可以避免用户无意中暴露更多的个人信息，增加透明度。</p>
 </li>
 </ol>
 <h3><span id="背景">背景</span></h3>
-<p>传统的以太坊地址是由 0x 开头的 40 个字符的十六进制数，这些地址对于普通用户来说既难以记忆也容易出错。为了改善这一点，以太坊社区提出了 ENS（Ethereum Name Service），类似于 DNS（域名系统）服务，用来将复杂的以太坊地址映射为更加友好的可读域名。EIP-747 正是为了解决如何让 ENS 域名与以太坊账户更好地结合，提出的一项改进提案。</p>
+<p>随着以太坊生态的扩展，越来越多的去中心化应用（DApps）开始连接到用户的钱包。为了提高安全性和隐私保护，EIP-1102 提出了这个建议，旨在通过加强用户控制来避免过度数据共享。MetaMask 等钱包扩展在提供方便的同时，也可能引发隐私泄漏问题，因此，这项提案旨在通过用户授权管理，减轻此类风险。</p>
 <h3><span id="目前状态">目前状态</span></h3>
-<p>EIP-747 在以太坊社区中得到了积极的讨论，但它的实施和采用可能需要在以太坊的后续升级中进行。ENS 域名系统本身已经得到了广泛应用，EIP-747 进一步增强了这种系统的易用性和普及度。</p>
-<h3><span id="总结">总结</span></h3>
-<p>EIP-747 通过引入可读性强的 ENS 域名，旨在使以太坊地址更加直观和易于使用。这不仅简化了用户与 DApp 和智能合约交互的过程，还减少了由于地址输入错误导致的风险。随着以太坊生态的发展，EIP-747 预计将在未来进一步提升用户体验和安全性。</p>
+<p>EIP-1102 仍处于讨论阶段，尚未正式实施。不过，类似的隐私保护问题已经引起了以太坊社区的广泛关注，未来可能会在以太坊浏览器和 DApp 之间实现更严格的隐私控制。</p>
+<p>总结来说，EIP-1102 主要是围绕提高去中心化应用中的隐私保护进行优化，尤其关注用户如何授权和控制对自己以太坊账户的访问权限。</p>
 
+                
+
+                <hr>
+                <!-- Pager -->
+                <ul class="pager">
+                    
+                        <li class="previous">
+                            <a href="/jtblogs/article/以太坊-EIP-3085/" data-toggle="tooltip" data-placement="top" title="以太坊-EIP-3085">&larr; Previous Post</a>
+                        </li>
+                    
+                    
+                        <li class="next">
+                            <a href="/jtblogs/article/以太坊-EIP-707/" data-toggle="tooltip" data-placement="top" title="以太坊-EIP-707">Next Post &rarr;</a>
+                        </li>
+                    
+                </ul>
 
                 <br>
 
+                <!--打赏-->
+                
+                <!--打赏-->
+
+                <br>
+                <!--分享-->
+                
+                    <div class="social-share"  data-wechat-qrcode-helper="" align="center"></div>
+                    <!--  css & js -->
+                    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/social-share.js/1.0.16/css/share.min.css">
+                    <script src="https://cdnjs.cloudflare.com/ajax/libs/social-share.js/1.0.16/js/social-share.min.js"></script>
+                
+                <!--分享-->
+                <br>                       
+                
                 <!-- require APlayer -->
                 
 
-                <!-- 如果开启评论功能 -->
+                <!-- duoshuo Share start -->
                 
-                    <hr>
+                <!-- 多说 Share end-->
+
+                <!-- 多说评论框 start -->
+                
+                <!-- 多说评论框 end -->
+
+                <!-- disqus comment start -->
+                
+                <!-- disqus comment end -->
+
+                
+
+            </div>
+            
+            <!-- Tabe of Content -->
+            <!-- Table of Contents -->
+
+  
+    <style>
+      span.toc-nav-number{
+        display: none
+      }
+    </style>
+  
+    
+      <aside id="sidebar">
+        <div id="toc" class="toc-article">
+        <strong class="toc-title">Contents</strong>
+        
+          <ol class="toc-nav"><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#null"><span class="toc-nav-number">1.</span> <span class="toc-nav-text">核心目标</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#null"><span class="toc-nav-number">2.</span> <span class="toc-nav-text">关键内容</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#null"><span class="toc-nav-number">3.</span> <span class="toc-nav-text">背景</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#null"><span class="toc-nav-number">4.</span> <span class="toc-nav-text">目前状态</span></a></li></ol>
+        
+        </div>
+      </aside>
+    
+
+                
+            <!-- Sidebar Container -->
+            <div class="
+                col-lg-8 col-lg-offset-2
+                col-md-10 col-md-offset-1
+                sidebar-container">
+
+                <!-- Featured Tags -->
+                
+                <section>
+                    <!-- no hr -->
+                    <h5><a href="/jtblogs/tags/">FEATURED TAGS</a></h5>
+                    <div class="tags">
+                       
+                          <a class="tag" href="/jtblogs/tags/#Web3" title="Web3">Web3</a>
+                        
+                    </div>
+                </section>
+                
+
+                <!-- Friends Blog -->
+                
+                <hr>
+                <h5>FRIENDS</h5>
+                <ul class="list-inline">
 
                     
-
-                    
-
-                    
-
-                    
-
-                    
-
-                    
-
+                </ul>
                 
             </div>
-
-          <!-- Sidebar Container -->
-<div class="
-    col-lg-3 col-lg-offset-0
-    col-md-3 col-md-offset-0
-    col-sm-12
-    col-xs-12
-    sidebar-container
-">
-    
-        <!-- Featured Tags -->
-
-<section>
-    <!-- no hr -->
-    <h5><a href="/jtblogs/tags/">FEATURED TAGS</a></h5>
-    <div class="tags">
-        
-            
-            <a href="/jtblogs/tags/#css" title="css" rel="5">css</a>
-            
-        
-            
-            <a href="/jtblogs/tags/#Web3" title="Web3" rel="5">Web3</a>
-            
-        
-            
-            <a href="/jtblogs/tags/#js" title="js" rel="5">js</a>
-            
-        
-            
-            <a href="/jtblogs/tags/#nodejs" title="nodejs" rel="11">nodejs</a>
-            
-        
-            
-            <a href="/jtblogs/tags/#HTTP" title="HTTP" rel="1">HTTP</a>
-            
-        
-            
-            <a href="/jtblogs/tags/#webpack" title="webpack" rel="5">webpack</a>
-            
-        
-            
-            <a href="/jtblogs/tags/#nginx" title="nginx" rel="1">nginx</a>
-            
-        
-            
-            <a href="/jtblogs/tags/#react" title="react" rel="5">react</a>
-            
-        
-            
-            <a href="/jtblogs/tags/#浏览器" title="浏览器" rel="1">浏览器</a>
-            
-        
+        </div>
     </div>
-</section>
+</article>
 
-        <hr>
-    
-        <!-- Short About -->
-<section class="visible-md visible-lg">
-    <h5><a href="/jtblogs/about/">ABOUT ME</a></h5>
-    <div class="short-about">
 
-        
-            <img id = "avatar_pic" src="/jtblogs/img/avatar/ironman.png" />
-        
 
-        
-            <p>Stay hungry,Stay foolish</p>
-        
 
-        <!-- SNS Link -->
-        <ul class="list-inline">
-            
-            
-            
 
-            
 
-            
 
-            
-                <li>
-                    <a target="_blank"  href="https://github.com/taojiangcb">
-                        <span class="fa-stack fa-lg">
-                            <i class="fa fa-circle fa-stack-2x"></i>
-                            <i class="fa fa-github fa-stack-1x fa-inverse"></i>
-                        </span>
-                    </a>
-                </li>
-            
-            
-            
-            
-        </ul>
-    </div>
-</section>
 
-        <hr>
-    
-        
-  <h5>RECENT POSTS</h3>
-  <div class="widget">
-    <ul>
-      
-        <li>
-          <a href="/jtblogs/article/以太坊-EIP-3085/">以太坊-EIP-3085</a>
-        </li>
-      
-        <li>
-          <a href="/jtblogs/article/以太坊-EIP-1102/">以太坊-EIP-1102</a>
-        </li>
-      
-        <li>
-          <a href="/jtblogs/article/以太坊-EIP-707/">以太坊-EIP-707</a>
-        </li>
-      
-        <li>
-          <a href="/jtblogs/article/EIP-1193/">以太坊 EIP-1193</a>
-        </li>
-      
-        <li>
-          <a href="/jtblogs/article/以太坊-EIP-747/">以太坊 EIP-747</a>
-        </li>
-      
-    </ul>
-  </div>
+<!-- async load function -->
+<script>
+    function async(u, c) {
+      var d = document, t = 'script',
+          o = d.createElement(t),
+          s = d.getElementsByTagName(t)[0];
+      o.src = u;
+      if (c) { o.addEventListener('load', function (e) { c(null, e); }, false); }
+      s.parentNode.insertBefore(o, s);
+    }
+</script>
+<!-- anchor-js, Doc:http://bryanbraun.github.io/anchorjs/ -->
+<script>
+    async("https://cdn.bootcss.com/anchor-js/1.1.1/anchor.min.js",function(){
+        anchors.options = {
+          visible: 'hover',
+          placement: 'left',
+          icon: 'ℬ'
+        };
+        anchors.add().remove('.intro-header h1').remove('.subheading').remove('.sidebar-container h5');
+    })
+</script>
+<style>
+    /* place left on bigger screen */
+    @media all and (min-width: 800px) {
+        .anchorjs-link{
+            position: absolute;
+            left: -0.75em;
+            font-size: 1.1em;
+            margin-top : -0.1em;
+        }
+    }
+</style>
 
-        <hr>
-    
-        <!-- Friends Blog -->
 
-<h5>FRIENDS</h5>
-<ul class="list-inline">
-
-    
-</ul>
-
-        <hr>
-    
-        
-    <h5>ARCHIVES</h5>
-    <div class="widget">
-      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/jtblogs/archives/2025/04/">April 2025</a><span class="archive-list-count">5</span></li><li class="archive-list-item"><a class="archive-list-link" href="/jtblogs/archives/2025/01/">January 2025</a><span class="archive-list-count">12</span></li><li class="archive-list-item"><a class="archive-list-link" href="/jtblogs/archives/2024/12/">December 2024</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/jtblogs/archives/2023/05/">May 2023</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/jtblogs/archives/2023/01/">January 2023</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/jtblogs/archives/2022/08/">August 2022</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/jtblogs/archives/2022/07/">July 2022</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/jtblogs/archives/2022/01/">January 2022</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/jtblogs/archives/2021/09/">September 2021</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/jtblogs/archives/2021/02/">February 2021</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/jtblogs/archives/2020/03/">March 2020</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/jtblogs/archives/2020/01/">January 2020</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/jtblogs/archives/2019/12/">December 2019</a><span class="archive-list-count">10</span></li></ul>
-    </div>
-
-        <hr>
-    
-</div>
-
-        
-    </div>
-</div>
+<!-- chrome Firefox 中文锚点定位失效-->
+<script src="https://cdn.bootcss.com/jquery/3.3.1/jquery.js"></script>
+<!-- smooth scroll behavior polyfill  -->
+<script type="text/javascript" src="/js/smoothscroll.js"></script>
+<script>
+        $('#toc').on('click','a',function(a){
+            // var isChrome = window.navigator.userAgent.indexOf("Chrome") !== -1;
+            // console.log(window.navigator.userAgent,isChrome)
+                // if(isChrome) {
+                    // console.log(a.currentTarget.outerHTML);
+                    // console.log($(a.currentTarget).attr("href"));
+                    //跳转到指定锚点
+                    // document.getElementById(a.target.innerText.toLowerCase()).scrollIntoView(true);
+                    document.getElementById($(a.currentTarget).attr("href").replace("#","")).scrollIntoView({behavior: 'smooth' });
+                // }
+        })  
+</script>
 
 
     <!-- Footer -->
