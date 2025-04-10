@@ -14,11 +14,11 @@
     <script async defer src="https://buttons.github.io/buttons.js"></script>
     <title>
         
-          Webpack中的hash值 - 江涛 | Blog
+          Webpack 中的shaking - 江涛 | Blog
         
     </title>
 
-    <link rel="canonical" href="https://taojiangcb.github.io/jtblogs/jtblogs/article/Webpack中的hash值/">
+    <link rel="canonical" href="https://taojiangcb.github.io/jtblogs/jtblogs/article/Webpack-中的shaking/">
 
     <!-- Bootstrap Core CSS -->
     <link rel="stylesheet" href="/jtblogs/css/bootstrap.min.css">
@@ -91,11 +91,11 @@
                               <a class="tag" href="/jtblogs/tags/#Webpack" title="Webpack">Webpack</a>
                             
                         </div>
-                        <h1>Webpack中的hash值</h1>
+                        <h1>Webpack 中的shaking</h1>
                         <h2 class="subheading"></h2>
                         <span class="meta">
                             Posted by 江涛 on
-                            2019-12-30
+                            2025-04-10
                         </span>
                     </div>
                 
@@ -227,42 +227,140 @@
                 col-md-10 col-md-offset-1
                 post-container">
 
-                <h1><span id="文件哈希值">⽂件哈希值</span></h1>
-<p>⽂件哈希值就是打包后输出的⽂件名的后缀</p>
-<p>例如：3.bfb2172c.js app.d3635098.js</p>
-<h1><span id="文件哈希值如何生成">⽂件哈希值如何⽣成</span></h1>
+                <p>这是个非常核心的问题！Webpack 的 Tree Shaking 是现代前端构建优化的关键特性之一，我们可以从 <strong>策略、实现原理、优化决策依据</strong> 三个维度来回答这个问题：</p>
+<hr>
+<h2><span id="一-tree-shaking-是什么">一、🌲 Tree Shaking 是什么？</span></h2>
+<p>Tree Shaking（摇树优化）是指在构建过程中<strong>移除 JavaScript 中未使用（dead code）的代码</strong>，从而减小打包体积、提升运行效率。</p>
+<hr>
+<h2><span id="二-webpack-中-tree-shaking-的策略">二、Webpack 中 Tree Shaking 的策略</span></h2>
+<p>Webpack 的 Tree Shaking 策略其实并不是直接去“找出哪些代码没用”，而是通过以下三个关键策略配合实现的：</p>
+<h3><span id="1-基于-es-module-的静态结构分析">✅ 1. <strong>基于 ES Module 的静态结构分析</strong></span></h3>
 <ul>
-<li>
-<p>Hash：和整个项⽬的构建相关，只要项⽬⽂件有修改，整个项⽬构建的 hash 值就会更改</p>
-</li>
-<li>
-<p>Chunkhash：和 webpack 打包的 chunk 有关，不同的 entry 会⽣成不同的 chunkhash 值</p>
-</li>
-<li>
-<p>Contenthash：根据⽂件内容来定义 hash ，⽂件内容不变，则 contenthash 不变</p>
-</li>
+<li>只有 ES Module（<code>import/export</code>）具有<strong>静态结构</strong>，Webpack 才能在构建时分析依赖关系。</li>
+<li>CommonJS（<code>require/exports</code>）是动态的，不支持 Tree Shaking。</li>
 </ul>
-<h1><span id="js-的文件哈希设置">JS 的⽂件哈希设置</span></h1>
-<p>设置 output 的 filename，使⽤ [chunkhash]</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">output: &#123;</span><br><span class="line">    filename: &apos;[name][chunkhash:8].js&apos;,</span><br><span class="line">    path: __dirname + &apos;/dist&apos;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>注意: chunkhash无法和热更新一起使用</p>
-<h1><span id="css-的文件哈希设置">CSS 的⽂件哈希设置</span></h1>
-<p>设置 MiniCssExtractPlugin 的 filename，</p>
-<p>使⽤ [contenthash]</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">npm install mini-css-extract-plugin -D</span><br><span class="line"></span><br><span class="line">const MiniCssExtractPlugin = require(&apos;mini-css-extract-plugin&apos;);</span><br><span class="line">plugins: [</span><br><span class="line">     new MiniCssExtractPlugin(&#123;</span><br><span class="line">         filename: `[name][contenthash:8].css`</span><br><span class="line">     &#125;);</span><br><span class="line">]</span><br></pre></td></tr></table></figure>
-<p>如果想把css提取出来，那么style-loader就不能用了，因为两个是互斥的，所以我们可以这样写:</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line">module: &#123;</span><br><span class="line">        rules: [</span><br><span class="line">            &#123;</span><br><span class="line">                test: /\.css$/,</span><br><span class="line">                use: [</span><br><span class="line">                    - &apos;style-loader&apos;,</span><br><span class="line">                    + MiniCssExtractPlugin.loader</span><br><span class="line">                    &apos;css-loader&apos;</span><br><span class="line">                ]</span><br><span class="line">            &#125;,</span><br><span class="line">            &#123;</span><br><span class="line">                test: /\.less$/,</span><br><span class="line">                use: [</span><br><span class="line">                    - &apos;style-loader&apos;,</span><br><span class="line">                    + MiniCssExtractPlugin.loader</span><br><span class="line">                    &apos;css-loader&apos;,</span><br><span class="line">                    &apos;less-loader&apos;</span><br><span class="line">                ]</span><br><span class="line">            &#125;,</span><br><span class="line">        ]</span><br><span class="line">&#125;,</span><br></pre></td></tr></table></figure>
-<p>图片&amp;字体文件哈希设置</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">module: &#123;</span><br><span class="line">rules: [</span><br><span class="line">    &#123;</span><br><span class="line">        test: /\.(png|svg|jpg|gif)$/,</span><br><span class="line">        use: [&#123;</span><br><span class="line">              loader: &apos;file-loader’,</span><br><span class="line">              options: &#123;</span><br><span class="line">                 name: &apos;img/[name][hash:8].[ext] &apos;</span><br><span class="line">              &#125;</span><br><span class="line">        &#125;]</span><br><span class="line">    &#125;</span><br><span class="line">]</span><br></pre></td></tr></table></figure>
-<h1><span id="占位符介绍">占位符介绍</span></h1>
+<blockquote>
+<p>✅ 所以第一策略：<strong>只对 ESM 模块进行 tree shaking</strong></p>
+</blockquote>
+<hr>
+<h3><span id="2-依赖于-sideeffects-字段的标注">✅ 2. <strong>依赖于 <code>sideEffects</code> 字段的标注</strong></span></h3>
+<p><code>package.json</code> 中的 <code>sideEffects</code> 字段告诉 Webpack 哪些文件是“纯的”，没有副作用。</p>
+<figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">  <span class="attr">"sideEffects"</span>: <span class="literal">false</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <ul>
-<li>[ext] 资源名后缀</li>
-<li>[name] 文件名称</li>
-<li>[path] 文件的相对路径</li>
-<li>[folder] 文件所在的文件夹</li>
-<li>[contenthash] 文件的内容hash 默认md5生成</li>
-<li>[hash] 文件内容的hash 默认md5生成</li>
+<li>如果某个模块或导入被标记为无副作用（pure），并且没有被引用，那么 Webpack 就会放心地移除它。</li>
+<li>如果你有某些 CSS 导入或者 polyfill 模块有副作用，就要排除：</li>
 </ul>
+<figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">  <span class="attr">"sideEffects"</span>: [<span class="string">"./src/styles.css"</span>, <span class="string">"./src/polyfill.js"</span>]</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>✅ 第二策略：<strong>需要 <code>sideEffects: false</code> 的配合使用</strong></p>
+</blockquote>
+<hr>
+<h3><span id="3-依赖-terser-swc-等压缩器进行-dead-code-elimination">✅ 3. <strong>依赖 Terser / SWC 等压缩器进行 Dead Code Elimination</strong></span></h3>
+<p>Webpack 自身不会直接删除“未引用的变量”，它只是标记（标注为 <code>unused</code>），真正“摇掉”的过程是在压缩阶段完成的。</p>
+<p>默认用的是 <a href="https://github.com/webpack-contrib/terser-webpack-plugin" target="_blank" rel="noopener"><code>terser-webpack-plugin</code></a>：</p>
+<ul>
+<li>会移除未使用的 import/export。</li>
+<li>移除未执行的分支代码。</li>
+<li>移除多余的函数声明。</li>
+</ul>
+<blockquote>
+<p>✅ 第三策略：<strong>通过压缩器来做最终 dead code 删除</strong></p>
+</blockquote>
+<hr>
+<h2><span id="三-tree-shaking-的优化决策依据">三、Tree Shaking 的优化决策依据</span></h2>
+<p>Webpack 在做 Tree Shaking 时，主要基于以下信息来判断是否可以移除代码：</p>
+<table>
+<thead>
+<tr>
+<th>决策依据</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>ESM 的 <code>import</code> 是否被使用</td>
+<td>如果导出的变量/函数/类没有被 import，用不到就可以摇掉</td>
+</tr>
+<tr>
+<td><code>sideEffects: false</code> 标识</td>
+<td>标记整个模块可以被移除</td>
+</tr>
+<tr>
+<td>代码是否是纯函数或纯模块</td>
+<td>如 <code>const a = 1;</code> 没有副作用，就可以移除</td>
+</tr>
+<tr>
+<td>Terser 等压缩器是否能确认其为 dead code</td>
+<td>分析作用域与引用链进行精准裁剪</td>
+</tr>
+</tbody>
+</table>
+<hr>
+<h2><span id="四-实际案例分析">四、实际案例分析</span></h2>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// math.js</span></span><br><span class="line"><span class="keyword">export</span> <span class="keyword">const</span> add = <span class="function">(<span class="params">a, b</span>) =&gt;</span> a + b;</span><br><span class="line"><span class="keyword">export</span> <span class="keyword">const</span> sub = <span class="function">(<span class="params">a, b</span>) =&gt;</span> a - b;</span><br><span class="line"></span><br><span class="line"><span class="comment">// index.js</span></span><br><span class="line"><span class="keyword">import</span> &#123; add &#125; <span class="keyword">from</span> <span class="string">'./math.js'</span>;</span><br><span class="line"><span class="built_in">console</span>.log(add(<span class="number">1</span>, <span class="number">2</span>));</span><br></pre></td></tr></table></figure>
+<p><strong>只使用了 <code>add</code>，没使用 <code>sub</code>，如果满足以下条件，<code>sub</code> 就会被 tree shake 掉：</strong></p>
+<ul>
+<li>使用 <code>import</code>/<code>export</code>（不是 require）</li>
+<li><code>package.json</code> 配了 <code>&quot;sideEffects&quot;: false</code></li>
+<li>开启了 production 模式（Webpack 默认会压缩）</li>
+</ul>
+<p>打包后的代码中，<code>sub</code> 不会存在！</p>
+<hr>
+<h2><span id="五-注意事项和坑-️">五、注意事项和坑 ⚠️</span></h2>
+<table>
+<thead>
+<tr>
+<th>问题</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>使用 CommonJS 会导致 Tree Shaking 失效</td>
+<td><code>require()</code> 无法静态分析</td>
+</tr>
+<tr>
+<td>忽略 <code>sideEffects</code> 会导致副作用代码保留</td>
+<td>必须标记清楚</td>
+</tr>
+<tr>
+<td>动态导入/动态属性访问</td>
+<td>比如 <code>obj[methodName]()</code> 会让压缩器放弃优化</td>
+</tr>
+<tr>
+<td>class 中未使用的静态方法不会自动移除</td>
+<td>需要手动或使用 babel 插件（如 <code>babel-plugin-minify-dead-code-elimination</code>）</td>
+</tr>
+</tbody>
+</table>
+<hr>
+<h2><span id="总结">✅ 总结</span></h2>
+<table>
+<thead>
+<tr>
+<th>项目</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>是否支持</td>
+<td>仅支持 ES Module 模块</td>
+</tr>
+<tr>
+<td>是否标记副作用</td>
+<td><code>sideEffects: false</code> 是必要条件</td>
+</tr>
+<tr>
+<td>是否生产模式</td>
+<td>生产模式下会启用压缩器来最终删除代码</td>
+</tr>
+<tr>
+<td>是否实际引用</td>
+<td>仅保留被引用的 export，未引用的会被摇掉</td>
+</tr>
+</tbody>
+</table>
 
                 
 
@@ -271,12 +369,12 @@
                 <ul class="pager">
                     
                         <li class="previous">
-                            <a href="/jtblogs/article/react-中的api/" data-toggle="tooltip" data-placement="top" title="react 中的api">&larr; Previous Post</a>
+                            <a href="/jtblogs/article/Webpack-sideEffect/" data-toggle="tooltip" data-placement="top" title="Webpack sideEffect">&larr; Previous Post</a>
                         </li>
                     
                     
                         <li class="next">
-                            <a href="/jtblogs/article/Webpack-核心概念/" data-toggle="tooltip" data-placement="top" title="Webpack - 核心概念">Next Post &rarr;</a>
+                            <a href="/jtblogs/article/以太坊-EIP-3085/" data-toggle="tooltip" data-placement="top" title="以太坊-EIP-3085">Next Post &rarr;</a>
                         </li>
                     
                 </ul>
@@ -332,7 +430,7 @@
         <div id="toc" class="toc-article">
         <strong class="toc-title">Contents</strong>
         
-          <ol class="toc-nav"><li class="toc-nav-item toc-nav-level-1"><a class="toc-nav-link" href="#null"><span class="toc-nav-number">1.</span> <span class="toc-nav-text">⽂件哈希值</span></a></li><li class="toc-nav-item toc-nav-level-1"><a class="toc-nav-link" href="#null"><span class="toc-nav-number">2.</span> <span class="toc-nav-text">⽂件哈希值如何⽣成</span></a></li><li class="toc-nav-item toc-nav-level-1"><a class="toc-nav-link" href="#null"><span class="toc-nav-number">3.</span> <span class="toc-nav-text">JS 的⽂件哈希设置</span></a></li><li class="toc-nav-item toc-nav-level-1"><a class="toc-nav-link" href="#null"><span class="toc-nav-number">4.</span> <span class="toc-nav-text">CSS 的⽂件哈希设置</span></a></li><li class="toc-nav-item toc-nav-level-1"><a class="toc-nav-link" href="#null"><span class="toc-nav-number">5.</span> <span class="toc-nav-text">占位符介绍</span></a></li></ol>
+          <ol class="toc-nav"><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#null"><span class="toc-nav-number">1.</span> <span class="toc-nav-text">一、🌲 Tree Shaking 是什么？</span></a></li><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#null"><span class="toc-nav-number">2.</span> <span class="toc-nav-text">二、Webpack 中 Tree Shaking 的策略</span></a><ol class="toc-nav-child"><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#null"><span class="toc-nav-number">2.1.</span> <span class="toc-nav-text">✅ 1. 基于 ES Module 的静态结构分析</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#null"><span class="toc-nav-number">2.2.</span> <span class="toc-nav-text">✅ 2. 依赖于 sideEffects 字段的标注</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#null"><span class="toc-nav-number">2.3.</span> <span class="toc-nav-text">✅ 3. 依赖 Terser / SWC 等压缩器进行 Dead Code Elimination</span></a></li></ol></li><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#null"><span class="toc-nav-number">3.</span> <span class="toc-nav-text">三、Tree Shaking 的优化决策依据</span></a></li><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#null"><span class="toc-nav-number">4.</span> <span class="toc-nav-text">四、实际案例分析</span></a></li><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#null"><span class="toc-nav-number">5.</span> <span class="toc-nav-text">五、注意事项和坑 ⚠️</span></a></li><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#null"><span class="toc-nav-number">6.</span> <span class="toc-nav-text">✅ 总结</span></a></li></ol>
         
         </div>
       </aside>

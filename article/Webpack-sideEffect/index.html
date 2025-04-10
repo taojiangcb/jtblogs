@@ -14,11 +14,11 @@
     <script async defer src="https://buttons.github.io/buttons.js"></script>
     <title>
         
-          Webpack中的hash值 - 江涛 | Blog
+          Webpack sideEffect - 江涛 | Blog
         
     </title>
 
-    <link rel="canonical" href="https://taojiangcb.github.io/jtblogs/jtblogs/article/Webpack中的hash值/">
+    <link rel="canonical" href="https://taojiangcb.github.io/jtblogs/jtblogs/article/Webpack-sideEffect/">
 
     <!-- Bootstrap Core CSS -->
     <link rel="stylesheet" href="/jtblogs/css/bootstrap.min.css">
@@ -91,11 +91,11 @@
                               <a class="tag" href="/jtblogs/tags/#Webpack" title="Webpack">Webpack</a>
                             
                         </div>
-                        <h1>Webpack中的hash值</h1>
+                        <h1>Webpack sideEffect</h1>
                         <h2 class="subheading"></h2>
                         <span class="meta">
                             Posted by 江涛 on
-                            2019-12-30
+                            2025-04-10
                         </span>
                     </div>
                 
@@ -227,42 +227,86 @@
                 col-md-10 col-md-offset-1
                 post-container">
 
-                <h1><span id="文件哈希值">⽂件哈希值</span></h1>
-<p>⽂件哈希值就是打包后输出的⽂件名的后缀</p>
-<p>例如：3.bfb2172c.js app.d3635098.js</p>
-<h1><span id="文件哈希值如何生成">⽂件哈希值如何⽣成</span></h1>
+                <p><strong>直观感受 <code>sideEffects</code> 到底起了什么作用</strong>，特别是它和 Tree Shaking 是怎么配合的。</p>
+<hr>
+<h2><span id="目标对比有无-sideeffects-配置时tree-shaking-的行为差异">✅ 目标：对比有无 <code>sideEffects</code> 配置时，Tree Shaking 的行为差异</span></h2>
+<hr>
+<h2><span id="项目结构">🔧 项目结构</span></h2>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">demo/</span><br><span class="line">├── package.json</span><br><span class="line">├── src/</span><br><span class="line">│   ├── index.js</span><br><span class="line">│   ├── utils.js</span><br><span class="line">│   └── style.css</span><br></pre></td></tr></table></figure>
+<hr>
+<h2><span id="1-packagejson-示例">📦 1. <code>package.json</code> 示例</span></h2>
+<figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">  <span class="attr">"name"</span>: <span class="string">"tree-shaking-demo"</span>,</span><br><span class="line">  <span class="attr">"version"</span>: <span class="string">"1.0.0"</span>,</span><br><span class="line">  <span class="attr">"type"</span>: <span class="string">"module"</span>,</span><br><span class="line">  <span class="attr">"main"</span>: <span class="string">"dist/bundle.js"</span>,</span><br><span class="line">  "sideEffects": ["./src/style.css"], // 示例①：只保留有副作用的 style.css</span><br><span class="line">  "scripts": &#123;</span><br><span class="line">    "build": "webpack --mode=production"</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>可以切换为 <code>&quot;sideEffects&quot;: false</code> 或完全去掉该字段来测试效果差异。</p>
+</blockquote>
+<hr>
+<h2><span id="2-srcutilsjs">📁 2. <code>src/utils.js</code></span></h2>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">export</span> <span class="function"><span class="keyword">function</span> <span class="title">pureFunction</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">  <span class="built_in">console</span>.log(<span class="string">"✅ I am pure and unused."</span>);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">export</span> <span class="function"><span class="keyword">function</span> <span class="title">usedFunction</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">  <span class="built_in">console</span>.log(<span class="string">"✅ I am used."</span>);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<hr>
+<h2><span id="3-srcstylecss">📁 3. <code>src/style.css</code></span></h2>
+<figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="selector-tag">body</span> &#123;</span><br><span class="line">  <span class="attribute">background-color</span>: pink;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>引入后会影响页面样式，属于 <strong>副作用模块</strong>。</p>
+</blockquote>
+<hr>
+<h2><span id="4-srcindexjs">📁 4. <code>src/index.js</code></span></h2>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> <span class="string">'./style.css'</span>; <span class="comment">// 仅用于样式</span></span><br><span class="line"><span class="keyword">import</span> &#123; usedFunction, pureFunction &#125; <span class="keyword">from</span> <span class="string">'./utils.js'</span>;</span><br><span class="line"></span><br><span class="line">usedFunction();</span><br><span class="line"><span class="comment">// pureFunction 未被调用</span></span><br></pre></td></tr></table></figure>
+<hr>
+<h2><span id="5-webpackconfigjs">📦 5. <code>webpack.config.js</code></span></h2>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> path <span class="keyword">from</span> <span class="string">'path'</span>;</span><br><span class="line"></span><br><span class="line"><span class="keyword">export</span> <span class="keyword">default</span> &#123;</span><br><span class="line">  entry: <span class="string">'./src/index.js'</span>,</span><br><span class="line">  output: &#123;</span><br><span class="line">    filename: <span class="string">'bundle.js'</span>,</span><br><span class="line">    path: path.resolve(<span class="string">'dist'</span>),</span><br><span class="line">  &#125;,</span><br><span class="line">  <span class="built_in">module</span>: &#123;</span><br><span class="line">    rules: [</span><br><span class="line">      &#123;</span><br><span class="line">        test: <span class="regexp">/\.css$/</span>,</span><br><span class="line">        use: [<span class="string">'style-loader'</span>, <span class="string">'css-loader'</span>],</span><br><span class="line">      &#125;</span><br><span class="line">    ]</span><br><span class="line">  &#125;,</span><br><span class="line">  mode: <span class="string">'production'</span></span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+<hr>
+<h2><span id="实验步骤">🚀 实验步骤：</span></h2>
+<h3><span id="实验-a设置-quotsideeffectsquot-false">✅ 实验 A：设置 <code>&quot;sideEffects&quot;: false</code></span></h3>
+<figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">"sideEffects": false</span><br></pre></td></tr></table></figure>
 <ul>
-<li>
-<p>Hash：和整个项⽬的构建相关，只要项⽬⽂件有修改，整个项⽬构建的 hash 值就会更改</p>
-</li>
-<li>
-<p>Chunkhash：和 webpack 打包的 chunk 有关，不同的 entry 会⽣成不同的 chunkhash 值</p>
-</li>
-<li>
-<p>Contenthash：根据⽂件内容来定义 hash ，⽂件内容不变，则 contenthash 不变</p>
-</li>
+<li>✔️ <code>pureFunction</code> 没用到 → 会被摇掉</li>
+<li>❌ <code>style.css</code> 也会被摇掉！导致样式丢失！😱</li>
 </ul>
-<h1><span id="js-的文件哈希设置">JS 的⽂件哈希设置</span></h1>
-<p>设置 output 的 filename，使⽤ [chunkhash]</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">output: &#123;</span><br><span class="line">    filename: &apos;[name][chunkhash:8].js&apos;,</span><br><span class="line">    path: __dirname + &apos;/dist&apos;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>注意: chunkhash无法和热更新一起使用</p>
-<h1><span id="css-的文件哈希设置">CSS 的⽂件哈希设置</span></h1>
-<p>设置 MiniCssExtractPlugin 的 filename，</p>
-<p>使⽤ [contenthash]</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">npm install mini-css-extract-plugin -D</span><br><span class="line"></span><br><span class="line">const MiniCssExtractPlugin = require(&apos;mini-css-extract-plugin&apos;);</span><br><span class="line">plugins: [</span><br><span class="line">     new MiniCssExtractPlugin(&#123;</span><br><span class="line">         filename: `[name][contenthash:8].css`</span><br><span class="line">     &#125;);</span><br><span class="line">]</span><br></pre></td></tr></table></figure>
-<p>如果想把css提取出来，那么style-loader就不能用了，因为两个是互斥的，所以我们可以这样写:</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line">module: &#123;</span><br><span class="line">        rules: [</span><br><span class="line">            &#123;</span><br><span class="line">                test: /\.css$/,</span><br><span class="line">                use: [</span><br><span class="line">                    - &apos;style-loader&apos;,</span><br><span class="line">                    + MiniCssExtractPlugin.loader</span><br><span class="line">                    &apos;css-loader&apos;</span><br><span class="line">                ]</span><br><span class="line">            &#125;,</span><br><span class="line">            &#123;</span><br><span class="line">                test: /\.less$/,</span><br><span class="line">                use: [</span><br><span class="line">                    - &apos;style-loader&apos;,</span><br><span class="line">                    + MiniCssExtractPlugin.loader</span><br><span class="line">                    &apos;css-loader&apos;,</span><br><span class="line">                    &apos;less-loader&apos;</span><br><span class="line">                ]</span><br><span class="line">            &#125;,</span><br><span class="line">        ]</span><br><span class="line">&#125;,</span><br></pre></td></tr></table></figure>
-<p>图片&amp;字体文件哈希设置</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">module: &#123;</span><br><span class="line">rules: [</span><br><span class="line">    &#123;</span><br><span class="line">        test: /\.(png|svg|jpg|gif)$/,</span><br><span class="line">        use: [&#123;</span><br><span class="line">              loader: &apos;file-loader’,</span><br><span class="line">              options: &#123;</span><br><span class="line">                 name: &apos;img/[name][hash:8].[ext] &apos;</span><br><span class="line">              &#125;</span><br><span class="line">        &#125;]</span><br><span class="line">    &#125;</span><br><span class="line">]</span><br></pre></td></tr></table></figure>
-<h1><span id="占位符介绍">占位符介绍</span></h1>
+<hr>
+<h3><span id="实验-b设置-quotsideeffectsquot-quotsrcstylecssquot">✅ 实验 B：设置 <code>&quot;sideEffects&quot;: [&quot;./src/style.css&quot;]</code></span></h3>
+<figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">"sideEffects": ["./src/style.css"]</span><br></pre></td></tr></table></figure>
 <ul>
-<li>[ext] 资源名后缀</li>
-<li>[name] 文件名称</li>
-<li>[path] 文件的相对路径</li>
-<li>[folder] 文件所在的文件夹</li>
-<li>[contenthash] 文件的内容hash 默认md5生成</li>
-<li>[hash] 文件内容的hash 默认md5生成</li>
+<li>✔️ <code>pureFunction</code> 没用到 → 会被摇掉</li>
+<li>✔️ 样式 <code>style.css</code> 会保留</li>
 </ul>
+<hr>
+<h3><span id="实验-c不设置-sideeffects-字段即默认-true">✅ 实验 C：不设置 <code>sideEffects</code> 字段（即默认 <code>true</code>）</span></h3>
+<figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">// package.json 没有 sideEffects 字段</span><br></pre></td></tr></table></figure>
+<ul>
+<li>❌ 所有模块默认认为有副作用 → <code>pureFunction</code> 也不会被摇掉</li>
+<li>❌ Tree Shaking 无法正常进行，bundle 体积变大</li>
+</ul>
+<hr>
+<h2><span id="总结一句话">📌 总结一句话：</span></h2>
+<blockquote>
+<p><code>sideEffects</code> 告诉 Webpack：“我可以安全地移除这些模块，如果它们没被用到的话。”</p>
+</blockquote>
+<table>
+<thead>
+<tr>
+<th>配置</th>
+<th>会摇掉未用代码？</th>
+<th>会保留样式？</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>sideEffects: false</code></td>
+<td>✅ 是</td>
+<td>❌ 否</td>
+</tr>
+<tr>
+<td><code>sideEffects: [&quot;./src/style.css&quot;]</code></td>
+<td>✅ 是</td>
+<td>✅ 是</td>
+</tr>
+<tr>
+<td>不设置</td>
+<td>❌ 否</td>
+<td>✅ 是（但体积大）</td>
+</tr>
+</tbody>
+</table>
 
                 
 
@@ -270,13 +314,9 @@
                 <!-- Pager -->
                 <ul class="pager">
                     
-                        <li class="previous">
-                            <a href="/jtblogs/article/react-中的api/" data-toggle="tooltip" data-placement="top" title="react 中的api">&larr; Previous Post</a>
-                        </li>
-                    
                     
                         <li class="next">
-                            <a href="/jtblogs/article/Webpack-核心概念/" data-toggle="tooltip" data-placement="top" title="Webpack - 核心概念">Next Post &rarr;</a>
+                            <a href="/jtblogs/article/Webpack-中的shaking/" data-toggle="tooltip" data-placement="top" title="Webpack 中的shaking">Next Post &rarr;</a>
                         </li>
                     
                 </ul>
@@ -332,7 +372,7 @@
         <div id="toc" class="toc-article">
         <strong class="toc-title">Contents</strong>
         
-          <ol class="toc-nav"><li class="toc-nav-item toc-nav-level-1"><a class="toc-nav-link" href="#null"><span class="toc-nav-number">1.</span> <span class="toc-nav-text">⽂件哈希值</span></a></li><li class="toc-nav-item toc-nav-level-1"><a class="toc-nav-link" href="#null"><span class="toc-nav-number">2.</span> <span class="toc-nav-text">⽂件哈希值如何⽣成</span></a></li><li class="toc-nav-item toc-nav-level-1"><a class="toc-nav-link" href="#null"><span class="toc-nav-number">3.</span> <span class="toc-nav-text">JS 的⽂件哈希设置</span></a></li><li class="toc-nav-item toc-nav-level-1"><a class="toc-nav-link" href="#null"><span class="toc-nav-number">4.</span> <span class="toc-nav-text">CSS 的⽂件哈希设置</span></a></li><li class="toc-nav-item toc-nav-level-1"><a class="toc-nav-link" href="#null"><span class="toc-nav-number">5.</span> <span class="toc-nav-text">占位符介绍</span></a></li></ol>
+          <ol class="toc-nav"><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#null"><span class="toc-nav-number">1.</span> <span class="toc-nav-text">✅ 目标：对比有无 sideEffects 配置时，Tree Shaking 的行为差异</span></a></li><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#null"><span class="toc-nav-number">2.</span> <span class="toc-nav-text">🔧 项目结构</span></a></li><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#null"><span class="toc-nav-number">3.</span> <span class="toc-nav-text">📦 1. package.json 示例</span></a></li><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#null"><span class="toc-nav-number">4.</span> <span class="toc-nav-text">📁 2. src/utils.js</span></a></li><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#null"><span class="toc-nav-number">5.</span> <span class="toc-nav-text">📁 3. src/style.css</span></a></li><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#null"><span class="toc-nav-number">6.</span> <span class="toc-nav-text">📁 4. src/index.js</span></a></li><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#null"><span class="toc-nav-number">7.</span> <span class="toc-nav-text">📦 5. webpack.config.js</span></a></li><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#null"><span class="toc-nav-number">8.</span> <span class="toc-nav-text">🚀 实验步骤：</span></a><ol class="toc-nav-child"><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#null"><span class="toc-nav-number">8.1.</span> <span class="toc-nav-text">✅ 实验 A：设置 &quot;sideEffects&quot;: false</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#null"><span class="toc-nav-number">8.2.</span> <span class="toc-nav-text">✅ 实验 B：设置 &quot;sideEffects&quot;: [&quot;./src/style.css&quot;]</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#null"><span class="toc-nav-number">8.3.</span> <span class="toc-nav-text">✅ 实验 C：不设置 sideEffects 字段（即默认 true）</span></a></li></ol></li><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#null"><span class="toc-nav-number">9.</span> <span class="toc-nav-text">📌 总结一句话：</span></a></li></ol>
         
         </div>
       </aside>
