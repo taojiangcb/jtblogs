@@ -14,11 +14,11 @@
     <script async defer src="https://buttons.github.io/buttons.js"></script>
     <title>
         
-          浏览器原理3 - 江涛 | Blog
+          Webpack 的生命周期 - 江涛 | Blog
         
     </title>
 
-    <link rel="canonical" href="https://taojiangcb.github.io/jtblogs/jtblogs/article/浏览器原理3/">
+    <link rel="canonical" href="https://taojiangcb.github.io/jtblogs/jtblogs/article/Webpack-的生命周期/">
 
     <!-- Bootstrap Core CSS -->
     <link rel="stylesheet" href="/jtblogs/css/bootstrap.min.css">
@@ -88,14 +88,14 @@
                     <div class="post-heading">
                         <div class="tags">
                             
-                              <a class="tag" href="/jtblogs/tags/#浏览器" title="浏览器">浏览器</a>
+                              <a class="tag" href="/jtblogs/tags/#Webpack" title="Webpack">Webpack</a>
                             
                         </div>
-                        <h1>浏览器原理3</h1>
+                        <h1>Webpack 的生命周期</h1>
                         <h2 class="subheading"></h2>
                         <span class="meta">
                             Posted by 江涛 on
-                            2020-03-02
+                            2025-04-10
                         </span>
                     </div>
                 
@@ -227,86 +227,211 @@
                 col-md-10 col-md-offset-1
                 post-container">
 
-                <h1><span id="浏览器原理3">浏览器原理3</span></h1>
-<h2><span id="dom-树">DOM 树</span></h2>
-<p>从⽹络传给渲染引擎的 HTML ⽂件字节流是⽆法直接被渲染引擎理解的，所以要将其转化为渲染引擎<br>
-能够理解的内部结构，这个结构就是 DOM。</p>
-<ul>
-<li>从⻚⾯的视⻆来看，DOM 是⽣成⻚⾯的基础数据结构。</li>
-<li>从 JavaScript 脚本视⻆来看，DOM 提供给 JavaScript 脚本操作的接⼝，通过这套接⼝，<br>
-JavaScript 可以对 DOM 结构进⾏访问，从⽽改变⽂档的结构、样式和内容。</li>
-<li>从安全视⻆来看，DOM 是⼀道安全防护线，⼀些不安全的内容在 DOM 解析阶段就被拒之⻔外了。</li>
-</ul>
-<h2><span id="dom-树">DOM 树</span></h2>
-<ul>
-<li>HTML 解析器（HTMLParser）</li>
-<li>⽹络进程加载了多少数据，HTML 解析器便解析多少数据。</li>
-<li>⽹络进程接收到响应头之后，会根据响应头中的 content-type 字段来判断⽂件的类型，⽐如 contenttype<br>
-的值是“text/html”，那么浏览器就会判断这是⼀个 HTML 类型的⽂件，然后为该请求选择或<br>
-者创建⼀个渲染进程。渲染进程准备好之后，⽹络进程和渲染进程之间会建⽴⼀个共享数据的管道，<br>
-⽹络进程接收到数据后就往这个管道⾥⾯放，⽽渲染进程则从管道的另外⼀端不断地读取数据，并同<br>
-时将读取的数据“喂”给 HTML 解析器。你可以把这个管道想象成⼀个“⽔管”，⽹络进程接收到的<br>
-字节流像⽔⼀样倒进这个“⽔管”，⽽“⽔管”的另外⼀端是渲染进程的 HTML 解析器，它会动态接<br>
-收字节流，并将其解析为 DOM。</li>
-</ul>
-<p><img src="https://taojiangcb.github.io/jtblogs/article/%E6%B5%8F%E8%A7%88%E5%99%A8%E5%8E%9F%E7%90%863/WeChat52ad8493db2f402c53499c60012992c3.png" alt="image"></p>
+                <p>这个问题问得非常专业！Webpack 的执行过程是一个<strong>多阶段的生命周期系统</strong>，可以分为若干个阶段（phases）和周期（cycles）。理解这些执行阶段，有助于你更好地写插件、调试构建问题、优化性能。</p>
+<hr>
+<h2><span id="一句话总结">🚀 一句话总结</span></h2>
+<blockquote>
+<p><strong>Webpack 的执行周期由多个 Hook 生命周期阶段组成，每个阶段负责构建流程中的不同任务。</strong></p>
+</blockquote>
+<hr>
+<h2><span id="webpack-执行周期图简化版">🧱 Webpack 执行周期图（简化版）</span></h2>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><span class="line">初始化阶段（Initialization）</span><br><span class="line">│</span><br><span class="line">├── 环境准备：initialize → environment → afterEnvironment</span><br><span class="line">│</span><br><span class="line">├── 加载配置与插件：entryOption → afterPlugins</span><br><span class="line">│</span><br><span class="line">编译准备阶段（Compiler Setup）</span><br><span class="line">│</span><br><span class="line">├── run / watchRun</span><br><span class="line">│</span><br><span class="line">编译构建阶段（Compilation）</span><br><span class="line">│</span><br><span class="line">├── compile</span><br><span class="line">│   ├── thisCompilation</span><br><span class="line">│   ├── compilation</span><br><span class="line">│   ├── make （创建依赖图）</span><br><span class="line">│   ├── buildModule → finishModules</span><br><span class="line">│   └── seal（优化 chunk 和 module）</span><br><span class="line">│</span><br><span class="line">资源输出阶段（Emit Assets）</span><br><span class="line">│</span><br><span class="line">├── emit</span><br><span class="line">│   └── afterEmit</span><br><span class="line">│</span><br><span class="line">结束阶段（Done）</span><br><span class="line">│</span><br><span class="line">├── done / failed</span><br><span class="line">└── watchClose / shutdown</span><br></pre></td></tr></table></figure>
+<hr>
+<h2><span id="各阶段详细说明">🧩 各阶段详细说明</span></h2>
+<h3><span id="1️⃣-初始化阶段initialization-phase">1️⃣ 初始化阶段（Initialization Phase）</span></h3>
+<table>
+<thead>
+<tr>
+<th>生命周期</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>initialize</code></td>
+<td>Webpack CLI 创建 compiler 时触发</td>
+</tr>
+<tr>
+<td><code>environment</code></td>
+<td>设置 loader 解析、plugin 加载前</td>
+</tr>
+<tr>
+<td><code>afterEnvironment</code></td>
+<td>环境变量处理完成</td>
+</tr>
+<tr>
+<td><code>entryOption</code></td>
+<td>读取并处理 entry 配置</td>
+</tr>
+<tr>
+<td><code>afterPlugins</code></td>
+<td>所有插件已被挂载</td>
+</tr>
+</tbody>
+</table>
+<p>📌 插件常在这一阶段挂钩 <code>apply(compiler)</code>。</p>
+<hr>
+<h3><span id="2️⃣-编译准备阶段compiler-phase">2️⃣ 编译准备阶段（Compiler Phase）</span></h3>
+<table>
+<thead>
+<tr>
+<th>生命周期</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>beforeRun</code></td>
+<td>编译开始前调用（仅首次）</td>
+</tr>
+<tr>
+<td><code>run</code></td>
+<td>正常构建时触发</td>
+</tr>
+<tr>
+<td><code>watchRun</code></td>
+<td>监听模式下，文件变化重新编译时触发</td>
+</tr>
+</tbody>
+</table>
+<blockquote>
+<p>编译启动时的入口点。</p>
+</blockquote>
+<hr>
+<h3><span id="3️⃣-编译构建阶段compilation-phase">3️⃣ 编译构建阶段（Compilation Phase）</span></h3>
+<p>这是 Webpack 的核心阶段！</p>
+<table>
+<thead>
+<tr>
+<th>生命周期</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>compile</code></td>
+<td>构建过程开始，准备 Compilation 对象</td>
+</tr>
+<tr>
+<td><code>thisCompilation</code></td>
+<td>创建 Compilation 实例</td>
+</tr>
+<tr>
+<td><code>compilation</code></td>
+<td>Compilation 实例创建后立即触发</td>
+</tr>
+<tr>
+<td><code>make</code></td>
+<td>构建模块图开始，依赖分析</td>
+</tr>
+<tr>
+<td><code>buildModule</code></td>
+<td>开始构建模块（会多次调用）</td>
+</tr>
+<tr>
+<td><code>seal</code></td>
+<td>完成依赖图后，准备生成 chunk、优化</td>
+</tr>
+</tbody>
+</table>
+<p>📌 插件可在这里修改 module、chunk、asset、依赖图结构等。</p>
+<hr>
+<h3><span id="4️⃣-输出资源阶段emit-phase">4️⃣ 输出资源阶段（Emit Phase）</span></h3>
+<table>
+<thead>
+<tr>
+<th>生命周期</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>emit</code></td>
+<td>开始写文件之前（可改输出内容）</td>
+</tr>
+<tr>
+<td><code>afterEmit</code></td>
+<td>写完文件之后</td>
+</tr>
+</tbody>
+</table>
+<p>📌 可用于生成额外文件、修改输出内容、记录日志。</p>
+<hr>
+<h3><span id="5️⃣-结束阶段done-phase">5️⃣ 结束阶段（Done Phase）</span></h3>
+<table>
+<thead>
+<tr>
+<th>生命周期</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>done</code></td>
+<td>编译成功完成</td>
+</tr>
+<tr>
+<td><code>failed</code></td>
+<td>编译失败</td>
+</tr>
+<tr>
+<td><code>watchClose</code></td>
+<td>监听模式下关闭</td>
+</tr>
+<tr>
+<td><code>shutdown</code></td>
+<td>Webpack 完整退出前（用于清理资源）</td>
+</tr>
+</tbody>
+</table>
+<hr>
+<h2><span id="每个周期内部都可能触发很多事件">🧪 每个周期内部都可能触发很多事件</span></h2>
+<p>比如：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">compiler.hooks.compilation.tap(<span class="string">'MyPlugin'</span>, (compilation) =&gt; &#123;</span><br><span class="line">  compilation.hooks.optimizeModules.tap(<span class="string">'MyPlugin'</span>, () =&gt; &#123;</span><br><span class="line">    <span class="built_in">console</span>.log(<span class="string">'模块优化中'</span>);</span><br><span class="line">  &#125;);</span><br><span class="line"></span><br><span class="line">  compilation.hooks.processAssets.tap(<span class="string">'MyPlugin'</span>, () =&gt; &#123;</span><br><span class="line">    <span class="built_in">console</span>.log(<span class="string">'输出资源处理'</span>);</span><br><span class="line">  &#125;);</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+<hr>
+<h2><span id="一个完整周期对照表">🔍 一个完整周期对照表</span></h2>
+<table>
+<thead>
+<tr>
+<th>阶段</th>
+<th>Hook（常用）</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>初始化</td>
+<td><code>initialize</code>, <code>environment</code>, <code>entryOption</code>, <code>afterPlugins</code></td>
+</tr>
+<tr>
+<td>编译准备</td>
+<td><code>beforeRun</code>, <code>run</code>, <code>watchRun</code></td>
+</tr>
+<tr>
+<td>编译构建</td>
+<td><code>compile</code>, <code>compilation</code>, <code>make</code>, <code>buildModule</code>, <code>seal</code></td>
+</tr>
+<tr>
+<td>输出资源</td>
+<td><code>emit</code>, <code>afterEmit</code>, <code>processAssets</code></td>
+</tr>
+<tr>
+<td>编译结束</td>
+<td><code>done</code>, <code>failed</code>, <code>watchClose</code>, <code>shutdown</code></td>
+</tr>
+</tbody>
+</table>
+<hr>
+<h2><span id="总结">🎯 总结</span></h2>
+<p>Webpack 是事件驱动架构，核心流程是：</p>
 <ol>
-<li>通过分词器将字节流转换为 Token。</li>
-<li>第⼆个和第三个阶段是同步进⾏的，需要将 Token 解析为 DOM 节点，并将 DOM 节点添加到 DOM<br>
-树中。</li>
+<li><strong>创建 Compiler 实例</strong></li>
+<li><strong>生成 Compilation 对象</strong></li>
+<li><strong>构建依赖图</strong></li>
+<li><strong>生成 chunk 与 asset</strong></li>
+<li><strong>输出资源到磁盘</strong></li>
+<li><strong>触发最终完成事件</strong></li>
 </ol>
-<p>HTML 解析器维护了⼀个 Token 栈结构，该 Token 栈主要⽤来计算节点之间的⽗⼦关系，在第⼀个阶<br>
-段中⽣成的 Token 会被按照顺序压到这个栈中。</p>
-<ul>
-<li>
-<p>如果压⼊到栈中的是 StartTag Token，HTML 解析器会为该 Token 创建⼀个 DOM 节点，然后将该<br>
-节点加⼊到 DOM 树中，它的⽗节点就是栈中相邻的那个元素⽣成的节点。</p>
-</li>
-<li>
-<p>如果分词器解析出来是⽂本 Token，那么会⽣成⼀个⽂本节点，然后将该节点加⼊到 DOM 树中，<br>
-⽂本 Token 是不需要压⼊到栈中，它的⽗节点就是当前栈顶 Token 所对应的 DOM 节点。</p>
-</li>
-<li>
-<p>如果分词器解析出来的是 EndTag 标签，⽐如是 EndTag div，HTML 解析器会查看 Token 栈顶的<br>
-元素是否是 StarTag div，如果是，就将 StartTag div 从栈中弹出，表⽰该 div 元素解析完成。</p>
-</li>
-</ul>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">&lt;html&gt;</span><br><span class="line"> &lt;body&gt;</span><br><span class="line"> &lt;div&gt;1&lt;/div&gt;</span><br><span class="line"> &lt;div&gt;test&lt;/div&gt;</span><br><span class="line"> &lt;/body&gt;</span><br><span class="line">&lt;/html&gt;</span><br></pre></td></tr></table></figure>
-<p>HTML 解析器开始⼯作时，会默认创建了⼀个根为 document 的空 DOM 结构</p>
-<p><img src="https://taojiangcb.github.io/jtblogs/article/%E6%B5%8F%E8%A7%88%E5%99%A8%E5%8E%9F%E7%90%863/WeChat8a40bfbf8e76322e73cf664fa76d5e1f.png" alt="image"><br>
-<img src="https://taojiangcb.github.io/jtblogs/article/%E6%B5%8F%E8%A7%88%E5%99%A8%E5%8E%9F%E7%90%863/WeChat5ab7d5d6900b2678779a2b58eadf8954.png" alt="image"><br>
-<img src="https://taojiangcb.github.io/jtblogs/article/%E6%B5%8F%E8%A7%88%E5%99%A8%E5%8E%9F%E7%90%863/WeChatfeec94cc72d107d0e840223e727659a5.png" alt="image"><br>
-<img src="https://taojiangcb.github.io/jtblogs/article/%E6%B5%8F%E8%A7%88%E5%99%A8%E5%8E%9F%E7%90%863/WeChat262e994bb3a19dc93cd589a8d401c55a.png" alt="image"><br>
-<img src="https://taojiangcb.github.io/jtblogs/article/%E6%B5%8F%E8%A7%88%E5%99%A8%E5%8E%9F%E7%90%863/WeChat277700336ceb7ac8f2345a7425d267fb.png" alt="image"></p>
-<p>在实际⽣产环境中，HTML 源⽂件中既包含 CSS 和 JavaScript，⼜包含图⽚、⾳频、视频等⽂件，所<br>
-以处理过程远⽐上⾯这个⽰范 Demo 复杂。</p>
-<h2><span id="javascript-是如何影响-dom-生成的">JavaScript 是如何影响 DOM ⽣成的</span></h2>
-<ul>
-<li>
-<p>当解析到 内嵌 JavaScript 脚本标签时,HTML 解析器暂停⼯作，JavaScript 引擎介⼊，并执⾏<br>
-script 标签中的脚本， 脚本会修改 DOM 中内容，脚本执⾏完成之后，HTML 解析器恢复解析过<br>
-程，继续解析后续的内容，直⾄⽣成最终的 DOM</p>
-</li>
-<li>
-<p>JavaScript ⽂件的下载过程会阻塞 DOM 解析。</p>
-</li>
-<li>
-<p>Chrome 浏览器做了很多优化，其中⼀个主要的优化是预解析操作。当渲染引擎收到字节流之后，<br>
-会开启⼀个预解析线程，⽤来分析 HTML ⽂件中包含的 JavaScript、CSS 等相关⽂件，解析到相<br>
-关⽂件之后，预解析线程会提前下载这些⽂件。</p>
-</li>
-<li>
-<p>使⽤ CDN 来加速 JavaScript ⽂件的加载，压缩 JavaScript ⽂件的体积。</p>
-</li>
-<li>
-<p>可以将该 JavaScript 脚本设置为异步加载，通过 async 或 defer 来标记代码</p>
-</li>
-</ul>
-<p>在执⾏ JavaScript 之前，需要先解析 JavaScript 语句之上所有的 CSS 样式。所以如果代码⾥引⽤了<br>
-外部的 CSS ⽂件，那么在执⾏ JavaScript 之前，还需要等待外部的 CSS ⽂件下载完成，并解析⽣成<br>
-CSSOM 对象之后，才能执⾏ JavaScript 脚本。</p>
-<p><b>不管该脚本是否操纵了 CSSOM，都会执⾏ CSS ⽂件下载，解析操作，再执⾏ JavaScript 脚本。<br>
-总结：JavaScript 会阻塞 DOM ⽣成，⽽样式⽂件⼜会阻塞 JavaScript 的执⾏</b></p>
+<hr>
 
                 
 
@@ -315,12 +440,12 @@ CSSOM 对象之后，才能执⾏ JavaScript 脚本。</p>
                 <ul class="pager">
                     
                         <li class="previous">
-                            <a href="/jtblogs/article/InstanceOf-的实现/" data-toggle="tooltip" data-placement="top" title="InstanceOf 的实现">&larr; Previous Post</a>
+                            <a href="/jtblogs/article/Webpack-Compiler-hooks-是什么/" data-toggle="tooltip" data-placement="top" title="Webpack Compiler.hooks 是什么">&larr; Previous Post</a>
                         </li>
                     
                     
                         <li class="next">
-                            <a href="/jtblogs/article/nginx-gzip-压缩js配置/" data-toggle="tooltip" data-placement="top" title="nginx gzip 压缩js配置">Next Post &rarr;</a>
+                            <a href="/jtblogs/article/Webpack-sideEffect/" data-toggle="tooltip" data-placement="top" title="Webpack sideEffect">Next Post &rarr;</a>
                         </li>
                     
                 </ul>
@@ -376,7 +501,7 @@ CSSOM 对象之后，才能执⾏ JavaScript 脚本。</p>
         <div id="toc" class="toc-article">
         <strong class="toc-title">Contents</strong>
         
-          <ol class="toc-nav"><li class="toc-nav-item toc-nav-level-1"><a class="toc-nav-link" href="#null"><span class="toc-nav-number">1.</span> <span class="toc-nav-text">浏览器原理3</span></a><ol class="toc-nav-child"><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#null"><span class="toc-nav-number">1.1.</span> <span class="toc-nav-text">DOM 树</span></a></li><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#null"><span class="toc-nav-number">1.2.</span> <span class="toc-nav-text">DOM 树</span></a></li><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#null"><span class="toc-nav-number">1.3.</span> <span class="toc-nav-text">JavaScript 是如何影响 DOM ⽣成的</span></a></li></ol></li></ol>
+          <ol class="toc-nav"><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#null"><span class="toc-nav-number">1.</span> <span class="toc-nav-text">🚀 一句话总结</span></a></li><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#null"><span class="toc-nav-number">2.</span> <span class="toc-nav-text">🧱 Webpack 执行周期图（简化版）</span></a></li><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#null"><span class="toc-nav-number">3.</span> <span class="toc-nav-text">🧩 各阶段详细说明</span></a><ol class="toc-nav-child"><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#null"><span class="toc-nav-number">3.1.</span> <span class="toc-nav-text">1️⃣ 初始化阶段（Initialization Phase）</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#null"><span class="toc-nav-number">3.2.</span> <span class="toc-nav-text">2️⃣ 编译准备阶段（Compiler Phase）</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#null"><span class="toc-nav-number">3.3.</span> <span class="toc-nav-text">3️⃣ 编译构建阶段（Compilation Phase）</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#null"><span class="toc-nav-number">3.4.</span> <span class="toc-nav-text">4️⃣ 输出资源阶段（Emit Phase）</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#null"><span class="toc-nav-number">3.5.</span> <span class="toc-nav-text">5️⃣ 结束阶段（Done Phase）</span></a></li></ol></li><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#null"><span class="toc-nav-number">4.</span> <span class="toc-nav-text">🧪 每个周期内部都可能触发很多事件</span></a></li><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#null"><span class="toc-nav-number">5.</span> <span class="toc-nav-text">🔍 一个完整周期对照表</span></a></li><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#null"><span class="toc-nav-number">6.</span> <span class="toc-nav-text">🎯 总结</span></a></li></ol>
         
         </div>
       </aside>
@@ -396,7 +521,7 @@ CSSOM 对象之后，才能执⾏ JavaScript 脚本。</p>
                     <h5><a href="/jtblogs/tags/">FEATURED TAGS</a></h5>
                     <div class="tags">
                        
-                          <a class="tag" href="/jtblogs/tags/#浏览器" title="浏览器">浏览器</a>
+                          <a class="tag" href="/jtblogs/tags/#Webpack" title="Webpack">Webpack</a>
                         
                     </div>
                 </section>
