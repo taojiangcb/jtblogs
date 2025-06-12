@@ -1,0 +1,708 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<!-- Head tag -->
+<head><meta name="generator" content="Hexo 3.9.0">
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="google-site-verification" content="xBT4GhYoi5qRD5tr338pgPM5OWHHIDR6mNg1a3euekI">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content>
+    <meta name="keyword" content>
+    <link rel="shortcut icon" href="/jtblogs/favicon.ico">
+    <!-- Place this tag in your head or just before your close body tag. -->
+    <script async defer src="https://buttons.github.io/buttons.js"></script>
+    <title>
+        
+          Webpack 中的shaking - 江涛 | Blog
+        
+    </title>
+
+    <link rel="canonical" href="https://taojiangcb.github.io/jtblogs/jtblogs/article/Webpack-中的shaking/">
+
+    <!-- Bootstrap Core CSS -->
+    <link rel="stylesheet" href="/jtblogs/css/bootstrap.min.css">
+
+    <!-- Custom CSS --> 
+    <link rel="stylesheet" href="/jtblogs/css/beantech.min.css">
+
+    <link rel="stylesheet" href="/jtblogs/css/donate.css">
+    
+    <!-- Pygments Highlight CSS -->
+    <link rel="stylesheet" href="/jtblogs/css/highlight.css">
+
+    <link rel="stylesheet" href="/jtblogs/css/widget.css">
+
+    <link rel="stylesheet" href="/jtblogs/css/rocket.css">
+
+    <link rel="stylesheet" href="/jtblogs/css/signature.css">
+
+    <link rel="stylesheet" href="/jtblogs/css/toc.css">
+
+    <!-- Custom Fonts -->
+    <!-- <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css" rel="stylesheet" type="text/css"> -->
+    <!-- Hux change font-awesome CDN to qiniu -->
+    <link href="https://cdn.staticfile.org/font-awesome/4.5.0/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+
+
+    <!-- Hux Delete, sad but pending in China
+    <link href='http://fonts.googleapis.com/css?family=Lora:400,700,400italic,700italic' rel='stylesheet' type='text/css'>
+    <link href='http://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800' rel='stylesheet' type='text/
+    css'>
+    -->
+
+
+    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+        <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+        <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+    <![endif]-->
+
+    <!-- ga & ba script hoook -->
+    <script></script>
+</head>
+
+
+<!-- hack iOS CSS :active style -->
+<body ontouchstart="">
+	<!-- Modified by Yu-Hsuan Yen -->
+<!-- Post Header -->
+<style type="text/css">
+    header.intro-header{
+        
+            background-image: url('/jtblogs/img/article_header/article_bg.jpg')
+            /*post*/
+        
+    }
+    
+</style>
+
+<header class="intro-header" >
+    <!-- Signature -->
+    <div id="signature">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+                
+                    <div class="post-heading">
+                        <div class="tags">
+                            
+                              <a class="tag" href="/jtblogs/tags/#Webpack" title="Webpack">Webpack</a>
+                            
+                        </div>
+                        <h1>Webpack 中的shaking</h1>
+                        <h2 class="subheading"></h2>
+                        <span class="meta">
+                            Posted by 江涛 on
+                            2025-04-10
+                        </span>
+                    </div>
+                
+
+
+                </div>
+            </div>
+        </div>
+    </div>
+</header>
+
+	
+    <!-- Navigation -->
+<nav class="navbar navbar-default navbar-custom navbar-fixed-top">
+    <div class="container-fluid">
+        <!-- Brand and toggle get grouped for better mobile display -->
+        <div class="navbar-header page-scroll">
+            <button type="button" class="navbar-toggle">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href="/jtblogs/">江涛</a>
+        </div>
+
+        <!-- Collect the nav links, forms, and other content for toggling -->
+        <!-- Known Issue, found by Hux:
+            <nav>'s height woule be hold on by its content.
+            so, when navbar scale out, the <nav> will cover tags.
+            also mask any touch event of tags, unfortunately.
+        -->
+        <div id="huxblog_navbar">
+            <div class="navbar-collapse">
+                <ul class="nav navbar-nav navbar-right">
+                    <li>
+                        <a href="/jtblogs/">Home</a>
+                    </li>
+
+                    
+
+                        
+                    
+
+                        
+                    
+
+                        
+                    
+
+                        
+                    
+
+                        
+                    
+
+                        
+                    
+
+                        
+                        <li>
+                            <a href="/jtblogs/tags/">Tags</a>
+                        </li>
+                        
+                    
+
+                        
+                        <li>
+                            <a href="/jtblogs/about/">About</a>
+                        </li>
+                        
+                    
+
+                        
+                        <li>
+                            <a href="/jtblogs/archive/">Archives</a>
+                        </li>
+                        
+                    
+                    
+                </ul>
+            </div>
+        </div>
+        <!-- /.navbar-collapse -->
+    </div>
+    <!-- /.container -->
+</nav>
+<script>
+    // Drop Bootstarp low-performance Navbar
+    // Use customize navbar with high-quality material design animation
+    // in high-perf jank-free CSS3 implementation
+    var $body   = document.body;
+    var $toggle = document.querySelector('.navbar-toggle');
+    var $navbar = document.querySelector('#huxblog_navbar');
+    var $collapse = document.querySelector('.navbar-collapse');
+
+    $toggle.addEventListener('click', handleMagic)
+    function handleMagic(e){
+        if ($navbar.className.indexOf('in') > 0) {
+        // CLOSE
+            $navbar.className = " ";
+            // wait until animation end.
+            setTimeout(function(){
+                // prevent frequently toggle
+                if($navbar.className.indexOf('in') < 0) {
+                    $collapse.style.height = "0px"
+                }
+            },400)
+        }else{
+        // OPEN
+            $collapse.style.height = "auto"
+            $navbar.className += " in";
+        }
+    }
+</script>
+
+
+    <!-- Main Content -->
+    <!-- Modify by Yu-Hsuan Yen -->
+
+<!-- Post Content -->
+<article>
+    <div class="container">
+        <div class="row">
+
+            <!-- Post Container -->
+            <div class="
+                col-lg-8 col-lg-offset-2
+                col-md-10 col-md-offset-1
+                post-container">
+
+                <p>这是个非常核心的问题！Webpack 的 Tree Shaking 是现代前端构建优化的关键特性之一，我们可以从 <strong>策略、实现原理、优化决策依据</strong> 三个维度来回答这个问题：</p>
+<hr>
+<h2><span id="一-tree-shaking-是什么">一、🌲 Tree Shaking 是什么？</span></h2>
+<p>Tree Shaking（摇树优化）是指在构建过程中<strong>移除 JavaScript 中未使用（dead code）的代码</strong>，从而减小打包体积、提升运行效率。</p>
+<hr>
+<h2><span id="二-webpack-中-tree-shaking-的策略">二、Webpack 中 Tree Shaking 的策略</span></h2>
+<p>Webpack 的 Tree Shaking 策略其实并不是直接去“找出哪些代码没用”，而是通过以下三个关键策略配合实现的：</p>
+<h3><span id="1-基于-es-module-的静态结构分析">✅ 1. <strong>基于 ES Module 的静态结构分析</strong></span></h3>
+<ul>
+<li>只有 ES Module（<code>import/export</code>）具有<strong>静态结构</strong>，Webpack 才能在构建时分析依赖关系。</li>
+<li>CommonJS（<code>require/exports</code>）是动态的，不支持 Tree Shaking。</li>
+</ul>
+<blockquote>
+<p>✅ 所以第一策略：<strong>只对 ESM 模块进行 tree shaking</strong></p>
+</blockquote>
+<hr>
+<h3><span id="2-依赖于-sideeffects-字段的标注">✅ 2. <strong>依赖于 <code>sideEffects</code> 字段的标注</strong></span></h3>
+<p><code>package.json</code> 中的 <code>sideEffects</code> 字段告诉 Webpack 哪些文件是“纯的”，没有副作用。</p>
+<figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">  <span class="attr">"sideEffects"</span>: <span class="literal">false</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<ul>
+<li>如果某个模块或导入被标记为无副作用（pure），并且没有被引用，那么 Webpack 就会放心地移除它。</li>
+<li>如果你有某些 CSS 导入或者 polyfill 模块有副作用，就要排除：</li>
+</ul>
+<figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">  <span class="attr">"sideEffects"</span>: [<span class="string">"./src/styles.css"</span>, <span class="string">"./src/polyfill.js"</span>]</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>✅ 第二策略：<strong>需要 <code>sideEffects: false</code> 的配合使用</strong></p>
+</blockquote>
+<hr>
+<h3><span id="3-依赖-terser-swc-等压缩器进行-dead-code-elimination">✅ 3. <strong>依赖 Terser / SWC 等压缩器进行 Dead Code Elimination</strong></span></h3>
+<p>Webpack 自身不会直接删除“未引用的变量”，它只是标记（标注为 <code>unused</code>），真正“摇掉”的过程是在压缩阶段完成的。</p>
+<p>默认用的是 <a href="https://github.com/webpack-contrib/terser-webpack-plugin" target="_blank" rel="noopener"><code>terser-webpack-plugin</code></a>：</p>
+<ul>
+<li>会移除未使用的 import/export。</li>
+<li>移除未执行的分支代码。</li>
+<li>移除多余的函数声明。</li>
+</ul>
+<blockquote>
+<p>✅ 第三策略：<strong>通过压缩器来做最终 dead code 删除</strong></p>
+</blockquote>
+<hr>
+<h2><span id="三-tree-shaking-的优化决策依据">三、Tree Shaking 的优化决策依据</span></h2>
+<p>Webpack 在做 Tree Shaking 时，主要基于以下信息来判断是否可以移除代码：</p>
+<table>
+<thead>
+<tr>
+<th>决策依据</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>ESM 的 <code>import</code> 是否被使用</td>
+<td>如果导出的变量/函数/类没有被 import，用不到就可以摇掉</td>
+</tr>
+<tr>
+<td><code>sideEffects: false</code> 标识</td>
+<td>标记整个模块可以被移除</td>
+</tr>
+<tr>
+<td>代码是否是纯函数或纯模块</td>
+<td>如 <code>const a = 1;</code> 没有副作用，就可以移除</td>
+</tr>
+<tr>
+<td>Terser 等压缩器是否能确认其为 dead code</td>
+<td>分析作用域与引用链进行精准裁剪</td>
+</tr>
+</tbody>
+</table>
+<hr>
+<h2><span id="四-实际案例分析">四、实际案例分析</span></h2>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// math.js</span></span><br><span class="line"><span class="keyword">export</span> <span class="keyword">const</span> add = <span class="function">(<span class="params">a, b</span>) =&gt;</span> a + b;</span><br><span class="line"><span class="keyword">export</span> <span class="keyword">const</span> sub = <span class="function">(<span class="params">a, b</span>) =&gt;</span> a - b;</span><br><span class="line"></span><br><span class="line"><span class="comment">// index.js</span></span><br><span class="line"><span class="keyword">import</span> &#123; add &#125; <span class="keyword">from</span> <span class="string">'./math.js'</span>;</span><br><span class="line"><span class="built_in">console</span>.log(add(<span class="number">1</span>, <span class="number">2</span>));</span><br></pre></td></tr></table></figure>
+<p><strong>只使用了 <code>add</code>，没使用 <code>sub</code>，如果满足以下条件，<code>sub</code> 就会被 tree shake 掉：</strong></p>
+<ul>
+<li>使用 <code>import</code>/<code>export</code>（不是 require）</li>
+<li><code>package.json</code> 配了 <code>&quot;sideEffects&quot;: false</code></li>
+<li>开启了 production 模式（Webpack 默认会压缩）</li>
+</ul>
+<p>打包后的代码中，<code>sub</code> 不会存在！</p>
+<hr>
+<h2><span id="五-注意事项和坑-️">五、注意事项和坑 ⚠️</span></h2>
+<table>
+<thead>
+<tr>
+<th>问题</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>使用 CommonJS 会导致 Tree Shaking 失效</td>
+<td><code>require()</code> 无法静态分析</td>
+</tr>
+<tr>
+<td>忽略 <code>sideEffects</code> 会导致副作用代码保留</td>
+<td>必须标记清楚</td>
+</tr>
+<tr>
+<td>动态导入/动态属性访问</td>
+<td>比如 <code>obj[methodName]()</code> 会让压缩器放弃优化</td>
+</tr>
+<tr>
+<td>class 中未使用的静态方法不会自动移除</td>
+<td>需要手动或使用 babel 插件（如 <code>babel-plugin-minify-dead-code-elimination</code>）</td>
+</tr>
+</tbody>
+</table>
+<hr>
+<h2><span id="总结">✅ 总结</span></h2>
+<table>
+<thead>
+<tr>
+<th>项目</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>是否支持</td>
+<td>仅支持 ES Module 模块</td>
+</tr>
+<tr>
+<td>是否标记副作用</td>
+<td><code>sideEffects: false</code> 是必要条件</td>
+</tr>
+<tr>
+<td>是否生产模式</td>
+<td>生产模式下会启用压缩器来最终删除代码</td>
+</tr>
+<tr>
+<td>是否实际引用</td>
+<td>仅保留被引用的 export，未引用的会被摇掉</td>
+</tr>
+</tbody>
+</table>
+
+                
+
+                <hr>
+                <!-- Pager -->
+                <ul class="pager">
+                    
+                        <li class="previous">
+                            <a href="/jtblogs/article/Webpack-sideEffect/" data-toggle="tooltip" data-placement="top" title="Webpack sideEffect">&larr; Previous Post</a>
+                        </li>
+                    
+                    
+                        <li class="next">
+                            <a href="/jtblogs/article/以太坊-EIP-3085/" data-toggle="tooltip" data-placement="top" title="以太坊-EIP-3085">Next Post &rarr;</a>
+                        </li>
+                    
+                </ul>
+
+                <br>
+
+                <!--打赏-->
+                
+                <!--打赏-->
+
+                <br>
+                <!--分享-->
+                
+                    <div class="social-share"  data-wechat-qrcode-helper="" align="center"></div>
+                    <!--  css & js -->
+                    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/social-share.js/1.0.16/css/share.min.css">
+                    <script src="https://cdnjs.cloudflare.com/ajax/libs/social-share.js/1.0.16/js/social-share.min.js"></script>
+                
+                <!--分享-->
+                <br>                       
+                
+                <!-- require APlayer -->
+                
+
+                <!-- duoshuo Share start -->
+                
+                <!-- 多说 Share end-->
+
+                <!-- 多说评论框 start -->
+                
+                <!-- 多说评论框 end -->
+
+                <!-- disqus comment start -->
+                
+                <!-- disqus comment end -->
+
+                
+
+            </div>
+            
+            <!-- Tabe of Content -->
+            <!-- Table of Contents -->
+
+  
+    <style>
+      span.toc-nav-number{
+        display: none
+      }
+    </style>
+  
+    
+      <aside id="sidebar">
+        <div id="toc" class="toc-article">
+        <strong class="toc-title">Contents</strong>
+        
+          <ol class="toc-nav"><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#null"><span class="toc-nav-number">1.</span> <span class="toc-nav-text">一、🌲 Tree Shaking 是什么？</span></a></li><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#null"><span class="toc-nav-number">2.</span> <span class="toc-nav-text">二、Webpack 中 Tree Shaking 的策略</span></a><ol class="toc-nav-child"><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#null"><span class="toc-nav-number">2.1.</span> <span class="toc-nav-text">✅ 1. 基于 ES Module 的静态结构分析</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#null"><span class="toc-nav-number">2.2.</span> <span class="toc-nav-text">✅ 2. 依赖于 sideEffects 字段的标注</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#null"><span class="toc-nav-number">2.3.</span> <span class="toc-nav-text">✅ 3. 依赖 Terser / SWC 等压缩器进行 Dead Code Elimination</span></a></li></ol></li><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#null"><span class="toc-nav-number">3.</span> <span class="toc-nav-text">三、Tree Shaking 的优化决策依据</span></a></li><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#null"><span class="toc-nav-number">4.</span> <span class="toc-nav-text">四、实际案例分析</span></a></li><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#null"><span class="toc-nav-number">5.</span> <span class="toc-nav-text">五、注意事项和坑 ⚠️</span></a></li><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#null"><span class="toc-nav-number">6.</span> <span class="toc-nav-text">✅ 总结</span></a></li></ol>
+        
+        </div>
+      </aside>
+    
+
+                
+            <!-- Sidebar Container -->
+            <div class="
+                col-lg-8 col-lg-offset-2
+                col-md-10 col-md-offset-1
+                sidebar-container">
+
+                <!-- Featured Tags -->
+                
+                <section>
+                    <!-- no hr -->
+                    <h5><a href="/jtblogs/tags/">FEATURED TAGS</a></h5>
+                    <div class="tags">
+                       
+                          <a class="tag" href="/jtblogs/tags/#Webpack" title="Webpack">Webpack</a>
+                        
+                    </div>
+                </section>
+                
+
+                <!-- Friends Blog -->
+                
+                <hr>
+                <h5>FRIENDS</h5>
+                <ul class="list-inline">
+
+                    
+                </ul>
+                
+            </div>
+        </div>
+    </div>
+</article>
+
+
+
+
+
+
+
+
+<!-- async load function -->
+<script>
+    function async(u, c) {
+      var d = document, t = 'script',
+          o = d.createElement(t),
+          s = d.getElementsByTagName(t)[0];
+      o.src = u;
+      if (c) { o.addEventListener('load', function (e) { c(null, e); }, false); }
+      s.parentNode.insertBefore(o, s);
+    }
+</script>
+<!-- anchor-js, Doc:http://bryanbraun.github.io/anchorjs/ -->
+<script>
+    async("https://cdn.bootcss.com/anchor-js/1.1.1/anchor.min.js",function(){
+        anchors.options = {
+          visible: 'hover',
+          placement: 'left',
+          icon: 'ℬ'
+        };
+        anchors.add().remove('.intro-header h1').remove('.subheading').remove('.sidebar-container h5');
+    })
+</script>
+<style>
+    /* place left on bigger screen */
+    @media all and (min-width: 800px) {
+        .anchorjs-link{
+            position: absolute;
+            left: -0.75em;
+            font-size: 1.1em;
+            margin-top : -0.1em;
+        }
+    }
+</style>
+
+
+<!-- chrome Firefox 中文锚点定位失效-->
+<script src="https://cdn.bootcss.com/jquery/3.3.1/jquery.js"></script>
+<!-- smooth scroll behavior polyfill  -->
+<script type="text/javascript" src="/js/smoothscroll.js"></script>
+<script>
+        $('#toc').on('click','a',function(a){
+            // var isChrome = window.navigator.userAgent.indexOf("Chrome") !== -1;
+            // console.log(window.navigator.userAgent,isChrome)
+                // if(isChrome) {
+                    // console.log(a.currentTarget.outerHTML);
+                    // console.log($(a.currentTarget).attr("href"));
+                    //跳转到指定锚点
+                    // document.getElementById(a.target.innerText.toLowerCase()).scrollIntoView(true);
+                    document.getElementById($(a.currentTarget).attr("href").replace("#","")).scrollIntoView({behavior: 'smooth' });
+                // }
+        })  
+</script>
+
+
+    <!-- Footer -->
+    <!-- Footer -->
+<footer>
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+                <ul class="list-inline text-center">
+                    
+                            
+                                    
+
+                                            
+
+                                                    
+
+                                                            
+                                                                <li>
+                                                                    <a target="_blank"
+                                                                        href="https://github.com/taojiangcb">
+                                                                        <span class="fa-stack fa-lg">
+                                                                            <i class="fa fa-circle fa-stack-2x"></i>
+                                                                            <i
+                                                                                class="fa fa-github fa-stack-1x fa-inverse"></i>
+                                                                        </span>
+                                                                    </a>
+                                                                </li>
+                                                                
+
+                                                                    
+
+                </ul>
+
+                <p class="copyright text-muted">
+                    Copyright &copy; 江涛
+                        2025
+                            <br>
+                            Theme by <a href="http://beantech.org">BeanTech</a>
+                            <span style="display: inline-block; margin: 0 5px;">
+                                <i class="fa fa-heart"></i>
+                            </span>
+                            re-Ported by <a href="https://taojiangcb.github.io/jtblogs">江涛</a> |
+                            <iframe style="margin-left: 2px; margin-bottom:-5px;" frameborder="0" scrolling="0"
+                                width="91px" height="20px"
+                                src="https://ghbtns.com/github-btn.html?user=taojiangcb&repo=jtblogs&type=star&count=true">
+                            </iframe>
+                </p>
+                <p class="copyright text-muted" style="margin:0">
+                    <script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+                    <span id="busuanzi_container_site_pv">
+                        总访问量<span id="busuanzi_value_site_pv"></span>次
+                    </span>
+                    <span id="busuanzi_container_site_uv">
+                        总访客数<span id="busuanzi_value_site_uv"></span>人
+                    </span>
+                </p>
+            </div>
+        </div>
+    </div>
+</footer>
+
+<!-- jQuery -->
+<script src="/jtblogs/js/jquery.min.js"></script>
+
+    <!-- Bootstrap Core JavaScript -->
+    <script src="/jtblogs/js/bootstrap.min.js"></script>
+
+        <!-- Custom Theme JavaScript -->
+        <script src="/jtblogs/js/hux-blog.min.js"></script>
+
+
+            <!-- async load function -->
+            <script>
+                function async(u, c) {
+                    var d = document, t = 'script',
+                        o = d.createElement(t),
+                        s = d.getElementsByTagName(t)[0];
+                    o.src = u;
+                    if (c) { o.addEventListener('load', function (e) { c(null, e); }, false); }
+                    s.parentNode.insertBefore(o, s);
+                }
+            </script>
+
+            <!-- 
+     Because of the native support for backtick-style fenced code blocks 
+     right within the Markdown is landed in Github Pages, 
+     From V1.6, There is no need for Highlight.js, 
+     so Huxblog drops it officially.
+
+     - https://github.com/blog/2100-github-pages-now-faster-and-simpler-with-jekyll-3-0  
+     - https://help.github.com/articles/creating-and-highlighting-code-blocks/    
+-->
+            <!--
+    <script>
+        async("http://cdn.bootcss.com/highlight.js/8.6/highlight.min.js", function(){
+            hljs.initHighlightingOnLoad();
+        })
+    </script>
+    <link href="http://cdn.bootcss.com/highlight.js/8.6/styles/github.min.css" rel="stylesheet">
+-->
+
+
+            <!-- jquery.tagcloud.js -->
+            <script>
+                // only load tagcloud.js in tag.html
+                if ($('#tag_cloud').length !== 0) {
+                    async("https://taojiangcb.github.io/jtblogs/js/jquery.tagcloud.js", function () {
+                        $.fn.tagcloud.defaults = {
+                            //size: {start: 1, end: 1, unit: 'em'},
+                            color: { start: '#bbbbee', end: '#0085a1' },
+                        };
+                        $('#tag_cloud a').tagcloud();
+                    })
+                }
+            </script>
+
+            <!--fastClick.js -->
+            <script>
+                async("https://cdn.bootcss.com/fastclick/1.0.6/fastclick.min.js", function () {
+                    var $nav = document.querySelector("nav");
+                    if ($nav) FastClick.attach($nav);
+                })
+            </script>
+
+
+            <!-- Google Analytics -->
+
+            
+                <script>
+                    // dynamic User by Hux
+                    var _gaId = 'UA-XXXXXXXX-X';
+                    var _gaDomain = 'yoursite';
+
+                    // Originial
+                    (function (i, s, o, g, r, a, m) {
+                        i['GoogleAnalyticsObject'] = r; i[r] = i[r] || function () {
+                            (i[r].q = i[r].q || []).push(arguments)
+                        }, i[r].l = 1 * new Date(); a = s.createElement(o),
+                            m = s.getElementsByTagName(o)[0]; a.async = 1; a.src = g; m.parentNode.insertBefore(a, m)
+                    })(window, document, 'script', '//www.google-analytics.com/analytics.js', 'ga');
+
+                    ga('create', _gaId, _gaDomain);
+                    ga('send', 'pageview');
+                </script>
+
+                
+
+
+                    <!-- Baidu Tongji -->
+                    
+                        <script>
+                            // dynamic User by Hux
+                            var _baId = 'xxx';
+
+                            // Originial
+                            var _hmt = _hmt || [];
+                            (function () {
+                                var hm = document.createElement("script");
+                                hm.src = "//hm.baidu.com/hm.js?" + _baId;
+                                var s = document.getElementsByTagName("script")[0];
+                                s.parentNode.insertBefore(hm, s);
+                            })();
+                        </script>
+                        
+
+
+	<a id="rocket" href="#top" class=""></a>
+	<script type="text/javascript" src="/jtblogs/js/totop.js?v=1.0.0" async=""></script>
+    <script type="text/javascript" src="/jtblogs/js/toc.js?v=1.0.0" async=""></script>
+<!-- Image to hack wechat -->
+<img src="https://taojiangcb.github.io/jtblogs/img/icon_wechat.png" width="0" height="0" />
+<!-- Migrate from head to bottom, no longer block render and still work -->
+
+</body>
+
+</html>

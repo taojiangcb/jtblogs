@@ -1,0 +1,747 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<!-- Head tag -->
+<head><meta name="generator" content="Hexo 3.9.0">
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="google-site-verification" content="xBT4GhYoi5qRD5tr338pgPM5OWHHIDR6mNg1a3euekI">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content>
+    <meta name="keyword" content>
+    <link rel="shortcut icon" href="/jtblogs/favicon.ico">
+    <!-- Place this tag in your head or just before your close body tag. -->
+    <script async defer src="https://buttons.github.io/buttons.js"></script>
+    <title>
+        
+          Webpack Compiler.hooks 是什么 - 江涛 | Blog
+        
+    </title>
+
+    <link rel="canonical" href="https://taojiangcb.github.io/jtblogs/jtblogs/article/Webpack-Compiler-hooks-是什么/">
+
+    <!-- Bootstrap Core CSS -->
+    <link rel="stylesheet" href="/jtblogs/css/bootstrap.min.css">
+
+    <!-- Custom CSS --> 
+    <link rel="stylesheet" href="/jtblogs/css/beantech.min.css">
+
+    <link rel="stylesheet" href="/jtblogs/css/donate.css">
+    
+    <!-- Pygments Highlight CSS -->
+    <link rel="stylesheet" href="/jtblogs/css/highlight.css">
+
+    <link rel="stylesheet" href="/jtblogs/css/widget.css">
+
+    <link rel="stylesheet" href="/jtblogs/css/rocket.css">
+
+    <link rel="stylesheet" href="/jtblogs/css/signature.css">
+
+    <link rel="stylesheet" href="/jtblogs/css/toc.css">
+
+    <!-- Custom Fonts -->
+    <!-- <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css" rel="stylesheet" type="text/css"> -->
+    <!-- Hux change font-awesome CDN to qiniu -->
+    <link href="https://cdn.staticfile.org/font-awesome/4.5.0/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+
+
+    <!-- Hux Delete, sad but pending in China
+    <link href='http://fonts.googleapis.com/css?family=Lora:400,700,400italic,700italic' rel='stylesheet' type='text/css'>
+    <link href='http://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800' rel='stylesheet' type='text/
+    css'>
+    -->
+
+
+    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+        <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+        <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+    <![endif]-->
+
+    <!-- ga & ba script hoook -->
+    <script></script>
+</head>
+
+
+<!-- hack iOS CSS :active style -->
+<body ontouchstart="">
+	<!-- Modified by Yu-Hsuan Yen -->
+<!-- Post Header -->
+<style type="text/css">
+    header.intro-header{
+        
+            background-image: url('/jtblogs/img/article_header/article_bg.jpg')
+            /*post*/
+        
+    }
+    
+</style>
+
+<header class="intro-header" >
+    <!-- Signature -->
+    <div id="signature">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+                
+                    <div class="post-heading">
+                        <div class="tags">
+                            
+                              <a class="tag" href="/jtblogs/tags/#Webpack" title="Webpack">Webpack</a>
+                            
+                        </div>
+                        <h1>Webpack Compiler.hooks 是什么</h1>
+                        <h2 class="subheading"></h2>
+                        <span class="meta">
+                            Posted by 江涛 on
+                            2025-04-10
+                        </span>
+                    </div>
+                
+
+
+                </div>
+            </div>
+        </div>
+    </div>
+</header>
+
+	
+    <!-- Navigation -->
+<nav class="navbar navbar-default navbar-custom navbar-fixed-top">
+    <div class="container-fluid">
+        <!-- Brand and toggle get grouped for better mobile display -->
+        <div class="navbar-header page-scroll">
+            <button type="button" class="navbar-toggle">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href="/jtblogs/">江涛</a>
+        </div>
+
+        <!-- Collect the nav links, forms, and other content for toggling -->
+        <!-- Known Issue, found by Hux:
+            <nav>'s height woule be hold on by its content.
+            so, when navbar scale out, the <nav> will cover tags.
+            also mask any touch event of tags, unfortunately.
+        -->
+        <div id="huxblog_navbar">
+            <div class="navbar-collapse">
+                <ul class="nav navbar-nav navbar-right">
+                    <li>
+                        <a href="/jtblogs/">Home</a>
+                    </li>
+
+                    
+
+                        
+                    
+
+                        
+                    
+
+                        
+                    
+
+                        
+                    
+
+                        
+                    
+
+                        
+                    
+
+                        
+                        <li>
+                            <a href="/jtblogs/tags/">Tags</a>
+                        </li>
+                        
+                    
+
+                        
+                        <li>
+                            <a href="/jtblogs/about/">About</a>
+                        </li>
+                        
+                    
+
+                        
+                        <li>
+                            <a href="/jtblogs/archive/">Archives</a>
+                        </li>
+                        
+                    
+                    
+                </ul>
+            </div>
+        </div>
+        <!-- /.navbar-collapse -->
+    </div>
+    <!-- /.container -->
+</nav>
+<script>
+    // Drop Bootstarp low-performance Navbar
+    // Use customize navbar with high-quality material design animation
+    // in high-perf jank-free CSS3 implementation
+    var $body   = document.body;
+    var $toggle = document.querySelector('.navbar-toggle');
+    var $navbar = document.querySelector('#huxblog_navbar');
+    var $collapse = document.querySelector('.navbar-collapse');
+
+    $toggle.addEventListener('click', handleMagic)
+    function handleMagic(e){
+        if ($navbar.className.indexOf('in') > 0) {
+        // CLOSE
+            $navbar.className = " ";
+            // wait until animation end.
+            setTimeout(function(){
+                // prevent frequently toggle
+                if($navbar.className.indexOf('in') < 0) {
+                    $collapse.style.height = "0px"
+                }
+            },400)
+        }else{
+        // OPEN
+            $collapse.style.height = "auto"
+            $navbar.className += " in";
+        }
+    }
+</script>
+
+
+    <!-- Main Content -->
+    <!-- Modify by Yu-Hsuan Yen -->
+
+<!-- Post Content -->
+<article>
+    <div class="container">
+        <div class="row">
+
+            <!-- Post Container -->
+            <div class="
+                col-lg-8 col-lg-offset-2
+                col-md-10 col-md-offset-1
+                post-container">
+
+                <h2><span id="什么是-compilerhooks">🧠 什么是 <code>compiler.hooks</code>？</span></h2>
+<p><code>compiler.hooks</code> 是 Webpack 插件生命周期钩子的集合。你可以在这些钩子上注册函数，<strong>在 Webpack 构建流程的各个阶段执行你的逻辑</strong>。</p>
+<blockquote>
+<p>插件核心逻辑：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">&gt; compiler.hooks.&lt;某个阶段&gt;.tap(<span class="string">'PluginName'</span>, (compilation) =&gt; &#123; ... &#125;)</span><br><span class="line">&gt;</span><br></pre></td></tr></table></figure>
+</blockquote>
+<hr>
+<h2><span id="webpack-生命周期关键阶段compilerhooks">🧭 Webpack 生命周期关键阶段（compiler.hooks）</span></h2>
+<p>下面是几个最关键的生命周期钩子，按执行顺序分类整理👇</p>
+<hr>
+<h3><span id="初始化阶段">🟢 初始化阶段</span></h3>
+<table>
+<thead>
+<tr>
+<th>钩子名</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>environment</code></td>
+<td>环境初始化前触发（最早）</td>
+</tr>
+<tr>
+<td><code>initialize</code></td>
+<td>webpack 5 新增：配置处理完毕，准备创建 compiler 实例时触发</td>
+</tr>
+<tr>
+<td><code>afterEnvironment</code></td>
+<td>环境配置已加载，加载插件之前触发</td>
+</tr>
+<tr>
+<td><code>entryOption</code></td>
+<td><code>entry</code> 配置解析后触发</td>
+</tr>
+</tbody>
+</table>
+<hr>
+<h3><span id="编译阶段compiler-创建-compilation-创建">🔄 编译阶段（Compiler 创建 → Compilation 创建）</span></h3>
+<table>
+<thead>
+<tr>
+<th>钩子名</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>beforeRun</code></td>
+<td>编译器开始运行前触发（异步）</td>
+</tr>
+<tr>
+<td><code>run</code></td>
+<td>调用 <code>webpack()</code> 启动时触发</td>
+</tr>
+<tr>
+<td><code>watchRun</code></td>
+<td>监听模式中，重新编译前触发</td>
+</tr>
+<tr>
+<td><code>compile</code></td>
+<td>每次编译开始时触发，传入参数是 <code>params</code>（模块工厂等）</td>
+</tr>
+<tr>
+<td><code>thisCompilation</code></td>
+<td>每次 Compilation 对象创建时（<em>比 compilation 更早</em>）</td>
+</tr>
+<tr>
+<td><code>compilation</code></td>
+<td>每次 Compilation 对象创建时（可以访问 chunk、module、asset 等）</td>
+</tr>
+</tbody>
+</table>
+<hr>
+<h3><span id="️-构建流程阶段构建模块-生成资源">🏗️ 构建流程阶段（构建模块、生成资源）</span></h3>
+<table>
+<thead>
+<tr>
+<th>钩子名</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>make</code></td>
+<td>开始构建模块图时触发（是构建主流程最重要的钩子）</td>
+</tr>
+<tr>
+<td><code>afterCompile</code></td>
+<td>所有模块构建完成，准备生成文件</td>
+</tr>
+<tr>
+<td><code>emit</code></td>
+<td>将文件输出到 output 目录前触发（可以操作最终文件）</td>
+</tr>
+<tr>
+<td><code>afterEmit</code></td>
+<td>文件输出后</td>
+</tr>
+</tbody>
+</table>
+<hr>
+<h3><span id="结束阶段">✅ 结束阶段</span></h3>
+<table>
+<thead>
+<tr>
+<th>钩子名</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>done</code></td>
+<td>编译完成（成功或失败）时触发</td>
+</tr>
+<tr>
+<td><code>failed</code></td>
+<td>编译失败时触发</td>
+</tr>
+<tr>
+<td><code>watchClose</code></td>
+<td>监听模式关闭时触发</td>
+</tr>
+<tr>
+<td><code>shutdown</code></td>
+<td>Webpack 关闭前触发（如 dev-server 退出）</td>
+</tr>
+</tbody>
+</table>
+<hr>
+<h2><span id="示例自定义插件使用钩子">🔧 示例：自定义插件使用钩子</span></h2>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">MyPlugin</span> </span>&#123;</span><br><span class="line">  apply(compiler) &#123;</span><br><span class="line">    compiler.hooks.compile.tap(<span class="string">'MyPlugin'</span>, (params) =&gt; &#123;</span><br><span class="line">      <span class="built_in">console</span>.log(<span class="string">'开始编译...'</span>);</span><br><span class="line">    &#125;);</span><br><span class="line"></span><br><span class="line">    compiler.hooks.emit.tapAsync(<span class="string">'MyPlugin'</span>, (compilation, callback) =&gt; &#123;</span><br><span class="line">      <span class="built_in">console</span>.log(<span class="string">'即将写入文件...'</span>);</span><br><span class="line">      callback();</span><br><span class="line">    &#125;);</span><br><span class="line"></span><br><span class="line">    compiler.hooks.done.tap(<span class="string">'MyPlugin'</span>, (stats) =&gt; &#123;</span><br><span class="line">      <span class="built_in">console</span>.log(<span class="string">'编译完成！'</span>);</span><br><span class="line">    &#125;);</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<hr>
+<h2><span id="图示版本构建流程时间线">🧱 图示版本（构建流程时间线）</span></h2>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">initialize</span><br><span class="line">  ↓</span><br><span class="line">environment → afterEnvironment → entryOption</span><br><span class="line">  ↓</span><br><span class="line">beforeRun → run / watchRun</span><br><span class="line">  ↓</span><br><span class="line">compile → thisCompilation → compilation → make → buildModules</span><br><span class="line">  ↓</span><br><span class="line">seal → optimize → emit → afterEmit</span><br><span class="line">  ↓</span><br><span class="line">done / failed → watchClose → shutdown</span><br></pre></td></tr></table></figure>
+<hr>
+<h2><span id="总结">📌 总结</span></h2>
+<table>
+<thead>
+<tr>
+<th>阶段</th>
+<th>代表钩子</th>
+<th>作用</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>初始化</td>
+<td><code>initialize</code>, <code>entryOption</code></td>
+<td>插件和配置准备</td>
+</tr>
+<tr>
+<td>编译前</td>
+<td><code>beforeRun</code>, <code>run</code>, <code>watchRun</code></td>
+<td>启动 webpack</td>
+</tr>
+<tr>
+<td>编译过程</td>
+<td><code>compile</code>, <code>compilation</code>, <code>make</code></td>
+<td>核心构建阶段</td>
+</tr>
+<tr>
+<td>输出阶段</td>
+<td><code>emit</code>, <code>afterEmit</code></td>
+<td>控制输出资源</td>
+</tr>
+<tr>
+<td>编译结束</td>
+<td><code>done</code>, <code>failed</code></td>
+<td>编译完成处理</td>
+</tr>
+</tbody>
+</table>
+
+                
+
+                <hr>
+                <!-- Pager -->
+                <ul class="pager">
+                    
+                        <li class="previous">
+                            <a href="/jtblogs/article/性能优化-预加载/" data-toggle="tooltip" data-placement="top" title="性能优化-预加载">&larr; Previous Post</a>
+                        </li>
+                    
+                    
+                        <li class="next">
+                            <a href="/jtblogs/article/Webpack-的生命周期/" data-toggle="tooltip" data-placement="top" title="Webpack 的生命周期">Next Post &rarr;</a>
+                        </li>
+                    
+                </ul>
+
+                <br>
+
+                <!--打赏-->
+                
+                <!--打赏-->
+
+                <br>
+                <!--分享-->
+                
+                    <div class="social-share"  data-wechat-qrcode-helper="" align="center"></div>
+                    <!--  css & js -->
+                    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/social-share.js/1.0.16/css/share.min.css">
+                    <script src="https://cdnjs.cloudflare.com/ajax/libs/social-share.js/1.0.16/js/social-share.min.js"></script>
+                
+                <!--分享-->
+                <br>                       
+                
+                <!-- require APlayer -->
+                
+
+                <!-- duoshuo Share start -->
+                
+                <!-- 多说 Share end-->
+
+                <!-- 多说评论框 start -->
+                
+                <!-- 多说评论框 end -->
+
+                <!-- disqus comment start -->
+                
+                <!-- disqus comment end -->
+
+                
+
+            </div>
+            
+            <!-- Tabe of Content -->
+            <!-- Table of Contents -->
+
+  
+    <style>
+      span.toc-nav-number{
+        display: none
+      }
+    </style>
+  
+    
+      <aside id="sidebar">
+        <div id="toc" class="toc-article">
+        <strong class="toc-title">Contents</strong>
+        
+          <ol class="toc-nav"><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#null"><span class="toc-nav-number">1.</span> <span class="toc-nav-text">🧠 什么是 compiler.hooks？</span></a></li><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#null"><span class="toc-nav-number">2.</span> <span class="toc-nav-text">🧭 Webpack 生命周期关键阶段（compiler.hooks）</span></a><ol class="toc-nav-child"><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#null"><span class="toc-nav-number">2.1.</span> <span class="toc-nav-text">🟢 初始化阶段</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#null"><span class="toc-nav-number">2.2.</span> <span class="toc-nav-text">🔄 编译阶段（Compiler 创建 → Compilation 创建）</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#null"><span class="toc-nav-number">2.3.</span> <span class="toc-nav-text">🏗️ 构建流程阶段（构建模块、生成资源）</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#null"><span class="toc-nav-number">2.4.</span> <span class="toc-nav-text">✅ 结束阶段</span></a></li></ol></li><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#null"><span class="toc-nav-number">3.</span> <span class="toc-nav-text">🔧 示例：自定义插件使用钩子</span></a></li><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#null"><span class="toc-nav-number">4.</span> <span class="toc-nav-text">🧱 图示版本（构建流程时间线）</span></a></li><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#null"><span class="toc-nav-number">5.</span> <span class="toc-nav-text">📌 总结</span></a></li></ol>
+        
+        </div>
+      </aside>
+    
+
+                
+            <!-- Sidebar Container -->
+            <div class="
+                col-lg-8 col-lg-offset-2
+                col-md-10 col-md-offset-1
+                sidebar-container">
+
+                <!-- Featured Tags -->
+                
+                <section>
+                    <!-- no hr -->
+                    <h5><a href="/jtblogs/tags/">FEATURED TAGS</a></h5>
+                    <div class="tags">
+                       
+                          <a class="tag" href="/jtblogs/tags/#Webpack" title="Webpack">Webpack</a>
+                        
+                    </div>
+                </section>
+                
+
+                <!-- Friends Blog -->
+                
+                <hr>
+                <h5>FRIENDS</h5>
+                <ul class="list-inline">
+
+                    
+                </ul>
+                
+            </div>
+        </div>
+    </div>
+</article>
+
+
+
+
+
+
+
+
+<!-- async load function -->
+<script>
+    function async(u, c) {
+      var d = document, t = 'script',
+          o = d.createElement(t),
+          s = d.getElementsByTagName(t)[0];
+      o.src = u;
+      if (c) { o.addEventListener('load', function (e) { c(null, e); }, false); }
+      s.parentNode.insertBefore(o, s);
+    }
+</script>
+<!-- anchor-js, Doc:http://bryanbraun.github.io/anchorjs/ -->
+<script>
+    async("https://cdn.bootcss.com/anchor-js/1.1.1/anchor.min.js",function(){
+        anchors.options = {
+          visible: 'hover',
+          placement: 'left',
+          icon: 'ℬ'
+        };
+        anchors.add().remove('.intro-header h1').remove('.subheading').remove('.sidebar-container h5');
+    })
+</script>
+<style>
+    /* place left on bigger screen */
+    @media all and (min-width: 800px) {
+        .anchorjs-link{
+            position: absolute;
+            left: -0.75em;
+            font-size: 1.1em;
+            margin-top : -0.1em;
+        }
+    }
+</style>
+
+
+<!-- chrome Firefox 中文锚点定位失效-->
+<script src="https://cdn.bootcss.com/jquery/3.3.1/jquery.js"></script>
+<!-- smooth scroll behavior polyfill  -->
+<script type="text/javascript" src="/js/smoothscroll.js"></script>
+<script>
+        $('#toc').on('click','a',function(a){
+            // var isChrome = window.navigator.userAgent.indexOf("Chrome") !== -1;
+            // console.log(window.navigator.userAgent,isChrome)
+                // if(isChrome) {
+                    // console.log(a.currentTarget.outerHTML);
+                    // console.log($(a.currentTarget).attr("href"));
+                    //跳转到指定锚点
+                    // document.getElementById(a.target.innerText.toLowerCase()).scrollIntoView(true);
+                    document.getElementById($(a.currentTarget).attr("href").replace("#","")).scrollIntoView({behavior: 'smooth' });
+                // }
+        })  
+</script>
+
+
+    <!-- Footer -->
+    <!-- Footer -->
+<footer>
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+                <ul class="list-inline text-center">
+                    
+                            
+                                    
+
+                                            
+
+                                                    
+
+                                                            
+                                                                <li>
+                                                                    <a target="_blank"
+                                                                        href="https://github.com/taojiangcb">
+                                                                        <span class="fa-stack fa-lg">
+                                                                            <i class="fa fa-circle fa-stack-2x"></i>
+                                                                            <i
+                                                                                class="fa fa-github fa-stack-1x fa-inverse"></i>
+                                                                        </span>
+                                                                    </a>
+                                                                </li>
+                                                                
+
+                                                                    
+
+                </ul>
+
+                <p class="copyright text-muted">
+                    Copyright &copy; 江涛
+                        2025
+                            <br>
+                            Theme by <a href="http://beantech.org">BeanTech</a>
+                            <span style="display: inline-block; margin: 0 5px;">
+                                <i class="fa fa-heart"></i>
+                            </span>
+                            re-Ported by <a href="https://taojiangcb.github.io/jtblogs">江涛</a> |
+                            <iframe style="margin-left: 2px; margin-bottom:-5px;" frameborder="0" scrolling="0"
+                                width="91px" height="20px"
+                                src="https://ghbtns.com/github-btn.html?user=taojiangcb&repo=jtblogs&type=star&count=true">
+                            </iframe>
+                </p>
+                <p class="copyright text-muted" style="margin:0">
+                    <script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+                    <span id="busuanzi_container_site_pv">
+                        总访问量<span id="busuanzi_value_site_pv"></span>次
+                    </span>
+                    <span id="busuanzi_container_site_uv">
+                        总访客数<span id="busuanzi_value_site_uv"></span>人
+                    </span>
+                </p>
+            </div>
+        </div>
+    </div>
+</footer>
+
+<!-- jQuery -->
+<script src="/jtblogs/js/jquery.min.js"></script>
+
+    <!-- Bootstrap Core JavaScript -->
+    <script src="/jtblogs/js/bootstrap.min.js"></script>
+
+        <!-- Custom Theme JavaScript -->
+        <script src="/jtblogs/js/hux-blog.min.js"></script>
+
+
+            <!-- async load function -->
+            <script>
+                function async(u, c) {
+                    var d = document, t = 'script',
+                        o = d.createElement(t),
+                        s = d.getElementsByTagName(t)[0];
+                    o.src = u;
+                    if (c) { o.addEventListener('load', function (e) { c(null, e); }, false); }
+                    s.parentNode.insertBefore(o, s);
+                }
+            </script>
+
+            <!-- 
+     Because of the native support for backtick-style fenced code blocks 
+     right within the Markdown is landed in Github Pages, 
+     From V1.6, There is no need for Highlight.js, 
+     so Huxblog drops it officially.
+
+     - https://github.com/blog/2100-github-pages-now-faster-and-simpler-with-jekyll-3-0  
+     - https://help.github.com/articles/creating-and-highlighting-code-blocks/    
+-->
+            <!--
+    <script>
+        async("http://cdn.bootcss.com/highlight.js/8.6/highlight.min.js", function(){
+            hljs.initHighlightingOnLoad();
+        })
+    </script>
+    <link href="http://cdn.bootcss.com/highlight.js/8.6/styles/github.min.css" rel="stylesheet">
+-->
+
+
+            <!-- jquery.tagcloud.js -->
+            <script>
+                // only load tagcloud.js in tag.html
+                if ($('#tag_cloud').length !== 0) {
+                    async("https://taojiangcb.github.io/jtblogs/js/jquery.tagcloud.js", function () {
+                        $.fn.tagcloud.defaults = {
+                            //size: {start: 1, end: 1, unit: 'em'},
+                            color: { start: '#bbbbee', end: '#0085a1' },
+                        };
+                        $('#tag_cloud a').tagcloud();
+                    })
+                }
+            </script>
+
+            <!--fastClick.js -->
+            <script>
+                async("https://cdn.bootcss.com/fastclick/1.0.6/fastclick.min.js", function () {
+                    var $nav = document.querySelector("nav");
+                    if ($nav) FastClick.attach($nav);
+                })
+            </script>
+
+
+            <!-- Google Analytics -->
+
+            
+                <script>
+                    // dynamic User by Hux
+                    var _gaId = 'UA-XXXXXXXX-X';
+                    var _gaDomain = 'yoursite';
+
+                    // Originial
+                    (function (i, s, o, g, r, a, m) {
+                        i['GoogleAnalyticsObject'] = r; i[r] = i[r] || function () {
+                            (i[r].q = i[r].q || []).push(arguments)
+                        }, i[r].l = 1 * new Date(); a = s.createElement(o),
+                            m = s.getElementsByTagName(o)[0]; a.async = 1; a.src = g; m.parentNode.insertBefore(a, m)
+                    })(window, document, 'script', '//www.google-analytics.com/analytics.js', 'ga');
+
+                    ga('create', _gaId, _gaDomain);
+                    ga('send', 'pageview');
+                </script>
+
+                
+
+
+                    <!-- Baidu Tongji -->
+                    
+                        <script>
+                            // dynamic User by Hux
+                            var _baId = 'xxx';
+
+                            // Originial
+                            var _hmt = _hmt || [];
+                            (function () {
+                                var hm = document.createElement("script");
+                                hm.src = "//hm.baidu.com/hm.js?" + _baId;
+                                var s = document.getElementsByTagName("script")[0];
+                                s.parentNode.insertBefore(hm, s);
+                            })();
+                        </script>
+                        
+
+
+	<a id="rocket" href="#top" class=""></a>
+	<script type="text/javascript" src="/jtblogs/js/totop.js?v=1.0.0" async=""></script>
+    <script type="text/javascript" src="/jtblogs/js/toc.js?v=1.0.0" async=""></script>
+<!-- Image to hack wechat -->
+<img src="https://taojiangcb.github.io/jtblogs/img/icon_wechat.png" width="0" height="0" />
+<!-- Migrate from head to bottom, no longer block render and still work -->
+
+</body>
+
+</html>

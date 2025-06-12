@@ -1,0 +1,616 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<!-- Head tag -->
+<head><meta name="generator" content="Hexo 3.9.0">
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="google-site-verification" content="xBT4GhYoi5qRD5tr338pgPM5OWHHIDR6mNg1a3euekI">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content>
+    <meta name="keyword" content>
+    <link rel="shortcut icon" href="/jtblogs/favicon.ico">
+    <!-- Place this tag in your head or just before your close body tag. -->
+    <script async defer src="https://buttons.github.io/buttons.js"></script>
+    <title>
+        
+          江涛 | Blog
+        
+    </title>
+
+    <link rel="canonical" href="https://taojiangcb.github.io/jtblogs/jtblogs/EPI-3085.html">
+
+    <!-- Bootstrap Core CSS -->
+    <link rel="stylesheet" href="/jtblogs/css/bootstrap.min.css">
+
+    <!-- Custom CSS --> 
+    <link rel="stylesheet" href="/jtblogs/css/beantech.min.css">
+
+    <link rel="stylesheet" href="/jtblogs/css/donate.css">
+    
+    <!-- Pygments Highlight CSS -->
+    <link rel="stylesheet" href="/jtblogs/css/highlight.css">
+
+    <link rel="stylesheet" href="/jtblogs/css/widget.css">
+
+    <link rel="stylesheet" href="/jtblogs/css/rocket.css">
+
+    <link rel="stylesheet" href="/jtblogs/css/signature.css">
+
+    <link rel="stylesheet" href="/jtblogs/css/toc.css">
+
+    <!-- Custom Fonts -->
+    <!-- <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css" rel="stylesheet" type="text/css"> -->
+    <!-- Hux change font-awesome CDN to qiniu -->
+    <link href="https://cdn.staticfile.org/font-awesome/4.5.0/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+
+
+    <!-- Hux Delete, sad but pending in China
+    <link href='http://fonts.googleapis.com/css?family=Lora:400,700,400italic,700italic' rel='stylesheet' type='text/css'>
+    <link href='http://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800' rel='stylesheet' type='text/
+    css'>
+    -->
+
+
+    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+        <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+        <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+    <![endif]-->
+
+    <!-- ga & ba script hoook -->
+    <script></script>
+</head>
+
+
+<!-- hack iOS CSS :active style -->
+<body ontouchstart="">
+	<!-- Modified by Yu-Hsuan Yen -->
+<!-- Post Header -->
+<style type="text/css">
+    header.intro-header{
+        
+            background-image: url('/jtblogs/img/header_img/archives-widget.jpg')
+            /*page*/
+        
+    }
+    
+</style>
+
+<header class="intro-header" >
+    <!-- Signature -->
+    <div id="signature">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+                
+                    <div class="site-heading">
+                        <h1>江涛</h1>
+                        <!--<hr class="small">-->
+                        <span class="subheading">个人博客</span>
+                    </div>
+                
+
+
+                </div>
+            </div>
+        </div>
+    </div>
+</header>
+
+	
+    <!-- Navigation -->
+<nav class="navbar navbar-default navbar-custom navbar-fixed-top">
+    <div class="container-fluid">
+        <!-- Brand and toggle get grouped for better mobile display -->
+        <div class="navbar-header page-scroll">
+            <button type="button" class="navbar-toggle">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href="/jtblogs/">江涛</a>
+        </div>
+
+        <!-- Collect the nav links, forms, and other content for toggling -->
+        <!-- Known Issue, found by Hux:
+            <nav>'s height woule be hold on by its content.
+            so, when navbar scale out, the <nav> will cover tags.
+            also mask any touch event of tags, unfortunately.
+        -->
+        <div id="huxblog_navbar">
+            <div class="navbar-collapse">
+                <ul class="nav navbar-nav navbar-right">
+                    <li>
+                        <a href="/jtblogs/">Home</a>
+                    </li>
+
+                    
+
+                        
+                    
+
+                        
+                    
+
+                        
+                    
+
+                        
+                    
+
+                        
+                    
+
+                        
+                    
+
+                        
+                        <li>
+                            <a href="/jtblogs/tags/">Tags</a>
+                        </li>
+                        
+                    
+
+                        
+                        <li>
+                            <a href="/jtblogs/about/">About</a>
+                        </li>
+                        
+                    
+
+                        
+                        <li>
+                            <a href="/jtblogs/archive/">Archives</a>
+                        </li>
+                        
+                    
+                    
+                </ul>
+            </div>
+        </div>
+        <!-- /.navbar-collapse -->
+    </div>
+    <!-- /.container -->
+</nav>
+<script>
+    // Drop Bootstarp low-performance Navbar
+    // Use customize navbar with high-quality material design animation
+    // in high-perf jank-free CSS3 implementation
+    var $body   = document.body;
+    var $toggle = document.querySelector('.navbar-toggle');
+    var $navbar = document.querySelector('#huxblog_navbar');
+    var $collapse = document.querySelector('.navbar-collapse');
+
+    $toggle.addEventListener('click', handleMagic)
+    function handleMagic(e){
+        if ($navbar.className.indexOf('in') > 0) {
+        // CLOSE
+            $navbar.className = " ";
+            // wait until animation end.
+            setTimeout(function(){
+                // prevent frequently toggle
+                if($navbar.className.indexOf('in') < 0) {
+                    $collapse.style.height = "0px"
+                }
+            },400)
+        }else{
+        // OPEN
+            $collapse.style.height = "auto"
+            $navbar.className += " in";
+        }
+    }
+</script>
+
+
+    <!-- Main Content -->
+    <!-- Main Content -->
+<div class="container">
+    <div class="row">
+        
+
+<!-- USE SIDEBAR -->
+    <!-- Post Container -->
+            <div class="
+                col-lg-8 col-lg-offset-1
+                col-md-8 col-md-offset-1
+                col-sm-12
+                col-xs-12
+                post-container
+            ">
+            
+                <p>EIP-3085 是一项关于以太坊的改进提案，旨在为以太坊钱包提供一种新的标准化机制，使得用户能够更加方便和安全地进行 <strong>加密货币交易的签名操作</strong>，同时增强用户对 <strong>签名消息</strong> 的理解和控制。</p>
+<h3><span id="核心目标">核心目标</span></h3>
+<p>EIP-3085 的主要目标是通过改进以太坊钱包中的 <strong>消息签名</strong> 机制，使得用户在与 DApp 或其他服务交互时，可以更加明确地看到自己签名的内容，从而更好地控制和保护自己的隐私。</p>
+<h3><span id="关键内容">关键内容</span></h3>
+<ol>
+<li>
+<p><strong>消息签名标准化</strong>：<br>
+EIP-3085 提出一种 <strong>标准化的消息签名格式</strong>，使得钱包（如 MetaMask）能够在用户签名消息时显示更多的上下文信息。用户可以更清晰地看到他们签署的具体内容，避免因不明身份或不明内容而误签。</p>
+</li>
+<li>
+<p><strong>提升透明度</strong>：<br>
+该提案的一个关键点是增强用户的透明度。签名的消息不再仅仅是一个加密的“黑盒”操作，而是可以向用户展示消息内容，确保用户了解自己正在签署的内容。这可以减少恶意 DApp 或攻击者通过不透明的操作欺骗用户的风险。</p>
+</li>
+<li>
+<p><strong>签名前的用户确认</strong>：<br>
+为了确保用户的知情权和隐私，EIP-3085 提出了在用户签名前，需要显示签名内容的详细信息，并提供确认按钮。这意味着用户在签署交易或其他消息时，必须明确地同意操作，从而加强安全性。</p>
+</li>
+<li>
+<p><strong>消息签名可识别性</strong>：<br>
+通过这种标准化方式，EIP-3085 还希望使得不同的以太坊钱包或应用之间可以更好地兼容并共享签名消息。这种统一标准能够让开发者和用户都能更轻松地理解和管理签名操作。</p>
+</li>
+</ol>
+<h3><span id="背景">背景</span></h3>
+<p>随着去中心化应用（DApp）和以太坊生态系统的扩大，用户与智能合约的交互越来越频繁。很多 DApp 需要用户签署交易或其他消息，而传统的签名操作往往缺乏足够的透明度，这使得用户可能在不知情的情况下签署不安全的或恶意的消息。</p>
+<p>EIP-3085 就是为了解决这个问题而提出的，它不仅增强了钱包操作的安全性，还提升了用户对自己签署内容的理解和控制。这个提案通过标准化签名消息格式，为用户提供更多的安全保障。</p>
+<h3><span id="目前状态">目前状态</span></h3>
+<p>EIP-3085 目前仍在讨论和审查阶段，还没有正式实施。不过，它在以太坊社区中已引起了一定关注，可能会在未来的以太坊升级中被采纳。</p>
+<h3><span id="总结">总结</span></h3>
+<p>EIP-3085 通过标准化消息签名机制，旨在提升用户在进行交易签名时的透明度和安全性，减少由于信息不透明而引发的安全问题。通过这个提案，用户可以更清楚地了解自己签署的内容，防止恶意应用的潜在风险。</p>
+<p>如果你有更多关于这个提案的疑问或想进一步讨论它的实现细节，随时告诉我！</p>
+
+
+                <br>
+
+                <!-- require APlayer -->
+                
+
+                <!-- 如果开启评论功能 -->
+                
+                    <hr>
+
+                    
+
+                    
+
+                    
+
+                    
+
+                    
+
+                    
+
+                
+            </div>
+
+          <!-- Sidebar Container -->
+<div class="
+    col-lg-3 col-lg-offset-0
+    col-md-3 col-md-offset-0
+    col-sm-12
+    col-xs-12
+    sidebar-container
+">
+    
+        <!-- Featured Tags -->
+
+<section>
+    <!-- no hr -->
+    <h5><a href="/jtblogs/tags/">FEATURED TAGS</a></h5>
+    <div class="tags">
+        
+            
+            <a href="/jtblogs/tags/#css" title="css" rel="5">css</a>
+            
+        
+            
+            <a href="/jtblogs/tags/#js" title="js" rel="5">js</a>
+            
+        
+            
+            <a href="/jtblogs/tags/#Web3" title="Web3" rel="5">Web3</a>
+            
+        
+            
+            <a href="/jtblogs/tags/#nodejs" title="nodejs" rel="11">nodejs</a>
+            
+        
+            
+            <a href="/jtblogs/tags/#Webpack" title="Webpack" rel="7">Webpack</a>
+            
+        
+            
+            <a href="/jtblogs/tags/#HTTP" title="HTTP" rel="1">HTTP</a>
+            
+        
+            
+            <a href="/jtblogs/tags/#react" title="react" rel="5">react</a>
+            
+        
+            
+            <a href="/jtblogs/tags/#nginx" title="nginx" rel="1">nginx</a>
+            
+        
+            
+            <a href="/jtblogs/tags/#webpack" title="webpack" rel="2">webpack</a>
+            
+        
+            
+            <a href="/jtblogs/tags/#性能优化" title="性能优化" rel="1">性能优化</a>
+            
+        
+            
+            <a href="/jtblogs/tags/#浏览器" title="浏览器" rel="1">浏览器</a>
+            
+        
+    </div>
+</section>
+
+        <hr>
+    
+        <!-- Short About -->
+<section class="visible-md visible-lg">
+    <h5><a href="/jtblogs/about/">ABOUT ME</a></h5>
+    <div class="short-about">
+
+        
+            <img id = "avatar_pic" src="/jtblogs/img/avatar/ironman.png" />
+        
+
+        
+            <p>Stay hungry,Stay foolish</p>
+        
+
+        <!-- SNS Link -->
+        <ul class="list-inline">
+            
+            
+            
+
+            
+
+            
+
+            
+                <li>
+                    <a target="_blank"  href="https://github.com/taojiangcb">
+                        <span class="fa-stack fa-lg">
+                            <i class="fa fa-circle fa-stack-2x"></i>
+                            <i class="fa fa-github fa-stack-1x fa-inverse"></i>
+                        </span>
+                    </a>
+                </li>
+            
+            
+            
+            
+        </ul>
+    </div>
+</section>
+
+        <hr>
+    
+        
+  <h5>RECENT POSTS</h3>
+  <div class="widget">
+    <ul>
+      
+        <li>
+          <a href="/jtblogs/article/性能优化-预加载/">性能优化-预加载</a>
+        </li>
+      
+        <li>
+          <a href="/jtblogs/article/Webpack-Compiler-hooks-是什么/">Webpack Compiler.hooks 是什么</a>
+        </li>
+      
+        <li>
+          <a href="/jtblogs/article/Webpack-的生命周期/">Webpack 的生命周期</a>
+        </li>
+      
+        <li>
+          <a href="/jtblogs/article/Webpack-sideEffect/">Webpack sideEffect</a>
+        </li>
+      
+        <li>
+          <a href="/jtblogs/article/Webpack-中的shaking/">Webpack 中的shaking</a>
+        </li>
+      
+    </ul>
+  </div>
+
+        <hr>
+    
+        <!-- Friends Blog -->
+
+<h5>FRIENDS</h5>
+<ul class="list-inline">
+
+    
+</ul>
+
+        <hr>
+    
+        
+    <h5>ARCHIVES</h5>
+    <div class="widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/jtblogs/archives/2025/06/">June 2025</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/jtblogs/archives/2025/04/">April 2025</a><span class="archive-list-count">9</span></li><li class="archive-list-item"><a class="archive-list-link" href="/jtblogs/archives/2025/01/">January 2025</a><span class="archive-list-count">12</span></li><li class="archive-list-item"><a class="archive-list-link" href="/jtblogs/archives/2024/12/">December 2024</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/jtblogs/archives/2023/05/">May 2023</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/jtblogs/archives/2023/01/">January 2023</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/jtblogs/archives/2022/08/">August 2022</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/jtblogs/archives/2022/07/">July 2022</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/jtblogs/archives/2022/01/">January 2022</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/jtblogs/archives/2021/09/">September 2021</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/jtblogs/archives/2021/02/">February 2021</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/jtblogs/archives/2020/03/">March 2020</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/jtblogs/archives/2020/01/">January 2020</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/jtblogs/archives/2019/12/">December 2019</a><span class="archive-list-count">10</span></li></ul>
+    </div>
+
+        <hr>
+    
+</div>
+
+        
+    </div>
+</div>
+
+
+    <!-- Footer -->
+    <!-- Footer -->
+<footer>
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+                <ul class="list-inline text-center">
+                    
+                            
+                                    
+
+                                            
+
+                                                    
+
+                                                            
+                                                                <li>
+                                                                    <a target="_blank"
+                                                                        href="https://github.com/taojiangcb">
+                                                                        <span class="fa-stack fa-lg">
+                                                                            <i class="fa fa-circle fa-stack-2x"></i>
+                                                                            <i
+                                                                                class="fa fa-github fa-stack-1x fa-inverse"></i>
+                                                                        </span>
+                                                                    </a>
+                                                                </li>
+                                                                
+
+                                                                    
+
+                </ul>
+
+                <p class="copyright text-muted">
+                    Copyright &copy; 江涛
+                        2025
+                            <br>
+                            Theme by <a href="http://beantech.org">BeanTech</a>
+                            <span style="display: inline-block; margin: 0 5px;">
+                                <i class="fa fa-heart"></i>
+                            </span>
+                            re-Ported by <a href="https://taojiangcb.github.io/jtblogs">江涛</a> |
+                            <iframe style="margin-left: 2px; margin-bottom:-5px;" frameborder="0" scrolling="0"
+                                width="91px" height="20px"
+                                src="https://ghbtns.com/github-btn.html?user=taojiangcb&repo=jtblogs&type=star&count=true">
+                            </iframe>
+                </p>
+                <p class="copyright text-muted" style="margin:0">
+                    <script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+                    <span id="busuanzi_container_site_pv">
+                        总访问量<span id="busuanzi_value_site_pv"></span>次
+                    </span>
+                    <span id="busuanzi_container_site_uv">
+                        总访客数<span id="busuanzi_value_site_uv"></span>人
+                    </span>
+                </p>
+            </div>
+        </div>
+    </div>
+</footer>
+
+<!-- jQuery -->
+<script src="/jtblogs/js/jquery.min.js"></script>
+
+    <!-- Bootstrap Core JavaScript -->
+    <script src="/jtblogs/js/bootstrap.min.js"></script>
+
+        <!-- Custom Theme JavaScript -->
+        <script src="/jtblogs/js/hux-blog.min.js"></script>
+
+
+            <!-- async load function -->
+            <script>
+                function async(u, c) {
+                    var d = document, t = 'script',
+                        o = d.createElement(t),
+                        s = d.getElementsByTagName(t)[0];
+                    o.src = u;
+                    if (c) { o.addEventListener('load', function (e) { c(null, e); }, false); }
+                    s.parentNode.insertBefore(o, s);
+                }
+            </script>
+
+            <!-- 
+     Because of the native support for backtick-style fenced code blocks 
+     right within the Markdown is landed in Github Pages, 
+     From V1.6, There is no need for Highlight.js, 
+     so Huxblog drops it officially.
+
+     - https://github.com/blog/2100-github-pages-now-faster-and-simpler-with-jekyll-3-0  
+     - https://help.github.com/articles/creating-and-highlighting-code-blocks/    
+-->
+            <!--
+    <script>
+        async("http://cdn.bootcss.com/highlight.js/8.6/highlight.min.js", function(){
+            hljs.initHighlightingOnLoad();
+        })
+    </script>
+    <link href="http://cdn.bootcss.com/highlight.js/8.6/styles/github.min.css" rel="stylesheet">
+-->
+
+
+            <!-- jquery.tagcloud.js -->
+            <script>
+                // only load tagcloud.js in tag.html
+                if ($('#tag_cloud').length !== 0) {
+                    async("https://taojiangcb.github.io/jtblogs/js/jquery.tagcloud.js", function () {
+                        $.fn.tagcloud.defaults = {
+                            //size: {start: 1, end: 1, unit: 'em'},
+                            color: { start: '#bbbbee', end: '#0085a1' },
+                        };
+                        $('#tag_cloud a').tagcloud();
+                    })
+                }
+            </script>
+
+            <!--fastClick.js -->
+            <script>
+                async("https://cdn.bootcss.com/fastclick/1.0.6/fastclick.min.js", function () {
+                    var $nav = document.querySelector("nav");
+                    if ($nav) FastClick.attach($nav);
+                })
+            </script>
+
+
+            <!-- Google Analytics -->
+
+            
+                <script>
+                    // dynamic User by Hux
+                    var _gaId = 'UA-XXXXXXXX-X';
+                    var _gaDomain = 'yoursite';
+
+                    // Originial
+                    (function (i, s, o, g, r, a, m) {
+                        i['GoogleAnalyticsObject'] = r; i[r] = i[r] || function () {
+                            (i[r].q = i[r].q || []).push(arguments)
+                        }, i[r].l = 1 * new Date(); a = s.createElement(o),
+                            m = s.getElementsByTagName(o)[0]; a.async = 1; a.src = g; m.parentNode.insertBefore(a, m)
+                    })(window, document, 'script', '//www.google-analytics.com/analytics.js', 'ga');
+
+                    ga('create', _gaId, _gaDomain);
+                    ga('send', 'pageview');
+                </script>
+
+                
+
+
+                    <!-- Baidu Tongji -->
+                    
+                        <script>
+                            // dynamic User by Hux
+                            var _baId = 'xxx';
+
+                            // Originial
+                            var _hmt = _hmt || [];
+                            (function () {
+                                var hm = document.createElement("script");
+                                hm.src = "//hm.baidu.com/hm.js?" + _baId;
+                                var s = document.getElementsByTagName("script")[0];
+                                s.parentNode.insertBefore(hm, s);
+                            })();
+                        </script>
+                        
+
+
+	<a id="rocket" href="#top" class=""></a>
+	<script type="text/javascript" src="/jtblogs/js/totop.js?v=1.0.0" async=""></script>
+    <script type="text/javascript" src="/jtblogs/js/toc.js?v=1.0.0" async=""></script>
+<!-- Image to hack wechat -->
+<img src="https://taojiangcb.github.io/jtblogs/img/icon_wechat.png" width="0" height="0" />
+<!-- Migrate from head to bottom, no longer block render and still work -->
+
+</body>
+
+</html>

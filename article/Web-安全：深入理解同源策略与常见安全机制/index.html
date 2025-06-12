@@ -1,0 +1,741 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<!-- Head tag -->
+<head><meta name="generator" content="Hexo 3.9.0">
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="google-site-verification" content="xBT4GhYoi5qRD5tr338pgPM5OWHHIDR6mNg1a3euekI">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content>
+    <meta name="keyword" content>
+    <link rel="shortcut icon" href="/jtblogs/favicon.ico">
+    <!-- Place this tag in your head or just before your close body tag. -->
+    <script async defer src="https://buttons.github.io/buttons.js"></script>
+    <title>
+        
+          Web 安全：深入理解同源策略与常见安全机制 - 江涛 | Blog
+        
+    </title>
+
+    <link rel="canonical" href="https://taojiangcb.github.io/jtblogs/jtblogs/article/Web-安全：深入理解同源策略与常见安全机制/">
+
+    <!-- Bootstrap Core CSS -->
+    <link rel="stylesheet" href="/jtblogs/css/bootstrap.min.css">
+
+    <!-- Custom CSS --> 
+    <link rel="stylesheet" href="/jtblogs/css/beantech.min.css">
+
+    <link rel="stylesheet" href="/jtblogs/css/donate.css">
+    
+    <!-- Pygments Highlight CSS -->
+    <link rel="stylesheet" href="/jtblogs/css/highlight.css">
+
+    <link rel="stylesheet" href="/jtblogs/css/widget.css">
+
+    <link rel="stylesheet" href="/jtblogs/css/rocket.css">
+
+    <link rel="stylesheet" href="/jtblogs/css/signature.css">
+
+    <link rel="stylesheet" href="/jtblogs/css/toc.css">
+
+    <!-- Custom Fonts -->
+    <!-- <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css" rel="stylesheet" type="text/css"> -->
+    <!-- Hux change font-awesome CDN to qiniu -->
+    <link href="https://cdn.staticfile.org/font-awesome/4.5.0/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+
+
+    <!-- Hux Delete, sad but pending in China
+    <link href='http://fonts.googleapis.com/css?family=Lora:400,700,400italic,700italic' rel='stylesheet' type='text/css'>
+    <link href='http://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800' rel='stylesheet' type='text/
+    css'>
+    -->
+
+
+    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+        <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+        <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+    <![endif]-->
+
+    <!-- ga & ba script hoook -->
+    <script></script>
+</head>
+
+
+<!-- hack iOS CSS :active style -->
+<body ontouchstart="">
+	<!-- Modified by Yu-Hsuan Yen -->
+<!-- Post Header -->
+<style type="text/css">
+    header.intro-header{
+        
+            background-image: url('/jtblogs/img/article_header/article_bg.jpg')
+            /*post*/
+        
+    }
+    
+</style>
+
+<header class="intro-header" >
+    <!-- Signature -->
+    <div id="signature">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+                
+                    <div class="post-heading">
+                        <div class="tags">
+                            
+                              <a class="tag" href="/jtblogs/tags/#HTTP" title="HTTP">HTTP</a>
+                            
+                        </div>
+                        <h1>Web 安全：深入理解同源策略与常见安全机制</h1>
+                        <h2 class="subheading"></h2>
+                        <span class="meta">
+                            Posted by 江涛 on
+                            2025-01-08
+                        </span>
+                    </div>
+                
+
+
+                </div>
+            </div>
+        </div>
+    </div>
+</header>
+
+	
+    <!-- Navigation -->
+<nav class="navbar navbar-default navbar-custom navbar-fixed-top">
+    <div class="container-fluid">
+        <!-- Brand and toggle get grouped for better mobile display -->
+        <div class="navbar-header page-scroll">
+            <button type="button" class="navbar-toggle">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href="/jtblogs/">江涛</a>
+        </div>
+
+        <!-- Collect the nav links, forms, and other content for toggling -->
+        <!-- Known Issue, found by Hux:
+            <nav>'s height woule be hold on by its content.
+            so, when navbar scale out, the <nav> will cover tags.
+            also mask any touch event of tags, unfortunately.
+        -->
+        <div id="huxblog_navbar">
+            <div class="navbar-collapse">
+                <ul class="nav navbar-nav navbar-right">
+                    <li>
+                        <a href="/jtblogs/">Home</a>
+                    </li>
+
+                    
+
+                        
+                    
+
+                        
+                    
+
+                        
+                    
+
+                        
+                    
+
+                        
+                    
+
+                        
+                    
+
+                        
+                        <li>
+                            <a href="/jtblogs/tags/">Tags</a>
+                        </li>
+                        
+                    
+
+                        
+                        <li>
+                            <a href="/jtblogs/about/">About</a>
+                        </li>
+                        
+                    
+
+                        
+                        <li>
+                            <a href="/jtblogs/archive/">Archives</a>
+                        </li>
+                        
+                    
+                    
+                </ul>
+            </div>
+        </div>
+        <!-- /.navbar-collapse -->
+    </div>
+    <!-- /.container -->
+</nav>
+<script>
+    // Drop Bootstarp low-performance Navbar
+    // Use customize navbar with high-quality material design animation
+    // in high-perf jank-free CSS3 implementation
+    var $body   = document.body;
+    var $toggle = document.querySelector('.navbar-toggle');
+    var $navbar = document.querySelector('#huxblog_navbar');
+    var $collapse = document.querySelector('.navbar-collapse');
+
+    $toggle.addEventListener('click', handleMagic)
+    function handleMagic(e){
+        if ($navbar.className.indexOf('in') > 0) {
+        // CLOSE
+            $navbar.className = " ";
+            // wait until animation end.
+            setTimeout(function(){
+                // prevent frequently toggle
+                if($navbar.className.indexOf('in') < 0) {
+                    $collapse.style.height = "0px"
+                }
+            },400)
+        }else{
+        // OPEN
+            $collapse.style.height = "auto"
+            $navbar.className += " in";
+        }
+    }
+</script>
+
+
+    <!-- Main Content -->
+    <!-- Modify by Yu-Hsuan Yen -->
+
+<!-- Post Content -->
+<article>
+    <div class="container">
+        <div class="row">
+
+            <!-- Post Container -->
+            <div class="
+                col-lg-8 col-lg-offset-2
+                col-md-10 col-md-offset-1
+                post-container">
+
+                <h2><span id="引言">引言</span></h2>
+<p>在现代Web开发中，安全性是一个不可忽视的重点。前端开发者需要理解和掌握多种安全策略和机制，以保护用户数据和防止潜在攻击。本文将围绕同源策略、CORS、XSS防护和跨文档消息机制展开讨论，并提供相关示例，帮助开发者更好地理解这些概念。</p>
+<h2><span id="同源策略-same-origin-policy">同源策略 (Same-Origin Policy)</span></h2>
+<h3><span id="什么是同源策略">什么是同源策略？</span></h3>
+<p>同源策略是一种Web安全机制，旨在防止不同源之间的互相访问，以保护用户数据。所谓“同源”，指的是协议、域名和端口都相同。例如，<code>http://example.com</code> 和 <code>https://example.com</code> 不是同源，因为它们的协议不同, 主要的作用是起到隔离，DOM 隔离，数据隔离，网络隔离等。</p>
+<h4><span id="dom-层面隔离">DOM 层面隔离</span></h4>
+<p>同源策略在DOM层面上限制了不同源的脚本对DOM的操作。一个页面中的脚本只能访问并修改同源页面的DOM。</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 仅允许对同源的iframe进行操作</span></span><br><span class="line"><span class="keyword">let</span> iframe = <span class="built_in">document</span>.createElement(<span class="string">'iframe'</span>);</span><br><span class="line">iframe.src = <span class="string">'http://same-origin.com'</span>;</span><br><span class="line"><span class="built_in">document</span>.body.appendChild(iframe);</span><br><span class="line"></span><br><span class="line">iframe.onload = <span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">  <span class="comment">// 允许访问同源iframe的内容</span></span><br><span class="line">  <span class="built_in">console</span>.log(iframe.contentWindow.document);</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+<h4><span id="web-数据层面隔离">Web 数据层面隔离</span></h4>
+<p>同源策略在Web数据层面上限制了对Cookie、LocalStorage和IndexDB的访问。一个源只能访问和修改属于它自己的数据。</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 设置和获取同源的LocalStorage</span></span><br><span class="line">localStorage.setItem(<span class="string">'key'</span>, <span class="string">'value'</span>);</span><br><span class="line"><span class="built_in">console</span>.log(localStorage.getItem(<span class="string">'key'</span>));</span><br></pre></td></tr></table></figure>
+<h4><span id="网络层面隔离">网络层面隔离</span></h4>
+<p>在网络层面，同源策略限制了跨源的AJAX请求。浏览器会阻止跨源请求，以防止敏感数据泄露和CSRF攻击。</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 仅允许同源的AJAX请求</span></span><br><span class="line">fetch(<span class="string">'/api/data'</span>)</span><br><span class="line">  .then(<span class="function"><span class="params">response</span> =&gt;</span> response.json())</span><br><span class="line">  .then(<span class="function"><span class="params">data</span> =&gt;</span> <span class="built_in">console</span>.log(data));</span><br></pre></td></tr></table></figure>
+<p>由于 Web 是需要互联互通的，所以基于安全层面基础之上需要考虑向外界留出可访问的口子于是才有以下内容考量</p>
+<h3><span id="页面中可以嵌入第三方资源">页面中可以嵌入第三方资源</span></h3>
+<p>虽然同源策略限制了不同源之间的交互，但允许在页面中嵌入第三方资源，例如图片、脚本和样式表。</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">&lt;!-- 允许加载第三方资源 --&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">img</span> <span class="attr">src</span>=<span class="string">"https://example.com/image.jpg"</span> <span class="attr">alt</span>=<span class="string">"Example Image"</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">script</span> <span class="attr">src</span>=<span class="string">"https://example.com/script.js"</span>&gt;</span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">link</span> <span class="attr">rel</span>=<span class="string">"stylesheet"</span> <span class="attr">href</span>=<span class="string">"https://example.com/style.css"</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<h3><span id="xss-攻击防护">XSS 攻击防护</span></h3>
+<p>由于需要访问外界资源或者被外界访问，所以我们需要注意 XSS 脚本注入攻击.<br>
+XSS，即 Cross Site Script，中译是跨站脚本攻击；其原本缩写是 CSS，但为了和层叠样式表(Cascading Style Sheet)有所区分，因而在安全领域叫做 XSS。</p>
+<p>XSS 攻击是指攻击者在网站上注入恶意的客户端代码，通过恶意脚本对客户端网页进行篡改，从而在用户浏览网页时，对用户浏览器进行控制或者获取用户隐私数据的一种攻击方式。</p>
+<p>攻击者对客户端网页注入的恶意脚本一般包括 JavaScript，有时也会包含 HTML 和 Flash。有很多种方式进行 XSS 攻击，但它们的共同点为：将一些隐私数据像 cookie、session 发送给攻击者，将受害者重定向到一个由攻击者控制的网站，在受害者的机器上进行一些恶意操作。</p>
+<p>XSS攻击可以分为3类：反射型（非持久型）、存储型（持久型）、基于DOM。</p>
+<h4><span id="反射型">反射型</span></h4>
+<p>反射型 XSS 只是简单地把用户输入的数据 “反射” 给浏览器，这种攻击方式往往需要攻击者诱使用户点击一个恶意链接，或者提交一个表单，或者进入一个恶意网站时，注入脚本进入被攻击者的网站。</p>
+<p>看一个示例。我先准备一个如下的静态页：<br>
+<img src="https://user-images.githubusercontent.com/7871813/42720000-30a9b93a-8752-11e8-879b-edd8519f4e3e.png" alt="image"></p>
+<p>恶意链接的地址指向了 localhost:8001/?q=111&amp;p=222。然后，我再启一个简单的 Node 服务处理恶意链接的请求：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> http = <span class="built_in">require</span>(<span class="string">'http'</span>);</span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">handleReequest</span>(<span class="params">req, res</span>) </span>&#123;</span><br><span class="line">    res.setHeader(<span class="string">'Access-Control-Allow-Origin'</span>, <span class="string">'*'</span>);</span><br><span class="line">    res.writeHead(<span class="number">200</span>, &#123;<span class="string">'Content-Type'</span>: <span class="string">'text/html; charset=UTF-8'</span>&#125;);</span><br><span class="line">    res.write(<span class="string">'&lt;script&gt;alert("反射型 XSS 攻击")&lt;/script&gt;'</span>);</span><br><span class="line">    res.end();</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> server = <span class="keyword">new</span> http.Server();</span><br><span class="line">server.listen(<span class="number">8001</span>, <span class="string">'127.0.0.1'</span>);</span><br><span class="line">server.on(<span class="string">'request'</span>, handleReequest);</span><br></pre></td></tr></table></figure>
+<p>当用户点击恶意链接时，页面跳转到攻击者预先准备的页面，会发现在攻击者的页面执行了 js 脚本：</p>
+<p><img src="https://user-images.githubusercontent.com/7871813/42720046-ee5a3f40-8752-11e8-8cc5-8b464414864a.png" alt="image"></p>
+<p>这样就产生了反射型 XSS 攻击。攻击者可以注入任意的恶意脚本进行攻击，可能注入恶作剧脚本，或者注入能获取用户隐私数据(如cookie)的脚本，这取决于攻击者的目的。</p>
+<h4><span id="存储型">存储型</span></h4>
+<p>存储型 XSS 会把用户输入的数据 “存储” 在服务器端，当浏览器请求数据时，脚本从服务器上传回并执行。这种 XSS 攻击具有很强的稳定性。</p>
+<p>比较常见的一个场景是攻击者在社区或论坛上写下一篇包含恶意 JavaScript 代码的文章或评论，文章或评论发表后，所有访问该文章或评论的用户，都会在他们的浏览器中执行这段恶意的 JavaScript 代码。</p>
+<p>举一个示例。</p>
+<p>先准备一个输入页面：</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">input</span> <span class="attr">type</span>=<span class="string">"text"</span> <span class="attr">id</span>=<span class="string">"input"</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">button</span> <span class="attr">id</span>=<span class="string">"btn"</span>&gt;</span>Submit<span class="tag">&lt;/<span class="name">button</span>&gt;</span>   </span><br><span class="line"></span><br><span class="line"><span class="tag">&lt;<span class="name">script</span>&gt;</span></span><br><span class="line"><span class="javascript">    <span class="keyword">const</span> input = <span class="built_in">document</span>.getElementById(<span class="string">'input'</span>);</span></span><br><span class="line"><span class="javascript">    <span class="keyword">const</span> btn = <span class="built_in">document</span>.getElementById(<span class="string">'btn'</span>);</span></span><br><span class="line"></span><br><span class="line"><span class="javascript">    <span class="keyword">let</span> val;</span></span><br><span class="line">     </span><br><span class="line"><span class="javascript">    input.addEventListener(<span class="string">'change'</span>, (e) =&gt; &#123;</span></span><br><span class="line">        val = e.target.value;</span><br><span class="line"><span class="javascript">    &#125;, <span class="literal">false</span>);</span></span><br><span class="line"></span><br><span class="line"><span class="javascript">    btn.addEventListener(<span class="string">'click'</span>, (e) =&gt; &#123;</span></span><br><span class="line"><span class="javascript">        fetch(<span class="string">'http://localhost:8001/save'</span>, &#123;</span></span><br><span class="line"><span class="javascript">            method: <span class="string">'POST'</span>,</span></span><br><span class="line">            body: val</span><br><span class="line">        &#125;);</span><br><span class="line"><span class="javascript">    &#125;, <span class="literal">false</span>);</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<p>启动一个 Node 服务监听 save 请求。为了简化，用一个变量来保存用户的输入：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> http = <span class="built_in">require</span>(<span class="string">'http'</span>);</span><br><span class="line"><span class="keyword">let</span> userInput = <span class="string">''</span>;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">handleReequest</span>(<span class="params">req, res</span>) </span>&#123;</span><br><span class="line">    <span class="keyword">const</span> method = req.method;</span><br><span class="line">    res.setHeader(<span class="string">'Access-Control-Allow-Origin'</span>, <span class="string">'*'</span>);</span><br><span class="line">    res.setHeader(<span class="string">'Access-Control-Allow-Headers'</span>, <span class="string">'Content-Type'</span>)</span><br><span class="line">    </span><br><span class="line">    <span class="keyword">if</span> (method === <span class="string">'POST'</span> &amp;&amp; req.url === <span class="string">'/save'</span>) &#123;</span><br><span class="line">        <span class="keyword">let</span> body = <span class="string">''</span>;</span><br><span class="line">        req.on(<span class="string">'data'</span>, chunk =&gt; &#123;</span><br><span class="line">            body += chunk;</span><br><span class="line">        &#125;);</span><br><span class="line">        req.on(<span class="string">'end'</span>, () =&gt; &#123;</span><br><span class="line">            <span class="keyword">if</span> (body) &#123;</span><br><span class="line">                userInput = body;</span><br><span class="line">            &#125;</span><br><span class="line">            res.end();</span><br><span class="line">        &#125;);</span><br><span class="line">    &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">        res.writeHead(<span class="number">200</span>, &#123;<span class="string">'Content-Type'</span>: <span class="string">'text/html; charset=UTF-8'</span>&#125;);</span><br><span class="line">        res.write(userInput);</span><br><span class="line">        res.end();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> server = <span class="keyword">new</span> http.Server();</span><br><span class="line">server.listen(<span class="number">8001</span>, <span class="string">'127.0.0.1'</span>);</span><br><span class="line">server.on(<span class="string">'request'</span>, handleReequest);</span><br></pre></td></tr></table></figure>
+<p>当用户点击提交按钮将输入信息提交到服务端时，服务端通过 userInput 变量保存了输入内容。当用户通过 <a href="http://localhost:8001/$%7Bid%7D" target="_blank" rel="noopener">http://localhost:8001/${id}</a> 访问时，服务端会返回与 id 对应的内容(本示例简化了处理)。如果用户输入了恶意脚本内容，则其他用户访问该内容时，恶意脚本就会在浏览器端执行：</p>
+<p><img src="https://user-images.githubusercontent.com/7871813/42720476-eb71a5c8-8759-11e8-8763-eb08b3480201.gif" alt="image"></p>
+<h4><span id="基于dom">基于DOM</span></h4>
+<p>基于 DOM 的 XSS 攻击是指通过恶意脚本修改页面的 DOM 结构，是纯粹发生在客户端的攻击。</p>
+<p>看如下代码：</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">h2</span>&gt;</span>XSS: <span class="tag">&lt;/<span class="name">h2</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">input</span> <span class="attr">type</span>=<span class="string">"text"</span> <span class="attr">id</span>=<span class="string">"input"</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">button</span> <span class="attr">id</span>=<span class="string">"btn"</span>&gt;</span>Submit<span class="tag">&lt;/<span class="name">button</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">div</span> <span class="attr">id</span>=<span class="string">"div"</span>&gt;</span><span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">script</span>&gt;</span></span><br><span class="line"><span class="javascript">    <span class="keyword">const</span> input = <span class="built_in">document</span>.getElementById(<span class="string">'input'</span>);</span></span><br><span class="line"><span class="javascript">    <span class="keyword">const</span> btn = <span class="built_in">document</span>.getElementById(<span class="string">'btn'</span>);</span></span><br><span class="line"><span class="javascript">    <span class="keyword">const</span> div = <span class="built_in">document</span>.getElementById(<span class="string">'div'</span>);</span></span><br><span class="line"></span><br><span class="line"><span class="javascript">    <span class="keyword">let</span> val;</span></span><br><span class="line">     </span><br><span class="line"><span class="javascript">    input.addEventListener(<span class="string">'change'</span>, (e) =&gt; &#123;</span></span><br><span class="line">        val = e.target.value;</span><br><span class="line"><span class="javascript">    &#125;, <span class="literal">false</span>);</span></span><br><span class="line"></span><br><span class="line"><span class="javascript">    btn.addEventListener(<span class="string">'click'</span>, () =&gt; &#123;</span></span><br><span class="line"><span class="xml">        div.innerHTML = `<span class="tag">&lt;<span class="name">a</span> <span class="attr">href</span>=<span class="string">$&#123;val&#125;</span>&gt;</span>testLink<span class="tag">&lt;/<span class="name">a</span>&gt;</span>`</span></span><br><span class="line"><span class="javascript">    &#125;, <span class="literal">false</span>);</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<p>点击 Submit 按钮后，会在当前页面插入一个链接，其地址为用户的输入内容。如果用户在输入时构造了如下内容：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="string">''</span> onclick=alert(<span class="regexp">/xss/</span>)</span><br></pre></td></tr></table></figure>
+<p>用户提交之后，页面代码就变成了：</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">a</span> <span class="attr">href</span> <span class="attr">onlick</span>=<span class="string">"alert(/xss/)"</span>&gt;</span>testLink<span class="tag">&lt;/<span class="name">a</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<p>此时，用户点击生成的链接，就会执行对应的脚本：</p>
+<p><img src="https://user-images.githubusercontent.com/7871813/42721109-cb7ce572-8766-11e8-96d9-9ada8a787827.gif" alt="image"></p>
+<h3><span id="xss-攻击的防范">XSS 攻击的防范</span></h3>
+<p>现在主流的浏览器内置了防范 XSS 的措施，例如 CSP。但对于开发者来说，也应该寻找可靠的解决方案来防止 XSS 攻击。</p>
+<h4><span id="httponly-防止劫取-cookie">HttpOnly 防止劫取 Cookie</span></h4>
+<p>HttpOnly 最早由微软提出，至今已经成为一个标准。浏览器将禁止页面的Javascript 访问带有 HttpOnly 属性的Cookie。</p>
+<p>上文有说到，攻击者可以通过注入恶意脚本获取用户的 Cookie 信息。通常 Cookie 中都包含了用户的登录凭证信息，攻击者在获取到 Cookie 之后，则可以发起 Cookie 劫持攻击。所以，严格来说，HttpOnly 并非阻止 XSS 攻击，而是能阻止 XSS 攻击后的 Cookie 劫持攻击。</p>
+<h4><span id="输入检查">输入检查</span></h4>
+<p>不要相信用户的任何输入。 对于用户的任何输入要进行检查、过滤和转义。建立可信任的字符和 HTML 标签白名单，对于不在白名单之列的字符或者标签进行过滤或编码。</p>
+<p>在 XSS 防御中，输入检查一般是检查用户输入的数据中是否包含 &lt;，&gt; 等特殊字符，如果存在，则对特殊字符进行过滤或编码，这种方式也称为 XSS Filter。</p>
+<p>而在一些前端框架中，都会有一份 decodingMap， 用于对用户输入所包含的特殊字符或标签进行编码或过滤，如 &lt;，&gt;，script，防止 XSS 攻击：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// vuejs 中的 decodingMap</span></span><br><span class="line"><span class="comment">// 在 vuejs 中，如果输入带 script 标签的内容，会直接过滤掉</span></span><br><span class="line"><span class="keyword">const</span> decodingMap = &#123;</span><br><span class="line">  <span class="string">'&amp;lt;'</span>: <span class="string">'&lt;'</span>,</span><br><span class="line">  <span class="string">'&amp;gt;'</span>: <span class="string">'&gt;'</span>,</span><br><span class="line">  <span class="string">'&amp;quot;'</span>: <span class="string">'"'</span>,</span><br><span class="line">  <span class="string">'&amp;amp;'</span>: <span class="string">'&amp;'</span>,</span><br><span class="line">  <span class="string">'&amp;#10;'</span>: <span class="string">'\n'</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h4><span id="输出检查">输出检查</span></h4>
+<p>用户的输入会存在问题，服务端的输出也会存在问题。一般来说，除富文本的输出外，在变量输出到 HTML 页面时，可以使用编码或转义的方式来防御 XSS 攻击。例如利用 sanitize-html 对输出内容进行有规则的过滤之后再输出到页面中。</p>
+<h4><span id="csp-是什么如何防止-xss-工具">CSP 是什么，如何防止 XSS 工具</span></h4>
+<p>内容安全策略 (CSP) 是一种防护机制，用于防止XSS攻击。通过设置HTTP头 <code>Content-Security-Policy</code>，开发者可以指定允许加载的资源来源，从而防止恶意脚本的注入和执行。</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">&lt;!-- 设置 CSP 头 --&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">meta</span> <span class="attr">http-equiv</span>=<span class="string">"Content-Security-Policy"</span> <span class="attr">content</span>=<span class="string">"default-src 'self'; script-src 'self' https://trusted.com"</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<h2><span id="跨域资源共享">跨域资源共享</span></h2>
+<h3><span id="跨域资源共享cors">跨域资源共享（CORS）</span></h3>
+<p>浏览器将CORS请求分成两类：简单请求（simple request）和非简单请求（not-so-simple request）。<br>
+请参考：<a href="https://www.ruanyifeng.com/blog/2016/04/cors.html" target="_blank" rel="noopener">https://www.ruanyifeng.com/blog/2016/04/cors.html</a></p>
+<h3><span id="csrf">CSRF</span></h3>
+<p>CSRF，即 Cross Site Request Forgery，中译是跨站请求伪造，是一种劫持受信任用户向服务器发送非预期请求的攻击方式。</p>
+<p>通常情况下，CSRF 攻击是攻击者借助受害者的 Cookie 骗取服务器的信任，可以在受害者毫不知情的情况下以受害者名义伪造请求发送给受攻击服务器，从而在并未授权的情况下执行在权限保护之下的操作。</p>
+<p>在举例子之前，先说说浏览器的 Cookie 策略。</p>
+<h4><span id="浏览器的-cookie-策略">浏览器的 Cookie 策略</span></h4>
+<p>Cookie 是服务器发送到用户浏览器并保存在本地的一小块数据，它会在浏览器下次向同一服务器再发起请求时被携带并发送到服务器上。Cookie 主要用于以下三个方面：</p>
+<ul>
+<li>
+<p>会话状态管理（如用户登录状态、购物车、游戏分数或其它需要记录的信息）</p>
+</li>
+<li>
+<p>个性化设置（如用户自定义设置、主题等）</p>
+</li>
+<li>
+<p>而浏览器所持有的 Cookie 分为两种：</p>
+</li>
+<li>
+<p>Session Cookie(会话期 Cookie)：会话期 Cookie 是最简单的Cookie，它不需要指定过期时间（Expires）或者有效期（Max-Age），它仅在会话期内有效，浏览器关闭之后它会被自动删除。</p>
+</li>
+<li>
+<p>Permanent Cookie(持久性 Cookie)：与会话期 Cookie 不同的是，持久性 Cookie 可以指定一个特定的过期时间（Expires）或有效期（Max-Age）。</p>
+</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">res.setHeader(&apos;Set-Cookie&apos;, [&apos;mycookie=222&apos;, &apos;test=3333; expires=Sat, 21 Jul 2018 00:00:00 GMT;&apos;]);</span><br></pre></td></tr></table></figure>
+<p>上述代码创建了两个 Cookie：mycookie 和 test，前者属于会话期 Cookie，后者则属于持久性 Cookie。当我们去查看 Cookie 相关的属性时，不同的浏览器对会话期 Cookie 的 Expires 属性值会不一样：</p>
+<p>Firefox：</p>
+<p><img src="https://user-images.githubusercontent.com/7871813/42733717-fe5c16fe-8868-11e8-979b-37aaf8311375.png" alt="image"></p>
+<p>此外，每个 Cookie 都会有与之关联的域，这个域的范围一般通过 donmain 属性指定。如果 Cookie 的域和页面的域相同，那么我们称这个 Cookie 为第一方 Cookie（first-party cookie），如果 Cookie 的域和页面的域不同，则称之为第三方 Cookie（third-party cookie）。一个页面包含图片或存放在其他域上的资源（如图片）时，第一方的 Cookie 也只会发送给设置它们的服务器。</p>
+<h4><span id="cookie-字段">cookie 字段</span></h4>
+<ul>
+<li>
+<p>Expires，Max-Age</p>
+</li>
+<li>
+<p>SameSite`属性用来限制第三方 Cookie，从而减少安全风险。</p>
+<ul>
+<li><code>Strict</code>最为严格，完全禁止第三方 Cookie，跨站点时，任何情况下都不会发送 Cookie。换言之，只有当前网页的 URL 与请求目标一致，才会带上 Cookie。</li>
+<li><code>Lax</code>规则稍稍放宽，大多数情况也是不发送第三方 Cookie，但是导航到目标网址的 Get 请求除外。</li>
+<li><code>None</code>设置为None以后，Secure需要同时设置为true，这意味着你的网站必须支持https</li>
+</ul>
+</li>
+<li>
+<p><code>Secure</code>属性指定浏览器只有在加密协议 HTTPS 下，才能将这个 Cookie 发送到服务器。另一方面，如果当前协议是 HTTP，浏览器会自动忽略服务器发来的<code>Secure</code>属性。该属性只是一个开关，不需要指定值。如果通信是 HTTPS 协议，该开关自动打开。</p>
+</li>
+</ul>
+<h4><span id="通过-cookie-进行-csrf-攻击">通过 Cookie 进行 CSRF 攻击</span></h4>
+<p>假设有一个 bbs 站点：<a href="http://www.c.com" target="_blank" rel="noopener">http://www.c.com</a>，当登录后的用户发起如下 GET 请求时，会删除 ID 指定的帖子：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">http://www.c.com:8002/content/delete/:id</span><br></pre></td></tr></table></figure>
+<p>如发起 <a href="http://www.c.com:8002/content/delete/87343" target="_blank" rel="noopener">http://www.c.com:8002/content/delete/87343</a> 请求时，会删除 id 为 87343 的帖子。当用户登录之后，会设置如下 cookie：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">res.setHeader(&apos;Set-Cookie&apos;, [&apos;user=22333; expires=Sat, 21 Jul 2018 00:00:00 GMT;&apos;]);</span><br></pre></td></tr></table></figure>
+<p><img src="https://user-images.githubusercontent.com/7871813/42733982-62308f16-886e-11e8-9c59-c3b0352b0002.png" alt="image"></p>
+<p>user 对应的值是用户 ID。然后构造一个页面 A：</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">p</span>&gt;</span>CSRF 攻击者准备的网站：<span class="tag">&lt;/<span class="name">p</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">img</span> <span class="attr">src</span>=<span class="string">"http://www.c.com:8002/content/delete/87343"</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<p>页面 A 使用了一个 img 标签，其地址指向了删除用户帖子的链接：</p>
+<p><img src="https://user-images.githubusercontent.com/7871813/42734074-38bc206c-8870-11e8-8f93-2aa5c39d245e.png" alt="image"></p>
+<p>可以看到，当登录用户访问攻击者的网站时，会向 <a href="http://www.c.com" target="_blank" rel="noopener">www.c.com</a> 发起一个删除用户帖子的请求。此时若用户在切换到 <a href="http://www.c.com" target="_blank" rel="noopener">www.c.com</a> 的帖子页面刷新，会发现ID 为 87343 的帖子已经被删除。</p>
+<p>由于 Cookie 中包含了用户的认证信息，当用户访问攻击者准备的攻击环境时，攻击者就可以对服务器发起 CSRF 攻击。在这个攻击过程中，攻击者借助受害者的 Cookie 骗取服务器的信任，但并不能拿到 Cookie，也看不到 Cookie 的内容。而对于服务器返回的结果，由于浏览器同源策略的限制，攻击者也无法进行解析。因此，攻击者无法从返回的结果中得到任何东西，他所能做的就是给服务器发送请求，以执行请求中所描述的命令，在服务器端直接改变数据的值，而非窃取服务器中的数据。</p>
+<p>但若 CSRF 攻击的目标并不需要使用 Cookie，则也不必顾虑浏览器的 Cookie 策略了。</p>
+<h4><span id="csrf-攻击的防范">CSRF 攻击的防范</span></h4>
+<p>当前，对 CSRF 攻击的防范措施主要有如下几种方式。</p>
+<h5><span id="验证码">验证码</span></h5>
+<p>验证码被认为是对抗 CSRF 攻击最简洁而有效的防御方法。</p>
+<p>从上述示例中可以看出，CSRF 攻击往往是在用户不知情的情况下构造了网络请求。而验证码会强制用户必须与应用进行交互，才能完成最终请求。因为通常情况下，验证码能够很好地遏制 CSRF 攻击。</p>
+<p>但验证码并不是万能的，因为出于用户考虑，不能给网站所有的操作都加上验证码。因此，验证码只能作为防御 CSRF 的一种辅助手段，而不能作为最主要的解决方案。</p>
+<h5><span id="referer-check">Referer Check</span></h5>
+<p>根据 HTTP 协议，在 HTTP 头中有一个字段叫 Referer，它记录了该 HTTP 请求的来源地址。通过 Referer Check，可以检查请求是否来自合法的&quot;源&quot;。</p>
+<p>比如，如果用户要删除自己的帖子，那么先要登录 <a href="http://www.c.com" target="_blank" rel="noopener">www.c.com</a>，然后找到对应的页面，发起删除帖子的请求。此时，Referer 的值是 <a href="http://www.c.com" target="_blank" rel="noopener">http://www.c.com</a>；当请求是从 <a href="http://www.a.com" target="_blank" rel="noopener">www.a.com</a> 发起时，Referer 的值是 <a href="http://www.a.com" target="_blank" rel="noopener">http://www.a.com</a> 了。因此，要防御 CSRF 攻击，只需要对于每一个删帖请求验证其 Referer 值，如果是以 <a href="http://www.c.com" target="_blank" rel="noopener">www.c.com</a> 开头的域名，则说明该请求是来自网站自己的请求，是合法的。如果 Referer 是其他网站的话，则有可能是 CSRF 攻击，可以拒绝该请求。</p>
+<p>针对上文的例子，可以在服务端增加如下代码：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">if</span> (req.headers.referer !== <span class="string">'http://www.c.com:8002/'</span>) &#123;</span><br><span class="line">    res.write(<span class="string">'csrf 攻击'</span>);</span><br><span class="line">    <span class="keyword">return</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p><img src="https://user-images.githubusercontent.com/7871813/42734407-0f4c0728-8876-11e8-8565-21f89b01f6f0.png" alt="image"><br>
+Referer Check 不仅能防范 CSRF 攻击，另一个应用场景是 “防止图片盗链”。</p>
+<h5><span id="添加-token-验证">添加 token 验证</span></h5>
+<p>CSRF 攻击之所以能够成功，是因为攻击者可以完全伪造用户的请求，该请求中所有的用户验证信息都是存在于 Cookie 中，因此攻击者可以在不知道这些验证信息的情况下直接利用用户自己的 Cookie 来通过安全验证。要抵御 CSRF，关键在于在请求中放入攻击者所不能伪造的信息，并且该信息不存在于 Cookie 之中。可以在 HTTP 请求中以参数的形式加入一个随机产生的 token，并在服务器端建立一个拦截器来验证这个 token，如果请求中没有 token 或者 token 内容不正确，则认为可能是 CSRF 攻击而拒绝该请求。</p>
+<p>CORS（跨域资源共享）允许服务器通过设置特定的HTTP头来指示浏览器允许跨域请求。对于复杂请求，浏览器会发送一个预检请求（OPTIONS），以确定服务器是否允许该操作。</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 发起跨域请求</span></span><br><span class="line">fetch(<span class="string">'https://api.example.com/data'</span>, &#123;</span><br><span class="line">  method: <span class="string">'POST'</span>,</span><br><span class="line">  headers: &#123;</span><br><span class="line">    <span class="string">'Content-Type'</span>: <span class="string">'application/json'</span></span><br><span class="line">  &#125;,</span><br><span class="line">  body: <span class="built_in">JSON</span>.stringify(&#123; <span class="attr">key</span>: <span class="string">'value'</span> &#125;)</span><br><span class="line">&#125;)</span><br><span class="line">.then(<span class="function"><span class="params">response</span> =&gt;</span> response.json())</span><br><span class="line">.then(<span class="function"><span class="params">data</span> =&gt;</span> <span class="built_in">console</span>.log(data));</span><br></pre></td></tr></table></figure>
+<p>服务器响应：</p>
+<figure class="highlight http"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">HTTP/1.1 <span class="number">200</span> OK</span><br><span class="line"><span class="attribute">Access-Control-Allow-Origin</span>: *</span><br><span class="line"><span class="attribute">Access-Control-Allow-Methods</span>: POST, GET, OPTIONS</span><br><span class="line"><span class="attribute">Access-Control-Allow-Headers</span>: Content-Type</span><br></pre></td></tr></table></figure>
+<h2><span id="跨文档消息机制">跨文档消息机制</span></h2>
+<h4><span id="windowpostmessage">window.postMessage</span></h4>
+<p>跨文档消息机制允许不同源的文档通过 <code>window.postMessage</code> 方法进行安全的通信。该方法可以发送消息给其他窗口，并通过设定消息事件的监听器来接收消息。</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 发送消息</span></span><br><span class="line"><span class="keyword">let</span> targetWindow = <span class="built_in">document</span>.getElementById(<span class="string">'target-iframe'</span>).contentWindow;</span><br><span class="line">targetWindow.postMessage(<span class="string">'Hello from parent'</span>, <span class="string">'https://target.com'</span>);</span><br><span class="line"></span><br><span class="line"><span class="comment">// 接收消息</span></span><br><span class="line"><span class="built_in">window</span>.addEventListener(<span class="string">'message'</span>, <span class="function"><span class="keyword">function</span>(<span class="params">event</span>) </span>&#123;</span><br><span class="line">  <span class="keyword">if</span> (event.origin === <span class="string">'https://target.com'</span>) &#123;</span><br><span class="line">    <span class="built_in">console</span>.log(<span class="string">'Received message:'</span>, event.data);</span><br><span class="line">  &#125;</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+<h2><span id="总结">总结</span></h2>
+<p>本文主要介绍了 XSS 和 CSRF 的攻击原理和防御措施。当然，在 Web 安全领域，除了这两种常见的攻击方式，也存在这 SQL 注入等其它攻击方式，这不在本文的讨论范围之内，如果你对其感兴趣，可以阅读SQL注入技术专题的专栏详细了解相关信息。最后，总结一下 XSS 攻击和 CSRF 攻击的常见防御措施：</p>
+<h4><span id="防御-xss-攻击">防御 XSS 攻击</span></h4>
+<ul>
+<li>HttpOnly 防止劫取 Cookie</li>
+<li>⽤用户输⼊入：⽤用户输⼊入内容编码解码 ( he.js ) 不不合法的东⻄西过滤( HTMLParser.js )</li>
+<li>服务端的输出检查</li>
+</ul>
+<h4><span id="防御-csrf-攻击">防御 CSRF 攻击</span></h4>
+<ul>
+<li>验证码</li>
+<li>Referer Check</li>
+<li>Token 验证</li>
+</ul>
+
+                
+
+                <hr>
+                <!-- Pager -->
+                <ul class="pager">
+                    
+                        <li class="previous">
+                            <a href="/jtblogs/article/解决-React-状态撕裂问题：Jotai-原理及实现/" data-toggle="tooltip" data-placement="top" title="解决 React 状态撕裂问题：Jotai 原理及实现">&larr; Previous Post</a>
+                        </li>
+                    
+                    
+                        <li class="next">
+                            <a href="/jtblogs/article/提升-React-应用性能：结合使用-welldone-software-why-did-you-render-和-immer/" data-toggle="tooltip" data-placement="top" title="提升 React 应用性能：结合使用 @welldone-software/why-did-you-render 和 immer">Next Post &rarr;</a>
+                        </li>
+                    
+                </ul>
+
+                <br>
+
+                <!--打赏-->
+                
+                <!--打赏-->
+
+                <br>
+                <!--分享-->
+                
+                    <div class="social-share"  data-wechat-qrcode-helper="" align="center"></div>
+                    <!--  css & js -->
+                    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/social-share.js/1.0.16/css/share.min.css">
+                    <script src="https://cdnjs.cloudflare.com/ajax/libs/social-share.js/1.0.16/js/social-share.min.js"></script>
+                
+                <!--分享-->
+                <br>                       
+                
+                <!-- require APlayer -->
+                
+
+                <!-- duoshuo Share start -->
+                
+                <!-- 多说 Share end-->
+
+                <!-- 多说评论框 start -->
+                
+                <!-- 多说评论框 end -->
+
+                <!-- disqus comment start -->
+                
+                <!-- disqus comment end -->
+
+                
+
+            </div>
+            
+            <!-- Tabe of Content -->
+            <!-- Table of Contents -->
+
+  
+    <style>
+      span.toc-nav-number{
+        display: none
+      }
+    </style>
+  
+    
+      <aside id="sidebar">
+        <div id="toc" class="toc-article">
+        <strong class="toc-title">Contents</strong>
+        
+          <ol class="toc-nav"><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#null"><span class="toc-nav-number">1.</span> <span class="toc-nav-text">引言</span></a></li><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#null"><span class="toc-nav-number">2.</span> <span class="toc-nav-text">同源策略 (Same-Origin Policy)</span></a><ol class="toc-nav-child"><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#null"><span class="toc-nav-number">2.1.</span> <span class="toc-nav-text">什么是同源策略？</span></a><ol class="toc-nav-child"><li class="toc-nav-item toc-nav-level-4"><a class="toc-nav-link" href="#null"><span class="toc-nav-number">2.1.1.</span> <span class="toc-nav-text">DOM 层面隔离</span></a></li><li class="toc-nav-item toc-nav-level-4"><a class="toc-nav-link" href="#null"><span class="toc-nav-number">2.1.2.</span> <span class="toc-nav-text">Web 数据层面隔离</span></a></li><li class="toc-nav-item toc-nav-level-4"><a class="toc-nav-link" href="#null"><span class="toc-nav-number">2.1.3.</span> <span class="toc-nav-text">网络层面隔离</span></a></li></ol></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#null"><span class="toc-nav-number">2.2.</span> <span class="toc-nav-text">页面中可以嵌入第三方资源</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#null"><span class="toc-nav-number">2.3.</span> <span class="toc-nav-text">XSS 攻击防护</span></a><ol class="toc-nav-child"><li class="toc-nav-item toc-nav-level-4"><a class="toc-nav-link" href="#null"><span class="toc-nav-number">2.3.1.</span> <span class="toc-nav-text">反射型</span></a></li><li class="toc-nav-item toc-nav-level-4"><a class="toc-nav-link" href="#null"><span class="toc-nav-number">2.3.2.</span> <span class="toc-nav-text">存储型</span></a></li><li class="toc-nav-item toc-nav-level-4"><a class="toc-nav-link" href="#null"><span class="toc-nav-number">2.3.3.</span> <span class="toc-nav-text">基于DOM</span></a></li></ol></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#null"><span class="toc-nav-number">2.4.</span> <span class="toc-nav-text">XSS 攻击的防范</span></a><ol class="toc-nav-child"><li class="toc-nav-item toc-nav-level-4"><a class="toc-nav-link" href="#null"><span class="toc-nav-number">2.4.1.</span> <span class="toc-nav-text">HttpOnly 防止劫取 Cookie</span></a></li><li class="toc-nav-item toc-nav-level-4"><a class="toc-nav-link" href="#null"><span class="toc-nav-number">2.4.2.</span> <span class="toc-nav-text">输入检查</span></a></li><li class="toc-nav-item toc-nav-level-4"><a class="toc-nav-link" href="#null"><span class="toc-nav-number">2.4.3.</span> <span class="toc-nav-text">输出检查</span></a></li><li class="toc-nav-item toc-nav-level-4"><a class="toc-nav-link" href="#null"><span class="toc-nav-number">2.4.4.</span> <span class="toc-nav-text">CSP 是什么，如何防止 XSS 工具</span></a></li></ol></li></ol></li><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#null"><span class="toc-nav-number">3.</span> <span class="toc-nav-text">跨域资源共享</span></a><ol class="toc-nav-child"><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#null"><span class="toc-nav-number">3.1.</span> <span class="toc-nav-text">跨域资源共享（CORS）</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#null"><span class="toc-nav-number">3.2.</span> <span class="toc-nav-text">CSRF</span></a><ol class="toc-nav-child"><li class="toc-nav-item toc-nav-level-4"><a class="toc-nav-link" href="#null"><span class="toc-nav-number">3.2.1.</span> <span class="toc-nav-text">浏览器的 Cookie 策略</span></a></li><li class="toc-nav-item toc-nav-level-4"><a class="toc-nav-link" href="#null"><span class="toc-nav-number">3.2.2.</span> <span class="toc-nav-text">cookie 字段</span></a></li><li class="toc-nav-item toc-nav-level-4"><a class="toc-nav-link" href="#null"><span class="toc-nav-number">3.2.3.</span> <span class="toc-nav-text">通过 Cookie 进行 CSRF 攻击</span></a></li><li class="toc-nav-item toc-nav-level-4"><a class="toc-nav-link" href="#null"><span class="toc-nav-number">3.2.4.</span> <span class="toc-nav-text">CSRF 攻击的防范</span></a><ol class="toc-nav-child"><li class="toc-nav-item toc-nav-level-5"><a class="toc-nav-link" href="#null"><span class="toc-nav-number">3.2.4.1.</span> <span class="toc-nav-text">验证码</span></a></li><li class="toc-nav-item toc-nav-level-5"><a class="toc-nav-link" href="#null"><span class="toc-nav-number">3.2.4.2.</span> <span class="toc-nav-text">Referer Check</span></a></li><li class="toc-nav-item toc-nav-level-5"><a class="toc-nav-link" href="#null"><span class="toc-nav-number">3.2.4.3.</span> <span class="toc-nav-text">添加 token 验证</span></a></li></ol></li></ol></li></ol></li><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#null"><span class="toc-nav-number">4.</span> <span class="toc-nav-text">跨文档消息机制</span></a><ol class="toc-nav-child"><li class="toc-nav-item toc-nav-level-4"><a class="toc-nav-link" href="#null"><span class="toc-nav-number">4.0.1.</span> <span class="toc-nav-text">window.postMessage</span></a></li></ol></li></ol></li><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#null"><span class="toc-nav-number">5.</span> <span class="toc-nav-text">总结</span></a><ol class="toc-nav-child"><li class="toc-nav-item toc-nav-level-4"><a class="toc-nav-link" href="#null"><span class="toc-nav-number">5.0.1.</span> <span class="toc-nav-text">防御 XSS 攻击</span></a></li><li class="toc-nav-item toc-nav-level-4"><a class="toc-nav-link" href="#null"><span class="toc-nav-number">5.0.2.</span> <span class="toc-nav-text">防御 CSRF 攻击</span></a></li></ol></li></ol></li></ol>
+        
+        </div>
+      </aside>
+    
+
+                
+            <!-- Sidebar Container -->
+            <div class="
+                col-lg-8 col-lg-offset-2
+                col-md-10 col-md-offset-1
+                sidebar-container">
+
+                <!-- Featured Tags -->
+                
+                <section>
+                    <!-- no hr -->
+                    <h5><a href="/jtblogs/tags/">FEATURED TAGS</a></h5>
+                    <div class="tags">
+                       
+                          <a class="tag" href="/jtblogs/tags/#HTTP" title="HTTP">HTTP</a>
+                        
+                    </div>
+                </section>
+                
+
+                <!-- Friends Blog -->
+                
+                <hr>
+                <h5>FRIENDS</h5>
+                <ul class="list-inline">
+
+                    
+                </ul>
+                
+            </div>
+        </div>
+    </div>
+</article>
+
+
+
+
+
+
+
+
+<!-- async load function -->
+<script>
+    function async(u, c) {
+      var d = document, t = 'script',
+          o = d.createElement(t),
+          s = d.getElementsByTagName(t)[0];
+      o.src = u;
+      if (c) { o.addEventListener('load', function (e) { c(null, e); }, false); }
+      s.parentNode.insertBefore(o, s);
+    }
+</script>
+<!-- anchor-js, Doc:http://bryanbraun.github.io/anchorjs/ -->
+<script>
+    async("https://cdn.bootcss.com/anchor-js/1.1.1/anchor.min.js",function(){
+        anchors.options = {
+          visible: 'hover',
+          placement: 'left',
+          icon: 'ℬ'
+        };
+        anchors.add().remove('.intro-header h1').remove('.subheading').remove('.sidebar-container h5');
+    })
+</script>
+<style>
+    /* place left on bigger screen */
+    @media all and (min-width: 800px) {
+        .anchorjs-link{
+            position: absolute;
+            left: -0.75em;
+            font-size: 1.1em;
+            margin-top : -0.1em;
+        }
+    }
+</style>
+
+
+<!-- chrome Firefox 中文锚点定位失效-->
+<script src="https://cdn.bootcss.com/jquery/3.3.1/jquery.js"></script>
+<!-- smooth scroll behavior polyfill  -->
+<script type="text/javascript" src="/js/smoothscroll.js"></script>
+<script>
+        $('#toc').on('click','a',function(a){
+            // var isChrome = window.navigator.userAgent.indexOf("Chrome") !== -1;
+            // console.log(window.navigator.userAgent,isChrome)
+                // if(isChrome) {
+                    // console.log(a.currentTarget.outerHTML);
+                    // console.log($(a.currentTarget).attr("href"));
+                    //跳转到指定锚点
+                    // document.getElementById(a.target.innerText.toLowerCase()).scrollIntoView(true);
+                    document.getElementById($(a.currentTarget).attr("href").replace("#","")).scrollIntoView({behavior: 'smooth' });
+                // }
+        })  
+</script>
+
+
+    <!-- Footer -->
+    <!-- Footer -->
+<footer>
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+                <ul class="list-inline text-center">
+                    
+                            
+                                    
+
+                                            
+
+                                                    
+
+                                                            
+                                                                <li>
+                                                                    <a target="_blank"
+                                                                        href="https://github.com/taojiangcb">
+                                                                        <span class="fa-stack fa-lg">
+                                                                            <i class="fa fa-circle fa-stack-2x"></i>
+                                                                            <i
+                                                                                class="fa fa-github fa-stack-1x fa-inverse"></i>
+                                                                        </span>
+                                                                    </a>
+                                                                </li>
+                                                                
+
+                                                                    
+
+                </ul>
+
+                <p class="copyright text-muted">
+                    Copyright &copy; 江涛
+                        2025
+                            <br>
+                            Theme by <a href="http://beantech.org">BeanTech</a>
+                            <span style="display: inline-block; margin: 0 5px;">
+                                <i class="fa fa-heart"></i>
+                            </span>
+                            re-Ported by <a href="https://taojiangcb.github.io/jtblogs">江涛</a> |
+                            <iframe style="margin-left: 2px; margin-bottom:-5px;" frameborder="0" scrolling="0"
+                                width="91px" height="20px"
+                                src="https://ghbtns.com/github-btn.html?user=taojiangcb&repo=jtblogs&type=star&count=true">
+                            </iframe>
+                </p>
+                <p class="copyright text-muted" style="margin:0">
+                    <script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+                    <span id="busuanzi_container_site_pv">
+                        总访问量<span id="busuanzi_value_site_pv"></span>次
+                    </span>
+                    <span id="busuanzi_container_site_uv">
+                        总访客数<span id="busuanzi_value_site_uv"></span>人
+                    </span>
+                </p>
+            </div>
+        </div>
+    </div>
+</footer>
+
+<!-- jQuery -->
+<script src="/jtblogs/js/jquery.min.js"></script>
+
+    <!-- Bootstrap Core JavaScript -->
+    <script src="/jtblogs/js/bootstrap.min.js"></script>
+
+        <!-- Custom Theme JavaScript -->
+        <script src="/jtblogs/js/hux-blog.min.js"></script>
+
+
+            <!-- async load function -->
+            <script>
+                function async(u, c) {
+                    var d = document, t = 'script',
+                        o = d.createElement(t),
+                        s = d.getElementsByTagName(t)[0];
+                    o.src = u;
+                    if (c) { o.addEventListener('load', function (e) { c(null, e); }, false); }
+                    s.parentNode.insertBefore(o, s);
+                }
+            </script>
+
+            <!-- 
+     Because of the native support for backtick-style fenced code blocks 
+     right within the Markdown is landed in Github Pages, 
+     From V1.6, There is no need for Highlight.js, 
+     so Huxblog drops it officially.
+
+     - https://github.com/blog/2100-github-pages-now-faster-and-simpler-with-jekyll-3-0  
+     - https://help.github.com/articles/creating-and-highlighting-code-blocks/    
+-->
+            <!--
+    <script>
+        async("http://cdn.bootcss.com/highlight.js/8.6/highlight.min.js", function(){
+            hljs.initHighlightingOnLoad();
+        })
+    </script>
+    <link href="http://cdn.bootcss.com/highlight.js/8.6/styles/github.min.css" rel="stylesheet">
+-->
+
+
+            <!-- jquery.tagcloud.js -->
+            <script>
+                // only load tagcloud.js in tag.html
+                if ($('#tag_cloud').length !== 0) {
+                    async("https://taojiangcb.github.io/jtblogs/js/jquery.tagcloud.js", function () {
+                        $.fn.tagcloud.defaults = {
+                            //size: {start: 1, end: 1, unit: 'em'},
+                            color: { start: '#bbbbee', end: '#0085a1' },
+                        };
+                        $('#tag_cloud a').tagcloud();
+                    })
+                }
+            </script>
+
+            <!--fastClick.js -->
+            <script>
+                async("https://cdn.bootcss.com/fastclick/1.0.6/fastclick.min.js", function () {
+                    var $nav = document.querySelector("nav");
+                    if ($nav) FastClick.attach($nav);
+                })
+            </script>
+
+
+            <!-- Google Analytics -->
+
+            
+                <script>
+                    // dynamic User by Hux
+                    var _gaId = 'UA-XXXXXXXX-X';
+                    var _gaDomain = 'yoursite';
+
+                    // Originial
+                    (function (i, s, o, g, r, a, m) {
+                        i['GoogleAnalyticsObject'] = r; i[r] = i[r] || function () {
+                            (i[r].q = i[r].q || []).push(arguments)
+                        }, i[r].l = 1 * new Date(); a = s.createElement(o),
+                            m = s.getElementsByTagName(o)[0]; a.async = 1; a.src = g; m.parentNode.insertBefore(a, m)
+                    })(window, document, 'script', '//www.google-analytics.com/analytics.js', 'ga');
+
+                    ga('create', _gaId, _gaDomain);
+                    ga('send', 'pageview');
+                </script>
+
+                
+
+
+                    <!-- Baidu Tongji -->
+                    
+                        <script>
+                            // dynamic User by Hux
+                            var _baId = 'xxx';
+
+                            // Originial
+                            var _hmt = _hmt || [];
+                            (function () {
+                                var hm = document.createElement("script");
+                                hm.src = "//hm.baidu.com/hm.js?" + _baId;
+                                var s = document.getElementsByTagName("script")[0];
+                                s.parentNode.insertBefore(hm, s);
+                            })();
+                        </script>
+                        
+
+
+	<a id="rocket" href="#top" class=""></a>
+	<script type="text/javascript" src="/jtblogs/js/totop.js?v=1.0.0" async=""></script>
+    <script type="text/javascript" src="/jtblogs/js/toc.js?v=1.0.0" async=""></script>
+<!-- Image to hack wechat -->
+<img src="https://taojiangcb.github.io/jtblogs/img/icon_wechat.png" width="0" height="0" />
+<!-- Migrate from head to bottom, no longer block render and still work -->
+
+</body>
+
+</html>

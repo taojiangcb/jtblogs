@@ -1,0 +1,696 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<!-- Head tag -->
+<head><meta name="generator" content="Hexo 3.9.0">
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="google-site-verification" content="xBT4GhYoi5qRD5tr338pgPM5OWHHIDR6mNg1a3euekI">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content>
+    <meta name="keyword" content>
+    <link rel="shortcut icon" href="/jtblogs/favicon.ico">
+    <!-- Place this tag in your head or just before your close body tag. -->
+    <script async defer src="https://buttons.github.io/buttons.js"></script>
+    <title>
+        
+          现代前端框架对比：React、Svelte、HTMX、Million.js 和 Vue 深度解析 - 江涛 | Blog
+        
+    </title>
+
+    <link rel="canonical" href="https://taojiangcb.github.io/jtblogs/jtblogs/article/现代前端框架对比：React、Svelte、HTMX、Million-js-和-Vue-深度解析/">
+
+    <!-- Bootstrap Core CSS -->
+    <link rel="stylesheet" href="/jtblogs/css/bootstrap.min.css">
+
+    <!-- Custom CSS --> 
+    <link rel="stylesheet" href="/jtblogs/css/beantech.min.css">
+
+    <link rel="stylesheet" href="/jtblogs/css/donate.css">
+    
+    <!-- Pygments Highlight CSS -->
+    <link rel="stylesheet" href="/jtblogs/css/highlight.css">
+
+    <link rel="stylesheet" href="/jtblogs/css/widget.css">
+
+    <link rel="stylesheet" href="/jtblogs/css/rocket.css">
+
+    <link rel="stylesheet" href="/jtblogs/css/signature.css">
+
+    <link rel="stylesheet" href="/jtblogs/css/toc.css">
+
+    <!-- Custom Fonts -->
+    <!-- <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css" rel="stylesheet" type="text/css"> -->
+    <!-- Hux change font-awesome CDN to qiniu -->
+    <link href="https://cdn.staticfile.org/font-awesome/4.5.0/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+
+
+    <!-- Hux Delete, sad but pending in China
+    <link href='http://fonts.googleapis.com/css?family=Lora:400,700,400italic,700italic' rel='stylesheet' type='text/css'>
+    <link href='http://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800' rel='stylesheet' type='text/
+    css'>
+    -->
+
+
+    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+        <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+        <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+    <![endif]-->
+
+    <!-- ga & ba script hoook -->
+    <script></script>
+</head>
+
+
+<!-- hack iOS CSS :active style -->
+<body ontouchstart="">
+	<!-- Modified by Yu-Hsuan Yen -->
+<!-- Post Header -->
+<style type="text/css">
+    header.intro-header{
+        
+            background-image: url('/jtblogs/img/article_header/article_bg.jpg')
+            /*post*/
+        
+    }
+    
+</style>
+
+<header class="intro-header" >
+    <!-- Signature -->
+    <div id="signature">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+                
+                    <div class="post-heading">
+                        <div class="tags">
+                            
+                              <a class="tag" href="/jtblogs/tags/#react" title="react">react</a>
+                            
+                        </div>
+                        <h1>现代前端框架对比：React、Svelte、HTMX、Million.js 和 Vue 深度解析</h1>
+                        <h2 class="subheading"></h2>
+                        <span class="meta">
+                            Posted by 江涛 on
+                            2025-01-01
+                        </span>
+                    </div>
+                
+
+
+                </div>
+            </div>
+        </div>
+    </div>
+</header>
+
+	
+    <!-- Navigation -->
+<nav class="navbar navbar-default navbar-custom navbar-fixed-top">
+    <div class="container-fluid">
+        <!-- Brand and toggle get grouped for better mobile display -->
+        <div class="navbar-header page-scroll">
+            <button type="button" class="navbar-toggle">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href="/jtblogs/">江涛</a>
+        </div>
+
+        <!-- Collect the nav links, forms, and other content for toggling -->
+        <!-- Known Issue, found by Hux:
+            <nav>'s height woule be hold on by its content.
+            so, when navbar scale out, the <nav> will cover tags.
+            also mask any touch event of tags, unfortunately.
+        -->
+        <div id="huxblog_navbar">
+            <div class="navbar-collapse">
+                <ul class="nav navbar-nav navbar-right">
+                    <li>
+                        <a href="/jtblogs/">Home</a>
+                    </li>
+
+                    
+
+                        
+                    
+
+                        
+                    
+
+                        
+                    
+
+                        
+                    
+
+                        
+                    
+
+                        
+                    
+
+                        
+                        <li>
+                            <a href="/jtblogs/tags/">Tags</a>
+                        </li>
+                        
+                    
+
+                        
+                        <li>
+                            <a href="/jtblogs/about/">About</a>
+                        </li>
+                        
+                    
+
+                        
+                        <li>
+                            <a href="/jtblogs/archive/">Archives</a>
+                        </li>
+                        
+                    
+                    
+                </ul>
+            </div>
+        </div>
+        <!-- /.navbar-collapse -->
+    </div>
+    <!-- /.container -->
+</nav>
+<script>
+    // Drop Bootstarp low-performance Navbar
+    // Use customize navbar with high-quality material design animation
+    // in high-perf jank-free CSS3 implementation
+    var $body   = document.body;
+    var $toggle = document.querySelector('.navbar-toggle');
+    var $navbar = document.querySelector('#huxblog_navbar');
+    var $collapse = document.querySelector('.navbar-collapse');
+
+    $toggle.addEventListener('click', handleMagic)
+    function handleMagic(e){
+        if ($navbar.className.indexOf('in') > 0) {
+        // CLOSE
+            $navbar.className = " ";
+            // wait until animation end.
+            setTimeout(function(){
+                // prevent frequently toggle
+                if($navbar.className.indexOf('in') < 0) {
+                    $collapse.style.height = "0px"
+                }
+            },400)
+        }else{
+        // OPEN
+            $collapse.style.height = "auto"
+            $navbar.className += " in";
+        }
+    }
+</script>
+
+
+    <!-- Main Content -->
+    <!-- Modify by Yu-Hsuan Yen -->
+
+<!-- Post Content -->
+<article>
+    <div class="container">
+        <div class="row">
+
+            <!-- Post Container -->
+            <div class="
+                col-lg-8 col-lg-offset-2
+                col-md-10 col-md-offset-1
+                post-container">
+
+                <h2><span id="现代前端框架对比react-svelte-htmx-millionjs-和-vue-深度解析"><strong>现代前端框架对比：React、Svelte、HTMX、Million.js 和 Vue 深度解析</strong></span></h2>
+<p>随着前端技术的快速发展，各种现代前端框架和库相继问世，每个框架都在不同的开发需求和场景下提供了独特的解决方案。如何选择适合自己项目的前端框架，成为开发者面临的一大挑战。本文将深入对比 <strong>React</strong>、<strong>Svelte</strong>、<strong>HTMX</strong>、<strong>Million.js</strong> 和 <strong>Vue</strong> 这五大主流框架，从特性、优势、适用场景等方面进行深度解析，并附带实际的代码示例，帮助你在具体项目中做出最佳选择。</p>
+<p><img src="image.png" alt="alt text"></p>
+<hr>
+<h3><span id="1-react组件化驱动的灵活选择"><strong>1. React：组件化驱动的灵活选择</strong></span></h3>
+<h4><span id="特性"><strong>特性</strong></span></h4>
+<ul>
+<li><strong>组件化结构</strong>：React 是一个基于组件的 UI 构建库。每个组件有自己的状态（state）和生命周期，可以重用和组合。</li>
+<li><strong>虚拟 DOM</strong>：React 使用虚拟 DOM 来减少与真实 DOM 的交互，从而提升性能。</li>
+<li><strong>丰富的生态系统</strong>：React 拥有庞大的生态系统和第三方库，像 React Router、Redux、Next.js 等都为 React 提供了强大的支持。</li>
+</ul>
+<h4><span id="优势"><strong>优势</strong></span></h4>
+<ul>
+<li><strong>成熟稳定</strong>：React 是目前最流行的前端框架之一，已经在多个大型项目中得到验证（如 Facebook、Instagram）。</li>
+<li><strong>灵活性高</strong>：React 允许开发者自由选择技术栈，不强制使用特定的工具，适合构建从小型到企业级的各种应用。</li>
+<li><strong>社区支持</strong>：React 拥有庞大的开发者社区，提供了丰富的插件、工具和教程。</li>
+</ul>
+<h4><span id="适用场景"><strong>适用场景</strong></span></h4>
+<ul>
+<li><strong>复杂的单页应用（SPA）</strong></li>
+<li><strong>需要高度灵活性和可扩展性的企业级项目</strong></li>
+</ul>
+<h4><span id="代码示例react-使用"><strong>代码示例：React 使用</strong></span></h4>
+<p>假设你需要开发一个简单的任务管理应用，可以使用 React 的组件化结构进行开发。</p>
+<figure class="highlight jsx"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> React, &#123; useState &#125; <span class="keyword">from</span> <span class="string">'react'</span>;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">Task</span>(<span class="params">&#123; task, toggleTask &#125;</span>) </span>&#123;</span><br><span class="line">  <span class="keyword">return</span> (</span><br><span class="line">    &lt;div&gt;</span><br><span class="line">      &lt;input </span><br><span class="line">        type=<span class="string">"checkbox"</span> </span><br><span class="line">        checked=&#123;task.completed&#125; </span><br><span class="line">        onChange=&#123;() =&gt; toggleTask(task.id)&#125; </span><br><span class="line">      /&gt;</span><br><span class="line">      &#123;task.name&#125;</span><br><span class="line">    &lt;<span class="regexp">/div&gt;</span></span><br><span class="line"><span class="regexp">  );</span></span><br><span class="line"><span class="regexp">&#125;</span></span><br><span class="line"><span class="regexp"></span></span><br><span class="line"><span class="regexp">export default function App() &#123;</span></span><br><span class="line"><span class="regexp">  const [tasks, setTasks] = useState([</span></span><br><span class="line"><span class="regexp">    &#123; id: 1, name: 'Learn React', completed: false &#125;,</span></span><br><span class="line"><span class="regexp">    &#123; id: 2, name: 'Build a Todo App', completed: false &#125;,</span></span><br><span class="line"><span class="regexp">  ]);</span></span><br><span class="line"><span class="regexp"></span></span><br><span class="line"><span class="regexp">  const toggleTask = (id) =&gt; &#123;</span></span><br><span class="line"><span class="regexp">    setTasks(tasks.map(task =&gt; </span></span><br><span class="line"><span class="regexp">      task.id === id ? &#123; ...task, completed: !task.completed &#125; : task</span></span><br><span class="line"><span class="regexp">    ));</span></span><br><span class="line"><span class="regexp">  &#125;;</span></span><br><span class="line"><span class="regexp"></span></span><br><span class="line"><span class="regexp">  return (</span></span><br><span class="line"><span class="regexp">    &lt;div&gt;</span></span><br><span class="line"><span class="regexp">      &#123;tasks.map(task =&gt; (</span></span><br><span class="line"><span class="regexp">        &lt;Task key=&#123;task.id&#125; task=&#123;task&#125; toggleTask=&#123;toggleTask&#125; /</span>&gt;</span><br><span class="line">      ))&#125;</span><br><span class="line">    &lt;<span class="regexp">/div&gt;</span></span><br><span class="line"><span class="regexp">  );</span></span><br><span class="line"><span class="regexp">&#125;</span></span><br></pre></td></tr></table></figure>
+<hr>
+<h3><span id="2-svelte编译时优化的轻量级框架"><strong>2. Svelte：编译时优化的轻量级框架</strong></span></h3>
+<h4><span id="特性"><strong>特性</strong></span></h4>
+<ul>
+<li><strong>编译时优化</strong>：Svelte 在编译时将应用程序转换为高效的 JavaScript 代码，而不是依赖虚拟 DOM。</li>
+<li><strong>反应式编程</strong>：Svelte 提供了内建的反应式机制，数据变化自动反应到 UI。</li>
+<li><strong>小巧的打包体积</strong>：Svelte 编译后的代码通常比 React 和 Vue 小很多，适合做高性能应用。</li>
+</ul>
+<h4><span id="优势"><strong>优势</strong></span></h4>
+<ul>
+<li><strong>更高的性能</strong>：由于没有虚拟 DOM，Svelte 的渲染速度比 React 和 Vue 更快，适用于实时数据更新的应用。</li>
+<li><strong>开发体验好</strong>：反应式编程的设计让开发者可以更轻松地处理 UI 更新，无需编写大量的 JavaScript 代码。</li>
+<li><strong>小巧的打包体积</strong>：Svelte 的输出代码非常小，非常适合移动端和低带宽环境。</li>
+</ul>
+<h4><span id="适用场景"><strong>适用场景</strong></span></h4>
+<ul>
+<li><strong>高性能需求的应用</strong>：例如实时数据展示、复杂动画等。</li>
+<li><strong>小型到中型项目</strong>：适合快速开发和迭代。</li>
+</ul>
+<h4><span id="代码示例svelte-使用"><strong>代码示例：Svelte 使用</strong></span></h4>
+<p>假设你需要开发一个实时股票行情应用，Svelte 的反应式特性可以让你轻松处理数据变化。</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">script</span>&gt;</span></span><br><span class="line"><span class="javascript">  <span class="keyword">let</span> price = <span class="number">100</span>;</span></span><br><span class="line"><span class="javascript">  <span class="keyword">let</span> interval;</span></span><br><span class="line"></span><br><span class="line"><span class="javascript">  <span class="function"><span class="keyword">function</span> <span class="title">startUpdating</span>(<span class="params"></span>) </span>&#123;</span></span><br><span class="line"><span class="javascript">    interval = setInterval(<span class="function"><span class="params">()</span> =&gt;</span> &#123;</span></span><br><span class="line"><span class="javascript">      price += <span class="built_in">Math</span>.random() * <span class="number">5</span> - <span class="number">2.5</span>;  <span class="comment">// 模拟价格波动</span></span></span><br><span class="line">    &#125;, 1000);</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line"><span class="javascript">  <span class="function"><span class="keyword">function</span> <span class="title">stopUpdating</span>(<span class="params"></span>) </span>&#123;</span></span><br><span class="line">    clearInterval(interval);</span><br><span class="line">  &#125;</span><br><span class="line"><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="tag">&lt;<span class="name">h1</span>&gt;</span>实时股票价格<span class="tag">&lt;/<span class="name">h1</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">p</span>&gt;</span>当前价格: $&#123;price.toFixed(2)&#125;<span class="tag">&lt;/<span class="name">p</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">button</span> <span class="attr">on:click</span>=<span class="string">&#123;startUpdating&#125;</span>&gt;</span>开始更新<span class="tag">&lt;/<span class="name">button</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">button</span> <span class="attr">on:click</span>=<span class="string">&#123;stopUpdating&#125;</span>&gt;</span>停止更新<span class="tag">&lt;/<span class="name">button</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<hr>
+<h3><span id="3-htmx无缝集成-html-与服务器"><strong>3. HTMX：无缝集成 HTML 与服务器</strong></span></h3>
+<h4><span id="特性"><strong>特性</strong></span></h4>
+<ul>
+<li><strong>HTML 驱动的动态行为</strong>：通过在 HTML 元素中添加属性，HTMX 使得 HTML 元素能够处理 AJAX 请求、WebSockets、局部更新等。</li>
+<li><strong>无 JavaScript 必须依赖</strong>：HTMX 允许你不写 JavaScript 代码即可实现复杂的交互行为。</li>
+<li><strong>与后端紧密集成</strong>：适用于传统的多页应用（MPA），可以简化前端和后端的交互。</li>
+</ul>
+<h4><span id="优势"><strong>优势</strong></span></h4>
+<ul>
+<li><strong>简化开发流程</strong>：开发者无需编写 JavaScript 代码，只需通过 HTML 属性控制动态行为，减少了前端开发的复杂度。</li>
+<li><strong>高效与后端集成</strong>：HTMX 能通过与后端 API 的直接交互，快速响应数据更新。</li>
+<li><strong>轻量级</strong>：HTMX 是一个小巧的库，不需要庞大的框架支持。</li>
+</ul>
+<h4><span id="适用场景"><strong>适用场景</strong></span></h4>
+<ul>
+<li><strong>传统的多页应用（MPA）</strong></li>
+<li><strong>快速开发动态功能而不引入复杂前端框架</strong></li>
+</ul>
+<h4><span id="代码示例htmx-使用"><strong>代码示例：HTMX 使用</strong></span></h4>
+<p>假设你需要实现一个动态加载任务列表的功能，HTMX 可以通过 HTML 属性实现：</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">div</span> <span class="attr">id</span>=<span class="string">"task-list"</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">button</span> <span class="attr">hx-get</span>=<span class="string">"/tasks"</span> <span class="attr">hx-target</span>=<span class="string">"#task-list"</span>&gt;</span>加载任务<span class="tag">&lt;/<span class="name">button</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<p>上面的代码会让点击按钮后，通过 HTMX 发起 GET 请求加载任务列表，而无需编写任何 JavaScript。</p>
+<hr>
+<h3><span id="4-millionjs优化-react-渲染性能"><strong>4. Million.js：优化 React 渲染性能</strong></span></h3>
+<h4><span id="特性"><strong>特性</strong></span></h4>
+<ul>
+<li><strong>虚拟 DOM 引擎优化</strong>：Million.js 是一个虚拟 DOM 引擎优化库，专为提升 React 渲染性能设计，尤其在处理大量数据或频繁更新时，性能提升显著。</li>
+<li><strong>高效列表渲染</strong>：Million.js 对大规模列表的渲染进行了优化，减少不必要的重渲染。</li>
+</ul>
+<h4><span id="优势"><strong>优势</strong></span></h4>
+<ul>
+<li><strong>提高渲染效率</strong>：通过优化 React 的虚拟 DOM 渲染，Million.js 可以大大提升渲染大量数据时的性能。</li>
+<li><strong>与现有框架兼容</strong>：Million.js 可以直接与 React 集成，开发者无需重构现有的项目结构。</li>
+</ul>
+<h4><span id="适用场景"><strong>适用场景</strong></span></h4>
+<ul>
+<li><strong>需要频繁渲染大量数据的应用</strong>：如实时监控、大数据展示等。</li>
+</ul>
+<hr>
+<h3><span id="5-vue渐进式框架易学易用"><strong>5. Vue：渐进式框架，易学易用</strong></span></h3>
+<h4><span id="特性"><strong>特性</strong></span></h4>
+<ul>
+<li><strong>渐进式框架</strong>：Vue 是一个渐进式框架，可以逐步引入，既可以作为简单的库使用，也可以作为全功能框架来支持复杂应用。</li>
+<li><strong>双向数据绑定</strong>：Vue 提供了类似于 Angular 的双向数据绑定，使得 UI 和数据之间的同步变得非常简单。</li>
+<li><strong>组件化</strong>：Vue 支持组件化开发，可以提高代码的复用性和维护性。</li>
+</ul>
+<h4><span id="优势"><strong>优势</strong></span></h4>
+<ul>
+<li><strong>易学易用</strong>：Vue 的 API 简单且直观，非常适合新手入门。</li>
+<li><strong>灵活性强</strong>：既可以用于小型应用，也可以扩展成大型应用，支持官方路由和状态管理工具。</li>
+<li><strong>强大的官方支持</strong>：Vue 的官方生态（Vue Router、Vuex）非常完整，适合各种开发需求。</li>
+</ul>
+<h4><span id="适用场景"><strong>适用场景</strong></span></h4>
+<ul>
+<li><strong>中小型项目</strong>：如个人博客、管理后台等。</li>
+<li><strong>快速开发和迭代</strong>：Vue 提供了简洁的开发体验，非常适合需要快速上线的产品。</li>
+</ul>
+<h4><span id="代码示例vue-使用"><strong>代码示例：Vue 使用</strong></span></h4>
+<p>假设你要开发一个简单的待办事项应用，Vue 的双向数据绑定让你轻松管理任务列表。</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">div</span> <span class="attr">id</span>=<span class="string">"app"</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">input</span> <span class="attr">v-model</span>=<span class="string">"newTask"</span> <span class="attr">placeholder</span>=<span class="string">"添加任务"</span> /&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">button</span> @<span class="attr">click</span>=<span class="string">"addTask"</span>&gt;</span>添加任务<span class="tag">&lt;/<span class="name">button</span>&gt;</span></span><br><span class="line"></span><br><span class="line">  <span class="tag">&lt;<span class="name">ul</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">li</span> <span class="attr">v-for</span>=<span class="string">"(task, index) in tasks"</span> <span class="attr">:key</span>=<span class="string">"index"</span>&gt;</span></span><br><span class="line">      <span class="tag">&lt;<span class="name">input</span> <span class="attr">type</span>=<span class="string">"checkbox"</span> <span class="attr">v-model</span>=<span class="string">"task.completed"</span> /&gt;</span></span><br><span class="line">      &#123;&#123; task.name &#125;&#125;</span><br><span class="line">    <span class="tag">&lt;/<span class="name">li</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;/<span class="name">ul</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="tag">&lt;<span class="name">script</span>&gt;</span></span><br><span class="line"><span class="javascript">  <span class="keyword">new</span> Vue(&#123;</span></span><br><span class="line"><span class="javascript">    el: <span class="string">'#app'</span>,</span></span><br><span class="line">    data() &#123;</span><br><span class="line"><span class="javascript">      <span class="keyword">return</span> &#123;</span></span><br><span class="line"><span class="javascript">        newTask: <span class="string">''</span>,</span></span><br><span class="line">        tasks: []</span><br><span class="line">      &#125;;</span><br><span class="line">    &#125;,</span><br><span class="line">    methods: &#123;</span><br><span class="line">      addTask() &#123;</span><br><span class="line"><span class="javascript">        <span class="keyword">if</span> (<span class="keyword">this</span>.newTask.trim()) &#123;</span></span><br><span class="line"><span class="javascript">          <span class="keyword">this</span>.tasks.push(&#123; <span class="attr">name</span>: <span class="keyword">this</span>.newTask, <span class="attr">completed</span>: <span class="literal">false</span> &#125;);</span></span><br><span class="line"><span class="javascript">          <span class="keyword">this</span>.newTask = <span class="string">''</span>;</span></span><br><span class="line">        &#125;</span><br><span class="line">      &#125;</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;);</span><br><span class="line"><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<p>在这个示例中，Vue 的 <strong>v-model</strong> 和 <strong>v-for</strong> 指令使得双向数据绑定和列表渲染变得非常简单。用户只需要通过输入框添加任务，任务列表会根据数据自动更新。</p>
+<hr>
+<h3><span id="总结与选择建议"><strong>总结与选择建议</strong></span></h3>
+<ul>
+<li><strong>React</strong>：非常适合构建复杂的单页应用（SPA）和企业级应用，具有强大的社区支持和丰富的第三方库。适用于需要高度灵活性和可扩展性的项目。</li>
+<li><strong>Svelte</strong>：如果你的项目对性能有较高要求，特别是需要处理实时数据或动画，Svelte 是一个不错的选择。它的小巧体积和高效的渲染机制使其在性能上表现突出。</li>
+<li><strong>HTMX</strong>：适用于传统的多页应用（MPA），尤其是在不需要复杂 JavaScript 的情况下，HTMX 提供了极简的方式来处理前后端交互，非常适合快速开发动态功能。</li>
+<li><strong>Million.js</strong>：如果你已经在使用 React 并且面临大量数据渲染或频繁更新的性能瓶颈，Million.js 是一个优秀的优化库，能够大幅提升 React 渲染性能。</li>
+<li><strong>Vue</strong>：Vue 的学习曲线较低，适合中小型项目和快速开发。其简单直观的 API 和双向数据绑定特性，使其成为快速原型开发和 MVP 的理想选择。</li>
+</ul>
+<p>选择哪个框架，取决于你的具体需求。如果你需要构建一个大规模的动态 Web 应用，React 或 Vue 是非常好的选择；如果你更关注性能或开发速度，Svelte 和 HTMX 则会是理想的选择；如果你已经在使用 React 并且需要优化渲染，Million.js 可以作为一个有力的工具。</p>
+<hr>
+<h3><span id="最后的建议"><strong>最后的建议</strong></span></h3>
+<p>在选择前端框架时，不仅要考虑性能，还要考虑开发体验、团队熟悉度以及项目的长期维护性。希望本文能为你提供一些有用的信息，帮助你做出最佳的技术选择。每个框架都有其独特的优势和适用场景，了解这些差异可以帮助你更高效地构建现代 Web 应用。</p>
+
+                
+
+                <hr>
+                <!-- Pager -->
+                <ul class="pager">
+                    
+                        <li class="previous">
+                            <a href="/jtblogs/article/探秘-Prepack-与-Webpack：从原理到融合发展/" data-toggle="tooltip" data-placement="top" title="探秘 Prepack 与 Webpack：从原理到融合发展">&larr; Previous Post</a>
+                        </li>
+                    
+                    
+                        <li class="next">
+                            <a href="/jtblogs/article/深度剖析-Cloudflare：性能、安全与全球分发的解决方案/" data-toggle="tooltip" data-placement="top" title="深度剖析 Cloudflare：性能、安全与全球分发的解决方案">Next Post &rarr;</a>
+                        </li>
+                    
+                </ul>
+
+                <br>
+
+                <!--打赏-->
+                
+                <!--打赏-->
+
+                <br>
+                <!--分享-->
+                
+                    <div class="social-share"  data-wechat-qrcode-helper="" align="center"></div>
+                    <!--  css & js -->
+                    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/social-share.js/1.0.16/css/share.min.css">
+                    <script src="https://cdnjs.cloudflare.com/ajax/libs/social-share.js/1.0.16/js/social-share.min.js"></script>
+                
+                <!--分享-->
+                <br>                       
+                
+                <!-- require APlayer -->
+                
+
+                <!-- duoshuo Share start -->
+                
+                <!-- 多说 Share end-->
+
+                <!-- 多说评论框 start -->
+                
+                <!-- 多说评论框 end -->
+
+                <!-- disqus comment start -->
+                
+                <!-- disqus comment end -->
+
+                
+
+            </div>
+            
+            <!-- Tabe of Content -->
+            <!-- Table of Contents -->
+
+  
+    <style>
+      span.toc-nav-number{
+        display: none
+      }
+    </style>
+  
+    
+      <aside id="sidebar">
+        <div id="toc" class="toc-article">
+        <strong class="toc-title">Contents</strong>
+        
+          <ol class="toc-nav"><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#null"><span class="toc-nav-number">1.</span> <span class="toc-nav-text">现代前端框架对比：React、Svelte、HTMX、Million.js 和 Vue 深度解析</span></a><ol class="toc-nav-child"><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#null"><span class="toc-nav-number">1.1.</span> <span class="toc-nav-text">1. React：组件化驱动的灵活选择</span></a><ol class="toc-nav-child"><li class="toc-nav-item toc-nav-level-4"><a class="toc-nav-link" href="#null"><span class="toc-nav-number">1.1.1.</span> <span class="toc-nav-text">特性</span></a></li><li class="toc-nav-item toc-nav-level-4"><a class="toc-nav-link" href="#null"><span class="toc-nav-number">1.1.2.</span> <span class="toc-nav-text">优势</span></a></li><li class="toc-nav-item toc-nav-level-4"><a class="toc-nav-link" href="#null"><span class="toc-nav-number">1.1.3.</span> <span class="toc-nav-text">适用场景</span></a></li><li class="toc-nav-item toc-nav-level-4"><a class="toc-nav-link" href="#null"><span class="toc-nav-number">1.1.4.</span> <span class="toc-nav-text">代码示例：React 使用</span></a></li></ol></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#null"><span class="toc-nav-number">1.2.</span> <span class="toc-nav-text">2. Svelte：编译时优化的轻量级框架</span></a><ol class="toc-nav-child"><li class="toc-nav-item toc-nav-level-4"><a class="toc-nav-link" href="#null"><span class="toc-nav-number">1.2.1.</span> <span class="toc-nav-text">特性</span></a></li><li class="toc-nav-item toc-nav-level-4"><a class="toc-nav-link" href="#null"><span class="toc-nav-number">1.2.2.</span> <span class="toc-nav-text">优势</span></a></li><li class="toc-nav-item toc-nav-level-4"><a class="toc-nav-link" href="#null"><span class="toc-nav-number">1.2.3.</span> <span class="toc-nav-text">适用场景</span></a></li><li class="toc-nav-item toc-nav-level-4"><a class="toc-nav-link" href="#null"><span class="toc-nav-number">1.2.4.</span> <span class="toc-nav-text">代码示例：Svelte 使用</span></a></li></ol></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#null"><span class="toc-nav-number">1.3.</span> <span class="toc-nav-text">3. HTMX：无缝集成 HTML 与服务器</span></a><ol class="toc-nav-child"><li class="toc-nav-item toc-nav-level-4"><a class="toc-nav-link" href="#null"><span class="toc-nav-number">1.3.1.</span> <span class="toc-nav-text">特性</span></a></li><li class="toc-nav-item toc-nav-level-4"><a class="toc-nav-link" href="#null"><span class="toc-nav-number">1.3.2.</span> <span class="toc-nav-text">优势</span></a></li><li class="toc-nav-item toc-nav-level-4"><a class="toc-nav-link" href="#null"><span class="toc-nav-number">1.3.3.</span> <span class="toc-nav-text">适用场景</span></a></li><li class="toc-nav-item toc-nav-level-4"><a class="toc-nav-link" href="#null"><span class="toc-nav-number">1.3.4.</span> <span class="toc-nav-text">代码示例：HTMX 使用</span></a></li></ol></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#null"><span class="toc-nav-number">1.4.</span> <span class="toc-nav-text">4. Million.js：优化 React 渲染性能</span></a><ol class="toc-nav-child"><li class="toc-nav-item toc-nav-level-4"><a class="toc-nav-link" href="#null"><span class="toc-nav-number">1.4.1.</span> <span class="toc-nav-text">特性</span></a></li><li class="toc-nav-item toc-nav-level-4"><a class="toc-nav-link" href="#null"><span class="toc-nav-number">1.4.2.</span> <span class="toc-nav-text">优势</span></a></li><li class="toc-nav-item toc-nav-level-4"><a class="toc-nav-link" href="#null"><span class="toc-nav-number">1.4.3.</span> <span class="toc-nav-text">适用场景</span></a></li></ol></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#null"><span class="toc-nav-number">1.5.</span> <span class="toc-nav-text">5. Vue：渐进式框架，易学易用</span></a><ol class="toc-nav-child"><li class="toc-nav-item toc-nav-level-4"><a class="toc-nav-link" href="#null"><span class="toc-nav-number">1.5.1.</span> <span class="toc-nav-text">特性</span></a></li><li class="toc-nav-item toc-nav-level-4"><a class="toc-nav-link" href="#null"><span class="toc-nav-number">1.5.2.</span> <span class="toc-nav-text">优势</span></a></li><li class="toc-nav-item toc-nav-level-4"><a class="toc-nav-link" href="#null"><span class="toc-nav-number">1.5.3.</span> <span class="toc-nav-text">适用场景</span></a></li><li class="toc-nav-item toc-nav-level-4"><a class="toc-nav-link" href="#null"><span class="toc-nav-number">1.5.4.</span> <span class="toc-nav-text">代码示例：Vue 使用</span></a></li></ol></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#null"><span class="toc-nav-number">1.6.</span> <span class="toc-nav-text">总结与选择建议</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#null"><span class="toc-nav-number">1.7.</span> <span class="toc-nav-text">最后的建议</span></a></li></ol></li></ol>
+        
+        </div>
+      </aside>
+    
+
+                
+            <!-- Sidebar Container -->
+            <div class="
+                col-lg-8 col-lg-offset-2
+                col-md-10 col-md-offset-1
+                sidebar-container">
+
+                <!-- Featured Tags -->
+                
+                <section>
+                    <!-- no hr -->
+                    <h5><a href="/jtblogs/tags/">FEATURED TAGS</a></h5>
+                    <div class="tags">
+                       
+                          <a class="tag" href="/jtblogs/tags/#react" title="react">react</a>
+                        
+                    </div>
+                </section>
+                
+
+                <!-- Friends Blog -->
+                
+                <hr>
+                <h5>FRIENDS</h5>
+                <ul class="list-inline">
+
+                    
+                </ul>
+                
+            </div>
+        </div>
+    </div>
+</article>
+
+
+
+
+
+
+
+
+<!-- async load function -->
+<script>
+    function async(u, c) {
+      var d = document, t = 'script',
+          o = d.createElement(t),
+          s = d.getElementsByTagName(t)[0];
+      o.src = u;
+      if (c) { o.addEventListener('load', function (e) { c(null, e); }, false); }
+      s.parentNode.insertBefore(o, s);
+    }
+</script>
+<!-- anchor-js, Doc:http://bryanbraun.github.io/anchorjs/ -->
+<script>
+    async("https://cdn.bootcss.com/anchor-js/1.1.1/anchor.min.js",function(){
+        anchors.options = {
+          visible: 'hover',
+          placement: 'left',
+          icon: 'ℬ'
+        };
+        anchors.add().remove('.intro-header h1').remove('.subheading').remove('.sidebar-container h5');
+    })
+</script>
+<style>
+    /* place left on bigger screen */
+    @media all and (min-width: 800px) {
+        .anchorjs-link{
+            position: absolute;
+            left: -0.75em;
+            font-size: 1.1em;
+            margin-top : -0.1em;
+        }
+    }
+</style>
+
+
+<!-- chrome Firefox 中文锚点定位失效-->
+<script src="https://cdn.bootcss.com/jquery/3.3.1/jquery.js"></script>
+<!-- smooth scroll behavior polyfill  -->
+<script type="text/javascript" src="/js/smoothscroll.js"></script>
+<script>
+        $('#toc').on('click','a',function(a){
+            // var isChrome = window.navigator.userAgent.indexOf("Chrome") !== -1;
+            // console.log(window.navigator.userAgent,isChrome)
+                // if(isChrome) {
+                    // console.log(a.currentTarget.outerHTML);
+                    // console.log($(a.currentTarget).attr("href"));
+                    //跳转到指定锚点
+                    // document.getElementById(a.target.innerText.toLowerCase()).scrollIntoView(true);
+                    document.getElementById($(a.currentTarget).attr("href").replace("#","")).scrollIntoView({behavior: 'smooth' });
+                // }
+        })  
+</script>
+
+
+    <!-- Footer -->
+    <!-- Footer -->
+<footer>
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+                <ul class="list-inline text-center">
+                    
+                            
+                                    
+
+                                            
+
+                                                    
+
+                                                            
+                                                                <li>
+                                                                    <a target="_blank"
+                                                                        href="https://github.com/taojiangcb">
+                                                                        <span class="fa-stack fa-lg">
+                                                                            <i class="fa fa-circle fa-stack-2x"></i>
+                                                                            <i
+                                                                                class="fa fa-github fa-stack-1x fa-inverse"></i>
+                                                                        </span>
+                                                                    </a>
+                                                                </li>
+                                                                
+
+                                                                    
+
+                </ul>
+
+                <p class="copyright text-muted">
+                    Copyright &copy; 江涛
+                        2025
+                            <br>
+                            Theme by <a href="http://beantech.org">BeanTech</a>
+                            <span style="display: inline-block; margin: 0 5px;">
+                                <i class="fa fa-heart"></i>
+                            </span>
+                            re-Ported by <a href="https://taojiangcb.github.io/jtblogs">江涛</a> |
+                            <iframe style="margin-left: 2px; margin-bottom:-5px;" frameborder="0" scrolling="0"
+                                width="91px" height="20px"
+                                src="https://ghbtns.com/github-btn.html?user=taojiangcb&repo=jtblogs&type=star&count=true">
+                            </iframe>
+                </p>
+                <p class="copyright text-muted" style="margin:0">
+                    <script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+                    <span id="busuanzi_container_site_pv">
+                        总访问量<span id="busuanzi_value_site_pv"></span>次
+                    </span>
+                    <span id="busuanzi_container_site_uv">
+                        总访客数<span id="busuanzi_value_site_uv"></span>人
+                    </span>
+                </p>
+            </div>
+        </div>
+    </div>
+</footer>
+
+<!-- jQuery -->
+<script src="/jtblogs/js/jquery.min.js"></script>
+
+    <!-- Bootstrap Core JavaScript -->
+    <script src="/jtblogs/js/bootstrap.min.js"></script>
+
+        <!-- Custom Theme JavaScript -->
+        <script src="/jtblogs/js/hux-blog.min.js"></script>
+
+
+            <!-- async load function -->
+            <script>
+                function async(u, c) {
+                    var d = document, t = 'script',
+                        o = d.createElement(t),
+                        s = d.getElementsByTagName(t)[0];
+                    o.src = u;
+                    if (c) { o.addEventListener('load', function (e) { c(null, e); }, false); }
+                    s.parentNode.insertBefore(o, s);
+                }
+            </script>
+
+            <!-- 
+     Because of the native support for backtick-style fenced code blocks 
+     right within the Markdown is landed in Github Pages, 
+     From V1.6, There is no need for Highlight.js, 
+     so Huxblog drops it officially.
+
+     - https://github.com/blog/2100-github-pages-now-faster-and-simpler-with-jekyll-3-0  
+     - https://help.github.com/articles/creating-and-highlighting-code-blocks/    
+-->
+            <!--
+    <script>
+        async("http://cdn.bootcss.com/highlight.js/8.6/highlight.min.js", function(){
+            hljs.initHighlightingOnLoad();
+        })
+    </script>
+    <link href="http://cdn.bootcss.com/highlight.js/8.6/styles/github.min.css" rel="stylesheet">
+-->
+
+
+            <!-- jquery.tagcloud.js -->
+            <script>
+                // only load tagcloud.js in tag.html
+                if ($('#tag_cloud').length !== 0) {
+                    async("https://taojiangcb.github.io/jtblogs/js/jquery.tagcloud.js", function () {
+                        $.fn.tagcloud.defaults = {
+                            //size: {start: 1, end: 1, unit: 'em'},
+                            color: { start: '#bbbbee', end: '#0085a1' },
+                        };
+                        $('#tag_cloud a').tagcloud();
+                    })
+                }
+            </script>
+
+            <!--fastClick.js -->
+            <script>
+                async("https://cdn.bootcss.com/fastclick/1.0.6/fastclick.min.js", function () {
+                    var $nav = document.querySelector("nav");
+                    if ($nav) FastClick.attach($nav);
+                })
+            </script>
+
+
+            <!-- Google Analytics -->
+
+            
+                <script>
+                    // dynamic User by Hux
+                    var _gaId = 'UA-XXXXXXXX-X';
+                    var _gaDomain = 'yoursite';
+
+                    // Originial
+                    (function (i, s, o, g, r, a, m) {
+                        i['GoogleAnalyticsObject'] = r; i[r] = i[r] || function () {
+                            (i[r].q = i[r].q || []).push(arguments)
+                        }, i[r].l = 1 * new Date(); a = s.createElement(o),
+                            m = s.getElementsByTagName(o)[0]; a.async = 1; a.src = g; m.parentNode.insertBefore(a, m)
+                    })(window, document, 'script', '//www.google-analytics.com/analytics.js', 'ga');
+
+                    ga('create', _gaId, _gaDomain);
+                    ga('send', 'pageview');
+                </script>
+
+                
+
+
+                    <!-- Baidu Tongji -->
+                    
+                        <script>
+                            // dynamic User by Hux
+                            var _baId = 'xxx';
+
+                            // Originial
+                            var _hmt = _hmt || [];
+                            (function () {
+                                var hm = document.createElement("script");
+                                hm.src = "//hm.baidu.com/hm.js?" + _baId;
+                                var s = document.getElementsByTagName("script")[0];
+                                s.parentNode.insertBefore(hm, s);
+                            })();
+                        </script>
+                        
+
+
+	<a id="rocket" href="#top" class=""></a>
+	<script type="text/javascript" src="/jtblogs/js/totop.js?v=1.0.0" async=""></script>
+    <script type="text/javascript" src="/jtblogs/js/toc.js?v=1.0.0" async=""></script>
+<!-- Image to hack wechat -->
+<img src="https://taojiangcb.github.io/jtblogs/img/icon_wechat.png" width="0" height="0" />
+<!-- Migrate from head to bottom, no longer block render and still work -->
+
+</body>
+
+</html>

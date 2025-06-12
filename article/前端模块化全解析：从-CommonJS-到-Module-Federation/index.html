@@ -1,0 +1,640 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<!-- Head tag -->
+<head><meta name="generator" content="Hexo 3.9.0">
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="google-site-verification" content="xBT4GhYoi5qRD5tr338pgPM5OWHHIDR6mNg1a3euekI">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content>
+    <meta name="keyword" content>
+    <link rel="shortcut icon" href="/jtblogs/favicon.ico">
+    <!-- Place this tag in your head or just before your close body tag. -->
+    <script async defer src="https://buttons.github.io/buttons.js"></script>
+    <title>
+        
+          前端模块化全解析：从 CommonJS 到 Module Federation - 江涛 | Blog
+        
+    </title>
+
+    <link rel="canonical" href="https://taojiangcb.github.io/jtblogs/jtblogs/article/前端模块化全解析：从-CommonJS-到-Module-Federation/">
+
+    <!-- Bootstrap Core CSS -->
+    <link rel="stylesheet" href="/jtblogs/css/bootstrap.min.css">
+
+    <!-- Custom CSS --> 
+    <link rel="stylesheet" href="/jtblogs/css/beantech.min.css">
+
+    <link rel="stylesheet" href="/jtblogs/css/donate.css">
+    
+    <!-- Pygments Highlight CSS -->
+    <link rel="stylesheet" href="/jtblogs/css/highlight.css">
+
+    <link rel="stylesheet" href="/jtblogs/css/widget.css">
+
+    <link rel="stylesheet" href="/jtblogs/css/rocket.css">
+
+    <link rel="stylesheet" href="/jtblogs/css/signature.css">
+
+    <link rel="stylesheet" href="/jtblogs/css/toc.css">
+
+    <!-- Custom Fonts -->
+    <!-- <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css" rel="stylesheet" type="text/css"> -->
+    <!-- Hux change font-awesome CDN to qiniu -->
+    <link href="https://cdn.staticfile.org/font-awesome/4.5.0/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+
+
+    <!-- Hux Delete, sad but pending in China
+    <link href='http://fonts.googleapis.com/css?family=Lora:400,700,400italic,700italic' rel='stylesheet' type='text/css'>
+    <link href='http://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800' rel='stylesheet' type='text/
+    css'>
+    -->
+
+
+    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+        <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+        <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+    <![endif]-->
+
+    <!-- ga & ba script hoook -->
+    <script></script>
+</head>
+
+
+<!-- hack iOS CSS :active style -->
+<body ontouchstart="">
+	<!-- Modified by Yu-Hsuan Yen -->
+<!-- Post Header -->
+<style type="text/css">
+    header.intro-header{
+        
+            background-image: url('/jtblogs/img/article_header/article_bg.jpg')
+            /*post*/
+        
+    }
+    
+</style>
+
+<header class="intro-header" >
+    <!-- Signature -->
+    <div id="signature">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+                
+                    <div class="post-heading">
+                        <div class="tags">
+                            
+                              <a class="tag" href="/jtblogs/tags/#webpack" title="webpack">webpack</a>
+                            
+                        </div>
+                        <h1>前端模块化全解析：从 CommonJS 到 Module Federation</h1>
+                        <h2 class="subheading"></h2>
+                        <span class="meta">
+                            Posted by 江涛 on
+                            2025-01-13
+                        </span>
+                    </div>
+                
+
+
+                </div>
+            </div>
+        </div>
+    </div>
+</header>
+
+	
+    <!-- Navigation -->
+<nav class="navbar navbar-default navbar-custom navbar-fixed-top">
+    <div class="container-fluid">
+        <!-- Brand and toggle get grouped for better mobile display -->
+        <div class="navbar-header page-scroll">
+            <button type="button" class="navbar-toggle">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href="/jtblogs/">江涛</a>
+        </div>
+
+        <!-- Collect the nav links, forms, and other content for toggling -->
+        <!-- Known Issue, found by Hux:
+            <nav>'s height woule be hold on by its content.
+            so, when navbar scale out, the <nav> will cover tags.
+            also mask any touch event of tags, unfortunately.
+        -->
+        <div id="huxblog_navbar">
+            <div class="navbar-collapse">
+                <ul class="nav navbar-nav navbar-right">
+                    <li>
+                        <a href="/jtblogs/">Home</a>
+                    </li>
+
+                    
+
+                        
+                    
+
+                        
+                    
+
+                        
+                    
+
+                        
+                    
+
+                        
+                    
+
+                        
+                    
+
+                        
+                        <li>
+                            <a href="/jtblogs/tags/">Tags</a>
+                        </li>
+                        
+                    
+
+                        
+                        <li>
+                            <a href="/jtblogs/about/">About</a>
+                        </li>
+                        
+                    
+
+                        
+                        <li>
+                            <a href="/jtblogs/archive/">Archives</a>
+                        </li>
+                        
+                    
+                    
+                </ul>
+            </div>
+        </div>
+        <!-- /.navbar-collapse -->
+    </div>
+    <!-- /.container -->
+</nav>
+<script>
+    // Drop Bootstarp low-performance Navbar
+    // Use customize navbar with high-quality material design animation
+    // in high-perf jank-free CSS3 implementation
+    var $body   = document.body;
+    var $toggle = document.querySelector('.navbar-toggle');
+    var $navbar = document.querySelector('#huxblog_navbar');
+    var $collapse = document.querySelector('.navbar-collapse');
+
+    $toggle.addEventListener('click', handleMagic)
+    function handleMagic(e){
+        if ($navbar.className.indexOf('in') > 0) {
+        // CLOSE
+            $navbar.className = " ";
+            // wait until animation end.
+            setTimeout(function(){
+                // prevent frequently toggle
+                if($navbar.className.indexOf('in') < 0) {
+                    $collapse.style.height = "0px"
+                }
+            },400)
+        }else{
+        // OPEN
+            $collapse.style.height = "auto"
+            $navbar.className += " in";
+        }
+    }
+</script>
+
+
+    <!-- Main Content -->
+    <!-- Modify by Yu-Hsuan Yen -->
+
+<!-- Post Content -->
+<article>
+    <div class="container">
+        <div class="row">
+
+            <!-- Post Container -->
+            <div class="
+                col-lg-8 col-lg-offset-2
+                col-md-10 col-md-offset-1
+                post-container">
+
+                <p>在前端工程化的漫长演进旅程中，模块化技术宛如一座不断翻新的灯塔，持续照亮着开发者前行的道路，引领着开发模式的革新。从最初崭露头角的CommonJS，到功能强大、成为行业标配的Webpack，再到代表前沿趋势的Module Federation，每一次技术的迭代都精准地瞄准并攻克了特定时期所面临的技术难题。其中，Module Federation所独具的共享作用域机制，犹如一颗璀璨的明珠，在微前端架构领域散发着独特的光芒，为解决依赖共享这一棘手问题提供了极为精妙的解决方案。深入探究这一机制，不仅能帮助我们更好地理解当下前端开发的趋势，还能为构建更高效、更具扩展性的应用提供有力的技术支撑 。</p>
+<h2><span id="一-溯源commonjs模块化的破晓之光">一、溯源CommonJS：模块化的破晓之光</span></h2>
+<p>在JavaScript发展的早期，代码的组织和复用面临着巨大的挑战。全局变量的肆意使用，使得代码之间的依赖关系错综复杂，如同乱麻一般难以梳理。CommonJS的横空出世，恰似一道曙光，为这混沌的局面带来了秩序。它通过一种极为简洁直观的模块定义方式，宣告了JavaScript模块化时代的正式开启。</p>
+<h3><span id="11-基础实现简洁铸就经典">1.1 基础实现：简洁铸就经典</span></h3>
+<p>在CommonJS的世界里，模块的定义与使用都遵循着一套简单而清晰的规则。以一个简单的数学运算模块为例：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// math.js</span></span><br><span class="line"><span class="comment">// 定义add函数用于两数相加，并将其挂载到exports对象上，以便外部模块可以访问</span></span><br><span class="line">exports.add = <span class="function">(<span class="params">a, b</span>) =&gt;</span> a + b;</span><br><span class="line"><span class="comment">// 定义multiply函数用于两数相乘，并将其挂载到exports对象上</span></span><br><span class="line">exports.multiply = <span class="function">(<span class="params">a, b</span>) =&gt;</span> a * b;</span><br><span class="line"></span><br><span class="line"><span class="comment">// main.js</span></span><br><span class="line"><span class="comment">// 使用require函数引入math模块，赋值给math变量</span></span><br><span class="line"><span class="keyword">const</span> math = <span class="built_in">require</span>(<span class="string">'./math'</span>);</span><br><span class="line"><span class="comment">// 调用math模块中的add函数，并传入2和3作为参数，然后在控制台打印结果</span></span><br><span class="line"><span class="built_in">console</span>.log(math.add(<span class="number">2</span>, <span class="number">3</span>));</span><br></pre></td></tr></table></figure>
+<p>在上述代码中，<code>math.js</code>模块通过<code>exports</code>对象将其内部定义的<code>add</code>和<code>multiply</code>函数暴露出去。而在<code>main.js</code>中，借助<code>require</code>函数，如同从模块仓库中精准地取出所需的工具，将<code>math</code>模块引入，并得以调用其中的函数进行数学运算。这种简洁明了的方式，使得开发者能够轻松地将代码拆分成一个个独立的模块，实现功能的封装与复用。</p>
+<h3><span id="12-nodejs中的实现原理揭秘模块加载机制">1.2 Node.js中的实现原理：揭秘模块加载机制</span></h3>
+<p>在Node.js环境中，CommonJS模块的实现背后隐藏着一套精妙的机制。通过深入剖析以下代码，我们可以一窥其究竟：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> vm = <span class="built_in">require</span>(<span class="string">'vm'</span>);</span><br><span class="line"><span class="keyword">const</span> fs = <span class="built_in">require</span>(<span class="string">'fs'</span>);</span><br><span class="line"><span class="keyword">const</span> path = <span class="built_in">require</span>(<span class="string">'path'</span>);</span><br><span class="line"></span><br><span class="line"><span class="comment">// 定义Module类，用于表示一个模块</span></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Module</span> </span>&#123;</span><br><span class="line">    <span class="comment">// 构造函数，接收模块的id作为参数</span></span><br><span class="line">    <span class="keyword">constructor</span>(id) &#123;</span><br><span class="line">        <span class="keyword">this</span>.id = id;</span><br><span class="line">        <span class="comment">// 初始化模块的exports对象，用于对外导出模块的内容</span></span><br><span class="line">        <span class="keyword">this</span>.exports = &#123;&#125;;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 定义load方法，用于加载模块</span></span><br><span class="line">    load(filename) &#123;</span><br><span class="line">        <span class="comment">// 读取指定文件的内容，以UTF - 8编码格式读取</span></span><br><span class="line">        <span class="keyword">const</span> content = fs.readFileSync(filename, <span class="string">'utf8'</span>);</span><br><span class="line">        <span class="comment">// 将读取到的内容进行包裹，以便在特定的上下文环境中执行</span></span><br><span class="line">        <span class="keyword">const</span> wrappedCode = <span class="keyword">this</span>.wrap(content);</span><br><span class="line">        </span><br><span class="line">        <span class="comment">// 创建一个新的上下文环境，用于执行模块代码</span></span><br><span class="line">        <span class="keyword">const</span> context = vm.createContext(&#123;</span><br><span class="line">            <span class="comment">// 绑定require函数，使其在当前模块的上下文中生效</span></span><br><span class="line">            <span class="built_in">require</span>: <span class="keyword">this</span>.require.bind(<span class="keyword">this</span>),</span><br><span class="line">            <span class="comment">// 将当前模块实例传入上下文，以便模块内部可以访问自身</span></span><br><span class="line">            <span class="built_in">module</span>: <span class="keyword">this</span>,</span><br><span class="line">            <span class="comment">// 将当前模块的exports对象传入上下文，用于导出模块内容</span></span><br><span class="line">            exports: <span class="keyword">this</span>.exports,</span><br><span class="line">            <span class="comment">// 当前模块的文件名</span></span><br><span class="line">            __filename: filename,</span><br><span class="line">            <span class="comment">// 当前模块文件所在的目录名</span></span><br><span class="line">            __dirname: path.dirname(filename)</span><br><span class="line">        &#125;);</span><br><span class="line"></span><br><span class="line">        <span class="comment">// 在创建的上下文环境中运行包裹后的代码</span></span><br><span class="line">        vm.runInContext(wrappedCode, context);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 定义wrap方法，将模块代码包裹在一个立即执行函数中</span></span><br><span class="line">    wrap(code) &#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="string">`(function(exports, require, module, __filename, __dirname) &#123;</span></span><br><span class="line"><span class="string">            <span class="subst">$&#123;code&#125;</span></span></span><br><span class="line"><span class="string">        &#125;)`</span>;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>在这里，<code>Module</code>类承担着模块加载与执行的重任。当调用<code>load</code>方法时，它首先读取指定文件的内容，然后通过<code>wrap</code>方法将代码包裹在一个立即执行函数中。这个函数的参数巧妙地涵盖了<code>exports</code>、<code>require</code>、<code>module</code>等关键对象，以及<code>__filename</code>和<code>__dirname</code>等上下文信息。随后，借助<code>vm</code>模块创建一个独立的执行上下文，将包裹后的代码在这个环境中运行，从而实现模块的加载与初始化。这一过程，不仅确保了模块之间的独立性，还为开发者提供了熟悉且便捷的编程接口。</p>
+<h2><span id="二-webpack浏览器端模块化的中流砥柱">二、Webpack：浏览器端模块化的中流砥柱</span></h2>
+<p>随着前端应用的日益复杂，对模块化在浏览器环境中的支持提出了更高的要求。Webpack凭借其强大的打包机制，成为了浏览器端模块化方案的不二之选。它犹如一位技艺精湛的工匠，将众多分散的模块巧妙地整合在一起，为浏览器提供了高效运行的代码。</p>
+<h3><span id="21-同步加载构建紧密的模块链条">2.1 同步加载：构建紧密的模块链条</span></h3>
+<p>在Webpack的同步加载机制下，模块之间的依赖关系被精准地梳理和整合。以下是一个简单的示例：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 源代码</span></span><br><span class="line"><span class="comment">// 从math模块中导入add函数</span></span><br><span class="line"><span class="keyword">import</span> &#123; add &#125; <span class="keyword">from</span> <span class="string">'./math'</span>;</span><br><span class="line"></span><br><span class="line"><span class="comment">// Webpack 输出</span></span><br><span class="line">(<span class="function"><span class="params">()</span> =&gt;</span> &#123;</span><br><span class="line">    <span class="comment">// 定义一个对象，用于存储所有的Webpack模块</span></span><br><span class="line">    <span class="keyword">var</span> __webpack_modules__ = &#123;</span><br><span class="line">        <span class="comment">// 定义名为'./math.js'的模块</span></span><br><span class="line">        <span class="string">'./math.js'</span>: <span class="function">(<span class="params"><span class="built_in">module</span></span>) =&gt;</span> &#123;</span><br><span class="line">            <span class="comment">// 为该模块的exports对象赋值，添加add函数</span></span><br><span class="line">            <span class="built_in">module</span>.exports = &#123;</span><br><span class="line">                add: <span class="function">(<span class="params">a, b</span>) =&gt;</span> a + b</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;;</span><br><span class="line">    </span><br><span class="line">    <span class="comment">// 定义一个对象，用于缓存已经加载过的Webpack模块</span></span><br><span class="line">    <span class="keyword">var</span> __webpack_module_cache__ = &#123;&#125;;</span><br><span class="line">    </span><br><span class="line">    <span class="comment">// 定义Webpack的require函数，用于加载模块</span></span><br><span class="line">    <span class="function"><span class="keyword">function</span> <span class="title">__webpack_require__</span>(<span class="params">moduleId</span>) </span>&#123;</span><br><span class="line">        <span class="comment">// 检查模块是否已经在缓存中</span></span><br><span class="line">        <span class="keyword">if</span>(__webpack_module_cache__[moduleId]) &#123;</span><br><span class="line">            <span class="comment">// 如果在缓存中，直接返回缓存模块的exports对象</span></span><br><span class="line">            <span class="keyword">return</span> __webpack_module_cache__[moduleId].exports;</span><br><span class="line">        &#125;</span><br><span class="line">        </span><br><span class="line">        <span class="comment">// 创建一个新的模块对象</span></span><br><span class="line">        <span class="keyword">var</span> <span class="built_in">module</span> = __webpack_module_cache__[moduleId] = &#123;</span><br><span class="line">            exports: &#123;&#125;</span><br><span class="line">        &#125;;</span><br><span class="line">        </span><br><span class="line">        <span class="comment">// 调用对应模块的定义函数，将模块的导出挂载到新创建的模块对象上</span></span><br><span class="line">        __webpack_modules__[moduleId](<span class="built_in">module</span>, <span class="built_in">module</span>.exports);</span><br><span class="line">        </span><br><span class="line">        <span class="comment">// 返回模块的exports对象</span></span><br><span class="line">        <span class="keyword">return</span> <span class="built_in">module</span>.exports;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;)();</span><br></pre></td></tr></table></figure>
+<p>在上述代码中，Webpack将应用的所有模块定义在<code>__webpack_modules__</code>对象中。当需要加载某个模块时，<code>__webpack_require__</code>函数便会发挥作用。它首先检查模块是否已经被缓存，如果是，则直接返回缓存中的模块导出。否则，创建一个新的模块对象，并调用对应的模块定义函数，将模块的导出挂载到该对象上。通过这种方式，Webpack构建了一个紧密相连的模块加载链条，确保了同步加载的高效性与准确性。</p>
+<h3><span id="22-异步加载为性能优化注入活力">2.2 异步加载：为性能优化注入活力</span></h3>
+<p>在处理大型应用时，异步加载成为了提升性能的关键。Webpack同样提供了出色的异步加载支持，以下是其实现方式：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 源代码</span></span><br><span class="line"><span class="comment">// 动态导入chart模块，这是一个异步操作</span></span><br><span class="line"><span class="keyword">import</span>(<span class="string">'./chart'</span>).then(<span class="function"><span class="params">module</span> =&gt;</span> &#123;</span><br><span class="line">    <span class="comment">// 当模块加载成功后，调用模块的render函数</span></span><br><span class="line">    <span class="built_in">module</span>.render();</span><br><span class="line">&#125;);</span><br><span class="line"></span><br><span class="line"><span class="comment">// Webpack 实现</span></span><br><span class="line">(<span class="function"><span class="params">()</span> =&gt;</span> &#123;</span><br><span class="line">    <span class="comment">// 为__webpack_require__对象添加e方法，用于处理异步加载</span></span><br><span class="line">    __webpack_require__.e = <span class="function">(<span class="params">chunkId</span>) =&gt;</span> &#123;</span><br><span class="line">        <span class="comment">// 返回一个Promise对象，用于处理异步操作</span></span><br><span class="line">        <span class="keyword">return</span> <span class="keyword">new</span> <span class="built_in">Promise</span>(<span class="function">(<span class="params">resolve</span>) =&gt;</span> &#123;</span><br><span class="line">            <span class="comment">// 创建一个script标签，用于加载异步模块的代码</span></span><br><span class="line">            <span class="keyword">var</span> script = <span class="built_in">document</span>.createElement(<span class="string">'script'</span>);</span><br><span class="line">            <span class="comment">// 设置script标签的src属性，指定异步模块代码块的路径</span></span><br><span class="line">            script.src = chunkId + <span class="string">".chunk.js"</span>;</span><br><span class="line">            <span class="comment">// 当script标签加载完成后，调用resolve函数，标记异步操作完成</span></span><br><span class="line">            script.onload = resolve;</span><br><span class="line">            <span class="comment">// 将script标签添加到文档的head标签中，开始加载异步模块</span></span><br><span class="line">            <span class="built_in">document</span>.head.appendChild(script);</span><br><span class="line">        &#125;);</span><br><span class="line">    &#125;;</span><br><span class="line">&#125;)();</span><br></pre></td></tr></table></figure>
+<p>当源代码中出现动态<code>import</code>语句时，Webpack会将异步加载的模块拆分成单独的代码块。在运行时，通过<code>__webpack_require__.e</code>方法，Webpack创建一个<code>&lt;script&gt;</code>标签，将异步模块的代码块地址赋值给<code>src</code>属性，并将其插入到页面的<code>&lt;head&gt;</code>标签中。当脚本加载完成后，通过Promise机制通知调用者，从而实现异步模块的加载与执行。这种异步加载机制，使得应用在初始加载时能够只加载必要的代码，极大地提升了应用的启动速度和用户体验。</p>
+<h2><span id="三-module-federation共享作用域开创微前端新格局">三、Module Federation：共享作用域，开创微前端新格局</span></h2>
+<p>在微前端架构逐渐兴起的当下，如何高效地管理各个子应用之间的依赖关系，成为了摆在开发者面前的一大难题。Module Federation的共享作用域机制，为这一难题提供了创新的解决方案，如同为微前端架构搭建了一座互联互通的桥梁，实现了依赖的共享与协同。</p>
+<h3><span id="31-共享作用域解决的问题直击微前端痛点">3.1 共享作用域解决的问题：直击微前端痛点</span></h3>
+<ol>
+<li><strong>依赖重复加载</strong>：在传统的微前端架构中，多个子应用可能会独立加载同一个依赖，例如React。这不仅会导致大量的资源浪费，增加应用的加载时间，还可能引发性能瓶颈。同时，由于不同子应用对依赖版本的管理可能存在差异，还可能引发版本冲突，导致应用运行不稳定。</li>
+<li><strong>状态不一致</strong>：当多个子应用中存在多个React实例时，会导致诸如Hook失效、Context无法跨应用共享等问题。这使得应用的状态管理变得混乱不堪，严重影响了应用的功能完整性和用户体验。</li>
+<li><strong>版本冲突</strong>：不同的子应用可能依赖于不同版本的库，在运行时，这些版本之间的不兼容性可能会导致功能异常。例如，某个子应用依赖于较新版本的库，而另一个子应用依赖于较旧版本，当它们同时运行时，可能会出现接口不匹配、方法不存在等问题。</li>
+</ol>
+<h3><span id="32-共享作用域的实现精心编织的依赖共享网络">3.2 共享作用域的实现：精心编织的依赖共享网络</span></h3>
+<p>通过在Webpack配置中进行如下设置，我们可以开启Module Federation的共享作用域功能：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 共享作用域配置</span></span><br><span class="line"><span class="built_in">module</span>.exports = &#123;</span><br><span class="line">    plugins: [</span><br><span class="line">        <span class="keyword">new</span> ModuleFederationPlugin(&#123;</span><br><span class="line">            <span class="comment">// 定义主应用的名称</span></span><br><span class="line">            name: <span class="string">'host'</span>,</span><br><span class="line">            <span class="comment">// 配置共享的依赖项</span></span><br><span class="line">            shared: &#123;</span><br><span class="line">                <span class="comment">// 配置react库的共享</span></span><br><span class="line">                react: &#123;</span><br><span class="line">                    <span class="comment">// 设置为单例模式，确保整个应用只有一个react实例</span></span><br><span class="line">                    singleton: <span class="literal">true</span>,</span><br><span class="line">                    <span class="comment">// 指定react库的所需版本范围</span></span><br><span class="line">                    requiredVersion: <span class="string">'^17.0.2'</span></span><br><span class="line">                &#125;,</span><br><span class="line">                <span class="comment">// 配置react - dom库的共享</span></span><br><span class="line">                <span class="string">'react-dom'</span>: &#123;</span><br><span class="line">                    <span class="comment">// 设置为单例模式</span></span><br><span class="line">                    singleton: <span class="literal">true</span>,</span><br><span class="line">                    <span class="comment">// 指定react - dom库的所需版本范围</span></span><br><span class="line">                    requiredVersion: <span class="string">'^17.0.2'</span></span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;)</span><br><span class="line">    ]</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+<p>在上述配置中，<code>ModuleFederationPlugin</code>插件被用于启用Module Federation功能。通过<code>shared</code>字段，我们可以指定需要共享的依赖及其相关配置。例如，对于<code>react</code>和<code>react - dom</code>，我们设置了<code>singleton: true</code>，表示强制使用单例模式，确保在整个应用中只有一个React实例。同时，<code>requiredVersion</code>字段指定了所需的版本范围，确保共享的依赖版本一致性。</p>
+<h3><span id="33-作用域容器实现打造高效的模块共享引擎">3.3 作用域容器实现：打造高效的模块共享引擎</span></h3>
+<p>以下代码展示了Module Federation中共享作用域容器的实现原理：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 定义共享作用域对象，包含默认作用域</span></span><br><span class="line"><span class="keyword">const</span> __webpack_share_scopes__ = &#123;</span><br><span class="line">    <span class="keyword">default</span>: &#123;</span><br><span class="line">        <span class="comment">// 定义react模块在默认作用域中的相关信息</span></span><br><span class="line">        react: &#123;</span><br><span class="line">            <span class="comment">// 记录react模块的版本</span></span><br><span class="line">            version: <span class="string">'17.0.2'</span>,</span><br><span class="line">            <span class="comment">// 获取react模块的函数，初始返回一个Promise，解析后返回通过webpack require获取的react模块</span></span><br><span class="line">            <span class="keyword">get</span>: () =&gt; Promise.resolve(() =&gt; __webpack_require__('react')),</span><br><span class="line">            // 标记react模块是否已加载，初始为false</span><br><span class="line">            loaded: false,</span><br><span class="line">            // 标记react模块是否已初始化，初始为false</span><br><span class="line">            initialized: false</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line">// 定义初始化共享作用域的函数</span><br><span class="line">async function initSharing(scopeName) &#123;</span><br><span class="line">    <span class="comment">// 获取指定名称的共享作用域</span></span><br><span class="line">    <span class="keyword">const</span> scope = __webpack_share_scopes__[scopeName];</span><br><span class="line">    <span class="comment">// 使用Promise.all并发处理所有模块的初始化</span></span><br><span class="line">    <span class="keyword">await</span> <span class="built_in">Promise</span>.all(</span><br><span class="line">        <span class="comment">// 遍历作用域中的所有模块</span></span><br><span class="line">        <span class="built_in">Object</span>.keys(scope).map(<span class="keyword">async</span> key =&gt; &#123;</span><br><span class="line">            <span class="comment">// 如果模块尚未初始化</span></span><br><span class="line">            <span class="keyword">if</span> (!scope[key].initialized) &#123;</span><br><span class="line">                <span class="comment">// 标记模块已初始化</span></span><br><span class="line">                scope[key].initialized = <span class="literal">true</span>;</span><br><span class="line">                <span class="comment">// 标记模块已加载</span></span><br><span class="line">                scope[key].loaded = <span class="literal">true</span>;</span><br><span class="line">                <span class="comment">// 更新获取模块的函数，直接通过webpack require获取</span></span><br><span class="line">                scope[key].get = <span class="function"><span class="params">()</span> =&gt;</span> __webpack_require__(key);</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;)</span><br><span class="line">    );</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 定义从共享作用域获取共享模块的函数</span></span><br><span class="line"><span class="keyword">async</span> <span class="function"><span class="keyword">function</span> <span class="title">getSharedModule</span>(<span class="params">scopeName, key, version</span>) </span>&#123;</span><br><span class="line">    <span class="comment">// 获取指定名称的共享作用域</span></span><br><span class="line">    <span class="keyword">const</span> scope = __webpack_share_scopes__[scopeName];</span><br><span class="line">    <span class="comment">// 获取作用域中指定键的共享模块信息</span></span><br><span class="line">    <span class="keyword">const</span> shared = scope[key];</span><br><span class="line">    </span><br><span class="line">    <span class="comment">// 如果传入了版本要求，且当前共享模块的版本不满足要求</span></span><br><span class="line">    <span class="keyword">if</span> (version &amp;&amp;!semver.satisfies(shared.version, version)) &#123;</span><br><span class="line">        <span class="comment">// 抛出版本不匹配的错误</span></span><br><span class="line">        <span class="keyword">throw</span> <span class="keyword">new</span> <span class="built_in">Error</span>(<span class="string">`Version mismatch for <span class="subst">$&#123;key&#125;</span>`</span>);</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    <span class="comment">// 如果共享模块尚未初始化</span></span><br><span class="line">    <span class="keyword">if</span> (!shared.initialized) &#123;</span><br><span class="line">        <span class="comment">// 初始化共享作用域</span></span><br><span class="line">        <span class="keyword">await</span> initSharing(scopeName);</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    <span class="comment">// 返回共享模块的获取函数执行结果</span></span><br><span class="line">    <span class="keyword">return</span> shared.get();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>在这段代码中，<code>__webpack_share_scopes__</code>对象定义了共享作用域的结构。其中，<code>default</code>作用域包含了<code>react</code>模块的相关信息。<code>initSharing</code>函数负责初始化共享作用域中的模块，确保它们在需要时能够被正确加载。<code>getSharedModule</code>函数则用于从共享作用域中获取指定的模块，并在版本不匹配时抛出错误，以保证版本的一致性。</p>
+<h3><span id="34-作用域工作原理协调一致的模块协作流程">3.4 作用域工作原理：协调一致的模块协作流程</span></h3>
+<ol>
+<li><strong>初始化阶段</strong>：在初始化阶段，主应用（Host）和远程应用（Remote）会进行作用域的对接。例如：</li>
+</ol>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// Host 应用</span></span><br><span class="line"><span class="comment">// 定义包含react模块信息的作用域对象</span></span><br><span class="line"><span class="keyword">const</span> scope = &#123;</span><br><span class="line">    react: &#123;</span><br><span class="line">        <span class="comment">// 记录react模块的版本</span></span><br><span class="line">        version: <span class="string">'17.0.2'</span>,</span><br><span class="line">        <span class="comment">// 获取react模块的函数，返回host应用中的react实例</span></span><br><span class="line">        <span class="keyword">get</span>: () =&gt; hostReactInstance</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line">// Remote 应用</span><br><span class="line">// 调用remote对象的init方法，传入host应用的作用域对象</span><br><span class="line">remote.init(scope).then(() =&gt; &#123;</span><br><span class="line">    <span class="comment">// 初始化完成后，remote应用开始使用host应用的react实例</span></span><br><span class="line">    <span class="comment">// Remote 应用现在使用 Host 的 React 实例</span></span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+<p>在这个过程中，Host应用将自己的React实例及其版本信息封装在<code>scope</code>对象中，并传递给Remote应用。Remote应用通过调用<code>init</code>方法，将自己的React依赖指向Host应用提供的实例，从而实现了依赖的共享。</p>
+<ol start="2">
+<li><strong>模块请求阶段</strong>：当Remote应用需要加载组件时，其内部的模块请求流程如下：</li>
+</ol>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// Remote 组件加载过程</span></span><br><span class="line"><span class="keyword">const</span> loadRemoteComponent = <span class="keyword">async</span> () =&gt; &#123;</span><br><span class="line">    <span class="comment">// 1. 获取共享的 React 实例</span></span><br><span class="line">    <span class="comment">// 从默认共享作用域中获取react模块，指定版本要求为'^17.0.2'</span></span><br><span class="line">    <span class="keyword">const</span> React = <span class="keyword">await</span> getSharedModule(<span class="string">'default'</span>, <span class="string">'react'</span>, <span class="string">'^17.0.2'</span>);</span><br><span class="line">    </span><br><span class="line">    <span class="comment">// 2. 加载组件</span></span><br><span class="line">    <span class="comment">// 从remote应用中获取名为'./Button'的组件</span></span><br><span class="line">    <span class="keyword">const</span> Button = <span class="keyword">await</span> remote.get(<span class="string">'./Button'</span>);</span><br><span class="line">    </span><br><span class="line">    <span class="comment">// 3. 组件使用共享的 React 实例</span></span><br><span class="line">    <span class="comment">// 返回获取到的Button组件，该组件将使用共享的React实例进行渲染</span></span><br><span class="line">    <span class="keyword">return</span> Button;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+<p>在这个过程中，<code>loadRemoteComponent</code>函数首先通过<code>getSharedModule</code>函数从共享作用域中获取共享的React实例。然后，通过<code>remote.get</code>方法加载所需的组件。最后，将共享的React实例应用于组件的渲染过程中，确保了组件在正确的React环境中运行。</p>
+<ol start="3">
+<li><strong>版本控制</strong>：为了确保共享依赖的版本一致性，Module Federation提供了精细的版本控制配置：</li>
+</ol>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 版本控制配置</span></span><br><span class="line">shared: &#123;</span><br><span class="line">    react: &#123;</span><br><span class="line">        <span class="comment">// 强制单例模式，确保整个应用只有一个react实例</span></span><br><span class="line">        singleton: <span class="literal">true</span>,           </span><br><span class="line">        <span class="comment">// 指定react库的所需版本范围</span></span><br><span class="line">        requiredVersion: <span class="string">'^17.0.2'</span>, </span><br><span class="line">        <span class="comment">// 开启严格版本匹配模式，确保引入的模块版本与配置完全一致</span></span><br><span class="line">        strictVersion: <span class="literal">true</span>,       </span><br><span class="line">        <span class="comment">// 设置为立即加载，应用启动时即加载该共享模块</span></span><br><span class="line">        eager: <span class="literal">true</span>               </span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>在上述配置中，<code>singleton</code>确保整个应用中只有一个React实例。<code>requiredVersion</code>指定了所需的React版本范围，保证引入的React版本符合预期。<code>strictVersion</code>开启了严格版本匹配模式，若引入的模块版本与配置不一致，会抛出错误，防止因版本差异导致的兼容性问题 。<code>eager</code>设置为<code>true</code>时，意味着在应用启动时就立即加载共享模块，这样可以避免在运行过程中因延迟加载共享模块而可能引发的各种潜在问题，保证共享模块在需要时能及时可用，增强了应用运行的稳定性和流畅性。</p>
+<h3><span id="35-实际应用示例生动展现共享作用域的魅力">3.5 实际应用示例：生动展现共享作用域的魅力</span></h3>
+<p>以下是一个在实际应用中使用Module Federation共享作用域的示例：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// Remote应用Button组件</span></span><br><span class="line"><span class="comment">// 使用React.lazy进行懒加载，动态引入Remote应用中的Button组件</span></span><br><span class="line"><span class="keyword">const</span> Button = React.lazy(<span class="function"><span class="params">()</span> =&gt;</span> <span class="keyword">import</span>(<span class="string">'remote/Button'</span>));</span><br><span class="line"></span><br><span class="line"><span class="comment">// Host应用使用远程组件</span></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">App</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">    <span class="keyword">return</span> (</span><br><span class="line">        <span class="comment">// 使用React.Suspense包裹懒加载组件，在组件加载时显示fallback内容</span></span><br><span class="line">        &lt;React.Suspense fallback=<span class="string">"Loading..."</span>&gt;</span><br><span class="line">            &lt;Button onClick=&#123;() =&gt; <span class="built_in">console</span>.log(<span class="string">'clicked'</span>)&#125; /&gt;</span><br><span class="line">        &lt;<span class="regexp">/React.Suspense&gt;</span></span><br><span class="line"><span class="regexp">    );</span></span><br><span class="line"><span class="regexp">&#125;</span></span><br></pre></td></tr></table></figure>
+<p>在这个例子中，Host应用通过<code>React.lazy</code>和<code>import</code>语句动态加载Remote应用中的<code>Button</code>组件。在加载过程中，借助共享作用域机制，Remote应用的<code>Button</code>组件能够无缝地使用Host应用提供的共享React实例。这不仅实现了组件的跨应用复用，还保证了组件在统一的React环境下运行，极大地提升了开发效率和应用性能。</p>
+<h2><span id="四-共享作用域的优势全方位赋能微前端开发">四、共享作用域的优势：全方位赋能微前端开发</span></h2>
+<ol>
+<li><strong>性能优化</strong>：共享作用域机制通过避免依赖的重复加载，显著减少了应用的资源占用。多个子应用无需各自加载相同的依赖库，从而降低了网络请求次数和文件大小，减少了内存消耗。这直接提升了应用的加载速度，让用户能够更快地访问应用内容，为用户带来了更加流畅的体验，尤其在网络环境不佳或设备性能有限的情况下，这种优势更为明显。</li>
+<li><strong>状态一致性</strong>：确保整个应用中只有一个React实例，有效地解决了Hook失效、Context无法跨应用共享等问题。在多实例React环境下，Hook的状态管理和复用会出现混乱，而共享作用域机制保证了所有子应用使用同一个React实例，使得Hook能够按照预期工作，状态管理变得稳定可靠。同时，Context也能在各个子应用间正常共享，保证了数据传递的一致性和准确性，进而确保应用功能的正常运行，提升了应用的稳定性和可维护性。</li>
+<li><strong>版本管理</strong>：Module Federation的共享作用域提供了集中化的版本控制功能。通过在配置中指定依赖的版本要求，能够在运行时进行版本协商。各个子应用在引入共享依赖时，会根据配置中的版本信息进行匹配，确保所有子应用使用的依赖版本一致。当出现版本不兼容的情况时，还能通过优雅的降级机制，保障应用的基本功能不受影响，维持应用的稳定运行，避免因版本问题导致的应用崩溃或功能异常。</li>
+</ol>
+<h2><span id="总结">总结</span></h2>
+<p>Module Federation的共享作用域机制，以其卓越的设计理念和强大的功能特性，为微前端架构中的依赖共享问题提供了一站式解决方案。它不仅实现了统一的依赖管理，让开发者能够轻松掌控各个子应用的依赖关系，避免了因依赖管理混乱而引发的各种问题；还通过运行时的版本控制，确保了应用在不同环境下的兼容性和稳定性，减少了因版本差异导致的潜在风险。此外，优雅的状态共享机制，使得应用的状态管理更加高效和可靠，提升了应用的整体性能和用户体验；高效的资源利用方式，则为应用的性能提升提供了坚实的保障，降低了开发和运维成本。</p>
+<p>这一创新机制的出现，为构建高度可扩展、灵活高效的微前端应用奠定了坚实的技术基础。它无疑是前端模块化发展史上的一座重要里程碑，为未来前端技术的发展指明了方向。随着技术的不断演进，我们有理由相信，Module Federation及其共享作用域机制将在更多的领域发挥重要作用，为前端开发者带来更多的惊喜与可能，推动前端开发技术不断迈向新的高度。</p>
+
+                
+
+                <hr>
+                <!-- Pager -->
+                <ul class="pager">
+                    
+                        <li class="previous">
+                            <a href="/jtblogs/article/深入理解装饰器、reflect-metadata-与-IOC-控制反转/" data-toggle="tooltip" data-placement="top" title="深入理解装饰器、reflect-metadata 与 IOC 控制反转">&larr; Previous Post</a>
+                        </li>
+                    
+                    
+                        <li class="next">
+                            <a href="/jtblogs/article/Node-js-模块加载与执行流程/" data-toggle="tooltip" data-placement="top" title="Node.js 模块加载与执行流程">Next Post &rarr;</a>
+                        </li>
+                    
+                </ul>
+
+                <br>
+
+                <!--打赏-->
+                
+                <!--打赏-->
+
+                <br>
+                <!--分享-->
+                
+                    <div class="social-share"  data-wechat-qrcode-helper="" align="center"></div>
+                    <!--  css & js -->
+                    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/social-share.js/1.0.16/css/share.min.css">
+                    <script src="https://cdnjs.cloudflare.com/ajax/libs/social-share.js/1.0.16/js/social-share.min.js"></script>
+                
+                <!--分享-->
+                <br>                       
+                
+                <!-- require APlayer -->
+                
+
+                <!-- duoshuo Share start -->
+                
+                <!-- 多说 Share end-->
+
+                <!-- 多说评论框 start -->
+                
+                <!-- 多说评论框 end -->
+
+                <!-- disqus comment start -->
+                
+                <!-- disqus comment end -->
+
+                
+
+            </div>
+            
+            <!-- Tabe of Content -->
+            <!-- Table of Contents -->
+
+  
+    <style>
+      span.toc-nav-number{
+        display: none
+      }
+    </style>
+  
+    
+      <aside id="sidebar">
+        <div id="toc" class="toc-article">
+        <strong class="toc-title">Contents</strong>
+        
+          <ol class="toc-nav"><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#null"><span class="toc-nav-number">1.</span> <span class="toc-nav-text">一、溯源CommonJS：模块化的破晓之光</span></a><ol class="toc-nav-child"><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#null"><span class="toc-nav-number">1.1.</span> <span class="toc-nav-text">1.1 基础实现：简洁铸就经典</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#null"><span class="toc-nav-number">1.2.</span> <span class="toc-nav-text">1.2 Node.js中的实现原理：揭秘模块加载机制</span></a></li></ol></li><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#null"><span class="toc-nav-number">2.</span> <span class="toc-nav-text">二、Webpack：浏览器端模块化的中流砥柱</span></a><ol class="toc-nav-child"><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#null"><span class="toc-nav-number">2.1.</span> <span class="toc-nav-text">2.1 同步加载：构建紧密的模块链条</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#null"><span class="toc-nav-number">2.2.</span> <span class="toc-nav-text">2.2 异步加载：为性能优化注入活力</span></a></li></ol></li><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#null"><span class="toc-nav-number">3.</span> <span class="toc-nav-text">三、Module Federation：共享作用域，开创微前端新格局</span></a><ol class="toc-nav-child"><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#null"><span class="toc-nav-number">3.1.</span> <span class="toc-nav-text">3.1 共享作用域解决的问题：直击微前端痛点</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#null"><span class="toc-nav-number">3.2.</span> <span class="toc-nav-text">3.2 共享作用域的实现：精心编织的依赖共享网络</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#null"><span class="toc-nav-number">3.3.</span> <span class="toc-nav-text">3.3 作用域容器实现：打造高效的模块共享引擎</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#null"><span class="toc-nav-number">3.4.</span> <span class="toc-nav-text">3.4 作用域工作原理：协调一致的模块协作流程</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#null"><span class="toc-nav-number">3.5.</span> <span class="toc-nav-text">3.5 实际应用示例：生动展现共享作用域的魅力</span></a></li></ol></li><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#null"><span class="toc-nav-number">4.</span> <span class="toc-nav-text">四、共享作用域的优势：全方位赋能微前端开发</span></a></li><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#null"><span class="toc-nav-number">5.</span> <span class="toc-nav-text">总结</span></a></li></ol>
+        
+        </div>
+      </aside>
+    
+
+                
+            <!-- Sidebar Container -->
+            <div class="
+                col-lg-8 col-lg-offset-2
+                col-md-10 col-md-offset-1
+                sidebar-container">
+
+                <!-- Featured Tags -->
+                
+                <section>
+                    <!-- no hr -->
+                    <h5><a href="/jtblogs/tags/">FEATURED TAGS</a></h5>
+                    <div class="tags">
+                       
+                          <a class="tag" href="/jtblogs/tags/#webpack" title="webpack">webpack</a>
+                        
+                    </div>
+                </section>
+                
+
+                <!-- Friends Blog -->
+                
+                <hr>
+                <h5>FRIENDS</h5>
+                <ul class="list-inline">
+
+                    
+                </ul>
+                
+            </div>
+        </div>
+    </div>
+</article>
+
+
+
+
+
+
+
+
+<!-- async load function -->
+<script>
+    function async(u, c) {
+      var d = document, t = 'script',
+          o = d.createElement(t),
+          s = d.getElementsByTagName(t)[0];
+      o.src = u;
+      if (c) { o.addEventListener('load', function (e) { c(null, e); }, false); }
+      s.parentNode.insertBefore(o, s);
+    }
+</script>
+<!-- anchor-js, Doc:http://bryanbraun.github.io/anchorjs/ -->
+<script>
+    async("https://cdn.bootcss.com/anchor-js/1.1.1/anchor.min.js",function(){
+        anchors.options = {
+          visible: 'hover',
+          placement: 'left',
+          icon: 'ℬ'
+        };
+        anchors.add().remove('.intro-header h1').remove('.subheading').remove('.sidebar-container h5');
+    })
+</script>
+<style>
+    /* place left on bigger screen */
+    @media all and (min-width: 800px) {
+        .anchorjs-link{
+            position: absolute;
+            left: -0.75em;
+            font-size: 1.1em;
+            margin-top : -0.1em;
+        }
+    }
+</style>
+
+
+<!-- chrome Firefox 中文锚点定位失效-->
+<script src="https://cdn.bootcss.com/jquery/3.3.1/jquery.js"></script>
+<!-- smooth scroll behavior polyfill  -->
+<script type="text/javascript" src="/js/smoothscroll.js"></script>
+<script>
+        $('#toc').on('click','a',function(a){
+            // var isChrome = window.navigator.userAgent.indexOf("Chrome") !== -1;
+            // console.log(window.navigator.userAgent,isChrome)
+                // if(isChrome) {
+                    // console.log(a.currentTarget.outerHTML);
+                    // console.log($(a.currentTarget).attr("href"));
+                    //跳转到指定锚点
+                    // document.getElementById(a.target.innerText.toLowerCase()).scrollIntoView(true);
+                    document.getElementById($(a.currentTarget).attr("href").replace("#","")).scrollIntoView({behavior: 'smooth' });
+                // }
+        })  
+</script>
+
+
+    <!-- Footer -->
+    <!-- Footer -->
+<footer>
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+                <ul class="list-inline text-center">
+                    
+                            
+                                    
+
+                                            
+
+                                                    
+
+                                                            
+                                                                <li>
+                                                                    <a target="_blank"
+                                                                        href="https://github.com/taojiangcb">
+                                                                        <span class="fa-stack fa-lg">
+                                                                            <i class="fa fa-circle fa-stack-2x"></i>
+                                                                            <i
+                                                                                class="fa fa-github fa-stack-1x fa-inverse"></i>
+                                                                        </span>
+                                                                    </a>
+                                                                </li>
+                                                                
+
+                                                                    
+
+                </ul>
+
+                <p class="copyright text-muted">
+                    Copyright &copy; 江涛
+                        2025
+                            <br>
+                            Theme by <a href="http://beantech.org">BeanTech</a>
+                            <span style="display: inline-block; margin: 0 5px;">
+                                <i class="fa fa-heart"></i>
+                            </span>
+                            re-Ported by <a href="https://taojiangcb.github.io/jtblogs">江涛</a> |
+                            <iframe style="margin-left: 2px; margin-bottom:-5px;" frameborder="0" scrolling="0"
+                                width="91px" height="20px"
+                                src="https://ghbtns.com/github-btn.html?user=taojiangcb&repo=jtblogs&type=star&count=true">
+                            </iframe>
+                </p>
+                <p class="copyright text-muted" style="margin:0">
+                    <script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+                    <span id="busuanzi_container_site_pv">
+                        总访问量<span id="busuanzi_value_site_pv"></span>次
+                    </span>
+                    <span id="busuanzi_container_site_uv">
+                        总访客数<span id="busuanzi_value_site_uv"></span>人
+                    </span>
+                </p>
+            </div>
+        </div>
+    </div>
+</footer>
+
+<!-- jQuery -->
+<script src="/jtblogs/js/jquery.min.js"></script>
+
+    <!-- Bootstrap Core JavaScript -->
+    <script src="/jtblogs/js/bootstrap.min.js"></script>
+
+        <!-- Custom Theme JavaScript -->
+        <script src="/jtblogs/js/hux-blog.min.js"></script>
+
+
+            <!-- async load function -->
+            <script>
+                function async(u, c) {
+                    var d = document, t = 'script',
+                        o = d.createElement(t),
+                        s = d.getElementsByTagName(t)[0];
+                    o.src = u;
+                    if (c) { o.addEventListener('load', function (e) { c(null, e); }, false); }
+                    s.parentNode.insertBefore(o, s);
+                }
+            </script>
+
+            <!-- 
+     Because of the native support for backtick-style fenced code blocks 
+     right within the Markdown is landed in Github Pages, 
+     From V1.6, There is no need for Highlight.js, 
+     so Huxblog drops it officially.
+
+     - https://github.com/blog/2100-github-pages-now-faster-and-simpler-with-jekyll-3-0  
+     - https://help.github.com/articles/creating-and-highlighting-code-blocks/    
+-->
+            <!--
+    <script>
+        async("http://cdn.bootcss.com/highlight.js/8.6/highlight.min.js", function(){
+            hljs.initHighlightingOnLoad();
+        })
+    </script>
+    <link href="http://cdn.bootcss.com/highlight.js/8.6/styles/github.min.css" rel="stylesheet">
+-->
+
+
+            <!-- jquery.tagcloud.js -->
+            <script>
+                // only load tagcloud.js in tag.html
+                if ($('#tag_cloud').length !== 0) {
+                    async("https://taojiangcb.github.io/jtblogs/js/jquery.tagcloud.js", function () {
+                        $.fn.tagcloud.defaults = {
+                            //size: {start: 1, end: 1, unit: 'em'},
+                            color: { start: '#bbbbee', end: '#0085a1' },
+                        };
+                        $('#tag_cloud a').tagcloud();
+                    })
+                }
+            </script>
+
+            <!--fastClick.js -->
+            <script>
+                async("https://cdn.bootcss.com/fastclick/1.0.6/fastclick.min.js", function () {
+                    var $nav = document.querySelector("nav");
+                    if ($nav) FastClick.attach($nav);
+                })
+            </script>
+
+
+            <!-- Google Analytics -->
+
+            
+                <script>
+                    // dynamic User by Hux
+                    var _gaId = 'UA-XXXXXXXX-X';
+                    var _gaDomain = 'yoursite';
+
+                    // Originial
+                    (function (i, s, o, g, r, a, m) {
+                        i['GoogleAnalyticsObject'] = r; i[r] = i[r] || function () {
+                            (i[r].q = i[r].q || []).push(arguments)
+                        }, i[r].l = 1 * new Date(); a = s.createElement(o),
+                            m = s.getElementsByTagName(o)[0]; a.async = 1; a.src = g; m.parentNode.insertBefore(a, m)
+                    })(window, document, 'script', '//www.google-analytics.com/analytics.js', 'ga');
+
+                    ga('create', _gaId, _gaDomain);
+                    ga('send', 'pageview');
+                </script>
+
+                
+
+
+                    <!-- Baidu Tongji -->
+                    
+                        <script>
+                            // dynamic User by Hux
+                            var _baId = 'xxx';
+
+                            // Originial
+                            var _hmt = _hmt || [];
+                            (function () {
+                                var hm = document.createElement("script");
+                                hm.src = "//hm.baidu.com/hm.js?" + _baId;
+                                var s = document.getElementsByTagName("script")[0];
+                                s.parentNode.insertBefore(hm, s);
+                            })();
+                        </script>
+                        
+
+
+	<a id="rocket" href="#top" class=""></a>
+	<script type="text/javascript" src="/jtblogs/js/totop.js?v=1.0.0" async=""></script>
+    <script type="text/javascript" src="/jtblogs/js/toc.js?v=1.0.0" async=""></script>
+<!-- Image to hack wechat -->
+<img src="https://taojiangcb.github.io/jtblogs/img/icon_wechat.png" width="0" height="0" />
+<!-- Migrate from head to bottom, no longer block render and still work -->
+
+</body>
+
+</html>

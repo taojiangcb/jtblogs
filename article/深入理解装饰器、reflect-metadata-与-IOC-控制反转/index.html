@@ -1,0 +1,747 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<!-- Head tag -->
+<head><meta name="generator" content="Hexo 3.9.0">
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="google-site-verification" content="xBT4GhYoi5qRD5tr338pgPM5OWHHIDR6mNg1a3euekI">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content>
+    <meta name="keyword" content>
+    <link rel="shortcut icon" href="/jtblogs/favicon.ico">
+    <!-- Place this tag in your head or just before your close body tag. -->
+    <script async defer src="https://buttons.github.io/buttons.js"></script>
+    <title>
+        
+          深入理解装饰器、reflect-metadata 与 IOC 控制反转 - 江涛 | Blog
+        
+    </title>
+
+    <link rel="canonical" href="https://taojiangcb.github.io/jtblogs/jtblogs/article/深入理解装饰器、reflect-metadata-与-IOC-控制反转/">
+
+    <!-- Bootstrap Core CSS -->
+    <link rel="stylesheet" href="/jtblogs/css/bootstrap.min.css">
+
+    <!-- Custom CSS --> 
+    <link rel="stylesheet" href="/jtblogs/css/beantech.min.css">
+
+    <link rel="stylesheet" href="/jtblogs/css/donate.css">
+    
+    <!-- Pygments Highlight CSS -->
+    <link rel="stylesheet" href="/jtblogs/css/highlight.css">
+
+    <link rel="stylesheet" href="/jtblogs/css/widget.css">
+
+    <link rel="stylesheet" href="/jtblogs/css/rocket.css">
+
+    <link rel="stylesheet" href="/jtblogs/css/signature.css">
+
+    <link rel="stylesheet" href="/jtblogs/css/toc.css">
+
+    <!-- Custom Fonts -->
+    <!-- <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css" rel="stylesheet" type="text/css"> -->
+    <!-- Hux change font-awesome CDN to qiniu -->
+    <link href="https://cdn.staticfile.org/font-awesome/4.5.0/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+
+
+    <!-- Hux Delete, sad but pending in China
+    <link href='http://fonts.googleapis.com/css?family=Lora:400,700,400italic,700italic' rel='stylesheet' type='text/css'>
+    <link href='http://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800' rel='stylesheet' type='text/
+    css'>
+    -->
+
+
+    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+        <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+        <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+    <![endif]-->
+
+    <!-- ga & ba script hoook -->
+    <script></script>
+</head>
+
+
+<!-- hack iOS CSS :active style -->
+<body ontouchstart="">
+	<!-- Modified by Yu-Hsuan Yen -->
+<!-- Post Header -->
+<style type="text/css">
+    header.intro-header{
+        
+            background-image: url('/jtblogs/img/article_header/article_bg.jpg')
+            /*post*/
+        
+    }
+    
+</style>
+
+<header class="intro-header" >
+    <!-- Signature -->
+    <div id="signature">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+                
+                    <div class="post-heading">
+                        <div class="tags">
+                            
+                              <a class="tag" href="/jtblogs/tags/#nodejs" title="nodejs">nodejs</a>
+                            
+                        </div>
+                        <h1>深入理解装饰器、reflect-metadata 与 IOC 控制反转</h1>
+                        <h2 class="subheading"></h2>
+                        <span class="meta">
+                            Posted by 江涛 on
+                            2025-01-16
+                        </span>
+                    </div>
+                
+
+
+                </div>
+            </div>
+        </div>
+    </div>
+</header>
+
+	
+    <!-- Navigation -->
+<nav class="navbar navbar-default navbar-custom navbar-fixed-top">
+    <div class="container-fluid">
+        <!-- Brand and toggle get grouped for better mobile display -->
+        <div class="navbar-header page-scroll">
+            <button type="button" class="navbar-toggle">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href="/jtblogs/">江涛</a>
+        </div>
+
+        <!-- Collect the nav links, forms, and other content for toggling -->
+        <!-- Known Issue, found by Hux:
+            <nav>'s height woule be hold on by its content.
+            so, when navbar scale out, the <nav> will cover tags.
+            also mask any touch event of tags, unfortunately.
+        -->
+        <div id="huxblog_navbar">
+            <div class="navbar-collapse">
+                <ul class="nav navbar-nav navbar-right">
+                    <li>
+                        <a href="/jtblogs/">Home</a>
+                    </li>
+
+                    
+
+                        
+                    
+
+                        
+                    
+
+                        
+                    
+
+                        
+                    
+
+                        
+                    
+
+                        
+                    
+
+                        
+                        <li>
+                            <a href="/jtblogs/tags/">Tags</a>
+                        </li>
+                        
+                    
+
+                        
+                        <li>
+                            <a href="/jtblogs/about/">About</a>
+                        </li>
+                        
+                    
+
+                        
+                        <li>
+                            <a href="/jtblogs/archive/">Archives</a>
+                        </li>
+                        
+                    
+                    
+                </ul>
+            </div>
+        </div>
+        <!-- /.navbar-collapse -->
+    </div>
+    <!-- /.container -->
+</nav>
+<script>
+    // Drop Bootstarp low-performance Navbar
+    // Use customize navbar with high-quality material design animation
+    // in high-perf jank-free CSS3 implementation
+    var $body   = document.body;
+    var $toggle = document.querySelector('.navbar-toggle');
+    var $navbar = document.querySelector('#huxblog_navbar');
+    var $collapse = document.querySelector('.navbar-collapse');
+
+    $toggle.addEventListener('click', handleMagic)
+    function handleMagic(e){
+        if ($navbar.className.indexOf('in') > 0) {
+        // CLOSE
+            $navbar.className = " ";
+            // wait until animation end.
+            setTimeout(function(){
+                // prevent frequently toggle
+                if($navbar.className.indexOf('in') < 0) {
+                    $collapse.style.height = "0px"
+                }
+            },400)
+        }else{
+        // OPEN
+            $collapse.style.height = "auto"
+            $navbar.className += " in";
+        }
+    }
+</script>
+
+
+    <!-- Main Content -->
+    <!-- Modify by Yu-Hsuan Yen -->
+
+<!-- Post Content -->
+<article>
+    <div class="container">
+        <div class="row">
+
+            <!-- Post Container -->
+            <div class="
+                col-lg-8 col-lg-offset-2
+                col-md-10 col-md-offset-1
+                post-container">
+
+                <h1><span id="深入理解装饰器-reflect-metadata-与-ioc-控制反转">深入理解装饰器、reflect-metadata 与 IOC 控制反转</span></h1>
+<p>在现代的 JavaScript 和 TypeScript 开发中，装饰器、<code>reflect-metadata</code> 以及 IOC（控制反转）是构建强大、灵活且可维护软件系统的关键技术。让我们逐步深入探讨这些概念，并着重关注装饰器的输出及其在不同场景中的作用。</p>
+<h2><span id="一-装饰器提升代码功能的强大工具">一、装饰器：提升代码功能的强大工具</span></h2>
+<h3><span id="装饰器的基础概念">装饰器的基础概念</span></h3>
+<p>装饰器是一种使用 <code>@expression</code> 语法的特殊声明，可应用于类声明、方法、属性或参数上。在运行时，<code>expression</code> 会被计算，且其结果必须是一个接收被装饰目标作为参数的函数。装饰器的强大之处在于，它允许我们在不修改原始代码结构的前提下，为代码增添额外的功能，这在诸如元编程、日志记录、性能监控和权限检查等方面表现出色。</p>
+<h3><span id="装饰器的分类及其输出和行为">装饰器的分类及其输出和行为</span></h3>
+<h4><span id="类装饰器">类装饰器</span></h4>
+<p>类装饰器主要用于修改类的构造函数或添加静态属性。以下是一个典型的类装饰器示例：</p>
+<figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 类装饰器函数，接收一个构造函数作为参数</span></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">logClass</span>(<span class="params">constructor: <span class="built_in">Function</span></span>) </span>&#123;</span><br><span class="line">    <span class="built_in">console</span>.log(<span class="string">`Class <span class="subst">$&#123;constructor.name&#125;</span> has been instantiated.`</span>);</span><br><span class="line">    <span class="comment">// 这里可以对构造函数进行修改或包装，这里仅添加日志</span></span><br><span class="line">    <span class="keyword">return</span> <span class="keyword">class</span> <span class="keyword">extends</span> <span class="keyword">constructor</span> &#123;</span><br><span class="line">        <span class="keyword">constructor</span>(<span class="params">...args: <span class="built_in">any</span>[]</span>) &#123;</span><br><span class="line">            <span class="built_in">console</span>.log(<span class="string">`Before instantiation of <span class="subst">$&#123;constructor.name&#125;</span>`</span>);</span><br><span class="line">            <span class="keyword">super</span>(...args);</span><br><span class="line">            <span class="built_in">console</span>.log(<span class="string">`After instantiation of <span class="subst">$&#123;constructor.name&#125;</span>`</span>);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 使用类装饰器</span></span><br><span class="line"><span class="meta">@logClass</span></span><br><span class="line"><span class="keyword">class</span> MyClass &#123;</span><br><span class="line">    <span class="keyword">constructor</span>(<span class="params"></span>) &#123;</span><br><span class="line">        <span class="built_in">console</span>.log(<span class="string">"MyClass constructor"</span>);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 创建类的实例，触发装饰器</span></span><br><span class="line"><span class="keyword">const</span> myClassInstance = <span class="keyword">new</span> MyClass();</span><br></pre></td></tr></table></figure>
+<p><strong>输出解释</strong>：</p>
+<ul>
+<li>当 <code>MyClass</code> 被 <code>logClass</code> 装饰器装饰时，首先输出 <code>Class MyClass has been instantiated.</code>，表明装饰器已被应用。</li>
+<li>创建 <code>MyClass</code> 的实例时，会先输出 <code>Before instantiation of MyClass</code>，接着执行原始的 <code>MyClass</code> 构造函数，输出 <code>MyClass constructor</code>，最后输出 <code>After instantiation of MyClass</code>。</li>
+</ul>
+<h4><span id="方法装饰器">方法装饰器</span></h4>
+<p>方法装饰器可以修改类方法的行为，常用于添加日志记录、性能监控等功能。以下是一个示例：</p>
+<figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 方法装饰器函数，接收三个参数：目标对象、方法名和属性描述符</span></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">logMethod</span>(<span class="params">target: <span class="built_in">any</span>, methodName: <span class="built_in">string</span>, descriptor: PropertyDescriptor</span>) </span>&#123;</span><br><span class="line">    <span class="keyword">const</span> originalMethod = descriptor.value;</span><br><span class="line">    descriptor.value = <span class="function"><span class="keyword">function</span> (<span class="params">...args: <span class="built_in">any</span>[]</span>) </span>&#123;</span><br><span class="line">        <span class="built_in">console</span>.log(<span class="string">`Calling method <span class="subst">$&#123;methodName&#125;</span> with args: <span class="subst">$&#123;<span class="built_in">JSON</span>.stringify(args)&#125;</span>`</span>);</span><br><span class="line">        <span class="keyword">const</span> startTime = <span class="built_in">Date</span>.now();</span><br><span class="line">        <span class="keyword">const</span> result = originalMethod.apply(<span class="keyword">this</span>, args);</span><br><span class="line">        <span class="keyword">const</span> endTime = <span class="built_in">Date</span>.now();</span><br><span class="line">        <span class="built_in">console</span>.log(<span class="string">`Method <span class="subst">$&#123;methodName&#125;</span> returned: <span class="subst">$&#123;<span class="built_in">JSON</span>.stringify(result)&#125;</span> in <span class="subst">$&#123;endTime - startTime&#125;</span>ms`</span>);</span><br><span class="line">        <span class="keyword">return</span> result;</span><br><span class="line">    &#125;;</span><br><span class="line">    <span class="keyword">return</span> descriptor;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">class</span> MyClass &#123;</span><br><span class="line">    <span class="meta">@logMethod</span></span><br><span class="line">    myMethod(param: <span class="built_in">string</span>) &#123;</span><br><span class="line">        <span class="built_in">console</span>.log(<span class="string">`Executing myMethod with param: <span class="subst">$&#123;param&#125;</span>`</span>);</span><br><span class="line">        <span class="keyword">return</span> <span class="string">`Hello, <span class="subst">$&#123;param&#125;</span>`</span>;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 使用类和方法</span></span><br><span class="line"><span class="keyword">const</span> myClassInstance = <span class="keyword">new</span> MyClass();</span><br><span class="line">myClassInstance.myMethod(<span class="string">"World"</span>);</span><br></pre></td></tr></table></figure>
+<p><strong>输出解释</strong>：</p>
+<ul>
+<li>调用 <code>myMethod</code> 时，首先输出 <code>Calling method myMethod with args: [&quot;World&quot;]</code>，显示方法调用及传入的参数。</li>
+<li>随后执行 <code>myMethod</code> 的原始逻辑，输出 <code>Executing myMethod with param: World</code>。</li>
+<li>最后输出 <code>Method myMethod returned: &quot;Hello, World&quot; in [X]ms</code>，其中 <code>[X]</code> 是方法执行的时间，展示了性能监控的效果。</li>
+</ul>
+<h4><span id="属性装饰器">属性装饰器</span></h4>
+<p>属性装饰器可修改属性的描述符或添加额外逻辑，常用于属性的访问和修改监控。以下是一个示例：</p>
+<figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 属性装饰器函数，接收两个参数：目标对象和属性名</span></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">logProperty</span>(<span class="params">target: <span class="built_in">any</span>, propertyName: <span class="built_in">string</span></span>) </span>&#123;</span><br><span class="line">    <span class="keyword">let</span> value: <span class="built_in">any</span>;</span><br><span class="line">    <span class="keyword">const</span> getter = <span class="function"><span class="params">()</span> =&gt;</span> &#123;</span><br><span class="line">        <span class="built_in">console</span>.log(<span class="string">`Getting value of <span class="subst">$&#123;propertyName&#125;</span>: <span class="subst">$&#123;value&#125;</span>`</span>);</span><br><span class="line">        <span class="keyword">return</span> value;</span><br><span class="line">    &#125;;</span><br><span class="line">    <span class="keyword">const</span> setter = <span class="function">(<span class="params">newVal: <span class="built_in">any</span></span>) =&gt;</span> &#123;</span><br><span class="line">        <span class="built_in">console</span>.log(<span class="string">`Setting value of <span class="subst">$&#123;propertyName&#125;</span>: <span class="subst">$&#123;newVal&#125;</span>`</span>);</span><br><span class="line">        value = newVal;</span><br><span class="line">    &#125;;</span><br><span class="line">    <span class="built_in">Object</span>.defineProperty(target, propertyName, &#123;</span><br><span class="line">        <span class="keyword">get</span>: getter,</span><br><span class="line">        <span class="keyword">set</span>: setter,</span><br><span class="line">        enumerable: <span class="literal">true</span>,</span><br><span class="line">        configurable: <span class="literal">true</span></span><br><span class="line">    &#125;);</span><br><span class="line">    <span class="keyword">return</span> target;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">class</span> MyClass &#123;</span><br><span class="line">    <span class="meta">@logProperty</span></span><br><span class="line">    myProperty: <span class="built_in">string</span> = <span class="string">"Initial Value"</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 使用类和属性</span></span><br><span class="line"><span class="keyword">const</span> myClassInstance = <span class="keyword">new</span> MyClass();</span><br><span class="line"><span class="built_in">console</span>.log(myClassInstance.myProperty);</span><br><span class="line">myClassInstance.myProperty = <span class="string">"New Value"</span>;</span><br></pre></td></tr></table></figure>
+<p><strong>输出解释</strong>：</p>
+<ul>
+<li>当访问 <code>myProperty</code> 时，输出 <code>Getting value of myProperty: Initial Value</code>。</li>
+<li>当修改 <code>myProperty</code> 的值时，输出 <code>Setting value of myProperty: New Value</code>。</li>
+</ul>
+<h4><span id="参数装饰器">参数装饰器</span></h4>
+<p>参数装饰器可修改参数的行为或添加额外逻辑，通常用于对方法的参数进行操作或验证。以下是一个示例：</p>
+<figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 参数装饰器函数，接收三个参数：目标对象、方法名和参数索引</span></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">logParameter</span>(<span class="params">target: <span class="built_in">any</span>, methodName: <span class="built_in">string</span>, parameterIndex: <span class="built_in">number</span></span>) </span>&#123;</span><br><span class="line">    <span class="built_in">console</span>.log(<span class="string">`Parameter at index <span class="subst">$&#123;parameterIndex&#125;</span> of method <span class="subst">$&#123;methodName&#125;</span> has been logged.`</span>);</span><br><span class="line">    <span class="keyword">return</span> target;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">class</span> MyClass &#123;</span><br><span class="line">    myMethod(<span class="meta">@logParameter</span> param: <span class="built_in">string</span>) &#123;</span><br><span class="line">        <span class="built_in">console</span>.log(<span class="string">`Executing myMethod with param: <span class="subst">$&#123;param&#125;</span>`</span>);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 使用类和方法</span></span><br><span class="line"><span class="keyword">const</span> myClassInstance = <span class="keyword">new</span> MyClass();</span><br><span class="line">myClassInstance.myMethod(<span class="string">"World"</span>);</span><br></pre></td></tr></table></figure>
+<p><strong>输出解释</strong>：</p>
+<ul>
+<li>当调用 <code>myMethod</code> 时，首先输出 <code>Parameter at index 0 of method myMethod has been logged.</code>，表明该参数已被装饰器记录。</li>
+</ul>
+<p>在使用装饰器时，确保在 <code>tsconfig.json</code> 中启用 <code>experimentalDecorators</code> 选项，以确保 TypeScript 编译器的支持：</p>
+<figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">    <span class="attr">"compilerOptions"</span>: &#123;</span><br><span class="line">        <span class="attr">"experimentalDecorators"</span>: <span class="literal">true</span></span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h2><span id="二-reflect-metadata元数据操作的核心库">二、reflect-metadata：元数据操作的核心库</span></h2>
+<h3><span id="概述">概述</span></h3>
+<p><code>reflect-metadata</code> 为 JavaScript 和 TypeScript 提供了元数据反射 API，允许我们为代码元素（类、方法、属性和参数）添加元数据，这些元数据可在运行时进行操作，极大地增强了代码的灵活性和可扩展性。</p>
+<h3><span id="核心功能及元数据解释">核心功能及元数据解释</span></h3>
+<h4><span id="元数据的基本操作添加和获取">元数据的基本操作：添加和获取</span></h4>
+<p>使用 <code>Reflect.defineMetadata</code> 方法添加元数据，使用 <code>Reflect.getMetadata</code> 方法获取元数据。例如：</p>
+<figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> <span class="string">'reflect-metadata'</span>;</span><br><span class="line"></span><br><span class="line"><span class="keyword">class</span> MyClass &#123;</span><br><span class="line">    <span class="meta">@Reflect</span>.metadata(<span class="string">'version'</span>, <span class="string">'1.0'</span>)</span><br><span class="line">    method() &#123;&#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> version = Reflect.getMetadata(<span class="string">'version'</span>, MyClass.prototype, <span class="string">'method'</span>);</span><br><span class="line"><span class="built_in">console</span>.log(version); <span class="comment">// 输出 '1.0'</span></span><br></pre></td></tr></table></figure>
+<p><strong>元数据解释</strong>：</p>
+<ul>
+<li><code>Reflect.metadata('version', '1.0')</code> 为 <code>MyClass</code> 的 <code>method</code> 方法添加了元数据，元数据键是 <code>version</code>，值为 <code>1.0</code>。</li>
+<li><code>Reflect.getMetadata('version', MyClass.prototype, 'method')</code> 从 <code>MyClass.prototype</code> 的 <code>method</code> 方法中获取 <code>version</code> 元数据，输出为 <code>1.0</code>。</li>
+</ul>
+<h4><span id="与自定义装饰器结合使用">与自定义装饰器结合使用</span></h4>
+<p>将 <code>reflect-metadata</code> 与自定义装饰器结合，可以创建功能更强大的装饰器。例如，使用元数据进行属性长度验证：</p>
+<figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> <span class="string">'reflect-metadata'</span>;</span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> MinLength = <span class="function">(<span class="params">minLength: <span class="built_in">number</span></span>) =&gt;</span> (target: <span class="built_in">any</span>, propertyKey: <span class="built_in">string</span>) =&gt; &#123;</span><br><span class="line">    Reflect.defineMetadata(<span class="string">'minLength'</span>, minLength, target, propertyKey);</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="keyword">class</span> MyClass &#123;</span><br><span class="line">    <span class="meta">@MinLength</span>(<span class="number">5</span>)</span><br><span class="line">    name: <span class="built_in">string</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> minLength = Reflect.getMetadata(<span class="string">'minLength'</span>, MyClass.prototype, <span class="string">'name'</span>);</span><br><span class="line"><span class="built_in">console</span>.log(minLength); <span class="comment">// 输出 5</span></span><br></pre></td></tr></table></figure>
+<p><strong>元数据解释</strong>：</p>
+<ul>
+<li><code>MinLength</code> 装饰器使用 <code>Reflect.defineMetadata</code> 为 <code>MyClass</code> 的 <code>name</code> 属性添加了 <code>minLength</code> 元数据，其值为 <code>5</code>，可用于后续的验证逻辑。</li>
+</ul>
+<h4><span id="关于-designparamtypes-和-injectparamtypes">关于 <code>design:paramtypes</code> 和 <code>inject:paramtypes</code></span></h4>
+<ul>
+<li>
+<p><strong><code>design:paramtypes</code></strong>：</p>
+<ul>
+<li>这是 <code>reflect-metadata</code> 中的一个特殊键，用于存储构造函数或方法的参数类型信息。当使用 <code>Reflect.getMetadata('design:paramtypes', target, propertyKey)</code> 时，可以获取目标（类的构造函数或方法）的参数类型数组。在 TypeScript 中，编译器会自动为构造函数和方法生成这些元数据，存储参数的类型信息。</li>
+<li>例如：</li>
+</ul>
+<figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> <span class="string">'reflect-metadata'</span>;</span><br><span class="line"></span><br><span class="line"><span class="keyword">class</span> MyClass &#123;</span><br><span class="line">    <span class="keyword">constructor</span>(<span class="params">param1: <span class="built_in">string</span>, param2: <span class="built_in">number</span></span>) &#123;&#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> paramTypes = Reflect.getMetadata(<span class="string">'design:paramtypes'</span>, MyClass, <span class="string">'constructor'</span>);</span><br><span class="line"><span class="built_in">console</span>.log(paramTypes); <span class="comment">// 输出 [String, Number]</span></span><br></pre></td></tr></table></figure>
+<p>这里，<code>design:paramtypes</code> 存储了 <code>MyClass</code> 构造函数的参数类型信息，便于在运行时进行依赖注入等操作。</p>
+</li>
+</ul>
+<ul>
+<li>
+<p><strong><code>inject:paramtypes</code></strong>：</p>
+<ul>
+<li>这是我们自定义的元数据键，通常用于存储依赖注入的信息。在自定义的依赖注入系统中，我们可以使用这个键来存储哪些参数需要注入依赖以及它们的标识符。</li>
+<li>例如：</li>
+</ul>
+<figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> <span class="string">'reflect-metadata'</span>;</span><br><span class="line"><span class="keyword">import</span> &#123; container &#125; <span class="keyword">from</span> <span class="string">'./container'</span>;</span><br><span class="line"></span><br><span class="line"><span class="keyword">export</span> <span class="function"><span class="keyword">function</span> <span class="title">inject</span>(<span class="params">serviceIdentifier: symbol</span>) </span>&#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="function">(<span class="params">target: <span class="built_in">any</span>, _: <span class="built_in">string</span> | <span class="literal">undefined</span>, parameterIndex: <span class="built_in">number</span></span>) =&gt;</span> &#123;</span><br><span class="line">        <span class="comment">// 获取已存储的注入参数数组，如果不存在则创建新数组</span></span><br><span class="line">        <span class="keyword">const</span> existingParams = Reflect.getMetadata(<span class="string">'inject:paramtypes'</span>, target) || [];</span><br><span class="line">        <span class="keyword">const</span> params = <span class="built_in">Array</span>.isArray(existingParams)? existingParams : [];</span><br><span class="line">        </span><br><span class="line">        <span class="comment">// 在正确的位置存储服务标识符</span></span><br><span class="line">        params[parameterIndex] = &#123; id: serviceIdentifier &#125;;</span><br><span class="line">        </span><br><span class="line">        <span class="comment">// 存储整个参数数组</span></span><br><span class="line">        Reflect.defineMetadata(<span class="string">'inject:paramtypes'</span>, params, target);</span><br><span class="line">    &#125;;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">class</span> MyClass &#123;</span><br><span class="line">    <span class="keyword">constructor</span>(<span class="params"><span class="meta">@inject</span>(Symbol.<span class="keyword">for</span>(<span class="string">'MyService'</span>)) <span class="keyword">private</span> myService: <span class="built_in">any</span></span>) &#123;&#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> injectParamTypes = Reflect.getMetadata(<span class="string">'inject:paramtypes'</span>, MyClass, <span class="string">'constructor'</span>);</span><br><span class="line"><span class="built_in">console</span>.log(injectParamTypes); <span class="comment">// 输出 [&#123; id: Symbol(MyService) &#125;]</span></span><br></pre></td></tr></table></figure>
+<p>这里，<code>inject:paramtypes</code> 存储了 <code>MyClass</code> 构造函数的参数 <code>myService</code> 需要注入的服务标识符，方便在实例化 <code>MyClass</code> 时进行依赖注入。</p>
+</li>
+</ul>
+<h4><span id="应用于依赖注入">应用于依赖注入</span></h4>
+<p>在依赖注入框架中，<code>reflect-metadata</code> 可存储和获取依赖关系信息，以下是一个更详细的示例：</p>
+<figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> <span class="string">'reflect-metadata'</span>;</span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> Inject = <span class="function"><span class="params">()</span> =&gt;</span> (target: <span class="built_in">any</span>, propertyKey: <span class="built_in">string</span>, parameterIndex: <span class="built_in">number</span>) =&gt; &#123;</span><br><span class="line">    <span class="keyword">let</span> metadataKey = <span class="string">`design:paramtypes`</span>;</span><br><span class="line">    <span class="keyword">let</span> paramTypes: <span class="built_in">any</span>[] = Reflect.getMetadata(metadataKey, target, propertyKey) || [];</span><br><span class="line">    paramTypes[parameterIndex] = <span class="string">'MyDependency'</span>;</span><br><span class="line">    Reflect.defineMetadata(metadataKey, paramTypes, target, propertyKey);</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="keyword">class</span> MyClass &#123;</span><br><span class="line">    <span class="keyword">constructor</span>(<span class="params"><span class="meta">@Inject</span>() myDependency: <span class="built_in">any</span></span>) &#123;&#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> paramTypes = Reflect.getMetadata(<span class="string">'design:paramtypes'</span>, MyClass, <span class="string">'constructor'</span>);</span><br><span class="line"><span class="built_in">console</span>.log(paramTypes); <span class="comment">// 输出 ['MyDependency']</span></span><br></pre></td></tr></table></figure>
+<p><strong>解释</strong>：</p>
+<ul>
+<li><code>Inject</code> 装饰器利用 <code>reflect-metadata</code> 存储构造函数参数的依赖信息。</li>
+<li>通过 <code>Reflect.getMetadata</code> 获取 <code>MyClass</code> 构造函数的参数类型信息，这里我们将其修改为 <code>['MyDependency']</code>，用于在运行时注入相应的依赖。</li>
+</ul>
+<h4><span id="运行时类型信息">运行时类型信息</span></h4>
+<p><code>reflect-metadata</code> 可存储和检索类型信息，这对于 TypeScript 尤其重要，因为其类型信息在编译后通常会被擦除：</p>
+<figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> <span class="string">'reflect-metadata'</span>;</span><br><span class="line"></span><br><span class="line"><span class="keyword">class</span> MyClass &#123;</span><br><span class="line">    myMethod(param: <span class="built_in">string</span>) &#123;&#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> paramTypes = Reflect.getMetadata(<span class="string">'design:paramtypes'</span>, MyClass.prototype, <span class="string">'myMethod'</span>);</span><br><span class="line"><span class="built_in">console</span>.log(paramTypes); <span class="comment">// 输出 [String]</span></span><br></pre></td></tr></table></figure>
+<p><strong>解释</strong>：</p>
+<ul>
+<li>这里使用 <code>Reflect.getMetadata</code> 获取 <code>myMethod</code> 的参数类型，输出为 <code>[String]</code>，即使在编译后的 JavaScript 代码中，也能在运行时获取类型信息。</li>
+</ul>
+<h3><span id="使用场景与注意事项">使用场景与注意事项</span></h3>
+<ul>
+<li><strong>使用场景</strong>：
+<ul>
+<li><strong>验证和序列化</strong>：使用元数据为属性添加验证规则，在运行时验证属性的合法性。</li>
+<li><strong>依赖注入</strong>：像 Angular 这样的框架使用 <code>reflect-metadata</code> 存储和管理依赖关系，根据存储的元数据在运行时注入依赖。</li>
+<li><strong>文档生成</strong>：添加描述、参数说明等元数据，根据这些信息生成更完善的文档。</li>
+<li><strong>AOP（面向切面编程）</strong>：使用元数据标记方法或属性，结合装饰器实现切面逻辑。</li>
+</ul>
+</li>
+</ul>
+<ul>
+<li>
+<p><strong>注意事项</strong>：</p>
+<ul>
+<li>在 TypeScript 中使用 <code>reflect-metadata</code> 时，需要启用 <code>experimentalDecorators</code> 和 <code>emitDecoratorMetadata</code> 选项：</li>
+</ul>
+<figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">  <span class="attr">"compilerOptions"</span>: &#123;</span><br><span class="line">    <span class="attr">"experimentalDecorators"</span>: <span class="literal">true</span>,</span><br><span class="line">    <span class="attr">"emitDecoratorMetadata"</span>: <span class="literal">true</span></span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<ul>
+<li>确保在代码中导入 <code>reflect-metadata</code> 库，它通过全局的 <code>Reflect</code> 对象提供 API。</li>
+</ul>
+</li>
+</ul>
+<h2><span id="三-ioc控制反转实现松耦合的设计原则">三、IOC（控制反转）：实现松耦合的设计原则</span></h2>
+<h3><span id="概念与重要性">概念与重要性</span></h3>
+<p>IOC（Inversion of Control）是一项重要的软件设计原则，其核心是将对象的创建以及对象间的依赖关系管理从应用程序代码中分离出来，交由外部容器负责。这有助于降低对象之间的耦合度，使代码更易于维护、扩展和测试。</p>
+<h4><span id="代码结构">代码结构</span></h4>
+<ul>
+<li>
+<p><strong><code>container.ts</code></strong>：</p>
+<figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> <span class="string">'reflect-metadata'</span>;</span><br><span class="line"></span><br><span class="line"><span class="keyword">export</span> <span class="keyword">class</span> Container &#123;</span><br><span class="line">  <span class="keyword">private</span> <span class="keyword">static</span> instance: Container;</span><br><span class="line">  <span class="keyword">private</span> services: Map&lt;symbol, <span class="built_in">any</span>&gt;;</span><br><span class="line"></span><br><span class="line">  <span class="keyword">private</span> <span class="keyword">constructor</span>(<span class="params"></span>) &#123;</span><br><span class="line">    <span class="keyword">this</span>.services = <span class="keyword">new</span> Map();</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="keyword">static</span> getInstance(): Container &#123;</span><br><span class="line">    <span class="keyword">if</span> (!Container.instance) &#123;</span><br><span class="line">      Container.instance = <span class="keyword">new</span> Container();</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> Container.instance;</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  bind(identifier: symbol, instance: <span class="built_in">any</span>) &#123;</span><br><span class="line">    <span class="keyword">this</span>.services.set(identifier, instance);</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="keyword">get</span>(identifier: symbol): <span class="built_in">any</span> &#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="keyword">this</span>.services.get(identifier);</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">export</span> <span class="keyword">const</span> container = Container.getInstance();</span><br></pre></td></tr></table></figure>
+<p><strong>输出解释</strong>：</p>
+<ul>
+<li><code>Container</code> 类是一个单例类，用于存储服务。<code>bind</code> 方法将服务与唯一标识符绑定，<code>get</code> 方法根据标识符获取服务。</li>
+</ul>
+</li>
+</ul>
+<ul>
+<li>
+<p><strong><code>decorators.ts</code></strong>：</p>
+<figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> <span class="string">'reflect-metadata'</span>;</span><br><span class="line"><span class="keyword">import</span> &#123; container &#125; <span class="keyword">from</span> <span class="string">'./container'</span>;</span><br><span class="line"></span><br><span class="line"><span class="keyword">export</span> <span class="keyword">const</span> TYPE = &#123;</span><br><span class="line">  userService: Symbol.for(<span class="string">'UserService'</span>),</span><br><span class="line">  logService: Symbol.for(<span class="string">'LogService'</span>),</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="keyword">export</span> <span class="function"><span class="keyword">function</span> <span class="title">inject</span>(<span class="params">serviceIdentifier: symbol</span>) </span>&#123;</span><br><span class="line">  <span class="keyword">return</span> <span class="function">(<span class="params">target: <span class="built_in">any</span>, _: <span class="built_in">string</span> | <span class="literal">undefined</span>, parameterIndex: <span class="built_in">number</span></span>) =&gt;</span> &#123;</span><br><span class="line">    <span class="comment">// 获取已存储的注入参数数组，如果不存在则创建新数组</span></span><br><span class="line">    <span class="keyword">const</span> existingParams = Reflect.getMetadata(<span class="string">'inject:paramtypes'</span>, target) || [];</span><br><span class="line">    <span class="keyword">const</span> params = <span class="built_in">Array</span>.isArray(existingParams)? existingParams : [];</span><br><span class="line">    </span><br><span class="line">    <span class="comment">// 在正确的位置存储服务标识符</span></span><br><span class="line">    params[parameterIndex] = &#123; id: serviceIdentifier &#125;;</span><br><span class="line">    </span><br><span class="line">    <span class="comment">// 存储整个参数数组</span></span><br><span class="line">    Reflect.defineMetadata(<span class="string">'inject:paramtypes'</span>, params, target);</span><br><span class="line">  &#125;;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">export</span> <span class="function"><span class="keyword">function</span> <span class="title">service</span>(<span class="params">identifier: symbol</span>) </span>&#123;</span><br><span class="line">  <span class="keyword">return</span> <span class="function">(<span class="params">target: <span class="built_in">any</span></span>) =&gt;</span> &#123;</span><br><span class="line">    <span class="comment">// 获取注入的参数信息数组</span></span><br><span class="line">    <span class="keyword">const</span> params = Reflect.getMetadata(<span class="string">'inject:paramtypes'</span>, target) || [];</span><br><span class="line">    <span class="built_in">console</span>.log(<span class="string">'service--&gt;params'</span>, params);</span><br><span class="line">    </span><br><span class="line">    <span class="comment">// 创建实例并注入依赖</span></span><br><span class="line">    <span class="keyword">const</span> dependencies = params.map(<span class="function">(<span class="params">param: <span class="built_in">any</span></span>) =&gt;</span> </span><br><span class="line">      param? container.get(param.id) : <span class="literal">undefined</span></span><br><span class="line">    );</span><br><span class="line">    </span><br><span class="line">    <span class="keyword">const</span> instance = <span class="keyword">new</span> target(...dependencies);</span><br><span class="line">    </span><br><span class="line">    <span class="comment">// 注册到容器</span></span><br><span class="line">    container.bind(identifier, instance);</span><br><span class="line">  &#125;;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p><strong>输出解释</strong>：</p>
+<ul>
+<li><code>inject</code> 装饰器存储依赖注入的元数据，<code>service</code> 装饰器根据存储的元数据进行依赖注入并将实例绑定到容器。</li>
+</ul>
+</li>
+</ul>
+<ul>
+<li>
+<p><strong><code>services.ts</code></strong>：</p>
+<figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> &#123; service, inject, TYPE &#125; <span class="keyword">from</span> <span class="string">"./decorators"</span>;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 日志服务接口</span></span><br><span class="line"><span class="keyword">interface</span> ILogService &#123;</span><br><span class="line">  log(message: <span class="built_in">string</span>): <span class="built_in">void</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 日志服务实现</span></span><br><span class="line"><span class="meta">@service</span>(TYPE.logService)</span><br><span class="line"><span class="keyword">class</span> LogService <span class="keyword">implements</span> ILogService &#123;</span><br><span class="line">  log(message: <span class="built_in">string</span>) &#123;</span><br><span class="line">    <span class="built_in">console</span>.log(<span class="string">`[Log]: <span class="subst">$&#123;message&#125;</span>`</span>);</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 用户服务接口</span></span><br><span class="line"><span class="keyword">interface</span> IUserService &#123;</span><br><span class="line">  createUser(name: <span class="built_in">string</span>): <span class="built_in">void</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 用户服务实现</span></span><br><span class="line"><span class="meta">@service</span>(TYPE.userService)</span><br><span class="line"><span class="keyword">class</span> UserService <span class="keyword">implements</span> IUserService &#123;</span><br><span class="line">  <span class="keyword">constructor</span>(<span class="params"><span class="meta">@inject</span>(TYPE.logService) <span class="keyword">private</span> logService: ILogService</span>) &#123;&#125;</span><br><span class="line"></span><br><span class="line">  createUser(name: <span class="built_in">string</span>) &#123;</span><br><span class="line">    <span class="keyword">this</span>.logService.log(<span class="string">`Creating user: <span class="subst">$&#123;name&#125;</span>`</span>);</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p><strong>输出解释</strong>：</p>
+<ul>
+<li><code>LogService</code> 和 <code>UserService</code> 分别实现了日志和用户服务，使用装饰器进行服务注册和依赖注入。</li>
+</ul>
+</li>
+</ul>
+<ul>
+<li>
+<p><strong><code>index.ts</code></strong>：</p>
+<figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> <span class="string">"reflect-metadata"</span>;</span><br><span class="line"><span class="keyword">import</span> &#123; container &#125; <span class="keyword">from</span> <span class="string">"./container"</span>;</span><br><span class="line"><span class="keyword">import</span> <span class="string">"./services"</span>; <span class="comment">// 确保服务被装饰器处理</span></span><br><span class="line"><span class="keyword">import</span> &#123; TYPE &#125; <span class="keyword">from</span> <span class="string">"./decorators"</span>;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 获取服务实例</span></span><br><span class="line"><span class="keyword">const</span> userService = container.get(TYPE.userService);</span><br><span class="line">userService.createUser(<span class="string">"John"</span>); <span class="comment">// 输出: [Log]: Creating user: John</span></span><br></pre></td></tr></table></figure>
+<p><strong>输出解释</strong>：</p>
+<ul>
+<li>从容器中获取 <code>UserService</code> 并调用 <code>createUser</code> 方法，输出 <code>[Log]: Creating user: John</code>，展示了服务的调用和依赖注入的效果。</li>
+</ul>
+</li>
+</ul>
+<h3><span id="解释">解释</span></h3>
+<ul>
+<li>在这个综合示例中，<code>reflect-metadata</code> 库和自定义装饰器共同实现了更复杂的 IOC 和 DI 机制。</li>
+<li><code>container.ts</code> 中的 <code>Container</code> 类是核心容器，管理服务的存储和获取。</li>
+<li><code>decorators.ts</code> 的 <code>inject</code> 装饰器利用 <code>reflect-metadata</code> 存储依赖注入信息，<code>service</code> 装饰器在类实例化时处理依赖注入并绑定实例到容器。</li>
+<li><code>services.ts</code> 中的服务实现类通过装饰器实现依赖注入和服务注册。</li>
+<li>最后，<code>index.ts</code> 展示了如何使用容器获取服务并调用其方法，实现服务间的协作。</li>
+</ul>
+<p>通过深入探讨装饰器、<code>reflect-metadata</code> 和 IOC，我们可以看到它们在软件开发中的强大功能和重要性。它们有助于构建更灵活、可维护和可测试的软件系统，在不同的开发场景中发挥着关键作用。希望本文能帮助你更好地理解这些技术，并在你的项目中灵活运用它们。</p>
+
+                
+
+                <hr>
+                <!-- Pager -->
+                <ul class="pager">
+                    
+                        <li class="previous">
+                            <a href="/jtblogs/article/从-MonoRepo-到私仓-Verdaccio/" data-toggle="tooltip" data-placement="top" title="从MonoRepo到私仓Verdaccio：实战指南">&larr; Previous Post</a>
+                        </li>
+                    
+                    
+                        <li class="next">
+                            <a href="/jtblogs/article/前端模块化全解析：从-CommonJS-到-Module-Federation/" data-toggle="tooltip" data-placement="top" title="前端模块化全解析：从 CommonJS 到 Module Federation">Next Post &rarr;</a>
+                        </li>
+                    
+                </ul>
+
+                <br>
+
+                <!--打赏-->
+                
+                <!--打赏-->
+
+                <br>
+                <!--分享-->
+                
+                    <div class="social-share"  data-wechat-qrcode-helper="" align="center"></div>
+                    <!--  css & js -->
+                    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/social-share.js/1.0.16/css/share.min.css">
+                    <script src="https://cdnjs.cloudflare.com/ajax/libs/social-share.js/1.0.16/js/social-share.min.js"></script>
+                
+                <!--分享-->
+                <br>                       
+                
+                <!-- require APlayer -->
+                
+
+                <!-- duoshuo Share start -->
+                
+                <!-- 多说 Share end-->
+
+                <!-- 多说评论框 start -->
+                
+                <!-- 多说评论框 end -->
+
+                <!-- disqus comment start -->
+                
+                <!-- disqus comment end -->
+
+                
+
+            </div>
+            
+            <!-- Tabe of Content -->
+            <!-- Table of Contents -->
+
+  
+    <style>
+      span.toc-nav-number{
+        display: none
+      }
+    </style>
+  
+    
+      <aside id="sidebar">
+        <div id="toc" class="toc-article">
+        <strong class="toc-title">Contents</strong>
+        
+          <ol class="toc-nav"><li class="toc-nav-item toc-nav-level-1"><a class="toc-nav-link" href="#null"><span class="toc-nav-number">1.</span> <span class="toc-nav-text">深入理解装饰器、reflect-metadata 与 IOC 控制反转</span></a><ol class="toc-nav-child"><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#null"><span class="toc-nav-number">1.1.</span> <span class="toc-nav-text">一、装饰器：提升代码功能的强大工具</span></a><ol class="toc-nav-child"><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#null"><span class="toc-nav-number">1.1.1.</span> <span class="toc-nav-text">装饰器的基础概念</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#null"><span class="toc-nav-number">1.1.2.</span> <span class="toc-nav-text">装饰器的分类及其输出和行为</span></a><ol class="toc-nav-child"><li class="toc-nav-item toc-nav-level-4"><a class="toc-nav-link" href="#null"><span class="toc-nav-number">1.1.2.1.</span> <span class="toc-nav-text">类装饰器</span></a></li><li class="toc-nav-item toc-nav-level-4"><a class="toc-nav-link" href="#null"><span class="toc-nav-number">1.1.2.2.</span> <span class="toc-nav-text">方法装饰器</span></a></li><li class="toc-nav-item toc-nav-level-4"><a class="toc-nav-link" href="#null"><span class="toc-nav-number">1.1.2.3.</span> <span class="toc-nav-text">属性装饰器</span></a></li><li class="toc-nav-item toc-nav-level-4"><a class="toc-nav-link" href="#null"><span class="toc-nav-number">1.1.2.4.</span> <span class="toc-nav-text">参数装饰器</span></a></li></ol></li></ol></li><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#null"><span class="toc-nav-number">1.2.</span> <span class="toc-nav-text">二、reflect-metadata：元数据操作的核心库</span></a><ol class="toc-nav-child"><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#null"><span class="toc-nav-number">1.2.1.</span> <span class="toc-nav-text">概述</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#null"><span class="toc-nav-number">1.2.2.</span> <span class="toc-nav-text">核心功能及元数据解释</span></a><ol class="toc-nav-child"><li class="toc-nav-item toc-nav-level-4"><a class="toc-nav-link" href="#null"><span class="toc-nav-number">1.2.2.1.</span> <span class="toc-nav-text">元数据的基本操作：添加和获取</span></a></li><li class="toc-nav-item toc-nav-level-4"><a class="toc-nav-link" href="#null"><span class="toc-nav-number">1.2.2.2.</span> <span class="toc-nav-text">与自定义装饰器结合使用</span></a></li><li class="toc-nav-item toc-nav-level-4"><a class="toc-nav-link" href="#null"><span class="toc-nav-number">1.2.2.3.</span> <span class="toc-nav-text">关于 design:paramtypes 和 inject:paramtypes</span></a></li><li class="toc-nav-item toc-nav-level-4"><a class="toc-nav-link" href="#null"><span class="toc-nav-number">1.2.2.4.</span> <span class="toc-nav-text">应用于依赖注入</span></a></li><li class="toc-nav-item toc-nav-level-4"><a class="toc-nav-link" href="#null"><span class="toc-nav-number">1.2.2.5.</span> <span class="toc-nav-text">运行时类型信息</span></a></li></ol></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#null"><span class="toc-nav-number">1.2.3.</span> <span class="toc-nav-text">使用场景与注意事项</span></a></li></ol></li><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#null"><span class="toc-nav-number">1.3.</span> <span class="toc-nav-text">三、IOC（控制反转）：实现松耦合的设计原则</span></a><ol class="toc-nav-child"><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#null"><span class="toc-nav-number">1.3.1.</span> <span class="toc-nav-text">概念与重要性</span></a><ol class="toc-nav-child"><li class="toc-nav-item toc-nav-level-4"><a class="toc-nav-link" href="#null"><span class="toc-nav-number">1.3.1.1.</span> <span class="toc-nav-text">代码结构</span></a></li></ol></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#null"><span class="toc-nav-number">1.3.2.</span> <span class="toc-nav-text">解释</span></a></li></ol></li></ol></li></ol>
+        
+        </div>
+      </aside>
+    
+
+                
+            <!-- Sidebar Container -->
+            <div class="
+                col-lg-8 col-lg-offset-2
+                col-md-10 col-md-offset-1
+                sidebar-container">
+
+                <!-- Featured Tags -->
+                
+                <section>
+                    <!-- no hr -->
+                    <h5><a href="/jtblogs/tags/">FEATURED TAGS</a></h5>
+                    <div class="tags">
+                       
+                          <a class="tag" href="/jtblogs/tags/#nodejs" title="nodejs">nodejs</a>
+                        
+                    </div>
+                </section>
+                
+
+                <!-- Friends Blog -->
+                
+                <hr>
+                <h5>FRIENDS</h5>
+                <ul class="list-inline">
+
+                    
+                </ul>
+                
+            </div>
+        </div>
+    </div>
+</article>
+
+
+
+
+
+
+
+
+<!-- async load function -->
+<script>
+    function async(u, c) {
+      var d = document, t = 'script',
+          o = d.createElement(t),
+          s = d.getElementsByTagName(t)[0];
+      o.src = u;
+      if (c) { o.addEventListener('load', function (e) { c(null, e); }, false); }
+      s.parentNode.insertBefore(o, s);
+    }
+</script>
+<!-- anchor-js, Doc:http://bryanbraun.github.io/anchorjs/ -->
+<script>
+    async("https://cdn.bootcss.com/anchor-js/1.1.1/anchor.min.js",function(){
+        anchors.options = {
+          visible: 'hover',
+          placement: 'left',
+          icon: 'ℬ'
+        };
+        anchors.add().remove('.intro-header h1').remove('.subheading').remove('.sidebar-container h5');
+    })
+</script>
+<style>
+    /* place left on bigger screen */
+    @media all and (min-width: 800px) {
+        .anchorjs-link{
+            position: absolute;
+            left: -0.75em;
+            font-size: 1.1em;
+            margin-top : -0.1em;
+        }
+    }
+</style>
+
+
+<!-- chrome Firefox 中文锚点定位失效-->
+<script src="https://cdn.bootcss.com/jquery/3.3.1/jquery.js"></script>
+<!-- smooth scroll behavior polyfill  -->
+<script type="text/javascript" src="/js/smoothscroll.js"></script>
+<script>
+        $('#toc').on('click','a',function(a){
+            // var isChrome = window.navigator.userAgent.indexOf("Chrome") !== -1;
+            // console.log(window.navigator.userAgent,isChrome)
+                // if(isChrome) {
+                    // console.log(a.currentTarget.outerHTML);
+                    // console.log($(a.currentTarget).attr("href"));
+                    //跳转到指定锚点
+                    // document.getElementById(a.target.innerText.toLowerCase()).scrollIntoView(true);
+                    document.getElementById($(a.currentTarget).attr("href").replace("#","")).scrollIntoView({behavior: 'smooth' });
+                // }
+        })  
+</script>
+
+
+    <!-- Footer -->
+    <!-- Footer -->
+<footer>
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+                <ul class="list-inline text-center">
+                    
+                            
+                                    
+
+                                            
+
+                                                    
+
+                                                            
+                                                                <li>
+                                                                    <a target="_blank"
+                                                                        href="https://github.com/taojiangcb">
+                                                                        <span class="fa-stack fa-lg">
+                                                                            <i class="fa fa-circle fa-stack-2x"></i>
+                                                                            <i
+                                                                                class="fa fa-github fa-stack-1x fa-inverse"></i>
+                                                                        </span>
+                                                                    </a>
+                                                                </li>
+                                                                
+
+                                                                    
+
+                </ul>
+
+                <p class="copyright text-muted">
+                    Copyright &copy; 江涛
+                        2025
+                            <br>
+                            Theme by <a href="http://beantech.org">BeanTech</a>
+                            <span style="display: inline-block; margin: 0 5px;">
+                                <i class="fa fa-heart"></i>
+                            </span>
+                            re-Ported by <a href="https://taojiangcb.github.io/jtblogs">江涛</a> |
+                            <iframe style="margin-left: 2px; margin-bottom:-5px;" frameborder="0" scrolling="0"
+                                width="91px" height="20px"
+                                src="https://ghbtns.com/github-btn.html?user=taojiangcb&repo=jtblogs&type=star&count=true">
+                            </iframe>
+                </p>
+                <p class="copyright text-muted" style="margin:0">
+                    <script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+                    <span id="busuanzi_container_site_pv">
+                        总访问量<span id="busuanzi_value_site_pv"></span>次
+                    </span>
+                    <span id="busuanzi_container_site_uv">
+                        总访客数<span id="busuanzi_value_site_uv"></span>人
+                    </span>
+                </p>
+            </div>
+        </div>
+    </div>
+</footer>
+
+<!-- jQuery -->
+<script src="/jtblogs/js/jquery.min.js"></script>
+
+    <!-- Bootstrap Core JavaScript -->
+    <script src="/jtblogs/js/bootstrap.min.js"></script>
+
+        <!-- Custom Theme JavaScript -->
+        <script src="/jtblogs/js/hux-blog.min.js"></script>
+
+
+            <!-- async load function -->
+            <script>
+                function async(u, c) {
+                    var d = document, t = 'script',
+                        o = d.createElement(t),
+                        s = d.getElementsByTagName(t)[0];
+                    o.src = u;
+                    if (c) { o.addEventListener('load', function (e) { c(null, e); }, false); }
+                    s.parentNode.insertBefore(o, s);
+                }
+            </script>
+
+            <!-- 
+     Because of the native support for backtick-style fenced code blocks 
+     right within the Markdown is landed in Github Pages, 
+     From V1.6, There is no need for Highlight.js, 
+     so Huxblog drops it officially.
+
+     - https://github.com/blog/2100-github-pages-now-faster-and-simpler-with-jekyll-3-0  
+     - https://help.github.com/articles/creating-and-highlighting-code-blocks/    
+-->
+            <!--
+    <script>
+        async("http://cdn.bootcss.com/highlight.js/8.6/highlight.min.js", function(){
+            hljs.initHighlightingOnLoad();
+        })
+    </script>
+    <link href="http://cdn.bootcss.com/highlight.js/8.6/styles/github.min.css" rel="stylesheet">
+-->
+
+
+            <!-- jquery.tagcloud.js -->
+            <script>
+                // only load tagcloud.js in tag.html
+                if ($('#tag_cloud').length !== 0) {
+                    async("https://taojiangcb.github.io/jtblogs/js/jquery.tagcloud.js", function () {
+                        $.fn.tagcloud.defaults = {
+                            //size: {start: 1, end: 1, unit: 'em'},
+                            color: { start: '#bbbbee', end: '#0085a1' },
+                        };
+                        $('#tag_cloud a').tagcloud();
+                    })
+                }
+            </script>
+
+            <!--fastClick.js -->
+            <script>
+                async("https://cdn.bootcss.com/fastclick/1.0.6/fastclick.min.js", function () {
+                    var $nav = document.querySelector("nav");
+                    if ($nav) FastClick.attach($nav);
+                })
+            </script>
+
+
+            <!-- Google Analytics -->
+
+            
+                <script>
+                    // dynamic User by Hux
+                    var _gaId = 'UA-XXXXXXXX-X';
+                    var _gaDomain = 'yoursite';
+
+                    // Originial
+                    (function (i, s, o, g, r, a, m) {
+                        i['GoogleAnalyticsObject'] = r; i[r] = i[r] || function () {
+                            (i[r].q = i[r].q || []).push(arguments)
+                        }, i[r].l = 1 * new Date(); a = s.createElement(o),
+                            m = s.getElementsByTagName(o)[0]; a.async = 1; a.src = g; m.parentNode.insertBefore(a, m)
+                    })(window, document, 'script', '//www.google-analytics.com/analytics.js', 'ga');
+
+                    ga('create', _gaId, _gaDomain);
+                    ga('send', 'pageview');
+                </script>
+
+                
+
+
+                    <!-- Baidu Tongji -->
+                    
+                        <script>
+                            // dynamic User by Hux
+                            var _baId = 'xxx';
+
+                            // Originial
+                            var _hmt = _hmt || [];
+                            (function () {
+                                var hm = document.createElement("script");
+                                hm.src = "//hm.baidu.com/hm.js?" + _baId;
+                                var s = document.getElementsByTagName("script")[0];
+                                s.parentNode.insertBefore(hm, s);
+                            })();
+                        </script>
+                        
+
+
+	<a id="rocket" href="#top" class=""></a>
+	<script type="text/javascript" src="/jtblogs/js/totop.js?v=1.0.0" async=""></script>
+    <script type="text/javascript" src="/jtblogs/js/toc.js?v=1.0.0" async=""></script>
+<!-- Image to hack wechat -->
+<img src="https://taojiangcb.github.io/jtblogs/img/icon_wechat.png" width="0" height="0" />
+<!-- Migrate from head to bottom, no longer block render and still work -->
+
+</body>
+
+</html>

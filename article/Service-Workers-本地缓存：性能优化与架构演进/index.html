@@ -1,0 +1,692 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<!-- Head tag -->
+<head><meta name="generator" content="Hexo 3.9.0">
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="google-site-verification" content="xBT4GhYoi5qRD5tr338pgPM5OWHHIDR6mNg1a3euekI">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content>
+    <meta name="keyword" content>
+    <link rel="shortcut icon" href="/jtblogs/favicon.ico">
+    <!-- Place this tag in your head or just before your close body tag. -->
+    <script async defer src="https://buttons.github.io/buttons.js"></script>
+    <title>
+        
+          Service Workers 本地缓存：性能优化与架构演进 - 江涛 | Blog
+        
+    </title>
+
+    <link rel="canonical" href="https://taojiangcb.github.io/jtblogs/jtblogs/article/Service-Workers-本地缓存：性能优化与架构演进/">
+
+    <!-- Bootstrap Core CSS -->
+    <link rel="stylesheet" href="/jtblogs/css/bootstrap.min.css">
+
+    <!-- Custom CSS --> 
+    <link rel="stylesheet" href="/jtblogs/css/beantech.min.css">
+
+    <link rel="stylesheet" href="/jtblogs/css/donate.css">
+    
+    <!-- Pygments Highlight CSS -->
+    <link rel="stylesheet" href="/jtblogs/css/highlight.css">
+
+    <link rel="stylesheet" href="/jtblogs/css/widget.css">
+
+    <link rel="stylesheet" href="/jtblogs/css/rocket.css">
+
+    <link rel="stylesheet" href="/jtblogs/css/signature.css">
+
+    <link rel="stylesheet" href="/jtblogs/css/toc.css">
+
+    <!-- Custom Fonts -->
+    <!-- <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css" rel="stylesheet" type="text/css"> -->
+    <!-- Hux change font-awesome CDN to qiniu -->
+    <link href="https://cdn.staticfile.org/font-awesome/4.5.0/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+
+
+    <!-- Hux Delete, sad but pending in China
+    <link href='http://fonts.googleapis.com/css?family=Lora:400,700,400italic,700italic' rel='stylesheet' type='text/css'>
+    <link href='http://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800' rel='stylesheet' type='text/
+    css'>
+    -->
+
+
+    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+        <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+        <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+    <![endif]-->
+
+    <!-- ga & ba script hoook -->
+    <script></script>
+</head>
+
+
+<!-- hack iOS CSS :active style -->
+<body ontouchstart="">
+	<!-- Modified by Yu-Hsuan Yen -->
+<!-- Post Header -->
+<style type="text/css">
+    header.intro-header{
+        
+            background-image: url('/jtblogs/img/article_header/article_bg.jpg')
+            /*post*/
+        
+    }
+    
+</style>
+
+<header class="intro-header" >
+    <!-- Signature -->
+    <div id="signature">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+                
+                    <div class="post-heading">
+                        <div class="tags">
+                            
+                              <a class="tag" href="/jtblogs/tags/#nodejs" title="nodejs">nodejs</a>
+                            
+                        </div>
+                        <h1>Service Workers 本地缓存：性能优化与架构演进</h1>
+                        <h2 class="subheading"></h2>
+                        <span class="meta">
+                            Posted by 江涛 on
+                            2025-01-04
+                        </span>
+                    </div>
+                
+
+
+                </div>
+            </div>
+        </div>
+    </div>
+</header>
+
+	
+    <!-- Navigation -->
+<nav class="navbar navbar-default navbar-custom navbar-fixed-top">
+    <div class="container-fluid">
+        <!-- Brand and toggle get grouped for better mobile display -->
+        <div class="navbar-header page-scroll">
+            <button type="button" class="navbar-toggle">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href="/jtblogs/">江涛</a>
+        </div>
+
+        <!-- Collect the nav links, forms, and other content for toggling -->
+        <!-- Known Issue, found by Hux:
+            <nav>'s height woule be hold on by its content.
+            so, when navbar scale out, the <nav> will cover tags.
+            also mask any touch event of tags, unfortunately.
+        -->
+        <div id="huxblog_navbar">
+            <div class="navbar-collapse">
+                <ul class="nav navbar-nav navbar-right">
+                    <li>
+                        <a href="/jtblogs/">Home</a>
+                    </li>
+
+                    
+
+                        
+                    
+
+                        
+                    
+
+                        
+                    
+
+                        
+                    
+
+                        
+                    
+
+                        
+                    
+
+                        
+                        <li>
+                            <a href="/jtblogs/tags/">Tags</a>
+                        </li>
+                        
+                    
+
+                        
+                        <li>
+                            <a href="/jtblogs/about/">About</a>
+                        </li>
+                        
+                    
+
+                        
+                        <li>
+                            <a href="/jtblogs/archive/">Archives</a>
+                        </li>
+                        
+                    
+                    
+                </ul>
+            </div>
+        </div>
+        <!-- /.navbar-collapse -->
+    </div>
+    <!-- /.container -->
+</nav>
+<script>
+    // Drop Bootstarp low-performance Navbar
+    // Use customize navbar with high-quality material design animation
+    // in high-perf jank-free CSS3 implementation
+    var $body   = document.body;
+    var $toggle = document.querySelector('.navbar-toggle');
+    var $navbar = document.querySelector('#huxblog_navbar');
+    var $collapse = document.querySelector('.navbar-collapse');
+
+    $toggle.addEventListener('click', handleMagic)
+    function handleMagic(e){
+        if ($navbar.className.indexOf('in') > 0) {
+        // CLOSE
+            $navbar.className = " ";
+            // wait until animation end.
+            setTimeout(function(){
+                // prevent frequently toggle
+                if($navbar.className.indexOf('in') < 0) {
+                    $collapse.style.height = "0px"
+                }
+            },400)
+        }else{
+        // OPEN
+            $collapse.style.height = "auto"
+            $navbar.className += " in";
+        }
+    }
+</script>
+
+
+    <!-- Main Content -->
+    <!-- Modify by Yu-Hsuan Yen -->
+
+<!-- Post Content -->
+<article>
+    <div class="container">
+        <div class="row">
+
+            <!-- Post Container -->
+            <div class="
+                col-lg-8 col-lg-offset-2
+                col-md-10 col-md-offset-1
+                post-container">
+
+                <h1><span id="service-workers-本地缓存性能优化与架构演进">Service Workers 本地缓存：性能优化与架构演进</span></h1>
+<h2><span id="一-本地缓存的重要性与价值">一、本地缓存的重要性与价值</span></h2>
+<p>在现代网络环境下，网络的不稳定和高延迟成为影响用户体验的关键因素。本地缓存作为一种重要的技术手段，能够有效提升应用的性能和用户体验。其核心价值在于将应用所需的资源存储在本地，减少对网络的依赖，从而实现快速响应。</p>
+<p><img src="image.png" alt="alt text"></p>
+<h3><span id="一提升用户体验">（一）提升用户体验</span></h3>
+<h4><span id="1-减少等待时间">1. <strong>减少等待时间</strong></span></h4>
+<p>在网络状况不佳或离线状态下，本地缓存能够快速响应用户请求。例如，一个包含大量图片和文字的网页，在没有网络连接时，从本地缓存读取数据，加载速度比从网络获取快得多。据统计，在网络不稳定的情况下，本地缓存可以将页面加载时间缩短50%以上。</p>
+<h4><span id="2-无缝浏览">2 <strong>无缝浏览</strong></span></h4>
+<p>用户可以在离线状态下继续浏览应用，无需担心网络中断。比如在地铁、电梯等信号不好的地方，应用依靠本地缓存能够正常展示内容，为用户提供连续的浏览体验。</p>
+<h3><span id="二提高应用性能">（二）提高应用性能</span></h3>
+<h4><span id="1-降低网络请求次数">1 <strong>降低网络请求次数</strong></span></h4>
+<p>本地缓存可以减少对服务器的网络请求。例如，当用户多次访问同一页面时，本地缓存能够直接提供该页面的资源，无需再次向服务器请求。根据实际测试，在一个具有频繁访问需求的应用中，本地缓存可以将网络请求次数减少80%以上。</p>
+<h4><span id="2-加快页面加载速度">2 <strong>加快页面加载速度</strong></span></h4>
+<p>通过缓存资源，应用能够更快地加载页面。以一个电商应用为例，页面加载速度的提升可以显著提高用户购物的效率。研究表明，页面加载速度每提高1秒，用户的购物转化率就会提高10%以上。</p>
+<h2><span id="二-本地缓存相关指标数据">二、本地缓存相关指标数据</span></h2>
+<h3><span id="一缓存命中率">（一）缓存命中率</span></h3>
+<p>缓存命中率是指缓存中成功匹配到请求的次数与总请求次数的比例。例如，一个应用在一段时间内共发起100次请求，其中有80次请求成功从缓存中获取到资源，那么缓存命中率为80%。较高的缓存命中率意味着应用能够更有效地利用本地缓存，减少网络请求。</p>
+<h3><span id="二缓存容量">（二）缓存容量</span></h3>
+<p>缓存容量是指缓存中存储的资源大小。合理的缓存容量可以确保应用能够缓存足够的资源。例如，一个应用的缓存容量为100MB，能够满足其基本的离线存储需求。在实际应用中，缓存容量需要根据应用的类型和用户需求进行调整。</p>
+<h3><span id="三缓存过期时间">（三）缓存过期时间</span></h3>
+<p>缓存过期时间是指缓存中存储的资源在多长时间后会失效。例如，一个应用的缓存过期时间为1天，那么在1天内缓存中的资源是有效的。合理的缓存过期时间可以保证缓存中的资源始终保持最新状态。</p>
+<p>非常抱歉没有达到你的预期呀，以下是一篇结合你之前的要求，更详细且更靠谱地阐述从Service Workers一步步发展到Workbox Webpack的过程，包括中间遇到的问题等内容的文章，希望这次能让你满意。</p>
+<h2><span id="三-service-workers-崭露头角本地缓存的新起点">三、Service Workers 崭露头角——本地缓存的新起点</span></h2>
+<p>随着互联网应用的日益复杂以及用户对离线体验需求的增加，传统的网页应用在面对网络不稳定或离线场景时显得力不从心。Service Workers 应运而生，它作为一种运行在浏览器后台的脚本，为解决这些问题开启了新的篇章。</p>
+<h3><span id="一背景起源">（一）<strong>背景起源</strong></span></h3>
+<h4><span id="1-应对网络挑战">1. 应对网络挑战</span></h4>
+<p>随着互联网应用的不断发展，网络环境的不确定性成为一个突出的问题。用户在使用网页应用时，经常会遇到网络延迟、间歇性断网等情况。例如，在移动网络环境下，信号的强弱变化会导致页面加载缓慢甚至无法加载。Service Workers的出现就是为了应对这些网络挑战，提供一种在浏览器后台运行的机制，让应用能够更好地处理网络请求，增强在不稳定网络环境下的鲁棒性。</p>
+<h4><span id="2离线应用需求的推动">2.离线应用需求的推动</span></h4>
+<p>用户对于能够在离线状态下使用应用的需求日益增长。比如，用户可能希望在乘坐地铁、飞机等没有网络连接的场景下，仍然能够查看之前浏览过的文档、新闻或者进行一些简单的游戏操作。Service Workers提供了实现离线应用的基础技术支持，它可以拦截网络请求并缓存资源，使得应用在离线时能够从本地缓存中获取数据，从而提供基本的功能。</p>
+<h4><span id="3-渐进式web应用pwa的兴起">3. 渐进式Web应用（PWA）的兴起</span></h4>
+<p>PWA是一种结合了网页和原生应用优点的应用形态。它旨在提供像原生应用一样的用户体验，包括离线访问、快速加载、推送通知等功能。Service Workers是PWA的关键技术之一，它使得PWA能够在后台管理网络请求和缓存，是实现PWA离线功能和性能优化的核心组件。例如，一个PWA版的电商应用可以通过Service Workers缓存商品信息和图片，用户在离线时可以查看商品详情，回到有网络的环境时，又可以及时更新数据。</p>
+<h3><span id="二-浏览器支持与标准化进程">（二） <strong>浏览器支持与标准化进程</strong></span></h3>
+<h4><span id="1-浏览器兼容性推进">1. 浏览器兼容性推进</span></h4>
+<p>Service Workers的发展也伴随着浏览器厂商的支持和不断完善。主流浏览器如Chrome、Firefox、Safari等逐渐实现了对Service Workers的支持。不过，在早期阶段，不同浏览器的支持程度和实现细节存在差异，这给开发者带来了一定的兼容性挑战。随着时间的推移，浏览器厂商通过不断更新和遵循统一的标准规范，如W3C（万维网联盟）的相关标准，使得Service Workers在不同浏览器中的表现更加一致。</p>
+<h4><span id="2-标准规范的制定与完善">2. 标准规范的制定与完善</span></h4>
+<p>W3C等标准组织在Service Workers的定义和规范方面起到了关键作用。它们制定了一系列的API和行为准则，确保Service Workers在不同的浏览器和平台上能够以统一的方式工作。例如，规范了Service Workers的生命周期，包括安装（install）、激活（activate）和销毁（terminate）等阶段的具体行为和事件触发机制，使得开发者能够按照标准的流程编写代码，提高了代码的可移植性和兼容性。</p>
+<h3><span id="三核心能力与基础应用">（三）核心能力与基础应用</span></h3>
+<p>Service Workers 具备强大的拦截网络请求以及缓存资源的能力，这使得网页应用在离线状态下也有了继续提供服务的可能。通过监听浏览器的关键事件，比如 <code>fetch</code> 事件用于捕获应用发出的网络请求，然后可决定是从缓存中响应还是发起新的网络请求；<code>install</code> 事件则常被用于在首次加载或者缓存更新时，将指定的资源预先缓存到本地。</p>
+<p>以下是一个简单的 Service Workers 注册及基础缓存配置示例：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// Service Worker注册</span></span><br><span class="line"><span class="keyword">if</span> (<span class="string">'serviceWorker'</span> <span class="keyword">in</span> navigator) &#123;</span><br><span class="line">    navigator.serviceWorker.register(<span class="string">'/service-worker.js'</span>)</span><br><span class="line">     .then(<span class="function"><span class="keyword">function</span> (<span class="params">registration</span>) </span>&#123;</span><br><span class="line">            <span class="built_in">console</span>.log(<span class="string">'Service Worker注册成功'</span>);</span><br><span class="line">        &#125;)</span><br><span class="line">     .catch(<span class="function"><span class="keyword">function</span> (<span class="params">error</span>) </span>&#123;</span><br><span class="line">            <span class="built_in">console</span>.log(<span class="string">'Service Worker注册失败'</span>);</span><br><span class="line">        &#125;);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">self.addEventListener(<span class="string">'fetch'</span>, <span class="function"><span class="keyword">function</span> (<span class="params">event</span>) </span>&#123;</span><br><span class="line">    event.respondWith(</span><br><span class="line">        caches.match(event.request)</span><br><span class="line">         .then(<span class="function"><span class="keyword">function</span> (<span class="params">response</span>) </span>&#123;</span><br><span class="line">                <span class="keyword">if</span> (response) &#123;</span><br><span class="line">                    <span class="keyword">return</span> response;</span><br><span class="line">                &#125;</span><br><span class="line">                <span class="keyword">return</span> fetch(event.request);</span><br><span class="line">            &#125;)</span><br><span class="line">    );</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">self.addEventListener(<span class="string">'install'</span>, <span class="function"><span class="keyword">function</span> (<span class="params">event</span>) </span>&#123;</span><br><span class="line">    event.waitUntil(</span><br><span class="line">        caches.open(<span class="string">'my-app-cache'</span>)</span><br><span class="line">         .then(<span class="function"><span class="keyword">function</span> (<span class="params">cache</span>) </span>&#123;</span><br><span class="line">                <span class="keyword">return</span> cache.addAll([</span><br><span class="line">                    <span class="comment">// 这里列出需要缓存的关键资源路径，例如首页HTML、样式文件、核心脚本等</span></span><br><span class="line">                    <span class="string">'/'</span>,</span><br><span class="line">                    <span class="string">'/index.html'</span>,</span><br><span class="line">                    <span class="string">'/styles.css'</span>,</span><br><span class="line">                    <span class="string">'/main.js'</span></span><br><span class="line">                ]);</span><br><span class="line">            &#125;)</span><br><span class="line">    );</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+<p>在上述代码中，首先注册了 Service Worker，接着在 <code>fetch</code> 事件处理中，优先尝试从已有的缓存里查找匹配请求的资源，如果找到就直接返回（体现了缓存的利用），没找到再去发起网络请求获取新资源。而在 <code>install</code> 事件里，将一些关键的页面资源预先添加到名为 <code>my-app-cache</code> 的缓存中，方便后续离线访问。</p>
+<h3><span id="四初期遇到的问题与局限">（四）初期遇到的问题与局限</span></h3>
+<h4><span id="1-复杂的缓存策略实现">1. 复杂的缓存策略实现</span></h4>
+<p>虽然 Service Workers 提供了缓存的基础功能，但要实现复杂且合理的缓存策略却并不轻松。开发者需要自行编写大量底层逻辑代码来处理诸如不同类型资源（像图片、脚本、样式文件等）该采用何种缓存优先顺序、缓存过期机制如何设定等问题。例如，对于一个电商应用，商品图片、详情页面、购物车数据等不同资源对缓存的时效性和更新频率要求各异，单纯依靠 Service Workers 原生的方式去配置合适的缓存策略，代码量会迅速膨胀，且易出错，维护起来也很困难。</p>
+<h4><span id="2-缓存更新与管理难题">2. 缓存更新与管理难题</span></h4>
+<p>手动管理缓存的更新是另一个棘手的问题。当服务器端的资源有了更新，如何确保本地缓存能及时同步更新，同时又不会过度消耗网络资源或者影响用户当前的使用体验，这需要精细的控制逻辑。比如，若简单地每次都重新缓存所有资源，不仅浪费带宽，还可能在更新过程中让用户遭遇页面加载卡顿等情况；而若更新不及时，用户又可能看到过期的内容。</p>
+<h2><span id="四-workbox-登场简化与强化-service-workers-缓存管理">四、Workbox 登场——简化与强化 Service Workers 缓存管理</span></h2>
+<p>为了应对 Service Workers 在实际应用中面临的缓存管理难题，Workbox 作为一个专门用于管理 Service Workers 的库被开发出来，它带来了诸多便利和功能增强。</p>
+<h3><span id="一功能优化与多样化缓存策略">（一）功能优化与多样化缓存策略</span></h3>
+<p>Workbox 对 Service Workers 的功能进行了封装和扩展，提供了一系列简洁易用的 API，极大地简化了缓存相关的开发工作。它内置了多种成熟的缓存策略，像“CacheFirst（缓存优先）”、“NetworkFirst（网络优先）”、“StaleWhileRevalidate（在后台更新缓存）”等，开发者可以根据具体的业务场景和资源特性灵活选用。</p>
+<p>以下是一个使用 Workbox 的 <code>CacheFirst</code> 策略来缓存常见资源类型的示例代码：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> &#123; registerRoute &#125; <span class="keyword">from</span> <span class="string">'workbox-routing'</span>;</span><br><span class="line"><span class="keyword">import</span> &#123; CacheFirst &#125; <span class="keyword">from</span> <span class="string">'workbox-strategies'</span>;</span><br><span class="line"></span><br><span class="line">registerRoute(</span><br><span class="line">    /\.(html|css|js|png|jpg|gif)$/,</span><br><span class="line">    <span class="keyword">new</span> CacheFirst(&#123;</span><br><span class="line">        cacheName: <span class="string">'my-cache'</span>,</span><br><span class="line">        expiration: &#123;</span><br><span class="line">            maxAge: <span class="number">7</span> * <span class="number">24</span> * <span class="number">60</span> * <span class="number">60</span></span><br><span class="line">        &#125;</span><br><span class="line">    &#125;)</span><br><span class="line">);</span><br></pre></td></tr></table></figure>
+<p>在这段代码中，通过 <code>registerRoute</code> 函数，轻松指定了针对 HTML、CSS、JavaScript 文件以及常见图片格式等资源应用 <code>CacheFirst</code> 策略，即优先从缓存中获取资源，如果缓存不存在才去发起网络请求，并且设置了缓存的有效期为 7 天，这样就清晰且高效地实现了缓存配置，无需像之前使用 Service Workers 时那样编写大量繁琐的底层代码。</p>
+<h4><span id="缓存优先-cache-first">缓存优先 (Cache First)</span></h4>
+<p>缓存优先策略是指优先从缓存中读取资源。如果缓存中有对应的资源，就直接返回缓存中的资源；如果缓存中没有，则从网络请求该资源，并将请求到的资源存储到缓存中以备后用。</p>
+<h5><span id="优点">优点：</span></h5>
+<ul>
+<li>提高资源加载速度，减少网络请求次数。</li>
+<li>对于不经常变化的资源效果很好。</li>
+</ul>
+<h5><span id="缺点">缺点：</span></h5>
+<ul>
+<li>如果缓存的资源过期或者不再有效，用户可能会看到过期的内容。</li>
+</ul>
+<h5><span id="示例代码">示例代码：</span></h5>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> &#123; registerRoute &#125; <span class="keyword">from</span> <span class="string">'workbox-routing'</span>;</span><br><span class="line"><span class="keyword">import</span> &#123; CacheFirst &#125; <span class="keyword">from</span> <span class="string">'workbox-strategies'</span>;</span><br><span class="line"></span><br><span class="line">registerRoute(</span><br><span class="line">  (&#123; request &#125;) =&gt; request.destination === <span class="string">'image'</span>, <span class="comment">// 例如应用于图片资源</span></span><br><span class="line">  <span class="keyword">new</span> CacheFirst(&#123;</span><br><span class="line">    cacheName: <span class="string">'images-cache'</span>,</span><br><span class="line">    plugins: [</span><br><span class="line">      <span class="comment">// 配置缓存策略的插件，例如过期时间、最大条目数等</span></span><br><span class="line">    ],</span><br><span class="line">  &#125;)</span><br><span class="line">);</span><br></pre></td></tr></table></figure>
+<h4><span id="网络优先-network-first">网络优先 (Network First)</span></h4>
+<p>网络优先策略是指优先从网络请求资源。如果网络请求成功，就使用请求到的资源，并将其存储到缓存中；如果网络请求失败（例如离线状态），则回退到缓存中读取资源。</p>
+<h5><span id="优点">优点：</span></h5>
+<ul>
+<li>确保用户始终看到的是最新的内容。</li>
+</ul>
+<h5><span id="缺点">缺点：</span></h5>
+<ul>
+<li>如果网络状况不好或请求失败，可能会导致加载延迟。</li>
+</ul>
+<h5><span id="示例代码">示例代码：</span></h5>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> &#123; registerRoute &#125; <span class="keyword">from</span> <span class="string">'workbox-routing'</span>;</span><br><span class="line"><span class="keyword">import</span> &#123; NetworkFirst &#125; <span class="keyword">from</span> <span class="string">'workbox-strategies'</span>;</span><br><span class="line"></span><br><span class="line">registerRoute(</span><br><span class="line">  (&#123; request &#125;) =&gt; request.destination === <span class="string">'document'</span>, <span class="comment">// 例如应用于HTML文档</span></span><br><span class="line">  <span class="keyword">new</span> NetworkFirst(&#123;</span><br><span class="line">    cacheName: <span class="string">'html-cache'</span>,</span><br><span class="line">    plugins: [</span><br><span class="line">      <span class="comment">// 配置缓存策略的插件，例如过期时间、最大条目数等</span></span><br><span class="line">    ],</span><br><span class="line">  &#125;)</span><br><span class="line">);</span><br></pre></td></tr></table></figure>
+<h4><span id="后台更新缓存-stale-while-revalidate">后台更新缓存 (Stale-While-Revalidate)</span></h4>
+<p>后台更新缓存策略是指优先使用缓存中的资源，同时在后台发送网络请求更新缓存。这样用户可以快速获取到缓存的资源，而缓存会在后台异步更新，以便下次请求时可以使用最新的资源。</p>
+<h5><span id="优点">优点：</span></h5>
+<ul>
+<li>提供快速响应，同时确保缓存的资源尽可能是最新的。</li>
+<li>非常适合需要频繁更新但又希望快速响应的资源。</li>
+</ul>
+<h5><span id="缺点">缺点：</span></h5>
+<ul>
+<li>用户第一次访问时可能会看到过期的内容，但下次访问时就会看到更新后的内容。</li>
+</ul>
+<h5><span id="示例代码">示例代码：</span></h5>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> &#123; registerRoute &#125; <span class="keyword">from</span> <span class="string">'workbox-routing'</span>;</span><br><span class="line"><span class="keyword">import</span> &#123; StaleWhileRevalidate &#125; <span class="keyword">from</span> <span class="string">'workbox-strategies'</span>;</span><br><span class="line"></span><br><span class="line">registerRoute(</span><br><span class="line">  (&#123; request &#125;) =&gt; request.destination === <span class="string">'script'</span>, <span class="comment">// 例如应用于JavaScript文件</span></span><br><span class="line">  <span class="keyword">new</span> StaleWhileRevalidate(&#123;</span><br><span class="line">    cacheName: <span class="string">'scripts-cache'</span>,</span><br><span class="line">    plugins: [</span><br><span class="line">      <span class="comment">// 配置缓存策略的插件，例如过期时间、最大条目数等</span></span><br><span class="line">    ],</span><br><span class="line">  &#125;)</span><br><span class="line">);</span><br></pre></td></tr></table></figure>
+<p>以上就是这三种常见的缓存策略的详细解释和示例代码。希望对你有所帮助！如果还有其他问题，欢迎继续提问。</p>
+<h3><span id="二缓存更新与管理的改进">（二）缓存更新与管理的改进</span></h3>
+<p>Workbox 提供了更方便的缓存更新机制，例如可以通过配置缓存的过期时间、设置缓存的最大数量等方式，自动管理缓存的生命周期。同时，它还支持后台同步更新缓存，允许在后台默默完成缓存资源的更新，不影响用户正在进行的页面操作，使得缓存更新变得更加智能和高效。</p>
+<h3><span id="三新的挑战浮现">（三）新的挑战浮现</span></h3>
+<p>尽管 Workbox 带来了诸多优势，但随着应用规模不断扩大以及业务场景愈发复杂，新的问题也随之而来。</p>
+<h4><span id="1-学习成本与集成难度">1. 学习成本与集成难度</span></h4>
+<p>Workbox 引入了不少新的概念、API 和配置方式，对于初次接触的开发者来说，存在一定的学习成本，需要花费时间去理解和掌握如何正确运用这些功能来达到最佳的缓存效果。而且，将 Workbox 集成到现有的项目中，尤其是那些已经有了较为复杂的构建流程和代码结构的项目时，也需要进行相应的适配和调整，一不小心就可能出现配置冲突等问题。</p>
+<h4><span id="2-性能瓶颈问题">2. 性能瓶颈问题</span></h4>
+<p>在处理大规模的缓存请求以及频繁的缓存更新时，Workbox 的性能表现可能会受到影响。例如，在一个拥有海量用户且资源频繁变动的大型社交应用中，大量用户同时发起缓存相关操作，Workbox 对缓存策略的执行效率、资源的调度和管理等方面可能会出现瓶颈，导致页面加载速度变慢或者出现短暂的卡顿现象，影响用户体验。</p>
+<h2><span id="五-workbox-webpack深度整合性能再升级">五、Workbox Webpack——深度整合，性能再升级</span></h2>
+<p>为了进一步优化 Workbox 在项目中的应用，提升整体性能以及更好地融入前端项目的构建流程，Workbox Webpack 插件应运而生，它将 Workbox 与广受欢迎的前端模块打包工具 Webpack 进行了深度集成。</p>
+<h3><span id="一集成带来的优势">（一）集成带来的优势</span></h3>
+<h4><span id="1-构建流程一体化">1. 构建流程一体化</span></h4>
+<p>Workbox Webpack 插件利用 Webpack 的强大构建能力，能够在项目构建过程中自动生成 Service Workers 的配置文件，并将基于 Workbox 的缓存相关代码与其他前端代码一起进行打包处理，生成最终可部署的优化文件。这样一来，开发者无需再手动去协调 Workbox 和项目中其他代码的关系，实现了一站式的构建体验，大大简化了开发流程。</p>
+<p>以下是一个简单的 Webpack 配置文件中使用 Workbox Webpack 插件的示例：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> path = <span class="built_in">require</span>(<span class="string">'path'</span>);</span><br><span class="line"><span class="keyword">const</span> WorkboxPlugin = <span class="built_in">require</span>(<span class="string">'workbox-webpack-plugin'</span>);</span><br><span class="line"></span><br><span class="line"><span class="built_in">module</span>.exports = &#123;</span><br><span class="line">    entry: <span class="string">'./src/index.js'</span>,</span><br><span class="line">    output: &#123;</span><br><span class="line">        path: path.resolve(__dirname, <span class="string">'dist'</span>),</span><br><span class="line">        filename: <span class="string">'bundle.js'</span></span><br><span class="line">    &#125;,</span><br><span class="line">    plugins: [</span><br><span class="line">        WorkboxPlugin.GenerateSW(&#123;</span><br><span class="line">            runtimeCaching: [</span><br><span class="line">                &#123;</span><br><span class="line">                    urlPattern: <span class="regexp">/\.(html|css|js|png|jpg|gif)$/</span>,</span><br><span class="line">                    handler: <span class="string">'CacheFirst'</span>,</span><br><span class="line">                    options: &#123;</span><br><span class="line">                        cacheName: <span class="string">'my-webpack-workbox-cache'</span>,</span><br><span class="line">                        expiration: &#123;</span><br><span class="line">                            maxEntries: <span class="number">50</span>, <span class="comment">// 限制缓存条目数量为 50 个，避免无限增长</span></span><br><span class="line">                            maxAge: <span class="number">5</span> * <span class="number">24</span> * <span class="number">60</span> * <span class="number">60</span> <span class="comment">// 缓存过期时间设为 5 天，根据应用更新频率调整</span></span><br><span class="line">                        &#125;</span><br><span class="line">                    &#125;</span><br><span class="line">                &#125;</span><br><span class="line">            ]</span><br><span class="line">        &#125;)</span><br><span class="line">    ]</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+<p>在这个配置中，通过 <code>WorkboxPlugin.GenerateSW</code> 配置项，针对不同类型的资源（如 HTML、CSS、图片等）应用 <code>CacheFirst</code> 策略，同时借助 Webpack 的配置方式，设置了缓存的最大条目数量以及过期时间等参数，使得缓存管理与整个项目的构建过程紧密结合，方便又高效。</p>
+<h4><span id="2-性能优化提升">2. 性能优化提升</span></h4>
+<p>借助 Webpack 的诸多优化功能，如代码压缩、代码拆分、模块懒加载等，Workbox Webpack 插件可以对缓存相关的代码和资源进行更精细的优化。例如，通过代码压缩，减少了缓存文件的大小，加快了缓存的加载速度；利用代码拆分，将大的缓存文件拆分成多个小文件，实现按需加载，避免一次性加载过多缓存内容导致的性能开销，从而提升了整体的缓存性能，尤其是在应对复杂应用和大规模缓存场景时效果显著。</p>
+<h3><span id="二解决的关键问题">（二）解决的关键问题</span></h3>
+<h4><span id="1-简化配置与集成复杂性">1. 简化配置与集成复杂性</span></h4>
+<p>Workbox Webpack 插件将 Workbox 的配置融入到 Webpack 的配置体系中，遵循 Webpack 已有的配置规范和方式，使得开发者能够利用熟悉的语法和结构来管理缓存相关的设置，大大降低了配置的复杂性和学习成本。同时，它也解决了之前 Workbox 与项目集成时可能出现的适配问题，让 Workbox 能够更顺滑地嵌入到各类基于 Webpack 的项目中，无论是小型的个人项目还是大型的企业级应用。</p>
+<h4><span id="2-突破性能瓶颈">2. 突破性能瓶颈</span></h4>
+<p>通过与 Webpack 的性能优化功能协同工作，Workbox Webpack 插件有效缓解了在大规模缓存请求和频繁更新场景下的性能压力。例如，在缓存更新时，利用 Webpack 的增量更新机制，只更新有变化的部分资源，避免了全量更新带来的资源浪费和性能损耗，确保了缓存的高效更新和应用的流畅运行，提升了用户在各种复杂网络环境和高并发使用场景下的体验。</p>
+<h2><span id="六-总结与展望">六、总结与展望</span></h2>
+<p>从 Service Workers 到 Workbox 再到 Workbox Webpack 的发展历程，是一个不断解决问题、优化性能、提升用户体验的过程。每一步的演进都是为了更好地应对日益复杂的前端应用开发需求，特别是在本地缓存和离线交互方面，让应用能够在不同网络条件下都能稳定、高效地运行。</p>
+<p>展望未来，随着前端技术的持续发展以及用户对应用性能和离线体验要求的进一步提高，相信这些技术还会不断迭代和完善，为打造更优质的互联网应用提供更强大的支持。开发者们也需要紧跟技术发展的步伐，深入理解并灵活运用这些工具，在实际项目中充分发挥它们的优势，以满足用户日益增长的期望。</p>
+
+                
+
+                <hr>
+                <!-- Pager -->
+                <ul class="pager">
+                    
+                        <li class="previous">
+                            <a href="/jtblogs/article/使用-GraphQL-和-AWS-AppSync-结合-Next-js-和-AWS-Lambda-构建现代全栈应用/" data-toggle="tooltip" data-placement="top" title="使用 GraphQL 和 AWS AppSync 结合 Next.js 和 AWS Lambda 构建现代全栈应用">&larr; Previous Post</a>
+                        </li>
+                    
+                    
+                        <li class="next">
+                            <a href="/jtblogs/article/CSS-技术演进之路：从基础到前沿的创新之旅/" data-toggle="tooltip" data-placement="top" title="CSS 技术演进之路：从基础到前沿的创新之旅">Next Post &rarr;</a>
+                        </li>
+                    
+                </ul>
+
+                <br>
+
+                <!--打赏-->
+                
+                <!--打赏-->
+
+                <br>
+                <!--分享-->
+                
+                    <div class="social-share"  data-wechat-qrcode-helper="" align="center"></div>
+                    <!--  css & js -->
+                    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/social-share.js/1.0.16/css/share.min.css">
+                    <script src="https://cdnjs.cloudflare.com/ajax/libs/social-share.js/1.0.16/js/social-share.min.js"></script>
+                
+                <!--分享-->
+                <br>                       
+                
+                <!-- require APlayer -->
+                
+
+                <!-- duoshuo Share start -->
+                
+                <!-- 多说 Share end-->
+
+                <!-- 多说评论框 start -->
+                
+                <!-- 多说评论框 end -->
+
+                <!-- disqus comment start -->
+                
+                <!-- disqus comment end -->
+
+                
+
+            </div>
+            
+            <!-- Tabe of Content -->
+            <!-- Table of Contents -->
+
+  
+    <style>
+      span.toc-nav-number{
+        display: none
+      }
+    </style>
+  
+    
+      <aside id="sidebar">
+        <div id="toc" class="toc-article">
+        <strong class="toc-title">Contents</strong>
+        
+          <ol class="toc-nav"><li class="toc-nav-item toc-nav-level-1"><a class="toc-nav-link" href="#null"><span class="toc-nav-number">1.</span> <span class="toc-nav-text">Service Workers 本地缓存：性能优化与架构演进</span></a><ol class="toc-nav-child"><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#null"><span class="toc-nav-number">1.1.</span> <span class="toc-nav-text">一、本地缓存的重要性与价值</span></a><ol class="toc-nav-child"><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#null"><span class="toc-nav-number">1.1.1.</span> <span class="toc-nav-text">（一）提升用户体验</span></a><ol class="toc-nav-child"><li class="toc-nav-item toc-nav-level-4"><a class="toc-nav-link" href="#null"><span class="toc-nav-number">1.1.1.1.</span> <span class="toc-nav-text">1. 减少等待时间</span></a></li><li class="toc-nav-item toc-nav-level-4"><a class="toc-nav-link" href="#null"><span class="toc-nav-number">1.1.1.2.</span> <span class="toc-nav-text">2 无缝浏览</span></a></li></ol></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#null"><span class="toc-nav-number">1.1.2.</span> <span class="toc-nav-text">（二）提高应用性能</span></a><ol class="toc-nav-child"><li class="toc-nav-item toc-nav-level-4"><a class="toc-nav-link" href="#null"><span class="toc-nav-number">1.1.2.1.</span> <span class="toc-nav-text">1 降低网络请求次数</span></a></li><li class="toc-nav-item toc-nav-level-4"><a class="toc-nav-link" href="#null"><span class="toc-nav-number">1.1.2.2.</span> <span class="toc-nav-text">2 加快页面加载速度</span></a></li></ol></li></ol></li><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#null"><span class="toc-nav-number">1.2.</span> <span class="toc-nav-text">二、本地缓存相关指标数据</span></a><ol class="toc-nav-child"><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#null"><span class="toc-nav-number">1.2.1.</span> <span class="toc-nav-text">（一）缓存命中率</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#null"><span class="toc-nav-number">1.2.2.</span> <span class="toc-nav-text">（二）缓存容量</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#null"><span class="toc-nav-number">1.2.3.</span> <span class="toc-nav-text">（三）缓存过期时间</span></a></li></ol></li><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#null"><span class="toc-nav-number">1.3.</span> <span class="toc-nav-text">三、Service Workers 崭露头角——本地缓存的新起点</span></a><ol class="toc-nav-child"><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#null"><span class="toc-nav-number">1.3.1.</span> <span class="toc-nav-text">（一）背景起源</span></a><ol class="toc-nav-child"><li class="toc-nav-item toc-nav-level-4"><a class="toc-nav-link" href="#null"><span class="toc-nav-number">1.3.1.1.</span> <span class="toc-nav-text">1. 应对网络挑战</span></a></li><li class="toc-nav-item toc-nav-level-4"><a class="toc-nav-link" href="#null"><span class="toc-nav-number">1.3.1.2.</span> <span class="toc-nav-text">2.离线应用需求的推动</span></a></li><li class="toc-nav-item toc-nav-level-4"><a class="toc-nav-link" href="#null"><span class="toc-nav-number">1.3.1.3.</span> <span class="toc-nav-text">3. 渐进式Web应用（PWA）的兴起</span></a></li></ol></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#null"><span class="toc-nav-number">1.3.2.</span> <span class="toc-nav-text">（二） 浏览器支持与标准化进程</span></a><ol class="toc-nav-child"><li class="toc-nav-item toc-nav-level-4"><a class="toc-nav-link" href="#null"><span class="toc-nav-number">1.3.2.1.</span> <span class="toc-nav-text">1. 浏览器兼容性推进</span></a></li><li class="toc-nav-item toc-nav-level-4"><a class="toc-nav-link" href="#null"><span class="toc-nav-number">1.3.2.2.</span> <span class="toc-nav-text">2. 标准规范的制定与完善</span></a></li></ol></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#null"><span class="toc-nav-number">1.3.3.</span> <span class="toc-nav-text">（三）核心能力与基础应用</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#null"><span class="toc-nav-number">1.3.4.</span> <span class="toc-nav-text">（四）初期遇到的问题与局限</span></a><ol class="toc-nav-child"><li class="toc-nav-item toc-nav-level-4"><a class="toc-nav-link" href="#null"><span class="toc-nav-number">1.3.4.1.</span> <span class="toc-nav-text">1. 复杂的缓存策略实现</span></a></li><li class="toc-nav-item toc-nav-level-4"><a class="toc-nav-link" href="#null"><span class="toc-nav-number">1.3.4.2.</span> <span class="toc-nav-text">2. 缓存更新与管理难题</span></a></li></ol></li></ol></li><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#null"><span class="toc-nav-number">1.4.</span> <span class="toc-nav-text">四、Workbox 登场——简化与强化 Service Workers 缓存管理</span></a><ol class="toc-nav-child"><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#null"><span class="toc-nav-number">1.4.1.</span> <span class="toc-nav-text">（一）功能优化与多样化缓存策略</span></a><ol class="toc-nav-child"><li class="toc-nav-item toc-nav-level-4"><a class="toc-nav-link" href="#null"><span class="toc-nav-number">1.4.1.1.</span> <span class="toc-nav-text">缓存优先 (Cache First)</span></a><ol class="toc-nav-child"><li class="toc-nav-item toc-nav-level-5"><a class="toc-nav-link" href="#null"><span class="toc-nav-number">1.4.1.1.1.</span> <span class="toc-nav-text">优点：</span></a></li><li class="toc-nav-item toc-nav-level-5"><a class="toc-nav-link" href="#null"><span class="toc-nav-number">1.4.1.1.2.</span> <span class="toc-nav-text">缺点：</span></a></li><li class="toc-nav-item toc-nav-level-5"><a class="toc-nav-link" href="#null"><span class="toc-nav-number">1.4.1.1.3.</span> <span class="toc-nav-text">示例代码：</span></a></li></ol></li><li class="toc-nav-item toc-nav-level-4"><a class="toc-nav-link" href="#null"><span class="toc-nav-number">1.4.1.2.</span> <span class="toc-nav-text">网络优先 (Network First)</span></a><ol class="toc-nav-child"><li class="toc-nav-item toc-nav-level-5"><a class="toc-nav-link" href="#null"><span class="toc-nav-number">1.4.1.2.1.</span> <span class="toc-nav-text">优点：</span></a></li><li class="toc-nav-item toc-nav-level-5"><a class="toc-nav-link" href="#null"><span class="toc-nav-number">1.4.1.2.2.</span> <span class="toc-nav-text">缺点：</span></a></li><li class="toc-nav-item toc-nav-level-5"><a class="toc-nav-link" href="#null"><span class="toc-nav-number">1.4.1.2.3.</span> <span class="toc-nav-text">示例代码：</span></a></li></ol></li><li class="toc-nav-item toc-nav-level-4"><a class="toc-nav-link" href="#null"><span class="toc-nav-number">1.4.1.3.</span> <span class="toc-nav-text">后台更新缓存 (Stale-While-Revalidate)</span></a><ol class="toc-nav-child"><li class="toc-nav-item toc-nav-level-5"><a class="toc-nav-link" href="#null"><span class="toc-nav-number">1.4.1.3.1.</span> <span class="toc-nav-text">优点：</span></a></li><li class="toc-nav-item toc-nav-level-5"><a class="toc-nav-link" href="#null"><span class="toc-nav-number">1.4.1.3.2.</span> <span class="toc-nav-text">缺点：</span></a></li><li class="toc-nav-item toc-nav-level-5"><a class="toc-nav-link" href="#null"><span class="toc-nav-number">1.4.1.3.3.</span> <span class="toc-nav-text">示例代码：</span></a></li></ol></li></ol></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#null"><span class="toc-nav-number">1.4.2.</span> <span class="toc-nav-text">（二）缓存更新与管理的改进</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#null"><span class="toc-nav-number">1.4.3.</span> <span class="toc-nav-text">（三）新的挑战浮现</span></a><ol class="toc-nav-child"><li class="toc-nav-item toc-nav-level-4"><a class="toc-nav-link" href="#null"><span class="toc-nav-number">1.4.3.1.</span> <span class="toc-nav-text">1. 学习成本与集成难度</span></a></li><li class="toc-nav-item toc-nav-level-4"><a class="toc-nav-link" href="#null"><span class="toc-nav-number">1.4.3.2.</span> <span class="toc-nav-text">2. 性能瓶颈问题</span></a></li></ol></li></ol></li><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#null"><span class="toc-nav-number">1.5.</span> <span class="toc-nav-text">五、Workbox Webpack——深度整合，性能再升级</span></a><ol class="toc-nav-child"><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#null"><span class="toc-nav-number">1.5.1.</span> <span class="toc-nav-text">（一）集成带来的优势</span></a><ol class="toc-nav-child"><li class="toc-nav-item toc-nav-level-4"><a class="toc-nav-link" href="#null"><span class="toc-nav-number">1.5.1.1.</span> <span class="toc-nav-text">1. 构建流程一体化</span></a></li><li class="toc-nav-item toc-nav-level-4"><a class="toc-nav-link" href="#null"><span class="toc-nav-number">1.5.1.2.</span> <span class="toc-nav-text">2. 性能优化提升</span></a></li></ol></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#null"><span class="toc-nav-number">1.5.2.</span> <span class="toc-nav-text">（二）解决的关键问题</span></a><ol class="toc-nav-child"><li class="toc-nav-item toc-nav-level-4"><a class="toc-nav-link" href="#null"><span class="toc-nav-number">1.5.2.1.</span> <span class="toc-nav-text">1. 简化配置与集成复杂性</span></a></li><li class="toc-nav-item toc-nav-level-4"><a class="toc-nav-link" href="#null"><span class="toc-nav-number">1.5.2.2.</span> <span class="toc-nav-text">2. 突破性能瓶颈</span></a></li></ol></li></ol></li><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#null"><span class="toc-nav-number">1.6.</span> <span class="toc-nav-text">六、总结与展望</span></a></li></ol></li></ol>
+        
+        </div>
+      </aside>
+    
+
+                
+            <!-- Sidebar Container -->
+            <div class="
+                col-lg-8 col-lg-offset-2
+                col-md-10 col-md-offset-1
+                sidebar-container">
+
+                <!-- Featured Tags -->
+                
+                <section>
+                    <!-- no hr -->
+                    <h5><a href="/jtblogs/tags/">FEATURED TAGS</a></h5>
+                    <div class="tags">
+                       
+                          <a class="tag" href="/jtblogs/tags/#nodejs" title="nodejs">nodejs</a>
+                        
+                    </div>
+                </section>
+                
+
+                <!-- Friends Blog -->
+                
+                <hr>
+                <h5>FRIENDS</h5>
+                <ul class="list-inline">
+
+                    
+                </ul>
+                
+            </div>
+        </div>
+    </div>
+</article>
+
+
+
+
+
+
+
+
+<!-- async load function -->
+<script>
+    function async(u, c) {
+      var d = document, t = 'script',
+          o = d.createElement(t),
+          s = d.getElementsByTagName(t)[0];
+      o.src = u;
+      if (c) { o.addEventListener('load', function (e) { c(null, e); }, false); }
+      s.parentNode.insertBefore(o, s);
+    }
+</script>
+<!-- anchor-js, Doc:http://bryanbraun.github.io/anchorjs/ -->
+<script>
+    async("https://cdn.bootcss.com/anchor-js/1.1.1/anchor.min.js",function(){
+        anchors.options = {
+          visible: 'hover',
+          placement: 'left',
+          icon: 'ℬ'
+        };
+        anchors.add().remove('.intro-header h1').remove('.subheading').remove('.sidebar-container h5');
+    })
+</script>
+<style>
+    /* place left on bigger screen */
+    @media all and (min-width: 800px) {
+        .anchorjs-link{
+            position: absolute;
+            left: -0.75em;
+            font-size: 1.1em;
+            margin-top : -0.1em;
+        }
+    }
+</style>
+
+
+<!-- chrome Firefox 中文锚点定位失效-->
+<script src="https://cdn.bootcss.com/jquery/3.3.1/jquery.js"></script>
+<!-- smooth scroll behavior polyfill  -->
+<script type="text/javascript" src="/js/smoothscroll.js"></script>
+<script>
+        $('#toc').on('click','a',function(a){
+            // var isChrome = window.navigator.userAgent.indexOf("Chrome") !== -1;
+            // console.log(window.navigator.userAgent,isChrome)
+                // if(isChrome) {
+                    // console.log(a.currentTarget.outerHTML);
+                    // console.log($(a.currentTarget).attr("href"));
+                    //跳转到指定锚点
+                    // document.getElementById(a.target.innerText.toLowerCase()).scrollIntoView(true);
+                    document.getElementById($(a.currentTarget).attr("href").replace("#","")).scrollIntoView({behavior: 'smooth' });
+                // }
+        })  
+</script>
+
+
+    <!-- Footer -->
+    <!-- Footer -->
+<footer>
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+                <ul class="list-inline text-center">
+                    
+                            
+                                    
+
+                                            
+
+                                                    
+
+                                                            
+                                                                <li>
+                                                                    <a target="_blank"
+                                                                        href="https://github.com/taojiangcb">
+                                                                        <span class="fa-stack fa-lg">
+                                                                            <i class="fa fa-circle fa-stack-2x"></i>
+                                                                            <i
+                                                                                class="fa fa-github fa-stack-1x fa-inverse"></i>
+                                                                        </span>
+                                                                    </a>
+                                                                </li>
+                                                                
+
+                                                                    
+
+                </ul>
+
+                <p class="copyright text-muted">
+                    Copyright &copy; 江涛
+                        2025
+                            <br>
+                            Theme by <a href="http://beantech.org">BeanTech</a>
+                            <span style="display: inline-block; margin: 0 5px;">
+                                <i class="fa fa-heart"></i>
+                            </span>
+                            re-Ported by <a href="https://taojiangcb.github.io/jtblogs">江涛</a> |
+                            <iframe style="margin-left: 2px; margin-bottom:-5px;" frameborder="0" scrolling="0"
+                                width="91px" height="20px"
+                                src="https://ghbtns.com/github-btn.html?user=taojiangcb&repo=jtblogs&type=star&count=true">
+                            </iframe>
+                </p>
+                <p class="copyright text-muted" style="margin:0">
+                    <script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+                    <span id="busuanzi_container_site_pv">
+                        总访问量<span id="busuanzi_value_site_pv"></span>次
+                    </span>
+                    <span id="busuanzi_container_site_uv">
+                        总访客数<span id="busuanzi_value_site_uv"></span>人
+                    </span>
+                </p>
+            </div>
+        </div>
+    </div>
+</footer>
+
+<!-- jQuery -->
+<script src="/jtblogs/js/jquery.min.js"></script>
+
+    <!-- Bootstrap Core JavaScript -->
+    <script src="/jtblogs/js/bootstrap.min.js"></script>
+
+        <!-- Custom Theme JavaScript -->
+        <script src="/jtblogs/js/hux-blog.min.js"></script>
+
+
+            <!-- async load function -->
+            <script>
+                function async(u, c) {
+                    var d = document, t = 'script',
+                        o = d.createElement(t),
+                        s = d.getElementsByTagName(t)[0];
+                    o.src = u;
+                    if (c) { o.addEventListener('load', function (e) { c(null, e); }, false); }
+                    s.parentNode.insertBefore(o, s);
+                }
+            </script>
+
+            <!-- 
+     Because of the native support for backtick-style fenced code blocks 
+     right within the Markdown is landed in Github Pages, 
+     From V1.6, There is no need for Highlight.js, 
+     so Huxblog drops it officially.
+
+     - https://github.com/blog/2100-github-pages-now-faster-and-simpler-with-jekyll-3-0  
+     - https://help.github.com/articles/creating-and-highlighting-code-blocks/    
+-->
+            <!--
+    <script>
+        async("http://cdn.bootcss.com/highlight.js/8.6/highlight.min.js", function(){
+            hljs.initHighlightingOnLoad();
+        })
+    </script>
+    <link href="http://cdn.bootcss.com/highlight.js/8.6/styles/github.min.css" rel="stylesheet">
+-->
+
+
+            <!-- jquery.tagcloud.js -->
+            <script>
+                // only load tagcloud.js in tag.html
+                if ($('#tag_cloud').length !== 0) {
+                    async("https://taojiangcb.github.io/jtblogs/js/jquery.tagcloud.js", function () {
+                        $.fn.tagcloud.defaults = {
+                            //size: {start: 1, end: 1, unit: 'em'},
+                            color: { start: '#bbbbee', end: '#0085a1' },
+                        };
+                        $('#tag_cloud a').tagcloud();
+                    })
+                }
+            </script>
+
+            <!--fastClick.js -->
+            <script>
+                async("https://cdn.bootcss.com/fastclick/1.0.6/fastclick.min.js", function () {
+                    var $nav = document.querySelector("nav");
+                    if ($nav) FastClick.attach($nav);
+                })
+            </script>
+
+
+            <!-- Google Analytics -->
+
+            
+                <script>
+                    // dynamic User by Hux
+                    var _gaId = 'UA-XXXXXXXX-X';
+                    var _gaDomain = 'yoursite';
+
+                    // Originial
+                    (function (i, s, o, g, r, a, m) {
+                        i['GoogleAnalyticsObject'] = r; i[r] = i[r] || function () {
+                            (i[r].q = i[r].q || []).push(arguments)
+                        }, i[r].l = 1 * new Date(); a = s.createElement(o),
+                            m = s.getElementsByTagName(o)[0]; a.async = 1; a.src = g; m.parentNode.insertBefore(a, m)
+                    })(window, document, 'script', '//www.google-analytics.com/analytics.js', 'ga');
+
+                    ga('create', _gaId, _gaDomain);
+                    ga('send', 'pageview');
+                </script>
+
+                
+
+
+                    <!-- Baidu Tongji -->
+                    
+                        <script>
+                            // dynamic User by Hux
+                            var _baId = 'xxx';
+
+                            // Originial
+                            var _hmt = _hmt || [];
+                            (function () {
+                                var hm = document.createElement("script");
+                                hm.src = "//hm.baidu.com/hm.js?" + _baId;
+                                var s = document.getElementsByTagName("script")[0];
+                                s.parentNode.insertBefore(hm, s);
+                            })();
+                        </script>
+                        
+
+
+	<a id="rocket" href="#top" class=""></a>
+	<script type="text/javascript" src="/jtblogs/js/totop.js?v=1.0.0" async=""></script>
+    <script type="text/javascript" src="/jtblogs/js/toc.js?v=1.0.0" async=""></script>
+<!-- Image to hack wechat -->
+<img src="https://taojiangcb.github.io/jtblogs/img/icon_wechat.png" width="0" height="0" />
+<!-- Migrate from head to bottom, no longer block render and still work -->
+
+</body>
+
+</html>

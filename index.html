@@ -1,0 +1,927 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<!-- Head tag -->
+<head><meta name="generator" content="Hexo 3.9.0">
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="google-site-verification" content="xBT4GhYoi5qRD5tr338pgPM5OWHHIDR6mNg1a3euekI">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content>
+    <meta name="keyword" content>
+    <link rel="shortcut icon" href="/jtblogs/favicon.ico">
+    <!-- Place this tag in your head or just before your close body tag. -->
+    <script async defer src="https://buttons.github.io/buttons.js"></script>
+    <title>
+        
+          江涛 | Blog
+        
+    </title>
+
+    <link rel="canonical" href="https://taojiangcb.github.io/jtblogs/jtblogs/">
+
+    <!-- Bootstrap Core CSS -->
+    <link rel="stylesheet" href="/jtblogs/css/bootstrap.min.css">
+
+    <!-- Custom CSS --> 
+    <link rel="stylesheet" href="/jtblogs/css/beantech.min.css">
+
+    <link rel="stylesheet" href="/jtblogs/css/donate.css">
+    
+    <!-- Pygments Highlight CSS -->
+    <link rel="stylesheet" href="/jtblogs/css/highlight.css">
+
+    <link rel="stylesheet" href="/jtblogs/css/widget.css">
+
+    <link rel="stylesheet" href="/jtblogs/css/rocket.css">
+
+    <link rel="stylesheet" href="/jtblogs/css/signature.css">
+
+    <link rel="stylesheet" href="/jtblogs/css/toc.css">
+
+    <!-- Custom Fonts -->
+    <!-- <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css" rel="stylesheet" type="text/css"> -->
+    <!-- Hux change font-awesome CDN to qiniu -->
+    <link href="https://cdn.staticfile.org/font-awesome/4.5.0/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+
+
+    <!-- Hux Delete, sad but pending in China
+    <link href='http://fonts.googleapis.com/css?family=Lora:400,700,400italic,700italic' rel='stylesheet' type='text/css'>
+    <link href='http://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800' rel='stylesheet' type='text/
+    css'>
+    -->
+
+
+    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+        <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+        <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+    <![endif]-->
+
+    <!-- ga & ba script hoook -->
+    <script></script>
+</head>
+
+
+<!-- hack iOS CSS :active style -->
+<body ontouchstart="">
+	<!-- Modified by Yu-Hsuan Yen -->
+<!-- Post Header -->
+<style type="text/css">
+    header.intro-header{
+        
+            background-image: url('/jtblogs/img/header_img/home.jpg') 
+            /*config*/
+        
+    }
+    
+</style>
+
+<header class="intro-header" >
+    <!-- Signature -->
+    <div id="signature">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+                
+                    <div class="site-heading">
+                        <h1>江涛</h1>
+                        <!--<hr class="small">-->
+                        <span class="subheading">个人博客</span>
+                    </div>
+                
+
+
+                </div>
+            </div>
+        </div>
+    </div>
+</header>
+
+	
+    <!-- Navigation -->
+<nav class="navbar navbar-default navbar-custom navbar-fixed-top">
+    <div class="container-fluid">
+        <!-- Brand and toggle get grouped for better mobile display -->
+        <div class="navbar-header page-scroll">
+            <button type="button" class="navbar-toggle">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href="/jtblogs/">江涛</a>
+        </div>
+
+        <!-- Collect the nav links, forms, and other content for toggling -->
+        <!-- Known Issue, found by Hux:
+            <nav>'s height woule be hold on by its content.
+            so, when navbar scale out, the <nav> will cover tags.
+            also mask any touch event of tags, unfortunately.
+        -->
+        <div id="huxblog_navbar">
+            <div class="navbar-collapse">
+                <ul class="nav navbar-nav navbar-right">
+                    <li>
+                        <a href="/jtblogs/">Home</a>
+                    </li>
+
+                    
+
+                        
+                    
+
+                        
+                    
+
+                        
+                    
+
+                        
+                    
+
+                        
+                    
+
+                        
+                    
+
+                        
+                        <li>
+                            <a href="/jtblogs/tags/">Tags</a>
+                        </li>
+                        
+                    
+
+                        
+                        <li>
+                            <a href="/jtblogs/about/">About</a>
+                        </li>
+                        
+                    
+
+                        
+                        <li>
+                            <a href="/jtblogs/archive/">Archives</a>
+                        </li>
+                        
+                    
+                    
+                </ul>
+            </div>
+        </div>
+        <!-- /.navbar-collapse -->
+    </div>
+    <!-- /.container -->
+</nav>
+<script>
+    // Drop Bootstarp low-performance Navbar
+    // Use customize navbar with high-quality material design animation
+    // in high-perf jank-free CSS3 implementation
+    var $body   = document.body;
+    var $toggle = document.querySelector('.navbar-toggle');
+    var $navbar = document.querySelector('#huxblog_navbar');
+    var $collapse = document.querySelector('.navbar-collapse');
+
+    $toggle.addEventListener('click', handleMagic)
+    function handleMagic(e){
+        if ($navbar.className.indexOf('in') > 0) {
+        // CLOSE
+            $navbar.className = " ";
+            // wait until animation end.
+            setTimeout(function(){
+                // prevent frequently toggle
+                if($navbar.className.indexOf('in') < 0) {
+                    $collapse.style.height = "0px"
+                }
+            },400)
+        }else{
+        // OPEN
+            $collapse.style.height = "auto"
+            $navbar.className += " in";
+        }
+    }
+</script>
+
+
+    <!-- Main Content -->
+    <!-- Main Content -->
+<div class="container">
+    <div class="row">
+        
+
+<!-- USE SIDEBAR -->
+    <!-- Post Container -->
+            <div class="
+                col-lg-8 col-lg-offset-1
+                col-md-8 col-md-offset-1
+                col-sm-12
+                col-xs-12
+                post-container
+            ">
+            
+                <!-- Main Content -->
+
+
+<div class="post-preview">
+
+    <a href="/jtblogs/article/性能优化-预加载/">
+        <h2 class="post-title">
+                                 
+            性能优化-预加载
+        </h2>
+        <h3 class="post-subtitle">
+            
+        </h3>
+        <div class="post-content-preview">
+            以下是常用的资源预加载手段及其实现方式，帮助提升网页加载速度和用户体验：
+
+一、HTML 原生预加载
+1. &lt;link rel=&quot;preload&quot;&gt;
+
+
+用途：高优先级预加载关键资源（字体、首屏图片、关键CSS/JS）
+
+
+示例：
+12345&lt;!-- 预加载字体 --&gt;&lt;link rel="preload" href="font.woff2"......
+        </div>
+    </a>
+    
+        <p class="post-meta" style="margin: 10px 0;">
+            Posted by 江涛 on
+            2025-06-12
+        </p>
+        <div class="tags">
+            
+              <a href="/jtblogs/tags/#性能优化" title="性能优化">性能优化</a>
+            
+        </div>
+    
+
+</div>
+<hr>
+
+<div class="post-preview">
+
+    <a href="/jtblogs/article/Webpack-Compiler-hooks-是什么/">
+        <h2 class="post-title">
+                                 
+            Webpack Compiler.hooks 是什么
+        </h2>
+        <h3 class="post-subtitle">
+            
+        </h3>
+        <div class="post-content-preview">
+            🧠 什么是 compiler.hooks？
+compiler.hooks 是 Webpack 插件生命周期钩子的集合。你可以在这些钩子上注册函数，在 Webpack 构建流程的各个阶段执行你的逻辑。
+
+插件核心逻辑：
+12&gt; compiler.hooks.&lt;某个阶段&gt;.tap('PluginName', (compilation) =&gt; &#123; ... &#1......
+        </div>
+    </a>
+    
+        <p class="post-meta" style="margin: 10px 0;">
+            Posted by 江涛 on
+            2025-04-10
+        </p>
+        <div class="tags">
+            
+              <a href="/jtblogs/tags/#Webpack" title="Webpack">Webpack</a>
+            
+        </div>
+    
+
+</div>
+<hr>
+
+<div class="post-preview">
+
+    <a href="/jtblogs/article/Webpack-的生命周期/">
+        <h2 class="post-title">
+                                 
+            Webpack 的生命周期
+        </h2>
+        <h3 class="post-subtitle">
+            
+        </h3>
+        <div class="post-content-preview">
+            这个问题问得非常专业！Webpack 的执行过程是一个多阶段的生命周期系统，可以分为若干个阶段（phases）和周期（cycles）。理解这些执行阶段，有助于你更好地写插件、调试构建问题、优化性能。
+
+🚀 一句话总结
+
+Webpack 的执行周期由多个 Hook 生命周期阶段组成，每个阶段负责构建流程中的不同任务。
+
+
+🧱 Webpack 执行周期图（简化版）
+1234567891011......
+        </div>
+    </a>
+    
+        <p class="post-meta" style="margin: 10px 0;">
+            Posted by 江涛 on
+            2025-04-10
+        </p>
+        <div class="tags">
+            
+              <a href="/jtblogs/tags/#Webpack" title="Webpack">Webpack</a>
+            
+        </div>
+    
+
+</div>
+<hr>
+
+<div class="post-preview">
+
+    <a href="/jtblogs/article/Webpack-sideEffect/">
+        <h2 class="post-title">
+                                 
+            Webpack sideEffect
+        </h2>
+        <h3 class="post-subtitle">
+            
+        </h3>
+        <div class="post-content-preview">
+            直观感受 sideEffects 到底起了什么作用，特别是它和 Tree Shaking 是怎么配合的。
+
+✅ 目标：对比有无 sideEffects 配置时，Tree Shaking 的行为差异
+
+🔧 项目结构
+123456demo/├── package.json├── src/│   ├── index.js│   ├── utils.js│   └── style.css
+
+📦 ......
+        </div>
+    </a>
+    
+        <p class="post-meta" style="margin: 10px 0;">
+            Posted by 江涛 on
+            2025-04-10
+        </p>
+        <div class="tags">
+            
+              <a href="/jtblogs/tags/#Webpack" title="Webpack">Webpack</a>
+            
+        </div>
+    
+
+</div>
+<hr>
+
+<div class="post-preview">
+
+    <a href="/jtblogs/article/Webpack-中的shaking/">
+        <h2 class="post-title">
+                                 
+            Webpack 中的shaking
+        </h2>
+        <h3 class="post-subtitle">
+            
+        </h3>
+        <div class="post-content-preview">
+            这是个非常核心的问题！Webpack 的 Tree Shaking 是现代前端构建优化的关键特性之一，我们可以从 策略、实现原理、优化决策依据 三个维度来回答这个问题：
+
+一、🌲 Tree Shaking 是什么？
+Tree Shaking（摇树优化）是指在构建过程中移除 JavaScript 中未使用（dead code）的代码，从而减小打包体积、提升运行效率。
+
+二、Webpack 中......
+        </div>
+    </a>
+    
+        <p class="post-meta" style="margin: 10px 0;">
+            Posted by 江涛 on
+            2025-04-10
+        </p>
+        <div class="tags">
+            
+              <a href="/jtblogs/tags/#Webpack" title="Webpack">Webpack</a>
+            
+        </div>
+    
+
+</div>
+<hr>
+
+<div class="post-preview">
+
+    <a href="/jtblogs/article/以太坊-EIP-3085/">
+        <h2 class="post-title">
+                                 
+            以太坊-EIP-3085
+        </h2>
+        <h3 class="post-subtitle">
+            
+        </h3>
+        <div class="post-content-preview">
+            EIP-3085 是一项关于以太坊的改进提案，旨在为以太坊钱包提供一种新的标准化机制，使得用户能够更加方便和安全地进行 加密货币交易的签名操作，同时增强用户对 签名消息 的理解和控制。
+核心目标
+EIP-3085 的主要目标是通过改进以太坊钱包中的 消息签名 机制，使得用户在与 DApp 或其他服务交互时，可以更加明确地看到自己签名的内容，从而更好地控制和保护自己的隐私。
+关键内容
+
+
+消息......
+        </div>
+    </a>
+    
+        <p class="post-meta" style="margin: 10px 0;">
+            Posted by 江涛 on
+            2025-04-10
+        </p>
+        <div class="tags">
+            
+              <a href="/jtblogs/tags/#Web3" title="Web3">Web3</a>
+            
+        </div>
+    
+
+</div>
+<hr>
+
+<div class="post-preview">
+
+    <a href="/jtblogs/article/以太坊-EIP-1102/">
+        <h2 class="post-title">
+                                 
+            以太坊-EIP-1102
+        </h2>
+        <h3 class="post-subtitle">
+            
+        </h3>
+        <div class="post-content-preview">
+            EIP-1102 是一项以太坊改进提案，旨在解决以太坊浏览器与用户隐私之间的平衡问题。它提出了一种新的方法，让用户在使用 DApp（去中心化应用）时，更加透明地控制和授权哪些信息可以被访问，尤其是在涉及浏览器本地存储的情况下。
+核心目标
+EIP-1102 的目标是 改善用户隐私控制，尤其是在用户与以太坊浏览器（例如 MetaMask）互动时，确保用户能够明确知道哪些数据正在被访问，以及它们可......
+        </div>
+    </a>
+    
+        <p class="post-meta" style="margin: 10px 0;">
+            Posted by 江涛 on
+            2025-04-10
+        </p>
+        <div class="tags">
+            
+              <a href="/jtblogs/tags/#Web3" title="Web3">Web3</a>
+            
+        </div>
+    
+
+</div>
+<hr>
+
+<div class="post-preview">
+
+    <a href="/jtblogs/article/以太坊-EIP-707/">
+        <h2 class="post-title">
+                                 
+            以太坊-EIP-707
+        </h2>
+        <h3 class="post-subtitle">
+            
+        </h3>
+        <div class="post-content-preview">
+            EIP 707 是以太坊改进提案（Ethereum Improvement Proposal）中的一部分，旨在为以太坊引入一种新的 “验证者奖励” 机制。其主要目标是优化和改进以太坊网络的共识机制，以激励更多的验证者参与到网络的共识中，并提升网络的安全性。
+EIP 707 提出的机制可以大致理解为在以太坊的权益证明（PoS）机制中，为参与网络验证的节点提供更多的激励。具体来说，这个提案在以下......
+        </div>
+    </a>
+    
+        <p class="post-meta" style="margin: 10px 0;">
+            Posted by 江涛 on
+            2025-04-10
+        </p>
+        <div class="tags">
+            
+              <a href="/jtblogs/tags/#Web3" title="Web3">Web3</a>
+            
+        </div>
+    
+
+</div>
+<hr>
+
+<div class="post-preview">
+
+    <a href="/jtblogs/article/EIP-1193/">
+        <h2 class="post-title">
+                                 
+            以太坊 EIP-1193
+        </h2>
+        <h3 class="post-subtitle">
+            
+        </h3>
+        <div class="post-content-preview">
+            EIP-1193 提供的标准化接口可以广泛应用于各种与以太坊相关的 Web 应用中，特别是在去中心化应用（DApp）中。以下是一些常见的使用场景：
+1. 连接以太坊钱包
+最常见的应用场景是通过 Web 应用与用户的钱包（如 MetaMask）进行连接。通过 eth_requestAccounts 方法，Web 应用可以请求用户的账户信息，并在用户授权后建立连接。
+场景示例：
+
+在去中心化交易......
+        </div>
+    </a>
+    
+        <p class="post-meta" style="margin: 10px 0;">
+            Posted by 江涛 on
+            2025-04-10
+        </p>
+        <div class="tags">
+            
+              <a href="/jtblogs/tags/#Web3" title="Web3">Web3</a>
+            
+        </div>
+    
+
+</div>
+<hr>
+
+<div class="post-preview">
+
+    <a href="/jtblogs/article/以太坊-EIP-747/">
+        <h2 class="post-title">
+                                 
+            以太坊 EIP-747
+        </h2>
+        <h3 class="post-subtitle">
+            
+        </h3>
+        <div class="post-content-preview">
+            EIP-747 是一项以太坊改进提案，旨在为以太坊账户引入 Human-Readable（可读性强的） Ethereum Name System (ENS) 地址 的支持。它的核心目标是简化和改善以太坊地址的使用，特别是通过 ENS 的集成，使得地址更具可读性，从而减少用户在处理和输入地址时可能出现的错误。
+核心目标
+EIP-747 的目标是让 以太坊地址 变得更加 用户友好，特别是在需要输......
+        </div>
+    </a>
+    
+        <p class="post-meta" style="margin: 10px 0;">
+            Posted by 江涛 on
+            2025-04-02
+        </p>
+        <div class="tags">
+            
+              <a href="/jtblogs/tags/#Web3" title="Web3">Web3</a>
+            
+        </div>
+    
+
+</div>
+<hr>
+
+
+
+<!-- Pager -->
+
+<ul class="pager">
+    
+    
+        <li class="next">
+            <a href="/jtblogs/archives/2/">Older Posts &rarr;</a>
+        </li>
+    
+</ul>
+
+
+
+                <br>
+
+                <!-- require APlayer -->
+                
+
+                <!-- 如果开启评论功能 -->
+                
+            </div>
+
+          <!-- Sidebar Container -->
+<div class="
+    col-lg-3 col-lg-offset-0
+    col-md-3 col-md-offset-0
+    col-sm-12
+    col-xs-12
+    sidebar-container
+">
+    
+        <!-- Featured Tags -->
+
+<section>
+    <!-- no hr -->
+    <h5><a href="/jtblogs/tags/">FEATURED TAGS</a></h5>
+    <div class="tags">
+        
+            
+            <a href="/jtblogs/tags/#css" title="css" rel="5">css</a>
+            
+        
+            
+            <a href="/jtblogs/tags/#js" title="js" rel="5">js</a>
+            
+        
+            
+            <a href="/jtblogs/tags/#Web3" title="Web3" rel="5">Web3</a>
+            
+        
+            
+            <a href="/jtblogs/tags/#nodejs" title="nodejs" rel="11">nodejs</a>
+            
+        
+            
+            <a href="/jtblogs/tags/#Webpack" title="Webpack" rel="7">Webpack</a>
+            
+        
+            
+            <a href="/jtblogs/tags/#HTTP" title="HTTP" rel="1">HTTP</a>
+            
+        
+            
+            <a href="/jtblogs/tags/#react" title="react" rel="5">react</a>
+            
+        
+            
+            <a href="/jtblogs/tags/#nginx" title="nginx" rel="1">nginx</a>
+            
+        
+            
+            <a href="/jtblogs/tags/#webpack" title="webpack" rel="2">webpack</a>
+            
+        
+            
+            <a href="/jtblogs/tags/#性能优化" title="性能优化" rel="1">性能优化</a>
+            
+        
+            
+            <a href="/jtblogs/tags/#浏览器" title="浏览器" rel="1">浏览器</a>
+            
+        
+    </div>
+</section>
+
+        <hr>
+    
+        <!-- Short About -->
+<section class="visible-md visible-lg">
+    <h5><a href="/jtblogs/about/">ABOUT ME</a></h5>
+    <div class="short-about">
+
+        
+            <img id = "avatar_pic" src="/jtblogs/img/avatar/ironman.png" />
+        
+
+        
+            <p>Stay hungry,Stay foolish</p>
+        
+
+        <!-- SNS Link -->
+        <ul class="list-inline">
+            
+            
+            
+
+            
+
+            
+
+            
+                <li>
+                    <a target="_blank"  href="https://github.com/taojiangcb">
+                        <span class="fa-stack fa-lg">
+                            <i class="fa fa-circle fa-stack-2x"></i>
+                            <i class="fa fa-github fa-stack-1x fa-inverse"></i>
+                        </span>
+                    </a>
+                </li>
+            
+            
+            
+            
+        </ul>
+    </div>
+</section>
+
+        <hr>
+    
+        
+  <h5>RECENT POSTS</h3>
+  <div class="widget">
+    <ul>
+      
+        <li>
+          <a href="/jtblogs/article/性能优化-预加载/">性能优化-预加载</a>
+        </li>
+      
+        <li>
+          <a href="/jtblogs/article/Webpack-Compiler-hooks-是什么/">Webpack Compiler.hooks 是什么</a>
+        </li>
+      
+        <li>
+          <a href="/jtblogs/article/Webpack-的生命周期/">Webpack 的生命周期</a>
+        </li>
+      
+        <li>
+          <a href="/jtblogs/article/Webpack-sideEffect/">Webpack sideEffect</a>
+        </li>
+      
+        <li>
+          <a href="/jtblogs/article/Webpack-中的shaking/">Webpack 中的shaking</a>
+        </li>
+      
+    </ul>
+  </div>
+
+        <hr>
+    
+        <!-- Friends Blog -->
+
+<h5>FRIENDS</h5>
+<ul class="list-inline">
+
+    
+</ul>
+
+        <hr>
+    
+        
+    <h5>ARCHIVES</h5>
+    <div class="widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/jtblogs/archives/2025/06/">June 2025</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/jtblogs/archives/2025/04/">April 2025</a><span class="archive-list-count">9</span></li><li class="archive-list-item"><a class="archive-list-link" href="/jtblogs/archives/2025/01/">January 2025</a><span class="archive-list-count">12</span></li><li class="archive-list-item"><a class="archive-list-link" href="/jtblogs/archives/2024/12/">December 2024</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/jtblogs/archives/2023/05/">May 2023</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/jtblogs/archives/2023/01/">January 2023</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/jtblogs/archives/2022/08/">August 2022</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/jtblogs/archives/2022/07/">July 2022</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/jtblogs/archives/2022/01/">January 2022</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/jtblogs/archives/2021/09/">September 2021</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/jtblogs/archives/2021/02/">February 2021</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/jtblogs/archives/2020/03/">March 2020</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/jtblogs/archives/2020/01/">January 2020</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/jtblogs/archives/2019/12/">December 2019</a><span class="archive-list-count">10</span></li></ul>
+    </div>
+
+        <hr>
+    
+</div>
+
+        
+    </div>
+</div>
+
+
+    <!-- Footer -->
+    <!-- Footer -->
+<footer>
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+                <ul class="list-inline text-center">
+                    
+                            
+                                    
+
+                                            
+
+                                                    
+
+                                                            
+                                                                <li>
+                                                                    <a target="_blank"
+                                                                        href="https://github.com/taojiangcb">
+                                                                        <span class="fa-stack fa-lg">
+                                                                            <i class="fa fa-circle fa-stack-2x"></i>
+                                                                            <i
+                                                                                class="fa fa-github fa-stack-1x fa-inverse"></i>
+                                                                        </span>
+                                                                    </a>
+                                                                </li>
+                                                                
+
+                                                                    
+
+                </ul>
+
+                <p class="copyright text-muted">
+                    Copyright &copy; 江涛
+                        2025
+                            <br>
+                            Theme by <a href="http://beantech.org">BeanTech</a>
+                            <span style="display: inline-block; margin: 0 5px;">
+                                <i class="fa fa-heart"></i>
+                            </span>
+                            re-Ported by <a href="https://taojiangcb.github.io/jtblogs">江涛</a> |
+                            <iframe style="margin-left: 2px; margin-bottom:-5px;" frameborder="0" scrolling="0"
+                                width="91px" height="20px"
+                                src="https://ghbtns.com/github-btn.html?user=taojiangcb&repo=jtblogs&type=star&count=true">
+                            </iframe>
+                </p>
+                <p class="copyright text-muted" style="margin:0">
+                    <script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+                    <span id="busuanzi_container_site_pv">
+                        总访问量<span id="busuanzi_value_site_pv"></span>次
+                    </span>
+                    <span id="busuanzi_container_site_uv">
+                        总访客数<span id="busuanzi_value_site_uv"></span>人
+                    </span>
+                </p>
+            </div>
+        </div>
+    </div>
+</footer>
+
+<!-- jQuery -->
+<script src="/jtblogs/js/jquery.min.js"></script>
+
+    <!-- Bootstrap Core JavaScript -->
+    <script src="/jtblogs/js/bootstrap.min.js"></script>
+
+        <!-- Custom Theme JavaScript -->
+        <script src="/jtblogs/js/hux-blog.min.js"></script>
+
+
+            <!-- async load function -->
+            <script>
+                function async(u, c) {
+                    var d = document, t = 'script',
+                        o = d.createElement(t),
+                        s = d.getElementsByTagName(t)[0];
+                    o.src = u;
+                    if (c) { o.addEventListener('load', function (e) { c(null, e); }, false); }
+                    s.parentNode.insertBefore(o, s);
+                }
+            </script>
+
+            <!-- 
+     Because of the native support for backtick-style fenced code blocks 
+     right within the Markdown is landed in Github Pages, 
+     From V1.6, There is no need for Highlight.js, 
+     so Huxblog drops it officially.
+
+     - https://github.com/blog/2100-github-pages-now-faster-and-simpler-with-jekyll-3-0  
+     - https://help.github.com/articles/creating-and-highlighting-code-blocks/    
+-->
+            <!--
+    <script>
+        async("http://cdn.bootcss.com/highlight.js/8.6/highlight.min.js", function(){
+            hljs.initHighlightingOnLoad();
+        })
+    </script>
+    <link href="http://cdn.bootcss.com/highlight.js/8.6/styles/github.min.css" rel="stylesheet">
+-->
+
+
+            <!-- jquery.tagcloud.js -->
+            <script>
+                // only load tagcloud.js in tag.html
+                if ($('#tag_cloud').length !== 0) {
+                    async("https://taojiangcb.github.io/jtblogs/js/jquery.tagcloud.js", function () {
+                        $.fn.tagcloud.defaults = {
+                            //size: {start: 1, end: 1, unit: 'em'},
+                            color: { start: '#bbbbee', end: '#0085a1' },
+                        };
+                        $('#tag_cloud a').tagcloud();
+                    })
+                }
+            </script>
+
+            <!--fastClick.js -->
+            <script>
+                async("https://cdn.bootcss.com/fastclick/1.0.6/fastclick.min.js", function () {
+                    var $nav = document.querySelector("nav");
+                    if ($nav) FastClick.attach($nav);
+                })
+            </script>
+
+
+            <!-- Google Analytics -->
+
+            
+                <script>
+                    // dynamic User by Hux
+                    var _gaId = 'UA-XXXXXXXX-X';
+                    var _gaDomain = 'yoursite';
+
+                    // Originial
+                    (function (i, s, o, g, r, a, m) {
+                        i['GoogleAnalyticsObject'] = r; i[r] = i[r] || function () {
+                            (i[r].q = i[r].q || []).push(arguments)
+                        }, i[r].l = 1 * new Date(); a = s.createElement(o),
+                            m = s.getElementsByTagName(o)[0]; a.async = 1; a.src = g; m.parentNode.insertBefore(a, m)
+                    })(window, document, 'script', '//www.google-analytics.com/analytics.js', 'ga');
+
+                    ga('create', _gaId, _gaDomain);
+                    ga('send', 'pageview');
+                </script>
+
+                
+
+
+                    <!-- Baidu Tongji -->
+                    
+                        <script>
+                            // dynamic User by Hux
+                            var _baId = 'xxx';
+
+                            // Originial
+                            var _hmt = _hmt || [];
+                            (function () {
+                                var hm = document.createElement("script");
+                                hm.src = "//hm.baidu.com/hm.js?" + _baId;
+                                var s = document.getElementsByTagName("script")[0];
+                                s.parentNode.insertBefore(hm, s);
+                            })();
+                        </script>
+                        
+
+
+	<a id="rocket" href="#top" class=""></a>
+	<script type="text/javascript" src="/jtblogs/js/totop.js?v=1.0.0" async=""></script>
+    <script type="text/javascript" src="/jtblogs/js/toc.js?v=1.0.0" async=""></script>
+<!-- Image to hack wechat -->
+<img src="https://taojiangcb.github.io/jtblogs/img/icon_wechat.png" width="0" height="0" />
+<!-- Migrate from head to bottom, no longer block render and still work -->
+
+</body>
+
+</html>

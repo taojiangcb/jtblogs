@@ -1,0 +1,700 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<!-- Head tag -->
+<head><meta name="generator" content="Hexo 3.9.0">
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="google-site-verification" content="xBT4GhYoi5qRD5tr338pgPM5OWHHIDR6mNg1a3euekI">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content>
+    <meta name="keyword" content>
+    <link rel="shortcut icon" href="/jtblogs/favicon.ico">
+    <!-- Place this tag in your head or just before your close body tag. -->
+    <script async defer src="https://buttons.github.io/buttons.js"></script>
+    <title>
+        
+          css专业素养 - 江涛 | Blog
+        
+    </title>
+
+    <link rel="canonical" href="https://taojiangcb.github.io/jtblogs/jtblogs/article/css专业素养/">
+
+    <!-- Bootstrap Core CSS -->
+    <link rel="stylesheet" href="/jtblogs/css/bootstrap.min.css">
+
+    <!-- Custom CSS --> 
+    <link rel="stylesheet" href="/jtblogs/css/beantech.min.css">
+
+    <link rel="stylesheet" href="/jtblogs/css/donate.css">
+    
+    <!-- Pygments Highlight CSS -->
+    <link rel="stylesheet" href="/jtblogs/css/highlight.css">
+
+    <link rel="stylesheet" href="/jtblogs/css/widget.css">
+
+    <link rel="stylesheet" href="/jtblogs/css/rocket.css">
+
+    <link rel="stylesheet" href="/jtblogs/css/signature.css">
+
+    <link rel="stylesheet" href="/jtblogs/css/toc.css">
+
+    <!-- Custom Fonts -->
+    <!-- <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css" rel="stylesheet" type="text/css"> -->
+    <!-- Hux change font-awesome CDN to qiniu -->
+    <link href="https://cdn.staticfile.org/font-awesome/4.5.0/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+
+
+    <!-- Hux Delete, sad but pending in China
+    <link href='http://fonts.googleapis.com/css?family=Lora:400,700,400italic,700italic' rel='stylesheet' type='text/css'>
+    <link href='http://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800' rel='stylesheet' type='text/
+    css'>
+    -->
+
+
+    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+        <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+        <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+    <![endif]-->
+
+    <!-- ga & ba script hoook -->
+    <script></script>
+</head>
+
+
+<!-- hack iOS CSS :active style -->
+<body ontouchstart="">
+	<!-- Modified by Yu-Hsuan Yen -->
+<!-- Post Header -->
+<style type="text/css">
+    header.intro-header{
+        
+            background-image: url('/jtblogs/img/article_header/article_bg.jpg')
+            /*post*/
+        
+    }
+    
+</style>
+
+<header class="intro-header" >
+    <!-- Signature -->
+    <div id="signature">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+                
+                    <div class="post-heading">
+                        <div class="tags">
+                            
+                              <a class="tag" href="/jtblogs/tags/#css" title="css">css</a>
+                            
+                        </div>
+                        <h1>css专业素养</h1>
+                        <h2 class="subheading"></h2>
+                        <span class="meta">
+                            Posted by 江涛 on
+                            2019-12-29
+                        </span>
+                    </div>
+                
+
+
+                </div>
+            </div>
+        </div>
+    </div>
+</header>
+
+	
+    <!-- Navigation -->
+<nav class="navbar navbar-default navbar-custom navbar-fixed-top">
+    <div class="container-fluid">
+        <!-- Brand and toggle get grouped for better mobile display -->
+        <div class="navbar-header page-scroll">
+            <button type="button" class="navbar-toggle">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href="/jtblogs/">江涛</a>
+        </div>
+
+        <!-- Collect the nav links, forms, and other content for toggling -->
+        <!-- Known Issue, found by Hux:
+            <nav>'s height woule be hold on by its content.
+            so, when navbar scale out, the <nav> will cover tags.
+            also mask any touch event of tags, unfortunately.
+        -->
+        <div id="huxblog_navbar">
+            <div class="navbar-collapse">
+                <ul class="nav navbar-nav navbar-right">
+                    <li>
+                        <a href="/jtblogs/">Home</a>
+                    </li>
+
+                    
+
+                        
+                    
+
+                        
+                    
+
+                        
+                    
+
+                        
+                    
+
+                        
+                    
+
+                        
+                    
+
+                        
+                        <li>
+                            <a href="/jtblogs/tags/">Tags</a>
+                        </li>
+                        
+                    
+
+                        
+                        <li>
+                            <a href="/jtblogs/about/">About</a>
+                        </li>
+                        
+                    
+
+                        
+                        <li>
+                            <a href="/jtblogs/archive/">Archives</a>
+                        </li>
+                        
+                    
+                    
+                </ul>
+            </div>
+        </div>
+        <!-- /.navbar-collapse -->
+    </div>
+    <!-- /.container -->
+</nav>
+<script>
+    // Drop Bootstarp low-performance Navbar
+    // Use customize navbar with high-quality material design animation
+    // in high-perf jank-free CSS3 implementation
+    var $body   = document.body;
+    var $toggle = document.querySelector('.navbar-toggle');
+    var $navbar = document.querySelector('#huxblog_navbar');
+    var $collapse = document.querySelector('.navbar-collapse');
+
+    $toggle.addEventListener('click', handleMagic)
+    function handleMagic(e){
+        if ($navbar.className.indexOf('in') > 0) {
+        // CLOSE
+            $navbar.className = " ";
+            // wait until animation end.
+            setTimeout(function(){
+                // prevent frequently toggle
+                if($navbar.className.indexOf('in') < 0) {
+                    $collapse.style.height = "0px"
+                }
+            },400)
+        }else{
+        // OPEN
+            $collapse.style.height = "auto"
+            $navbar.className += " in";
+        }
+    }
+</script>
+
+
+    <!-- Main Content -->
+    <!-- Modify by Yu-Hsuan Yen -->
+
+<!-- Post Content -->
+<article>
+    <div class="container">
+        <div class="row">
+
+            <!-- Post Container -->
+            <div class="
+                col-lg-8 col-lg-offset-2
+                col-md-10 col-md-offset-1
+                post-container">
+
+                <p>cascading style sheet</p>
+<p>层叠样式表</p>
+<p>1.引入css</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line">&lt;html lang=&quot;en&quot;&gt;</span><br><span class="line">   &lt;head&gt;</span><br><span class="line">       &lt;meta charset=&quot;UTF-8&quot;&gt;</span><br><span class="line">       &lt;title&gt;Document&lt;/title&gt;</span><br><span class="line">       &lt;!--内部样式--&gt;</span><br><span class="line">       &lt;style type=&quot;text/css&quot;&gt;</span><br><span class="line">           div&#123;</span><br><span class="line">               width:100px;</span><br><span class="line">               height:100px;</span><br><span class="line">               background-color:green;</span><br><span class="line">           &#125;</span><br><span class="line">       &lt;/style&gt;</span><br><span class="line">       </span><br><span class="line">       &lt;!-- 外部引入 --&gt;</span><br><span class="line">       &lt;link rel=&quot;stylesheet&quot; href=&quot;lesson3.css&quot;,type=&quot;text/css&quot; /&gt;</span><br><span class="line">       </span><br><span class="line">   &lt;/head&gt;</span><br><span class="line">   </span><br><span class="line">   &lt;body&gt;</span><br><span class="line">       &lt;!-- 行间样式--&gt;</span><br><span class="line">       &lt;div style=&quot;width:100px;height=100px;background-color:red;&quot;&gt;&lt;/div&gt;</span><br><span class="line">   &lt;/body&gt;</span><br><span class="line">&lt;/html&gt;</span><br></pre></td></tr></table></figure>
+<p>lesson3.css</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">div&#123;</span><br><span class="line">    width:100px;</span><br><span class="line">    height:100px;</span><br><span class="line">    border-radius:50%;</span><br><span class="line">    background-color:black;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>下载策略</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">1.浏览器 同时开始多个线性下载 文件</span><br></pre></td></tr></table></figure>
+<p>css 选择器</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br></pre></td><td class="code"><pre><span class="line">1. id选择器 --- 一一对应</span><br><span class="line">&lt;div id=&quot;only&quot;&gt;123&lt;/div&gt;</span><br><span class="line"></span><br><span class="line">#only &#123;</span><br><span class="line">    background-color:red</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">2. class 选择器 ---- 多对多关系</span><br><span class="line">&lt;div class=&quot;demo&quot;&gt;&lt;/div&gt;</span><br><span class="line">.demo &#123; </span><br><span class="line">    background-color:&quot;yellow&quot; </span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">3.标签选择器</span><br><span class="line">&lt;div&gt;123&lt;div&gt;</span><br><span class="line"></span><br><span class="line">div&#123;</span><br><span class="line">    background-color:&quot;black&quot;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">4.通配符选择器 (any 所有的标签)</span><br><span class="line">&lt;span&gt;123&lt;/span&gt;</span><br><span class="line">&lt;div&gt;234&lt;/div&gt;</span><br><span class="line">&lt;strong&gt;1111&lt;/strong&gt;</span><br><span class="line"></span><br><span class="line">*&#123;</span><br><span class="line">    background-color:&quot;green&quot;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">5.属性选择器</span><br><span class="line">&lt;div id=&quot;only&quot; class=&quot;demo&quot;&gt;123&lt;/div&gt;</span><br><span class="line">&lt;div id=&quot;only1&quot;&gt;234&lt;/div&gt;</span><br><span class="line"></span><br><span class="line">[id] &#123;</span><br><span class="line">    background-color:red</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">[id=&quot;only&quot;] &#123;</span><br><span class="line">    background-color:red</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">6.!important 只能加载属性上，不能加在样式上</span><br><span class="line">div&#123;</span><br><span class="line">    background-color:green!important </span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">7.父子选择器 （直接，间接都生效）</span><br><span class="line">&lt;div&gt;</span><br><span class="line">    &lt;span&gt;123123123&lt;/span&gt;</span><br><span class="line">&lt;/div&gt;</span><br><span class="line">&lt;span&gt;123123&lt;/span&gt;</span><br><span class="line"></span><br><span class="line">div span &#123;</span><br><span class="line">    background-color:red;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">---------------------</span><br><span class="line"></span><br><span class="line">&lt;div class=&quot;wapper&quot;&gt;</span><br><span class="line">    &lt;strong class=&quot;box&quot;&gt;</span><br><span class="line">        &lt;em&gt;234&lt;/em&gt;</span><br><span class="line">    &lt;strong&gt;</span><br><span class="line">&lt;/div&gt;</span><br><span class="line"></span><br><span class="line">.wapper .box em&#123;</span><br><span class="line">    background-color:red</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">8.直接子元素选择器</span><br><span class="line">&lt;div&gt;</span><br><span class="line">    &lt;em&gt;1&lt;/em&gt;</span><br><span class="line">    &lt;strong&gt;</span><br><span class="line">        &lt;em&gt;2&lt;/em&gt;</span><br><span class="line">    &lt;/strong&gt;</span><br><span class="line">&lt;div&gt;</span><br><span class="line"></span><br><span class="line">div &gt; em &#123;</span><br><span class="line">    background-color:green;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">9.并列选择器</span><br><span class="line">&lt;div&gt;1&lt;/div&gt;</span><br><span class="line">&lt;div class=&quot;demo&quot;&gt;2&lt;/div&gt;</span><br><span class="line">&lt;p class=&quot;demo&quot;&gt;&lt;/p&gt;</span><br><span class="line"></span><br><span class="line">div.demo&#123;</span><br><span class="line">    background-color:red;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">10.分组选择器</span><br><span class="line">&lt;em&gt;&lt;/em&gt;</span><br><span class="line">&lt;strong&gt;&lt;/strong&gt;</span><br><span class="line">&lt;span&gt;&lt;/span&gt;</span><br><span class="line"></span><br><span class="line">em,strong,span &#123;</span><br><span class="line">    background-color:red</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">9.选择标签的优先级 important &gt; 行间样式 &gt; id选择器 &gt; (class选择器 == 属性选择器) &gt; 标签选择器 &gt; 统配符选择器</span><br><span class="line">&lt;div id=&quot;only&quot; class=&quot;demo&quot;&gt;&lt;/div&gt;</span><br><span class="line">#only&#123;</span><br><span class="line">    background-color:red;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">.demo&#123;</span><br><span class="line">    background-color:green;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>css 自又向左选择顺序</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">selection div ul li a em &#123;</span><br><span class="line">    background-color:red</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>css 权重</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line">!important</span><br><span class="line">行间样式                256进制     1000</span><br><span class="line">id                      256进制     100</span><br><span class="line">class|属性|伪类         256进制     10</span><br><span class="line">标签|微元素             256进制     1</span><br><span class="line">通配符                              0</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">------------------</span><br><span class="line">同一行样式定义权重相加</span><br><span class="line">&lt;div class=&quot;classDiv&quot; id=&quot;idDiv&quot;&gt; </span><br><span class="line">    &lt;p class=&quot;classP&quot; id=&quot;idP&quot;&gt;&lt;/p&gt;</span><br><span class="line">&lt;/div&gt;</span><br><span class="line"></span><br><span class="line">100   +  1</span><br><span class="line">#idDiv p &#123;</span><br><span class="line">    background-color:red</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">10     +     10</span><br><span class="line">.classDiv .classP &#123;</span><br><span class="line">    background-color:gren</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>==如果权重相等后来先到，后面会定义的会覆盖之前的==</p>
+<p>复合使用例子</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line">&lt;div class=&quot;wrapper&quot;&gt;</span><br><span class="line">    &lt;div class=&quot;content&quot;&gt;</span><br><span class="line">        &lt;em class=&quot;box&quot; id=&quot;only&quot;&gt;1&lt;/em&gt;</span><br><span class="line">    &lt;/div&gt;</span><br><span class="line">&lt;/div&gt;</span><br><span class="line"></span><br><span class="line">#only &#123;</span><br><span class="line">    background-color:&quot;red&quot;;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">.content em &#123;</span><br><span class="line">    background-color:&apos;green&apos;;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">.wapper &gt; .content &gt; .box &#123;</span><br><span class="line">    background-color:&apos;gray&apos;;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">div.wrapper &gt; div[class=&quot;content&quot;] &gt;div#only.box&#123;</span><br><span class="line">    background-color:blue</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>font 字体</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">font-szie:50px;     其实是设置字体的高度   默认字号16</span><br><span class="line">font-weigth:bolder, lighter,normal,100,200,300,400,500,600,700,800,900</span><br><span class="line">font-style:italic;</span><br><span class="line">font-family:arial;  //互联网通用字体</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">//画三角</span><br><span class="line">width:0;</span><br><span class="line">height:0;</span><br><span class="line">border:100px solid black;</span><br><span class="line">border-left-color:transparent;</span><br><span class="line">border-top-color:transparent;</span><br><span class="line">border-right-color:#00f;</span><br></pre></td></tr></table></figure>
+<h1><span id="盒子模型-层模型-习惯-企业开发经验">盒子模型 层模型 习惯 企业开发经验</span></h1>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">div &#123;</span><br><span class="line">    border:1px solder black;</span><br><span class="line">   text-align:center;</span><br><span class="line">   text-line:20px;                  //行高</span><br><span class="line">   height:200px;    </span><br><span class="line">   text-indent:2em;                 //首行文本缩减</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">span &#123;</span><br><span class="line">    text-decoration:node;underline;overline;</span><br><span class="line">    color:rgb(0,0,238)</span><br><span class="line">    cursor:pointer(小手);help(问号);e-resize</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>==1em = 1 * font-size; 该元素的font-size<br>
+line-height:1.2em   1.2 的行高==</p>
+<p>伪类选择器</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">//鼠标悬浮</span><br><span class="line">a:hover&#123;</span><br><span class="line">    background-color:red</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">//设置超链接a在其链接地址已被访问过时的样式</span><br><span class="line">a:visited &#123; &#125;</span><br><span class="line"></span><br><span class="line">设置元素在被用户激活（在鼠标点击与释放之间发生的事件）时的样式。</span><br><span class="line">IE6,7只支持a元素的:active，从IE8开始支持其它元素的:active。</span><br><span class="line">a:active &#123; &#125;</span><br><span class="line"></span><br><span class="line">//设置对象在成为输入焦点（该对象的onfocus事件发生）时的样式。</span><br><span class="line">webkit内核浏览器会默认给:focus状态的元素加上outline的样式。</span><br><span class="line">input:facus &#123;&#125;</span><br></pre></td></tr></table></figure>
+<h3><span id="行级元素">行级元素</span></h3>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">feature: 内容决定元素所占的位置,不可以通过css改变宽高</span><br><span class="line">span strong em a del</span><br><span class="line"></span><br><span class="line">span&#123;</span><br><span class="line">    display:inline</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3><span id="块级元素">块级元素</span></h3>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">feature: 独占一行，可以通过css改变宽和高</span><br><span class="line">div p ul li ol form address</span><br><span class="line"></span><br><span class="line">div&#123;</span><br><span class="line">    display:block</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3><span id="行级块元素">行级块元素</span></h3>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">feature: 内容决定大小</span><br><span class="line">         可以改宽高</span><br><span class="line">         </span><br><span class="line">&lt;img src=&apos;fy.jpg&apos;/&gt;</span><br><span class="line"></span><br><span class="line">img&#123;</span><br><span class="line">    display:inline-block;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>==凡是带有inline 的元素都有文字特性 带有文字分隔符==</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">//去掉换行和空格</span><br><span class="line">&lt;img src=&quot;fy.jpg&quot;/&gt;&lt;img src=&quot;fy.jpg&quot;/&gt;&lt;img src=&quot;fy.jpg&quot;/&gt;&lt;img src=&quot;fy.jpg&quot;/&gt;</span><br></pre></td></tr></table></figure>
+<p>==先写css 后写html ==</p>
+<ol>
+<li>css 先定义功能  css 工具库</li>
+<li>后选配功能</li>
+<li>标签选择器 初始化样式用的（自定义标签）</li>
+<li>通配符选择器最大的好处就是 初始化所有的标签</li>
+</ol>
+<h3><span id="盒子模型">盒子模型</span></h3>
+<ol>
+<li>盒子的三大部分</li>
+</ol>
+<ul>
+<li>盒子壁    border</li>
+<li>内边距    padding</li>
+<li>盒子模型  width + height;</li>
+</ul>
+<h5><span id="四个组成部分">四个组成部分</span></h5>
+<table>
+<thead>
+<tr>
+<th>外边距</th>
+<th>边</th>
+<th>内边距</th>
+<th>content</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>margin</td>
+<td>border</td>
+<td>padding</td>
+<td>content</td>
+</tr>
+</tbody>
+</table>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">一个值:上下左右</span><br><span class="line">padding:100px </span><br><span class="line">两个值 上下，左右</span><br><span class="line">padding:100px 150px</span><br><span class="line">三个值 上，左右，下</span><br><span class="line">padding:100px 150px 100</span><br><span class="line">四个值:上，有，下，左</span><br><span class="line">padding:100px,100px,100px,100px</span><br><span class="line"></span><br><span class="line">单值设置</span><br><span class="line"></span><br><span class="line">padding-left:100px;</span><br><span class="line">padding-right:100px;</span><br><span class="line">padding-top:100px;</span><br><span class="line">padding-bottom:100px;</span><br></pre></td></tr></table></figure>
+<h3><span id="怪异和模型-amp-标准盒子模型详解">怪异和模型 &amp; 标准盒子模型详解</span></h3>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">box-sizing:content-box||border-box||inherit</span><br><span class="line"></span><br><span class="line">box-sizing:content-box 标准模式解析计算</span><br><span class="line"></span><br><span class="line">box-sizing:border-box</span><br><span class="line">将采用怪异和模型</span><br></pre></td></tr></table></figure>
+<h3><span id="弹性盒子模型">弹性盒子模型</span></h3>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br></pre></td><td class="code"><pre><span class="line">定义flex</span><br><span class="line"></span><br><span class="line">display:flex|inline-flex(伸缩和模型最新版本)</span><br><span class="line"></span><br><span class="line">display:box|inline-box(伸缩和模型老版本)</span><br><span class="line"></span><br><span class="line">1.css columns 在弹性和模型中起不了作用</span><br><span class="line">2.float clear 和vertical-align在flex中不起作用</span><br><span class="line"></span><br><span class="line">### flex 布局</span><br><span class="line">- content 包裹元素</span><br><span class="line">  - flex-direction</span><br><span class="line">    - flex-direction: row | row-reverse | column | column-reverse;</span><br><span class="line">  - flex-wrap</span><br><span class="line">    -   flex-wrap: nowrap | wrap | wrap-reverse;</span><br><span class="line">  - flex-flow flex-flow属性是flex-direction属性和flex-wrap属性的简写形式，默认值为row nowrap。</span><br><span class="line">    -   flex-flow: &lt;flex-direction&gt; &lt;flex-wrap&gt;;</span><br><span class="line">  - justify-content justify-content属性定义了项目在主轴上的对齐方式。</span><br><span class="line">    -   justify-content: flex-start | flex-end | center | space-between | space-around;</span><br><span class="line">  - align-items align-items属性定义项目在交叉轴上如何对齐。(垂直对齐))</span><br><span class="line">    - align-items: flex-start | flex-end | center | baseline | stretch;</span><br><span class="line">  - align-content</span><br><span class="line">    - align-content: flex-start | flex-end | center | space-between | space-around | stretch;</span><br><span class="line"></span><br><span class="line">- item 子级元素</span><br><span class="line">    - order</span><br><span class="line">      -   order: &lt;integer&gt;; order属性定义项目的排列顺序。数值越小，排列越靠前，默认为0。</span><br><span class="line">    - flex-grow</span><br><span class="line">      -   flex-grow: &lt;number&gt;; /* default 0 */ flex-grow属性定义项目的放大比例，默认为0，即如果存在剩余空间，也不放大。</span><br><span class="line">    - flex-shrink</span><br><span class="line">      -   flex-shrink: &lt;number&gt;; /* default 1 */ flex-shrink属性定义了项目的缩小比例，默认为1，即如果空间不足，该项目将缩小。</span><br><span class="line">    - flex-basis</span><br><span class="line">      -   flex-basis: &lt;length&gt; | auto; /* default auto */ 它可以设为跟width或height属性一样的值（比如350px），则项目将占据固定空间。</span><br><span class="line">    - flex 以上三个元素的合并</span><br><span class="line">      -   flex: none | [ &lt;&apos;flex-grow&apos;&gt; &lt;&apos;flex-shrink&apos;&gt;? || &lt;&apos;flex-basis&apos;&gt; ]</span><br><span class="line">    - align-self 自身覆盖 conent 元素的item-align 的属性可以以其他元素达到不一样的对齐方式</span><br><span class="line">      -   align-self: auto | flex-start | flex-end | center | baseline | stretch;</span><br></pre></td></tr></table></figure>
+<p>==和模型的高宽不计算margin==</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">realW = border + padding + width</span><br><span class="line">realH = border + padding + height</span><br></pre></td></tr></table></figure>
+<p>==body 有个默认的margin值 8 个像素==</p>
+<h1><span id="层模型">层模型</span></h1>
+<h3><span id="定位-absolute">定位 absolute</span></h3>
+<p>absolute 绝对定位 脱离原来位置从新定位</p>
+<p>相对于最近的有定位的父级进行定位，否则相对于文档进行定位</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">div&#123;</span><br><span class="line">    position:absolute </span><br><span class="line">    top:100px                   顶部距离</span><br><span class="line">    left:100px                  左边距离</span><br><span class="line">    ========================================</span><br><span class="line">    top:100x                    顶部距离</span><br><span class="line">    right:100px                 右边距离</span><br><span class="line">    opacity:0.5;                //透明度 </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3><span id="定位-relative-相对定位">定位 relative 相对定位</span></h3>
+<p>保留原来位置进行定位（灵魂出窍)</p>
+<p>相对于原来出生的位置进行定位</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">div &#123;</span><br><span class="line">    position:relative</span><br><span class="line">    top:100px                   顶部距离</span><br><span class="line">    left:100px                  左边距离</span><br><span class="line">    ========================================</span><br><span class="line">    top:100x                    顶部距离</span><br><span class="line">    right:100px                 右边距离</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3><span id="定位-fixed-固定定位">定位 fixed 固定定位</span></h3>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">div &#123;</span><br><span class="line">    position:fixed              相对于窗口</span><br><span class="line">    top:100px                   顶部距离</span><br><span class="line">    left:100px                  左边距离</span><br><span class="line">    ========================================</span><br><span class="line">    top:100x                    顶部距离</span><br><span class="line">    right:100px                 右边距离</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>居中固定做法</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">div &#123;</span><br><span class="line">    position:absolute|fixed 相对于文档 </span><br><span class="line">    left:50%;</span><br><span class="line">    top:50%;</span><br><span class="line">    width:100px;</span><br><span class="line">    height:100px;</span><br><span class="line">    background-color:red;</span><br><span class="line">    margin-left:50%;</span><br><span class="line">    marign-top:50%;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>圆形</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">div&#123;</span><br><span class="line">    width:100px;</span><br><span class="line">    height:100px;</span><br><span class="line">    border:10px solid black;</span><br><span class="line">    border-radius:50%</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>两栏布局</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">//要先right 把position 位置让出来。</span><br><span class="line">&lt;div class=&quot;right&quot;&gt;&lt;/div&gt;</span><br><span class="line">&lt;div class=&quot;left&quot;&gt;&lt;/div&gt;</span><br><span class="line">.right &#123;</span><br><span class="line">    position:absolute</span><br><span class="line">    right:0;</span><br><span class="line">    width:100px;</span><br><span class="line">    height:100px;</span><br><span class="line">    background-color:#fcc;</span><br><span class="line">    opacity:0.5;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">.left&#123;</span><br><span class="line">    margin-right:100px;</span><br><span class="line">    height:100px;</span><br><span class="line">    background-color:#123;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>==使用定律==<br>
+==用relative 进行参照物,absolute 进行定位==</p>
+<h1><span id="bfc">BFC</span></h1>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line">垂直的 margin 父子会结合在一起去最大的值。</span><br><span class="line"></span><br><span class="line">&lt;div class=&quot;wrapper&quot;&gt;</span><br><span class="line">    &lt;div class=&quot;content&quot;&gt;&lt;/div&gt;</span><br><span class="line">&lt;/div&gt;</span><br><span class="line"></span><br><span class="line">.wrapper&#123;</span><br><span class="line">    margin-left:100px;</span><br><span class="line">    margin-top:100px;</span><br><span class="line">    width:100px;</span><br><span class="line">    height:100px;</span><br><span class="line">    background-color:black;</span><br><span class="line">    border-top:1px solid red;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">.content&#123;</span><br><span class="line">    margin-left:50px;</span><br><span class="line">    margin-top:150px;</span><br><span class="line">    width:50px;</span><br><span class="line">    height:50px;</span><br><span class="line">    background-color:green;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>解决margin 塌陷的方法</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br></pre></td><td class="code"><pre><span class="line">bfc</span><br><span class="line">block format context</span><br><span class="line">如何触发一个盒子的bfc</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">以下是弥补的方案</span><br><span class="line"></span><br><span class="line">//position:absolute;      //腾出原来的位置浮动</span><br><span class="line">//display:inline-block;   //去掉独占一行</span><br><span class="line">//float:left/right;</span><br><span class="line">//overflow:hidden;        //溢出部分隐藏</span><br><span class="line"></span><br><span class="line">&lt;div class=&quot;wrapper&quot;&gt;</span><br><span class="line">    &lt;div class=&quot;content&quot;&gt;&lt;/div&gt;</span><br><span class="line">&lt;/div&gt;</span><br><span class="line"></span><br><span class="line">.wrapper&#123;</span><br><span class="line">    margin-left:100px;</span><br><span class="line">    margin-top:100px;</span><br><span class="line">    width:100px;</span><br><span class="line">    height:100px;</span><br><span class="line">    background-color:black;</span><br><span class="line">    border-top:1px solid red;</span><br><span class="line">    overflow:hidden;    //溢出部分隐藏</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">.content&#123;</span><br><span class="line">    margin-left:50px;</span><br><span class="line">    margin-top:150px;</span><br><span class="line">    width:50px;</span><br><span class="line">    height:50px;</span><br><span class="line">    background-color:green;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>margin 合并问题不解决，用数学的方式解决，</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">&lt;div class=&quot;demo1&quot;&gt;1&lt;/div&gt;</span><br><span class="line">&lt;div class=&quot;demo2&quot;&gt;2&lt;/div&gt;</span><br><span class="line"></span><br><span class="line">.demo1&#123;</span><br><span class="line">    background-color:red;</span><br><span class="line">    margin-bottom:200px + 100px(demo2 的 margin-top) 300px ;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">.demo2&#123;</span><br><span class="line">    background-color:green;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h4><span id="float-问题">float 问题</span></h4>
+<p>凡是设置了 position:abolute;float:left/right 内核内部会把元素转成inline-block</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br></pre></td><td class="code"><pre><span class="line">1.它能使元素站队</span><br><span class="line">&lt;div class=&apos;wrapper&apos;&gt;</span><br><span class="line">    &lt;div class=&quot;content&quot;&gt;1&lt;/div&gt;</span><br><span class="line">    &lt;div class=&quot;content&quot;&gt;2&lt;/div&gt;</span><br><span class="line">    &lt;div class=&quot;content&quot;&gt;3&lt;/div&gt;</span><br><span class="line">&lt;/div&gt;</span><br><span class="line"></span><br><span class="line">2.浮动元素产生了浮动流</span><br><span class="line">    1. 所有产生了浮动流元素，块级元素看不到他们</span><br><span class="line">    2. 产生了BFC的元素，和文本类属性的元素(inline)以及文本都能看到浮动元素</span><br><span class="line">    </span><br><span class="line">3.浮动流包裹不住</span><br><span class="line">    - p标签css用 clear:both(清楚两边浮动流解决)</span><br><span class="line">&lt;div class=&quot;wrapper&quot;&gt;</span><br><span class="line">    &lt;div class=&quot;content1&quot;&gt;&lt;/div&gt;</span><br><span class="line">    &lt;div class=&quot;content2&quot;&gt;&lt;/div&gt;</span><br><span class="line">    &lt;div class=&quot;content3&quot;&gt;&lt;/div&gt;</span><br><span class="line">    &lt;p&gt;&lt;/p&gt;</span><br><span class="line">&lt;/div&gt;</span><br><span class="line"></span><br><span class="line">.wapper&#123;</span><br><span class="line">    border:1px  solid black;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">.content&#123;</span><br><span class="line">    float:left;</span><br><span class="line">    color:#fff;</span><br><span class="line">    background-color:black;</span><br><span class="line">    width:100px;</span><br><span class="line">    height:100px;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">p&#123;</span><br><span class="line">    border-top:0 solid green;</span><br><span class="line">    clear:both;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h4><span id="伪元素">伪元素</span></h4>
+<p>伪元素天生是行级元素。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br></pre></td><td class="code"><pre><span class="line">&lt;span&gt; 你好 &lt;/span&gt;</span><br><span class="line"></span><br><span class="line">span::before&#123;</span><br><span class="line">    content:&quot;江涛&quot;;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">span::after&#123;</span><br><span class="line">    cotent:&quot;&quot;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">//利用伪元素清楚浮动流，达到浮动包裹的目的</span><br><span class="line">&lt;div class=&quot;wrapper&quot;&gt;</span><br><span class="line">    &lt;div class=&quot;content&quot;&gt;&lt;/div&gt;</span><br><span class="line">    &lt;div class=&quot;content&quot;&gt;&lt;/div&gt;</span><br><span class="line">    &lt;div class=&quot;content&quot;&gt;&lt;/div&gt;</span><br><span class="line">&lt;/div&gt;</span><br><span class="line"></span><br><span class="line">.content&#123;</span><br><span class="line">    float:left;</span><br><span class="line">    width:100px;</span><br><span class="line">    height:100px;</span><br><span class="line">    background-color:black;</span><br><span class="line">    color:#fff;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">.wrapper::after&#123;</span><br><span class="line">    content:&quot;&quot;</span><br><span class="line">    clear:both;</span><br><span class="line">    display:block;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>导航</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br></pre></td><td class="code"><pre><span class="line">&lt;ul class=&quot;nav&quot;&gt;</span><br><span class="line">    &lt;li class=&quot;list-item&quot;&gt;天猫&lt;/li&gt;</span><br><span class="line">    &lt;li class=&quot;list-item&quot;&gt;聚划算&lt;/li&gt;</span><br><span class="line">    &lt;li class=&quot;list-item&quot;&gt;天猫超市&lt;/li&gt;</span><br><span class="line">&lt;/ul&gt;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">.nav &#123;</span><br><span class="line">    list-style:none;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">.nav::after&#123;</span><br><span class="line">    cotent:&quot;&quot;;</span><br><span class="line">    display:block;</span><br><span class="line">    clear:both;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">.nav .list-item&#123;</span><br><span class="line">    float:left;</span><br><span class="line">    margin:0px 10px;</span><br><span class="line">    height:30px;</span><br><span class="line">    line-height:30px;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">.nav .list-item a &#123;</span><br><span class="line">    padding:0,5px;</span><br><span class="line">    color:#f40;</span><br><span class="line">    height:30px;</span><br><span class="line">    font-weight:bold;</span><br><span class="line">    display:inline-block;</span><br><span class="line">    border-radius:15px;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">.nav .list-item a:hover&#123;</span><br><span class="line">    background-color:#f40;</span><br><span class="line">    color:#FFF;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3><span id="双飞翼布局">双飞翼布局</span></h3>
+<h3><span id="弹性和模型">弹性和模型</span></h3>
+<p>样式参考</p>
+<p>flex 布局</p>
+<p><a href="https://www.runoob.com/w3cnote/flex-grammar.html" target="_blank" rel="noopener">https://www.runoob.com/w3cnote/flex-grammar.html</a></p>
+<p><a href="http://www.phpstudy.net/css3/" target="_blank" rel="noopener">http://www.phpstudy.net/css3/</a><br>
+<a href="https://www.html.cn/doc/css3/flex/index.htm" target="_blank" rel="noopener">https://www.html.cn/doc/css3/flex/index.htm</a></p>
+<p>核心样式  旧的</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">display:-webkit-box:</span><br><span class="line">-webkit-box-orient:horizontal;</span><br><span class="line">-webkit-box-pack:center;</span><br><span class="line">-webkit-box-align:center;</span><br></pre></td></tr></table></figure>
+<p>核心样式 新的</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">display:-webkit-flex|-webkit-inline-flex</span><br><span class="line">-webkit-flex-direction: row | row-reverse | column | column-reverse</span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">.col &#123;</span><br><span class="line"> -webkit-column-count:2;        //分裂</span><br><span class="line"> -webkit-column-style:dotted;   //间隔样式</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">//居中</span><br><span class="line">.center &#123;</span><br><span class="line">    display:-webkit-box;</span><br><span class="line">    -webkit-box-pack:center;        //垂直居中</span><br><span class="line">    </span><br><span class="line">    -webkit-box-align:center;   //水平居中</span><br><span class="line">    </span><br><span class="line">    height:300px;</span><br><span class="line">    width:300px;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h1><span id="flexbox">FlexBox</span></h1>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line">&lt;html&gt;</span><br><span class="line">    &lt;head&gt;</span><br><span class="line">        &lt;meta charse=&quot;utf-8&quot;&gt;</span><br><span class="line">        &lt;title&gt;flex box&lt;/title&gt;</span><br><span class="line">        &lt;style type=&quot;text/css&quot;&gt;</span><br><span class="line">            .first &#123;</span><br><span class="line">                height:100px;</span><br><span class="line">                background-color:&quot;aquamarine&quot;;</span><br><span class="line">            &#125;</span><br><span class="line">            .second &#123;</span><br><span class="line">                height:100px;</span><br><span class="line">                background:orign</span><br><span class="line">            &#125;</span><br><span class="line">            .three &#123;</span><br><span class="line">                height:100px;</span><br><span class="line">                background:red;</span><br><span class="line">            &#125;</span><br><span class="line">        &lt;/style&gt;</span><br><span class="line">    &lt;/head&gt;</span><br><span class="line">    &lt;body&gt;</span><br><span class="line">        </span><br><span class="line">    &lt;/body&gt;</span><br><span class="line">&lt;/html&gt;</span><br></pre></td></tr></table></figure>
+<h3><span id="css3-新增选择器">css3 新增选择器</span></h3>
+<p>属性选择器</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line">[att*=val] 全选</span><br><span class="line">[att^=val] 选择首字母 = val</span><br><span class="line">[att$=val] 选择首字母 = val</span><br><span class="line"></span><br><span class="line">是的属性选择器有了通配符的概念</span><br><span class="line"></span><br><span class="line">&lt;style&gt;</span><br><span class="line">    [id*=div] &#123;</span><br><span class="line">        color:red;</span><br><span class="line">    &#125;</span><br><span class="line">&lt;/style&gt;</span><br><span class="line"></span><br><span class="line">&lt;body&gt;</span><br><span class="line">    &lt;div id=&quot;div1&quot;&gt;实例文本1&lt;/div&gt;</span><br><span class="line">    &lt;div id=&quot;div2&quot;&gt;实例文本2&lt;/div&gt;</span><br><span class="line">    &lt;div id=&quot;div3&quot;&gt;实例文本3&lt;/div&gt;</span><br><span class="line">    &lt;div id=&quot;div4&quot;&gt;实例文本4&lt;/div&gt;</span><br><span class="line">    &lt;div id=&quot;div5&quot;&gt;实例文本5&lt;/div&gt;</span><br><span class="line">    &lt;div id=&quot;div6&quot;&gt;实例文本6&lt;/div&gt;</span><br><span class="line">&lt;/body&gt;</span><br></pre></td></tr></table></figure>
+                
+
+                <hr>
+                <!-- Pager -->
+                <ul class="pager">
+                    
+                        <li class="previous">
+                            <a href="/jtblogs/article/看透matrix3/" data-toggle="tooltip" data-placement="top" title="看透matrix3">&larr; Previous Post</a>
+                        </li>
+                    
+                    
+                        <li class="next">
+                            <a href="/jtblogs/article/IFC-BFC-FFC-GFC/" data-toggle="tooltip" data-placement="top" title="IFC BFC FFC GFC">Next Post &rarr;</a>
+                        </li>
+                    
+                </ul>
+
+                <br>
+
+                <!--打赏-->
+                
+                <!--打赏-->
+
+                <br>
+                <!--分享-->
+                
+                    <div class="social-share"  data-wechat-qrcode-helper="" align="center"></div>
+                    <!--  css & js -->
+                    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/social-share.js/1.0.16/css/share.min.css">
+                    <script src="https://cdnjs.cloudflare.com/ajax/libs/social-share.js/1.0.16/js/social-share.min.js"></script>
+                
+                <!--分享-->
+                <br>                       
+                
+                <!-- require APlayer -->
+                
+
+                <!-- duoshuo Share start -->
+                
+                <!-- 多说 Share end-->
+
+                <!-- 多说评论框 start -->
+                
+                <!-- 多说评论框 end -->
+
+                <!-- disqus comment start -->
+                
+                <!-- disqus comment end -->
+
+                
+
+            </div>
+            
+            <!-- Tabe of Content -->
+            <!-- Table of Contents -->
+
+  
+    <style>
+      span.toc-nav-number{
+        display: none
+      }
+    </style>
+  
+    
+      <aside id="sidebar">
+        <div id="toc" class="toc-article">
+        <strong class="toc-title">Contents</strong>
+        
+          <ol class="toc-nav"><li class="toc-nav-item toc-nav-level-1"><a class="toc-nav-link" href="#null"><span class="toc-nav-number">1.</span> <span class="toc-nav-text">盒子模型 层模型 习惯 企业开发经验</span></a><ol class="toc-nav-child"><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#null"><span class="toc-nav-number">1.0.1.</span> <span class="toc-nav-text">行级元素</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#null"><span class="toc-nav-number">1.0.2.</span> <span class="toc-nav-text">块级元素</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#null"><span class="toc-nav-number">1.0.3.</span> <span class="toc-nav-text">行级块元素</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#null"><span class="toc-nav-number">1.0.4.</span> <span class="toc-nav-text">盒子模型</span></a><ol class="toc-nav-child"><li class="toc-nav-item toc-nav-level-5"><a class="toc-nav-link" href="#null"><span class="toc-nav-number">1.0.4.0.1.</span> <span class="toc-nav-text">四个组成部分</span></a></li></ol></li></ol></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#null"><span class="toc-nav-number">1.0.5.</span> <span class="toc-nav-text">怪异和模型 &amp; 标准盒子模型详解</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#null"><span class="toc-nav-number">1.0.6.</span> <span class="toc-nav-text">弹性盒子模型</span></a></li></ol></li></ol></li><li class="toc-nav-item toc-nav-level-1"><a class="toc-nav-link" href="#null"><span class="toc-nav-number">2.</span> <span class="toc-nav-text">层模型</span></a><ol class="toc-nav-child"><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#null"><span class="toc-nav-number">2.0.1.</span> <span class="toc-nav-text">定位 absolute</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#null"><span class="toc-nav-number">2.0.2.</span> <span class="toc-nav-text">定位 relative 相对定位</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#null"><span class="toc-nav-number">2.0.3.</span> <span class="toc-nav-text">定位 fixed 固定定位</span></a></li></ol></li></ol></li><li class="toc-nav-item toc-nav-level-1"><a class="toc-nav-link" href="#null"><span class="toc-nav-number">3.</span> <span class="toc-nav-text">BFC</span></a><ol class="toc-nav-child"><li class="toc-nav-item toc-nav-level-4"><a class="toc-nav-link" href="#null"><span class="toc-nav-number">3.0.0.1.</span> <span class="toc-nav-text">float 问题</span></a></li><li class="toc-nav-item toc-nav-level-4"><a class="toc-nav-link" href="#null"><span class="toc-nav-number">3.0.0.2.</span> <span class="toc-nav-text">伪元素</span></a></li></ol></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#null"><span class="toc-nav-number">3.0.1.</span> <span class="toc-nav-text">双飞翼布局</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#null"><span class="toc-nav-number">3.0.2.</span> <span class="toc-nav-text">弹性和模型</span></a></li></ol></li></ol></li><li class="toc-nav-item toc-nav-level-1"><a class="toc-nav-link" href="#null"><span class="toc-nav-number">4.</span> <span class="toc-nav-text">FlexBox</span></a><ol class="toc-nav-child"><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#null"><span class="toc-nav-number">4.0.1.</span> <span class="toc-nav-text">css3 新增选择器</span></a></li></ol></li></ol></li></ol>
+        
+        </div>
+      </aside>
+    
+
+                
+            <!-- Sidebar Container -->
+            <div class="
+                col-lg-8 col-lg-offset-2
+                col-md-10 col-md-offset-1
+                sidebar-container">
+
+                <!-- Featured Tags -->
+                
+                <section>
+                    <!-- no hr -->
+                    <h5><a href="/jtblogs/tags/">FEATURED TAGS</a></h5>
+                    <div class="tags">
+                       
+                          <a class="tag" href="/jtblogs/tags/#css" title="css">css</a>
+                        
+                    </div>
+                </section>
+                
+
+                <!-- Friends Blog -->
+                
+                <hr>
+                <h5>FRIENDS</h5>
+                <ul class="list-inline">
+
+                    
+                </ul>
+                
+            </div>
+        </div>
+    </div>
+</article>
+
+
+
+
+
+
+
+
+<!-- async load function -->
+<script>
+    function async(u, c) {
+      var d = document, t = 'script',
+          o = d.createElement(t),
+          s = d.getElementsByTagName(t)[0];
+      o.src = u;
+      if (c) { o.addEventListener('load', function (e) { c(null, e); }, false); }
+      s.parentNode.insertBefore(o, s);
+    }
+</script>
+<!-- anchor-js, Doc:http://bryanbraun.github.io/anchorjs/ -->
+<script>
+    async("https://cdn.bootcss.com/anchor-js/1.1.1/anchor.min.js",function(){
+        anchors.options = {
+          visible: 'hover',
+          placement: 'left',
+          icon: 'ℬ'
+        };
+        anchors.add().remove('.intro-header h1').remove('.subheading').remove('.sidebar-container h5');
+    })
+</script>
+<style>
+    /* place left on bigger screen */
+    @media all and (min-width: 800px) {
+        .anchorjs-link{
+            position: absolute;
+            left: -0.75em;
+            font-size: 1.1em;
+            margin-top : -0.1em;
+        }
+    }
+</style>
+
+
+<!-- chrome Firefox 中文锚点定位失效-->
+<script src="https://cdn.bootcss.com/jquery/3.3.1/jquery.js"></script>
+<!-- smooth scroll behavior polyfill  -->
+<script type="text/javascript" src="/js/smoothscroll.js"></script>
+<script>
+        $('#toc').on('click','a',function(a){
+            // var isChrome = window.navigator.userAgent.indexOf("Chrome") !== -1;
+            // console.log(window.navigator.userAgent,isChrome)
+                // if(isChrome) {
+                    // console.log(a.currentTarget.outerHTML);
+                    // console.log($(a.currentTarget).attr("href"));
+                    //跳转到指定锚点
+                    // document.getElementById(a.target.innerText.toLowerCase()).scrollIntoView(true);
+                    document.getElementById($(a.currentTarget).attr("href").replace("#","")).scrollIntoView({behavior: 'smooth' });
+                // }
+        })  
+</script>
+
+
+    <!-- Footer -->
+    <!-- Footer -->
+<footer>
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+                <ul class="list-inline text-center">
+                    
+                            
+                                    
+
+                                            
+
+                                                    
+
+                                                            
+                                                                <li>
+                                                                    <a target="_blank"
+                                                                        href="https://github.com/taojiangcb">
+                                                                        <span class="fa-stack fa-lg">
+                                                                            <i class="fa fa-circle fa-stack-2x"></i>
+                                                                            <i
+                                                                                class="fa fa-github fa-stack-1x fa-inverse"></i>
+                                                                        </span>
+                                                                    </a>
+                                                                </li>
+                                                                
+
+                                                                    
+
+                </ul>
+
+                <p class="copyright text-muted">
+                    Copyright &copy; 江涛
+                        2025
+                            <br>
+                            Theme by <a href="http://beantech.org">BeanTech</a>
+                            <span style="display: inline-block; margin: 0 5px;">
+                                <i class="fa fa-heart"></i>
+                            </span>
+                            re-Ported by <a href="https://taojiangcb.github.io/jtblogs">江涛</a> |
+                            <iframe style="margin-left: 2px; margin-bottom:-5px;" frameborder="0" scrolling="0"
+                                width="91px" height="20px"
+                                src="https://ghbtns.com/github-btn.html?user=taojiangcb&repo=jtblogs&type=star&count=true">
+                            </iframe>
+                </p>
+                <p class="copyright text-muted" style="margin:0">
+                    <script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+                    <span id="busuanzi_container_site_pv">
+                        总访问量<span id="busuanzi_value_site_pv"></span>次
+                    </span>
+                    <span id="busuanzi_container_site_uv">
+                        总访客数<span id="busuanzi_value_site_uv"></span>人
+                    </span>
+                </p>
+            </div>
+        </div>
+    </div>
+</footer>
+
+<!-- jQuery -->
+<script src="/jtblogs/js/jquery.min.js"></script>
+
+    <!-- Bootstrap Core JavaScript -->
+    <script src="/jtblogs/js/bootstrap.min.js"></script>
+
+        <!-- Custom Theme JavaScript -->
+        <script src="/jtblogs/js/hux-blog.min.js"></script>
+
+
+            <!-- async load function -->
+            <script>
+                function async(u, c) {
+                    var d = document, t = 'script',
+                        o = d.createElement(t),
+                        s = d.getElementsByTagName(t)[0];
+                    o.src = u;
+                    if (c) { o.addEventListener('load', function (e) { c(null, e); }, false); }
+                    s.parentNode.insertBefore(o, s);
+                }
+            </script>
+
+            <!-- 
+     Because of the native support for backtick-style fenced code blocks 
+     right within the Markdown is landed in Github Pages, 
+     From V1.6, There is no need for Highlight.js, 
+     so Huxblog drops it officially.
+
+     - https://github.com/blog/2100-github-pages-now-faster-and-simpler-with-jekyll-3-0  
+     - https://help.github.com/articles/creating-and-highlighting-code-blocks/    
+-->
+            <!--
+    <script>
+        async("http://cdn.bootcss.com/highlight.js/8.6/highlight.min.js", function(){
+            hljs.initHighlightingOnLoad();
+        })
+    </script>
+    <link href="http://cdn.bootcss.com/highlight.js/8.6/styles/github.min.css" rel="stylesheet">
+-->
+
+
+            <!-- jquery.tagcloud.js -->
+            <script>
+                // only load tagcloud.js in tag.html
+                if ($('#tag_cloud').length !== 0) {
+                    async("https://taojiangcb.github.io/jtblogs/js/jquery.tagcloud.js", function () {
+                        $.fn.tagcloud.defaults = {
+                            //size: {start: 1, end: 1, unit: 'em'},
+                            color: { start: '#bbbbee', end: '#0085a1' },
+                        };
+                        $('#tag_cloud a').tagcloud();
+                    })
+                }
+            </script>
+
+            <!--fastClick.js -->
+            <script>
+                async("https://cdn.bootcss.com/fastclick/1.0.6/fastclick.min.js", function () {
+                    var $nav = document.querySelector("nav");
+                    if ($nav) FastClick.attach($nav);
+                })
+            </script>
+
+
+            <!-- Google Analytics -->
+
+            
+                <script>
+                    // dynamic User by Hux
+                    var _gaId = 'UA-XXXXXXXX-X';
+                    var _gaDomain = 'yoursite';
+
+                    // Originial
+                    (function (i, s, o, g, r, a, m) {
+                        i['GoogleAnalyticsObject'] = r; i[r] = i[r] || function () {
+                            (i[r].q = i[r].q || []).push(arguments)
+                        }, i[r].l = 1 * new Date(); a = s.createElement(o),
+                            m = s.getElementsByTagName(o)[0]; a.async = 1; a.src = g; m.parentNode.insertBefore(a, m)
+                    })(window, document, 'script', '//www.google-analytics.com/analytics.js', 'ga');
+
+                    ga('create', _gaId, _gaDomain);
+                    ga('send', 'pageview');
+                </script>
+
+                
+
+
+                    <!-- Baidu Tongji -->
+                    
+                        <script>
+                            // dynamic User by Hux
+                            var _baId = 'xxx';
+
+                            // Originial
+                            var _hmt = _hmt || [];
+                            (function () {
+                                var hm = document.createElement("script");
+                                hm.src = "//hm.baidu.com/hm.js?" + _baId;
+                                var s = document.getElementsByTagName("script")[0];
+                                s.parentNode.insertBefore(hm, s);
+                            })();
+                        </script>
+                        
+
+
+	<a id="rocket" href="#top" class=""></a>
+	<script type="text/javascript" src="/jtblogs/js/totop.js?v=1.0.0" async=""></script>
+    <script type="text/javascript" src="/jtblogs/js/toc.js?v=1.0.0" async=""></script>
+<!-- Image to hack wechat -->
+<img src="https://taojiangcb.github.io/jtblogs/img/icon_wechat.png" width="0" height="0" />
+<!-- Migrate from head to bottom, no longer block render and still work -->
+
+</body>
+
+</html>

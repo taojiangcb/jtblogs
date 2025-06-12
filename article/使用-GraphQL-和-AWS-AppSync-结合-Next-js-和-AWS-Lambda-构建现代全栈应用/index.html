@@ -1,0 +1,679 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<!-- Head tag -->
+<head><meta name="generator" content="Hexo 3.9.0">
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="google-site-verification" content="xBT4GhYoi5qRD5tr338pgPM5OWHHIDR6mNg1a3euekI">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content>
+    <meta name="keyword" content>
+    <link rel="shortcut icon" href="/jtblogs/favicon.ico">
+    <!-- Place this tag in your head or just before your close body tag. -->
+    <script async defer src="https://buttons.github.io/buttons.js"></script>
+    <title>
+        
+          使用 GraphQL 和 AWS AppSync 结合 Next.js 和 AWS Lambda 构建现代全栈应用 - 江涛 | Blog
+        
+    </title>
+
+    <link rel="canonical" href="https://taojiangcb.github.io/jtblogs/jtblogs/article/使用-GraphQL-和-AWS-AppSync-结合-Next-js-和-AWS-Lambda-构建现代全栈应用/">
+
+    <!-- Bootstrap Core CSS -->
+    <link rel="stylesheet" href="/jtblogs/css/bootstrap.min.css">
+
+    <!-- Custom CSS --> 
+    <link rel="stylesheet" href="/jtblogs/css/beantech.min.css">
+
+    <link rel="stylesheet" href="/jtblogs/css/donate.css">
+    
+    <!-- Pygments Highlight CSS -->
+    <link rel="stylesheet" href="/jtblogs/css/highlight.css">
+
+    <link rel="stylesheet" href="/jtblogs/css/widget.css">
+
+    <link rel="stylesheet" href="/jtblogs/css/rocket.css">
+
+    <link rel="stylesheet" href="/jtblogs/css/signature.css">
+
+    <link rel="stylesheet" href="/jtblogs/css/toc.css">
+
+    <!-- Custom Fonts -->
+    <!-- <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css" rel="stylesheet" type="text/css"> -->
+    <!-- Hux change font-awesome CDN to qiniu -->
+    <link href="https://cdn.staticfile.org/font-awesome/4.5.0/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+
+
+    <!-- Hux Delete, sad but pending in China
+    <link href='http://fonts.googleapis.com/css?family=Lora:400,700,400italic,700italic' rel='stylesheet' type='text/css'>
+    <link href='http://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800' rel='stylesheet' type='text/
+    css'>
+    -->
+
+
+    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+        <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+        <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+    <![endif]-->
+
+    <!-- ga & ba script hoook -->
+    <script></script>
+</head>
+
+
+<!-- hack iOS CSS :active style -->
+<body ontouchstart="">
+	<!-- Modified by Yu-Hsuan Yen -->
+<!-- Post Header -->
+<style type="text/css">
+    header.intro-header{
+        
+            background-image: url('/jtblogs/img/article_header/article_bg.jpg')
+            /*post*/
+        
+    }
+    
+</style>
+
+<header class="intro-header" >
+    <!-- Signature -->
+    <div id="signature">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+                
+                    <div class="post-heading">
+                        <div class="tags">
+                            
+                              <a class="tag" href="/jtblogs/tags/#nodejs" title="nodejs">nodejs</a>
+                            
+                        </div>
+                        <h1>使用 GraphQL 和 AWS AppSync 结合 Next.js 和 AWS Lambda 构建现代全栈应用</h1>
+                        <h2 class="subheading"></h2>
+                        <span class="meta">
+                            Posted by 江涛 on
+                            2025-01-06
+                        </span>
+                    </div>
+                
+
+
+                </div>
+            </div>
+        </div>
+    </div>
+</header>
+
+	
+    <!-- Navigation -->
+<nav class="navbar navbar-default navbar-custom navbar-fixed-top">
+    <div class="container-fluid">
+        <!-- Brand and toggle get grouped for better mobile display -->
+        <div class="navbar-header page-scroll">
+            <button type="button" class="navbar-toggle">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href="/jtblogs/">江涛</a>
+        </div>
+
+        <!-- Collect the nav links, forms, and other content for toggling -->
+        <!-- Known Issue, found by Hux:
+            <nav>'s height woule be hold on by its content.
+            so, when navbar scale out, the <nav> will cover tags.
+            also mask any touch event of tags, unfortunately.
+        -->
+        <div id="huxblog_navbar">
+            <div class="navbar-collapse">
+                <ul class="nav navbar-nav navbar-right">
+                    <li>
+                        <a href="/jtblogs/">Home</a>
+                    </li>
+
+                    
+
+                        
+                    
+
+                        
+                    
+
+                        
+                    
+
+                        
+                    
+
+                        
+                    
+
+                        
+                    
+
+                        
+                        <li>
+                            <a href="/jtblogs/tags/">Tags</a>
+                        </li>
+                        
+                    
+
+                        
+                        <li>
+                            <a href="/jtblogs/about/">About</a>
+                        </li>
+                        
+                    
+
+                        
+                        <li>
+                            <a href="/jtblogs/archive/">Archives</a>
+                        </li>
+                        
+                    
+                    
+                </ul>
+            </div>
+        </div>
+        <!-- /.navbar-collapse -->
+    </div>
+    <!-- /.container -->
+</nav>
+<script>
+    // Drop Bootstarp low-performance Navbar
+    // Use customize navbar with high-quality material design animation
+    // in high-perf jank-free CSS3 implementation
+    var $body   = document.body;
+    var $toggle = document.querySelector('.navbar-toggle');
+    var $navbar = document.querySelector('#huxblog_navbar');
+    var $collapse = document.querySelector('.navbar-collapse');
+
+    $toggle.addEventListener('click', handleMagic)
+    function handleMagic(e){
+        if ($navbar.className.indexOf('in') > 0) {
+        // CLOSE
+            $navbar.className = " ";
+            // wait until animation end.
+            setTimeout(function(){
+                // prevent frequently toggle
+                if($navbar.className.indexOf('in') < 0) {
+                    $collapse.style.height = "0px"
+                }
+            },400)
+        }else{
+        // OPEN
+            $collapse.style.height = "auto"
+            $navbar.className += " in";
+        }
+    }
+</script>
+
+
+    <!-- Main Content -->
+    <!-- Modify by Yu-Hsuan Yen -->
+
+<!-- Post Content -->
+<article>
+    <div class="container">
+        <div class="row">
+
+            <!-- Post Container -->
+            <div class="
+                col-lg-8 col-lg-offset-2
+                col-md-10 col-md-offset-1
+                post-container">
+
+                <h1><span id="使用-graphql-和-aws-appsync-结合-nextjs-和-aws-lambda-构建现代全栈应用">使用 GraphQL 和 AWS AppSync 结合 Next.js 和 AWS Lambda 构建现代全栈应用</span></h1>
+<h2><span id="介绍">介绍</span></h2>
+<p>GraphQL 是一种用于 API 的查询语言，它允许客户端请求仅所需的数据，而不是像 REST API 那样返回固定的数据结构。AWS AppSync 是 Amazon 提供的一种完全托管的 GraphQL 服务，它简化了构建数据驱动应用的方式，使得开发者可以轻松地与不同数据源进行交互。AWS Lambda 是一种无服务器计算服务，可让您运行代码而无需预置或管理服务器。</p>
+<p>在这篇文章中，我们将介绍如何使用 GraphQL 和 AWS AppSync 结合 AWS Lambda 和 Next.js 构建现代全栈应用。通过详细的步骤和解释，帮助初学者更好地理解和实践这些技术。</p>
+<h2><span id="1-graphql-基础">1. GraphQL 基础</span></h2>
+<h3><span id="11-什么是-graphql">1.1 什么是 GraphQL？</span></h3>
+<p>GraphQL 是由 Facebook 开发的用于 API 的查询语言。它允许客户端准确地描述所需的数据结构，并通过单个请求获取数据。主要特点包括：</p>
+<ul>
+<li><strong>强类型系统</strong>：每个 GraphQL API 都有一个强类型的 schema。</li>
+<li><strong>单一端点</strong>：所有请求都通过一个端点进行。</li>
+<li><strong>高效的查询</strong>：客户端可以请求精确的数据，避免过多的数据传输。</li>
+</ul>
+<h3><span id="12-graphql-示例">1.2 GraphQL 示例</span></h3>
+<p>以下是一个简单的 GraphQL 查询示例：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">query &#123;</span><br><span class="line">  getUser(id: &quot;1&quot;) &#123;</span><br><span class="line">    id</span><br><span class="line">    name</span><br><span class="line">    email</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>这个查询将返回用户 ID 为 “1” 的用户的 ID、名称和电子邮件。</p>
+<h2><span id="2-aws-appsync-和-aws-lambda-基础">2. AWS AppSync 和 AWS Lambda 基础</span></h2>
+<h3><span id="21-什么是-aws-appsync">2.1 什么是 AWS AppSync？</span></h3>
+<p>AWS AppSync 是 Amazon 提供的完全托管的 GraphQL 服务，它简化了构建数据驱动应用的方式。AppSync 可以与多种数据源（如 DynamoDB、Lambda、Elasticsearch）集成，提供实时订阅功能，并支持离线数据同步。</p>
+<h3><span id="22-什么是-aws-lambda">2.2 什么是 AWS Lambda？</span></h3>
+<p>AWS Lambda 是一种无服务器计算服务，可让您运行代码而无需预置或管理服务器。Lambda 自动扩展并处理高可用性。您只需为使用的计算资源付费。</p>
+<h2><span id="3-创建一个-graphql-api">3. 创建一个 GraphQL API</span></h2>
+<h3><span id="31-设置-aws-appsync">3.1 设置 AWS AppSync</span></h3>
+<ol>
+<li>登录 AWS 管理控制台，导航到 AppSync 服务。</li>
+<li>点击 “Create API”，选择 “Build from scratch”。</li>
+<li>输入 API 名称，并选择默认设置。</li>
+<li>点击 “Create”。</li>
+</ol>
+<h3><span id="32-定义-graphql-schema">3.2 定义 GraphQL Schema</span></h3>
+<p>在 AppSync 控制台中，定义以下 GraphQL schema：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">type Query &#123;</span><br><span class="line">  getUser(id: ID!): User</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">type Mutation &#123;</span><br><span class="line">  createUser(id: ID!, name: String!, email: String!): User</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">type User &#123;</span><br><span class="line">  id: ID!</span><br><span class="line">  name: String!</span><br><span class="line">  email: String!</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3><span id="33-创建-aws-lambda-函数">3.3 创建 AWS Lambda 函数</span></h3>
+<ol>
+<li>登录 AWS 管理控制台，导航到 Lambda 服务。</li>
+<li>点击 “Create function”，选择 “Author from scratch”。</li>
+<li>输入函数名称，并选择 “Node.js 18.x” 作为运行时。</li>
+<li>为函数添加基本代码：</li>
+</ol>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line">exports.handler = <span class="keyword">async</span> (event) =&gt; &#123;</span><br><span class="line">  <span class="keyword">const</span> &#123; field, <span class="built_in">arguments</span> &#125; = event;</span><br><span class="line"></span><br><span class="line">  <span class="keyword">const</span> users = [</span><br><span class="line">    &#123; <span class="attr">id</span>: <span class="string">"1"</span>, <span class="attr">name</span>: <span class="string">"Alice"</span>, <span class="attr">email</span>: <span class="string">"alice@example.com"</span> &#125;,</span><br><span class="line">    &#123; <span class="attr">id</span>: <span class="string">"2"</span>, <span class="attr">name</span>: <span class="string">"Bob"</span>, <span class="attr">email</span>: <span class="string">"bob@example.com"</span> &#125;</span><br><span class="line">  ];</span><br><span class="line"></span><br><span class="line">  <span class="keyword">if</span> (field === <span class="string">"getUser"</span>) &#123;</span><br><span class="line">    <span class="keyword">return</span> users.find(<span class="function"><span class="params">user</span> =&gt;</span> user.id === <span class="built_in">arguments</span>.id);</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="keyword">if</span> (field === <span class="string">"createUser"</span>) &#123;</span><br><span class="line">    <span class="keyword">const</span> newUser = &#123; <span class="attr">id</span>: <span class="built_in">arguments</span>.id, <span class="attr">name</span>: <span class="built_in">arguments</span>.name, <span class="attr">email</span>: <span class="built_in">arguments</span>.email &#125;;</span><br><span class="line">    users.push(newUser);</span><br><span class="line">    <span class="keyword">return</span> newUser;</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="keyword">return</span> <span class="literal">null</span>;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+<h3><span id="34-连接-aws-lambda-数据源">3.4 连接 AWS Lambda 数据源</span></h3>
+<ol>
+<li>在 AppSync 控制台中，导航到 “Data Sources”。</li>
+<li>点击 “Create Data Source”，选择 “AWS Lambda”。</li>
+<li>输入数据源名称，并选择刚刚创建的 Lambda 函数。</li>
+</ol>
+<h3><span id="35-配置解析器">3.5 配置解析器</span></h3>
+<ol>
+<li>在 AppSync 控制台中，导航到 “Resolvers”。</li>
+<li>为 <code>getUser</code> 和 <code>createUser</code> 配置解析器，映射到 Lambda 函数。</li>
+</ol>
+<p>详细步骤可以参考 <a href="https://docs.aws.amazon.com/appsync/latest/devguide/tutorial-lambda-resolvers-js.html" target="_blank" rel="noopener">AWS 官方文档</a>。</p>
+<h3><span id="36-配置解析器的具体步骤">3.6 配置解析器的具体步骤</span></h3>
+<p>在配置解析器时，需要为 <code>getUser</code> 和 <code>createUser</code> 操作指定 Lambda 函数作为它们的解析器。以下是详细步骤：</p>
+<ol>
+<li>在 “Resolvers” 页面，选择 <code>Query</code> 下面的 <code>getUser</code>。</li>
+<li>点击 “Attach”，然后选择刚创建的 Lambda 数据源。</li>
+<li>在 “Request Mapping Template” 中，使用以下模板：</li>
+</ol>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">  &quot;field&quot;: &quot;getUser&quot;,</span><br><span class="line">  &quot;arguments&quot;: $utils.toJson($context.arguments)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<ol start="4">
+<li>在 “Response Mapping Template” 中，使用以下模板：</li>
+</ol>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$utils.toJson($context.result)</span><br></pre></td></tr></table></figure>
+<ol start="5">
+<li>对 <code>createUser</code> 操作重复上述步骤，修改 “Request Mapping Template” 中的 <code>field</code> 为 <code>createUser</code>。</li>
+</ol>
+<h2><span id="4-前端集成">4. 前端集成</span></h2>
+<h3><span id="41-安装-aws-amplify">4.1 安装 AWS Amplify</span></h3>
+<p>AWS Amplify 是一个开源库，简化了与 AWS 服务的集成。安装 Amplify：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">npm install aws-amplify @aws-amplify/ui-react</span><br></pre></td></tr></table></figure>
+<h3><span id="42-初始化-aws-amplify-并生成-aws-exportsjs-文件">4.2 初始化 AWS Amplify 并生成 <code>aws-exports.js</code> 文件</span></h3>
+<p>首先，需要全局安装 AWS Amplify CLI：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">npm install -g @aws-amplify/cli</span><br></pre></td></tr></table></figure>
+<p>然后，在你的 Next.js 项目根目录下，运行以下命令来初始化 Amplify 项目：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">amplify init</span><br></pre></td></tr></table></figure>
+<p>你将会被提示输入一些配置信息，如项目名称、环境名称、AWS 区域等。根据你的需求进行配置。</p>
+<p>接下来，运行以下命令来添加 AWS AppSync API：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">amplify add api</span><br></pre></td></tr></table></figure>
+<p>在配置过程中，你会被问到以下问题：</p>
+<ul>
+<li><strong>请选择您想要添加的 API 类型</strong>：选择 <code>GraphQL</code></li>
+<li><strong>为您的 API 提供一个友好的名称</strong>：输入你的 API 名称</li>
+<li><strong>为您的 API 提供一个 API Key</strong>：选择 <code>API Key</code></li>
+<li><strong>API Key 到期时间</strong>：选择合适的过期时间</li>
+<li><strong>是否有现有的 schema</strong>：选择 <code>No</code></li>
+<li><strong>是否要导入 schema</strong>：选择 <code>No</code></li>
+<li><strong>是否想要一个样本 schema</strong>：选择 <code>Yes</code></li>
+</ul>
+<p>选择一个样本 schema，或者根据你的需求自定义 schema。</p>
+<p>最后，运行以下命令来部署 API：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">amplify push</span><br></pre></td></tr></table></figure>
+<p>这将会创建并配置 AWS AppSync API，并生成 <code>aws-exports.js</code> 配置文件。</p>
+<h3><span id="43-使用-aws-exportsjs-配置文件">4.3 使用 <code>aws-exports.js</code> 配置文件</span></h3>
+<p>在你的 Next.js 项目中，<code>aws-exports.js</code> 文件会在项目根目录的 <code>src</code> 文件夹或 <code>src</code> 文件夹的子文件夹中生成。你需要将这个文件导入到你的项目中，并使用它来配置 AWS Amplify。</p>
+<p>例如，在 <code>pages/_app.js</code> 文件中：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> Amplify <span class="keyword">from</span> <span class="string">'aws-amplify'</span>;</span><br><span class="line"><span class="keyword">import</span> awsconfig <span class="keyword">from</span> <span class="string">'../src/aws-exports'</span>;  <span class="comment">// 确保路径正确</span></span><br><span class="line"></span><br><span class="line">Amplify.configure(awsconfig);</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">MyApp</span>(<span class="params">&#123; Component, pageProps &#125;</span>) </span>&#123;</span><br><span class="line">  <span class="keyword">return</span> <span class="xml"><span class="tag">&lt;<span class="name">Component</span> &#123;<span class="attr">...pageProps</span>&#125; /&gt;</span>;</span></span><br><span class="line"><span class="xml">&#125;</span></span><br><span class="line"><span class="xml"></span></span><br><span class="line"><span class="xml">export default MyApp;</span></span><br></pre></td></tr></table></figure>
+<h3><span id="44-使用-graphql-查询和变更">4.4 使用 GraphQL 查询和变更</span></h3>
+<p>创建一个 GraphQL 查询和变更文件（如 <code>graphql/queries.js</code> 和 <code>graphql/mutations.js</code>）：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// graphql/queries.js</span></span><br><span class="line"><span class="keyword">export</span> <span class="keyword">const</span> getUser = <span class="comment">/* GraphQL */</span> <span class="string">`</span></span><br><span class="line"><span class="string">  query GetUser($id: ID!) &#123;</span></span><br><span class="line"><span class="string">    getUser(id: $id) &#123;</span></span><br><span class="line"><span class="string">      id</span></span><br><span class="line"><span class="string">      name</span></span><br><span class="line"><span class="string">      email</span></span><br><span class="line"><span class="string">    &#125;</span></span><br><span class="line"><span class="string">  &#125;</span></span><br><span class="line"><span class="string">`</span>;</span><br><span class="line"></span><br><span class="line"><span class="comment">// graphql/mutations.js</span></span><br><span class="line"><span class="keyword">export</span> <span class="keyword">const</span> createUser = <span class="comment">/* GraphQL */</span> <span class="string">`</span></span><br><span class="line"><span class="string">  mutation CreateUser($id: ID!, $name: String!, $email: String!) &#123;</span></span><br><span class="line"><span class="string">    createUser(id: $id, name: $name, email: $email) &#123;</span></span><br><span class="line"><span class="string">      id</span></span><br><span class="line"><span class="string">      name</span></span><br><span class="line"><span class="string">      email</span></span><br><span class="line"><span class="string">    &#125;</span></span><br><span class="line"><span class="string">  &#125;</span></span><br><span class="line"><span class="string">`</span>;</span><br></pre></td></tr></table></figure>
+<h3><span id="45-在-nextjs-页面中使用-graphql">4.5 在 Next.js 页面中使用 GraphQL</span></h3>
+<p>在 Next.js 页面中使用 GraphQL 查询和变更：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> &#123; API, graphqlOperation &#125; <span class="keyword">from</span> <span class="string">'aws-amplify'</span>;</span><br><span class="line"><span class="keyword">import</span> &#123; useState &#125; <span class="keyword">from</span> <span class="string">'react'</span>;</span><br><span class="line"><span class="keyword">import</span> &#123; getUser &#125; <span class="keyword">from</span> <span class="string">'../graphql/queries'</span>;</span><br><span class="line"><span class="keyword">import</span> &#123; createUser &#125; <span class="keyword">from</span> <span class="string">'../graphql/mutations'</span>;</span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> HomePage = <span class="function"><span class="params">()</span> =&gt;</span> &#123;</span><br><span class="line">  <span class="keyword">const</span> [user, setUser] = useState(<span class="literal">null</span>);</span><br><span class="line">  <span class="keyword">const</span> [newUser, setNewUser] = useState(&#123; <span class="attr">id</span>: <span class="string">''</span>, <span class="attr">name</span>: <span class="string">''</span>, <span class="attr">email</span>: <span class="string">''</span> &#125;);</span><br><span class="line"></span><br><span class="line">  <span class="keyword">const</span> fetchUser = <span class="keyword">async</span> (userId) =&gt; &#123;</span><br><span class="line">    <span class="keyword">try</span> &#123;</span><br><span class="line">      <span class="keyword">const</span> userData = <span class="keyword">await</span> API.graphql(graphqlOperation(getUser, &#123; <span class="attr">id</span>: userId &#125;));</span><br><span class="line">      setUser(userData.data.getUser);</span><br><span class="line">    &#125; <span class="keyword">catch</span> (err) &#123;</span><br><span class="line">      <span class="built_in">console</span>.error(<span class="string">'Error fetching user:'</span>, err);</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;;</span><br><span class="line"></span><br><span class="line">  <span class="keyword">const</span> addUser = <span class="keyword">async</span> () =&gt; &#123;</span><br><span class="line">    <span class="keyword">try</span> &#123;</span><br><span class="line">      <span class="keyword">const</span> userData = <span class="keyword">await</span> API.graphql(graphqlOperation(createUser, newUser));</span><br><span class="line">      setUser(userData.data.createUser);</span><br><span class="line">      setNewUser(&#123; <span class="attr">id</span>: <span class="string">''</span>, <span class="attr">name</span>: <span class="string">''</span>, <span class="attr">email</span>: <span class="string">''</span> &#125;);</span><br><span class="line">    &#125; <span class="keyword">catch</span> (err) &#123;</span><br><span class="line">      <span class="built_in">console</span>.error(<span class="string">'Error creating user:'</span>, err);</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;;</span><br><span class="line"></span><br><span class="line">  <span class="keyword">return</span> (</span><br><span class="line">    &lt;div&gt;</span><br><span class="line">      &lt;h1&gt;GraphQL and AWS AppSync <span class="keyword">with</span> Next.js&lt;<span class="regexp">/h1&gt;</span></span><br><span class="line"><span class="regexp">      &lt;div&gt;</span></span><br><span class="line"><span class="regexp">        &lt;h2&gt;Fetch User&lt;/</span>h2&gt;</span><br><span class="line">        &lt;input</span><br><span class="line">          type=<span class="string">"text"</span></span><br><span class="line">          placeholder=<span class="string">"User ID"</span></span><br><span class="line">          onChange=&#123;(e) =&gt; fetchUser(e.target.value)&#125;</span><br><span class="line">        /&gt;</span><br><span class="line">        &#123;user &amp;&amp; (</span><br><span class="line">          &lt;div&gt;</span><br><span class="line">            &lt;p&gt;ID: &#123;user.id&#125;&lt;<span class="regexp">/p&gt;</span></span><br><span class="line"><span class="regexp">            &lt;p&gt;Name: &#123;user.name&#125;&lt;/</span>p&gt;</span><br><span class="line">            &lt;p&gt;Email: &#123;user.email&#125;&lt;<span class="regexp">/p&gt;</span></span><br><span class="line"><span class="regexp">          &lt;/</span>div&gt;</span><br><span class="line">        )&#125;</span><br><span class="line">      &lt;<span class="regexp">/div&gt;</span></span><br><span class="line"><span class="regexp">      &lt;div&gt;</span></span><br><span class="line"><span class="regexp">        &lt;h2&gt;Create User&lt;/</span>h2&gt;</span><br><span class="line">        &lt;input</span><br><span class="line">          type=<span class="string">"text"</span></span><br><span class="line">          placeholder=<span class="string">"ID"</span></span><br><span class="line">          value=&#123;newUser.id&#125;</span><br><span class="line">          onChange=&#123;(e) =&gt; setNewUser(&#123; ...newUser, <span class="attr">id</span>: e.target.value &#125;)&#125;</span><br><span class="line">        /&gt;</span><br><span class="line">        &lt;input</span><br><span class="line">          type=<span class="string">"text"</span></span><br><span class="line">          placeholder=<span class="string">"Name"</span></span><br><span class="line">          value=&#123;newUser.name&#125;</span><br><span class="line">          onChange=&#123;(e) =&gt; setNewUser(&#123; ...newUser, <span class="attr">name</span>: e.target.value &#125;)&#125;</span><br><span class="line">        /&gt;</span><br><span class="line">        &lt;input</span><br><span class="line">          type=<span class="string">"text"</span></span><br><span class="line">          placeholder=<span class="string">"Email"</span></span><br><span class="line">          value=&#123;newUser.email&#125;</span><br><span class="line">          onChange=&#123;(e) =&gt; setNewUser(&#123; ...newUser, <span class="attr">email</span>: e.target.value &#125;)&#125;</span><br><span class="line">        /&gt;</span><br><span class="line">        &lt;button onClick=&#123;addUser&#125;&gt;Create User&lt;<span class="regexp">/button&gt;</span></span><br><span class="line"><span class="regexp">      &lt;/</span>div&gt;</span><br><span class="line">    &lt;<span class="regexp">/div&gt;</span></span><br><span class="line"><span class="regexp">  );</span></span><br><span class="line"><span class="regexp">&#125;;</span></span><br><span class="line"><span class="regexp"></span></span><br><span class="line"><span class="regexp">export default HomePage;</span></span><br></pre></td></tr></table></figure>
+<h2><span id="5-结论">5. 结论</span></h2>
+<p>通过使用 GraphQL 和 AWS AppSync，我们可以构建强大且高效的全栈应用。GraphQL 提供了灵活的数据查询方式，而 AWS AppSync 则简化了与各种数据源的集成，并提供了实时和离线支持。结合 Next.js 和 AWS Lambda，可以让前端全栈开发者更好地实践和练习这些技术。</p>
+
+                
+
+                <hr>
+                <!-- Pager -->
+                <ul class="pager">
+                    
+                        <li class="previous">
+                            <a href="/jtblogs/article/提升-React-应用性能：结合使用-welldone-software-why-did-you-render-和-immer/" data-toggle="tooltip" data-placement="top" title="提升 React 应用性能：结合使用 @welldone-software/why-did-you-render 和 immer">&larr; Previous Post</a>
+                        </li>
+                    
+                    
+                        <li class="next">
+                            <a href="/jtblogs/article/Service-Workers-本地缓存：性能优化与架构演进/" data-toggle="tooltip" data-placement="top" title="Service Workers 本地缓存：性能优化与架构演进">Next Post &rarr;</a>
+                        </li>
+                    
+                </ul>
+
+                <br>
+
+                <!--打赏-->
+                
+                <!--打赏-->
+
+                <br>
+                <!--分享-->
+                
+                    <div class="social-share"  data-wechat-qrcode-helper="" align="center"></div>
+                    <!--  css & js -->
+                    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/social-share.js/1.0.16/css/share.min.css">
+                    <script src="https://cdnjs.cloudflare.com/ajax/libs/social-share.js/1.0.16/js/social-share.min.js"></script>
+                
+                <!--分享-->
+                <br>                       
+                
+                <!-- require APlayer -->
+                
+
+                <!-- duoshuo Share start -->
+                
+                <!-- 多说 Share end-->
+
+                <!-- 多说评论框 start -->
+                
+                <!-- 多说评论框 end -->
+
+                <!-- disqus comment start -->
+                
+                <!-- disqus comment end -->
+
+                
+
+            </div>
+            
+            <!-- Tabe of Content -->
+            <!-- Table of Contents -->
+
+  
+    <style>
+      span.toc-nav-number{
+        display: none
+      }
+    </style>
+  
+    
+      <aside id="sidebar">
+        <div id="toc" class="toc-article">
+        <strong class="toc-title">Contents</strong>
+        
+          <ol class="toc-nav"><li class="toc-nav-item toc-nav-level-1"><a class="toc-nav-link" href="#null"><span class="toc-nav-number">1.</span> <span class="toc-nav-text">使用 GraphQL 和 AWS AppSync 结合 Next.js 和 AWS Lambda 构建现代全栈应用</span></a><ol class="toc-nav-child"><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#null"><span class="toc-nav-number">1.1.</span> <span class="toc-nav-text">介绍</span></a></li><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#null"><span class="toc-nav-number">1.2.</span> <span class="toc-nav-text">1. GraphQL 基础</span></a><ol class="toc-nav-child"><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#null"><span class="toc-nav-number">1.2.1.</span> <span class="toc-nav-text">1.1 什么是 GraphQL？</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#null"><span class="toc-nav-number">1.2.2.</span> <span class="toc-nav-text">1.2 GraphQL 示例</span></a></li></ol></li><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#null"><span class="toc-nav-number">1.3.</span> <span class="toc-nav-text">2. AWS AppSync 和 AWS Lambda 基础</span></a><ol class="toc-nav-child"><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#null"><span class="toc-nav-number">1.3.1.</span> <span class="toc-nav-text">2.1 什么是 AWS AppSync？</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#null"><span class="toc-nav-number">1.3.2.</span> <span class="toc-nav-text">2.2 什么是 AWS Lambda？</span></a></li></ol></li><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#null"><span class="toc-nav-number">1.4.</span> <span class="toc-nav-text">3. 创建一个 GraphQL API</span></a><ol class="toc-nav-child"><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#null"><span class="toc-nav-number">1.4.1.</span> <span class="toc-nav-text">3.1 设置 AWS AppSync</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#null"><span class="toc-nav-number">1.4.2.</span> <span class="toc-nav-text">3.2 定义 GraphQL Schema</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#null"><span class="toc-nav-number">1.4.3.</span> <span class="toc-nav-text">3.3 创建 AWS Lambda 函数</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#null"><span class="toc-nav-number">1.4.4.</span> <span class="toc-nav-text">3.4 连接 AWS Lambda 数据源</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#null"><span class="toc-nav-number">1.4.5.</span> <span class="toc-nav-text">3.5 配置解析器</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#null"><span class="toc-nav-number">1.4.6.</span> <span class="toc-nav-text">3.6 配置解析器的具体步骤</span></a></li></ol></li><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#null"><span class="toc-nav-number">1.5.</span> <span class="toc-nav-text">4. 前端集成</span></a><ol class="toc-nav-child"><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#null"><span class="toc-nav-number">1.5.1.</span> <span class="toc-nav-text">4.1 安装 AWS Amplify</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#null"><span class="toc-nav-number">1.5.2.</span> <span class="toc-nav-text">4.2 初始化 AWS Amplify 并生成 aws-exports.js 文件</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#null"><span class="toc-nav-number">1.5.3.</span> <span class="toc-nav-text">4.3 使用 aws-exports.js 配置文件</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#null"><span class="toc-nav-number">1.5.4.</span> <span class="toc-nav-text">4.4 使用 GraphQL 查询和变更</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#null"><span class="toc-nav-number">1.5.5.</span> <span class="toc-nav-text">4.5 在 Next.js 页面中使用 GraphQL</span></a></li></ol></li><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#null"><span class="toc-nav-number">1.6.</span> <span class="toc-nav-text">5. 结论</span></a></li></ol></li></ol>
+        
+        </div>
+      </aside>
+    
+
+                
+            <!-- Sidebar Container -->
+            <div class="
+                col-lg-8 col-lg-offset-2
+                col-md-10 col-md-offset-1
+                sidebar-container">
+
+                <!-- Featured Tags -->
+                
+                <section>
+                    <!-- no hr -->
+                    <h5><a href="/jtblogs/tags/">FEATURED TAGS</a></h5>
+                    <div class="tags">
+                       
+                          <a class="tag" href="/jtblogs/tags/#nodejs" title="nodejs">nodejs</a>
+                        
+                    </div>
+                </section>
+                
+
+                <!-- Friends Blog -->
+                
+                <hr>
+                <h5>FRIENDS</h5>
+                <ul class="list-inline">
+
+                    
+                </ul>
+                
+            </div>
+        </div>
+    </div>
+</article>
+
+
+
+
+
+
+
+
+<!-- async load function -->
+<script>
+    function async(u, c) {
+      var d = document, t = 'script',
+          o = d.createElement(t),
+          s = d.getElementsByTagName(t)[0];
+      o.src = u;
+      if (c) { o.addEventListener('load', function (e) { c(null, e); }, false); }
+      s.parentNode.insertBefore(o, s);
+    }
+</script>
+<!-- anchor-js, Doc:http://bryanbraun.github.io/anchorjs/ -->
+<script>
+    async("https://cdn.bootcss.com/anchor-js/1.1.1/anchor.min.js",function(){
+        anchors.options = {
+          visible: 'hover',
+          placement: 'left',
+          icon: 'ℬ'
+        };
+        anchors.add().remove('.intro-header h1').remove('.subheading').remove('.sidebar-container h5');
+    })
+</script>
+<style>
+    /* place left on bigger screen */
+    @media all and (min-width: 800px) {
+        .anchorjs-link{
+            position: absolute;
+            left: -0.75em;
+            font-size: 1.1em;
+            margin-top : -0.1em;
+        }
+    }
+</style>
+
+
+<!-- chrome Firefox 中文锚点定位失效-->
+<script src="https://cdn.bootcss.com/jquery/3.3.1/jquery.js"></script>
+<!-- smooth scroll behavior polyfill  -->
+<script type="text/javascript" src="/js/smoothscroll.js"></script>
+<script>
+        $('#toc').on('click','a',function(a){
+            // var isChrome = window.navigator.userAgent.indexOf("Chrome") !== -1;
+            // console.log(window.navigator.userAgent,isChrome)
+                // if(isChrome) {
+                    // console.log(a.currentTarget.outerHTML);
+                    // console.log($(a.currentTarget).attr("href"));
+                    //跳转到指定锚点
+                    // document.getElementById(a.target.innerText.toLowerCase()).scrollIntoView(true);
+                    document.getElementById($(a.currentTarget).attr("href").replace("#","")).scrollIntoView({behavior: 'smooth' });
+                // }
+        })  
+</script>
+
+
+    <!-- Footer -->
+    <!-- Footer -->
+<footer>
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+                <ul class="list-inline text-center">
+                    
+                            
+                                    
+
+                                            
+
+                                                    
+
+                                                            
+                                                                <li>
+                                                                    <a target="_blank"
+                                                                        href="https://github.com/taojiangcb">
+                                                                        <span class="fa-stack fa-lg">
+                                                                            <i class="fa fa-circle fa-stack-2x"></i>
+                                                                            <i
+                                                                                class="fa fa-github fa-stack-1x fa-inverse"></i>
+                                                                        </span>
+                                                                    </a>
+                                                                </li>
+                                                                
+
+                                                                    
+
+                </ul>
+
+                <p class="copyright text-muted">
+                    Copyright &copy; 江涛
+                        2025
+                            <br>
+                            Theme by <a href="http://beantech.org">BeanTech</a>
+                            <span style="display: inline-block; margin: 0 5px;">
+                                <i class="fa fa-heart"></i>
+                            </span>
+                            re-Ported by <a href="https://taojiangcb.github.io/jtblogs">江涛</a> |
+                            <iframe style="margin-left: 2px; margin-bottom:-5px;" frameborder="0" scrolling="0"
+                                width="91px" height="20px"
+                                src="https://ghbtns.com/github-btn.html?user=taojiangcb&repo=jtblogs&type=star&count=true">
+                            </iframe>
+                </p>
+                <p class="copyright text-muted" style="margin:0">
+                    <script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+                    <span id="busuanzi_container_site_pv">
+                        总访问量<span id="busuanzi_value_site_pv"></span>次
+                    </span>
+                    <span id="busuanzi_container_site_uv">
+                        总访客数<span id="busuanzi_value_site_uv"></span>人
+                    </span>
+                </p>
+            </div>
+        </div>
+    </div>
+</footer>
+
+<!-- jQuery -->
+<script src="/jtblogs/js/jquery.min.js"></script>
+
+    <!-- Bootstrap Core JavaScript -->
+    <script src="/jtblogs/js/bootstrap.min.js"></script>
+
+        <!-- Custom Theme JavaScript -->
+        <script src="/jtblogs/js/hux-blog.min.js"></script>
+
+
+            <!-- async load function -->
+            <script>
+                function async(u, c) {
+                    var d = document, t = 'script',
+                        o = d.createElement(t),
+                        s = d.getElementsByTagName(t)[0];
+                    o.src = u;
+                    if (c) { o.addEventListener('load', function (e) { c(null, e); }, false); }
+                    s.parentNode.insertBefore(o, s);
+                }
+            </script>
+
+            <!-- 
+     Because of the native support for backtick-style fenced code blocks 
+     right within the Markdown is landed in Github Pages, 
+     From V1.6, There is no need for Highlight.js, 
+     so Huxblog drops it officially.
+
+     - https://github.com/blog/2100-github-pages-now-faster-and-simpler-with-jekyll-3-0  
+     - https://help.github.com/articles/creating-and-highlighting-code-blocks/    
+-->
+            <!--
+    <script>
+        async("http://cdn.bootcss.com/highlight.js/8.6/highlight.min.js", function(){
+            hljs.initHighlightingOnLoad();
+        })
+    </script>
+    <link href="http://cdn.bootcss.com/highlight.js/8.6/styles/github.min.css" rel="stylesheet">
+-->
+
+
+            <!-- jquery.tagcloud.js -->
+            <script>
+                // only load tagcloud.js in tag.html
+                if ($('#tag_cloud').length !== 0) {
+                    async("https://taojiangcb.github.io/jtblogs/js/jquery.tagcloud.js", function () {
+                        $.fn.tagcloud.defaults = {
+                            //size: {start: 1, end: 1, unit: 'em'},
+                            color: { start: '#bbbbee', end: '#0085a1' },
+                        };
+                        $('#tag_cloud a').tagcloud();
+                    })
+                }
+            </script>
+
+            <!--fastClick.js -->
+            <script>
+                async("https://cdn.bootcss.com/fastclick/1.0.6/fastclick.min.js", function () {
+                    var $nav = document.querySelector("nav");
+                    if ($nav) FastClick.attach($nav);
+                })
+            </script>
+
+
+            <!-- Google Analytics -->
+
+            
+                <script>
+                    // dynamic User by Hux
+                    var _gaId = 'UA-XXXXXXXX-X';
+                    var _gaDomain = 'yoursite';
+
+                    // Originial
+                    (function (i, s, o, g, r, a, m) {
+                        i['GoogleAnalyticsObject'] = r; i[r] = i[r] || function () {
+                            (i[r].q = i[r].q || []).push(arguments)
+                        }, i[r].l = 1 * new Date(); a = s.createElement(o),
+                            m = s.getElementsByTagName(o)[0]; a.async = 1; a.src = g; m.parentNode.insertBefore(a, m)
+                    })(window, document, 'script', '//www.google-analytics.com/analytics.js', 'ga');
+
+                    ga('create', _gaId, _gaDomain);
+                    ga('send', 'pageview');
+                </script>
+
+                
+
+
+                    <!-- Baidu Tongji -->
+                    
+                        <script>
+                            // dynamic User by Hux
+                            var _baId = 'xxx';
+
+                            // Originial
+                            var _hmt = _hmt || [];
+                            (function () {
+                                var hm = document.createElement("script");
+                                hm.src = "//hm.baidu.com/hm.js?" + _baId;
+                                var s = document.getElementsByTagName("script")[0];
+                                s.parentNode.insertBefore(hm, s);
+                            })();
+                        </script>
+                        
+
+
+	<a id="rocket" href="#top" class=""></a>
+	<script type="text/javascript" src="/jtblogs/js/totop.js?v=1.0.0" async=""></script>
+    <script type="text/javascript" src="/jtblogs/js/toc.js?v=1.0.0" async=""></script>
+<!-- Image to hack wechat -->
+<img src="https://taojiangcb.github.io/jtblogs/img/icon_wechat.png" width="0" height="0" />
+<!-- Migrate from head to bottom, no longer block render and still work -->
+
+</body>
+
+</html>
