@@ -1,0 +1,695 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<!-- Head tag -->
+<head><meta name="generator" content="Hexo 3.9.0">
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="google-site-verification" content="xBT4GhYoi5qRD5tr338pgPM5OWHHIDR6mNg1a3euekI">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content>
+    <meta name="keyword" content>
+    <link rel="shortcut icon" href="/jtblogs/favicon.ico">
+    <!-- Place this tag in your head or just before your close body tag. -->
+    <script async defer src="https://buttons.github.io/buttons.js"></script>
+    <title>
+        
+          深入理解 Tailwind CSS 插件：常用参数解析与实战示例 - 江涛 | Blog
+        
+    </title>
+
+    <link rel="canonical" href="https://taojiangcb.github.io/jtblogs/jtblogs/article/深入理解-Tailwind-CSS-插件：常用参数解析与实战示例/">
+
+    <!-- Bootstrap Core CSS -->
+    <link rel="stylesheet" href="/jtblogs/css/bootstrap.min.css">
+
+    <!-- Custom CSS --> 
+    <link rel="stylesheet" href="/jtblogs/css/beantech.min.css">
+
+    <link rel="stylesheet" href="/jtblogs/css/donate.css">
+    
+    <!-- Pygments Highlight CSS -->
+    <link rel="stylesheet" href="/jtblogs/css/highlight.css">
+
+    <link rel="stylesheet" href="/jtblogs/css/widget.css">
+
+    <link rel="stylesheet" href="/jtblogs/css/rocket.css">
+
+    <link rel="stylesheet" href="/jtblogs/css/signature.css">
+
+    <link rel="stylesheet" href="/jtblogs/css/toc.css">
+
+    <!-- Custom Fonts -->
+    <!-- <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css" rel="stylesheet" type="text/css"> -->
+    <!-- Hux change font-awesome CDN to qiniu -->
+    <link href="https://cdn.staticfile.org/font-awesome/4.5.0/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+
+
+    <!-- Hux Delete, sad but pending in China
+    <link href='http://fonts.googleapis.com/css?family=Lora:400,700,400italic,700italic' rel='stylesheet' type='text/css'>
+    <link href='http://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800' rel='stylesheet' type='text/
+    css'>
+    -->
+
+
+    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+        <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+        <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+    <![endif]-->
+
+    <!-- ga & ba script hoook -->
+    <script></script>
+</head>
+
+
+<!-- hack iOS CSS :active style -->
+<body ontouchstart="">
+	<!-- Modified by Yu-Hsuan Yen -->
+<!-- Post Header -->
+<style type="text/css">
+    header.intro-header{
+        
+            background-image: url('/jtblogs/img/article_header/article_bg.jpg')
+            /*post*/
+        
+    }
+    
+</style>
+
+<header class="intro-header" >
+    <!-- Signature -->
+    <div id="signature">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+                
+                    <div class="post-heading">
+                        <div class="tags">
+                            
+                              <a class="tag" href="/jtblogs/tags/#CSS" title="CSS">CSS</a>
+                            
+                        </div>
+                        <h1>深入理解 Tailwind CSS 插件：常用参数解析与实战示例</h1>
+                        <h2 class="subheading"></h2>
+                        <span class="meta">
+                            Posted by 江涛 on
+                            2025-09-12
+                        </span>
+                    </div>
+                
+
+
+                </div>
+            </div>
+        </div>
+    </div>
+</header>
+
+	
+    <!-- Navigation -->
+<nav class="navbar navbar-default navbar-custom navbar-fixed-top">
+    <div class="container-fluid">
+        <!-- Brand and toggle get grouped for better mobile display -->
+        <div class="navbar-header page-scroll">
+            <button type="button" class="navbar-toggle">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href="/jtblogs/">江涛</a>
+        </div>
+
+        <!-- Collect the nav links, forms, and other content for toggling -->
+        <!-- Known Issue, found by Hux:
+            <nav>'s height woule be hold on by its content.
+            so, when navbar scale out, the <nav> will cover tags.
+            also mask any touch event of tags, unfortunately.
+        -->
+        <div id="huxblog_navbar">
+            <div class="navbar-collapse">
+                <ul class="nav navbar-nav navbar-right">
+                    <li>
+                        <a href="/jtblogs/">Home</a>
+                    </li>
+
+                    
+
+                        
+                    
+
+                        
+                    
+
+                        
+                    
+
+                        
+                    
+
+                        
+                    
+
+                        
+                    
+
+                        
+                        <li>
+                            <a href="/jtblogs/about/">About</a>
+                        </li>
+                        
+                    
+
+                        
+                        <li>
+                            <a href="/jtblogs/archive/">Archives</a>
+                        </li>
+                        
+                    
+
+                        
+                        <li>
+                            <a href="/jtblogs/tags/">Tags</a>
+                        </li>
+                        
+                    
+                    
+                </ul>
+            </div>
+        </div>
+        <!-- /.navbar-collapse -->
+    </div>
+    <!-- /.container -->
+</nav>
+<script>
+    // Drop Bootstarp low-performance Navbar
+    // Use customize navbar with high-quality material design animation
+    // in high-perf jank-free CSS3 implementation
+    var $body   = document.body;
+    var $toggle = document.querySelector('.navbar-toggle');
+    var $navbar = document.querySelector('#huxblog_navbar');
+    var $collapse = document.querySelector('.navbar-collapse');
+
+    $toggle.addEventListener('click', handleMagic)
+    function handleMagic(e){
+        if ($navbar.className.indexOf('in') > 0) {
+        // CLOSE
+            $navbar.className = " ";
+            // wait until animation end.
+            setTimeout(function(){
+                // prevent frequently toggle
+                if($navbar.className.indexOf('in') < 0) {
+                    $collapse.style.height = "0px"
+                }
+            },400)
+        }else{
+        // OPEN
+            $collapse.style.height = "auto"
+            $navbar.className += " in";
+        }
+    }
+</script>
+
+
+    <!-- Main Content -->
+    <!-- Modify by Yu-Hsuan Yen -->
+
+<!-- Post Content -->
+<article>
+    <div class="container">
+        <div class="row">
+
+            <!-- Post Container -->
+            <div class="
+                col-lg-8 col-lg-offset-2
+                col-md-10 col-md-offset-1
+                post-container">
+
+                <h1><span id="深入理解-tailwind-css-插件常用参数解析与实战示例">深入理解 Tailwind CSS 插件：常用参数解析与实战示例</span></h1>
+<p>Tailwind CSS 的强大之处不仅在于其丰富的预设工具类，更在于通过插件系统实现高度定制化。在开发 Tailwind 插件时，核心入口是 <code>plugin(function({ ... }) )</code> 函数，其内部提供了多个关键参数，支撑自定义工具类、组件、变体等核心能力。本文将逐一拆解这些常用参数的作用，并结合实战示例说明其用法，帮助你快速掌握 Tailwind 插件开发技巧。</p>
+<h2><span id="1-addutilities添加自定义工具类">1. <code>addUtilities</code>：添加自定义工具类</span></h2>
+<p>工具类是 Tailwind 的核心设计理念，<code>addUtilities</code> 允许你扩展预设之外的工具类，满足特定样式需求（如自定义变换、特殊定位等）。这类工具类通常是<strong>单一功能</strong>的样式封装，可直接在 HTML 中通过类名调用。</p>
+<h3><span id="示例">示例</span></h3>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// tailwind-plugin.js</span></span><br><span class="line"><span class="keyword">import</span> plugin <span class="keyword">from</span> <span class="string">'tailwindcss/plugin'</span>;</span><br><span class="line"></span><br><span class="line"><span class="keyword">export</span> <span class="keyword">default</span> plugin(<span class="function"><span class="keyword">function</span>(<span class="params">&#123; addUtilities &#125;</span>) </span>&#123;</span><br><span class="line">  <span class="comment">// 添加自定义倾斜工具类</span></span><br><span class="line">  addUtilities(&#123;</span><br><span class="line">    <span class="string">'.skew-10deg'</span>: &#123;</span><br><span class="line">      transform: <span class="string">'skewY(-10deg)'</span> <span class="comment">// Y 轴倾斜 10 度</span></span><br><span class="line">    &#125;,</span><br><span class="line">    <span class="string">'.skew-15deg'</span>: &#123;</span><br><span class="line">      transform: <span class="string">'skewY(-15deg)'</span> <span class="comment">// Y 轴倾斜 15 度</span></span><br><span class="line">    &#125;,</span><br><span class="line">    <span class="comment">// 可扩展更多工具类，如自定义旋转、缩放</span></span><br><span class="line">    <span class="string">'.rotate-15'</span>: &#123;</span><br><span class="line">      transform: <span class="string">'rotate(15deg)'</span></span><br><span class="line">    &#125;</span><br><span class="line">  &#125;);</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+<h3><span id="使用效果">使用效果</span></h3>
+<p>在 HTML 中直接引用自定义类名，即可生效：</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">&lt;!-- 元素会沿 Y 轴倾斜 10 度 --&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">"skew-10deg bg-blue-500 p-4"</span>&gt;</span>自定义倾斜效果<span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<h2><span id="2-addcomponents封装复用性组件类">2. <code>addComponents</code>：封装复用性组件类</span></h2>
+<p>与单一功能的工具类不同，<code>addComponents</code> 用于创建<strong>复合样式的组件类</strong>（如按钮、卡片、导航栏等），将多个样式属性封装为一个类名，提升代码复用性。组件类的设计思路更贴近传统 CSS 组件，但保留了 Tailwind 的灵活组合特性。</p>
+<h3><span id="示例">示例</span></h3>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">export</span> <span class="keyword">default</span> plugin(<span class="function"><span class="keyword">function</span>(<span class="params">&#123; addComponents &#125;</span>) </span>&#123;</span><br><span class="line">  addComponents(&#123;</span><br><span class="line">    <span class="comment">// 基础按钮组件</span></span><br><span class="line">    <span class="string">'.btn'</span>: &#123;</span><br><span class="line">      padding: <span class="string">'0.5rem 1.25rem'</span>, <span class="comment">// 内边距</span></span><br><span class="line">      borderRadius: <span class="string">'0.375rem'</span>,  <span class="comment">// 圆角</span></span><br><span class="line">      fontWeight: <span class="string">'600'</span>,         <span class="comment">// 字体加粗</span></span><br><span class="line">      transition: <span class="string">'all 0.2s'</span>,    <span class="comment">// 过渡效果</span></span><br><span class="line">      cursor: <span class="string">'pointer'</span>,         <span class="comment">// 鼠标指针</span></span><br><span class="line">    &#125;,</span><br><span class="line">    <span class="comment">// 按钮变体（基于基础按钮扩展）</span></span><br><span class="line">    <span class="string">'.btn-primary'</span>: &#123;</span><br><span class="line">      <span class="string">'@apply bg-blue-600 text-white'</span>: &#123;&#125;, <span class="comment">// 复用 Tailwind 预设类</span></span><br><span class="line">      <span class="string">'&amp;:hover'</span>: &#123;</span><br><span class="line">        backgroundColor: <span class="string">'theme(colors.blue.700)'</span> <span class="comment">//  hover 状态</span></span><br><span class="line">      &#125;</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;);</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+<h3><span id="使用效果">使用效果</span></h3>
+<p>通过组合组件类，快速实现不同样式的按钮：</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">&lt;!-- 基础按钮 --&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">button</span> <span class="attr">class</span>=<span class="string">"btn border border-gray-300"</span>&gt;</span>基础按钮<span class="tag">&lt;/<span class="name">button</span>&gt;</span></span><br><span class="line"><span class="comment">&lt;!-- 蓝色主按钮（带 hover 效果） --&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">button</span> <span class="attr">class</span>=<span class="string">"btn btn-primary"</span>&gt;</span>提交按钮<span class="tag">&lt;/<span class="name">button</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<h2><span id="3-addbase配置全局基础样式">3. <code>addBase</code>：配置全局基础样式</span></h2>
+<p><code>addBase</code> 用于注入<strong>全局基础样式</strong>，通常作用于 HTML 标签（如 <code>h1</code>、<code>body</code>、<code>a</code>）或重置默认样式，优先级低于工具类和组件类，适合统一项目的基础排版、颜色等。</p>
+<h3><span id="示例">示例</span></h3>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">export</span> <span class="keyword">default</span> plugin(<span class="function"><span class="keyword">function</span>(<span class="params">&#123; addBase &#125;</span>) </span>&#123;</span><br><span class="line">  addBase(&#123;</span><br><span class="line">    <span class="comment">// 全局 body 样式</span></span><br><span class="line">    <span class="string">'body'</span>: &#123;</span><br><span class="line">      margin: <span class="string">'0'</span>,</span><br><span class="line">      padding: <span class="string">'0'</span>,</span><br><span class="line">      fontFamily: <span class="string">'theme(fontFamily.sans)'</span>, <span class="comment">// 复用 Tailwind 字体配置</span></span><br><span class="line">      lineHeight: <span class="string">'1.5'</span></span><br><span class="line">    &#125;,</span><br><span class="line">    <span class="comment">// 标题标签统一样式</span></span><br><span class="line">    <span class="string">'h1'</span>: &#123;</span><br><span class="line">      fontSize: <span class="string">'2.5rem'</span>,</span><br><span class="line">      fontWeight: <span class="string">'700'</span>,</span><br><span class="line">      marginBottom: <span class="string">'1rem'</span></span><br><span class="line">    &#125;,</span><br><span class="line">    <span class="string">'h2'</span>: &#123;</span><br><span class="line">      fontSize: <span class="string">'2rem'</span>,</span><br><span class="line">      fontWeight: <span class="string">'600'</span>,</span><br><span class="line">      marginBottom: <span class="string">'0.75rem'</span></span><br><span class="line">    &#125;,</span><br><span class="line">    <span class="comment">// 链接默认样式</span></span><br><span class="line">    <span class="string">'a'</span>: &#123;</span><br><span class="line">      color: <span class="string">'theme(colors.blue.600)'</span>,</span><br><span class="line">      textDecoration: <span class="string">'underline'</span>,</span><br><span class="line">      <span class="string">'&amp;:hover'</span>: &#123;</span><br><span class="line">        color: <span class="string">'theme(colors.blue.800)'</span></span><br><span class="line">      &#125;</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;);</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+<h3><span id="使用效果">使用效果</span></h3>
+<p>无需额外添加类名，全局标签自动应用样式：</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">&lt;!-- 自动拥有 2.5rem 字号和加粗效果 --&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">h1</span>&gt;</span>文章标题<span class="tag">&lt;/<span class="name">h1</span>&gt;</span></span><br><span class="line"><span class="comment">&lt;!-- 自动拥有蓝色和下划线 --&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">a</span> <span class="attr">href</span>=<span class="string">"#"</span>&gt;</span>跳转链接<span class="tag">&lt;/<span class="name">a</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<h2><span id="4-addvariant创建自定义变体">4. <code>addVariant</code>：创建自定义变体</span></h2>
+<p>变体（Variant）是 Tailwind 的特色功能（如 <code>hover:</code>、<code>md:</code>、<code>focus:</code>），<code>addVariant</code> 允许你自定义变体前缀，实现特殊场景下的样式切换（如子元素样式、父元素 hover 触发等）。</p>
+<h3><span id="示例-1子元素变体">示例 1：子元素变体</span></h3>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">export</span> <span class="keyword">default</span> plugin(<span class="function"><span class="keyword">function</span>(<span class="params">&#123; addVariant &#125;</span>) </span>&#123;</span><br><span class="line">  <span class="comment">// 自定义 "child" 变体，作用于所有直接子元素</span></span><br><span class="line">  addVariant(<span class="string">'child'</span>, <span class="string">'&amp; &gt; *'</span>);</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+<h4><span id="使用效果">使用效果</span></h4>
+<p>通过 <code>child:</code> 前缀，为父元素的所有直接子元素添加样式：</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">&lt;!-- 所有 div 的直接子元素（p 标签）会变成红色 --&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">"child:text-red-500"</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">p</span>&gt;</span>这是红色文本<span class="tag">&lt;/<span class="name">p</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">div</span>&gt;</span><span class="tag">&lt;<span class="name">p</span>&gt;</span>这不会变红（非直接子元素）<span class="tag">&lt;/<span class="name">p</span>&gt;</span><span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<h3><span id="示例-2自定义响应式变体">示例 2：自定义响应式变体</span></h3>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">export</span> <span class="keyword">default</span> plugin(<span class="function"><span class="keyword">function</span>(<span class="params">&#123; addVariant, postcss &#125;</span>) </span>&#123;</span><br><span class="line">  <span class="comment">// 自定义响应式断点（替代默认 md:/lg:）</span></span><br><span class="line">  <span class="keyword">const</span> customScreens = &#123;</span><br><span class="line">    <span class="string">'mobile'</span>: <span class="string">'(max-width: 767px)'</span>,    <span class="comment">// 移动端</span></span><br><span class="line">    <span class="string">'pad'</span>: <span class="string">'(min-width: 768px)'</span>,       <span class="comment">// 平板</span></span><br><span class="line">    <span class="string">'desktop'</span>: <span class="string">'(min-width: 1200px)'</span>   <span class="comment">// 桌面端</span></span><br><span class="line">  &#125;;</span><br><span class="line"></span><br><span class="line">  <span class="comment">// 为每个断点生成对应的变体</span></span><br><span class="line">  <span class="built_in">Object</span>.entries(customScreens).forEach(<span class="function">(<span class="params">[name, query]</span>) =&gt;</span> &#123;</span><br><span class="line">    addVariant(name, (&#123; container &#125;) =&gt; &#123;</span><br><span class="line">      <span class="comment">// 创建 @media 规则</span></span><br><span class="line">      <span class="keyword">const</span> mediaRule = postcss.atRule(&#123;</span><br><span class="line">        name: <span class="string">'media'</span>,</span><br><span class="line">        params: query</span><br><span class="line">      &#125;);</span><br><span class="line">      <span class="comment">// 将原样式放入 @media 中</span></span><br><span class="line">      mediaRule.append(container.nodes);</span><br><span class="line">      container.append(mediaRule);</span><br><span class="line">    &#125;);</span><br><span class="line">  &#125;);</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+<h4><span id="使用效果">使用效果</span></h4>
+<p>直接使用自定义断点前缀，实现响应式控制：</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">&lt;!-- 移动端隐藏，平板及以上显示 --&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">"mobile:hidden pad:block"</span>&gt;</span>平板及以上可见<span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<h2><span id="5-e转义特殊字符的类名">5. <code>e</code>：转义特殊字符的类名</span></h2>
+<p>Tailwind 类名中若包含 <code>/</code>、<code>:</code> 等特殊字符，会导致 CSS 选择器无效。<code>e</code> 函数的作用是<strong>转义这些特殊字符</strong>，生成合法的 CSS 类名（本质是添加反斜杠 <code>\</code> 转义）。</p>
+<h3><span id="示例">示例</span></h3>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">export</span> <span class="keyword">default</span> plugin(<span class="function"><span class="keyword">function</span>(<span class="params">&#123; addUtilities, e &#125;</span>) </span>&#123;</span><br><span class="line">  <span class="comment">// 为 "w-1/3" 这类带 "/" 的类名转义</span></span><br><span class="line">  <span class="keyword">const</span> customWidth = &#123;</span><br><span class="line">    [<span class="string">`.w-<span class="subst">$&#123;e(<span class="string">'1/3'</span>)&#125;</span>`</span>]: &#123; <span class="attr">width</span>: <span class="string">'33.333%'</span> &#125;,</span><br><span class="line">    [<span class="string">`.w-<span class="subst">$&#123;e(<span class="string">'2/5'</span>)&#125;</span>`</span>]: &#123; <span class="attr">width</span>: <span class="string">'40%'</span> &#125;</span><br><span class="line">  &#125;;</span><br><span class="line">  addUtilities(customWidth);</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+<h3><span id="效果解析">效果解析</span></h3>
+<ul>
+<li>未转义时，<code>.w-1/3</code> 会被 CSS 解析为无效选择器；</li>
+<li>经 <code>e('1/3')</code> 转义后，生成 <code>.w-1\/3</code>（CSS 中合法）；</li>
+<li>使用时仍可写 <code>class=&quot;w-1/3&quot;</code>，Tailwind 会自动匹配转义后的类名。</li>
+</ul>
+<h2><span id="6-theme读取-tailwind-配置值">6. <code>theme</code>：读取 Tailwind 配置值</span></h2>
+<p><code>theme</code> 函数用于<strong>获取 tailwind.config.js 中的配置项</strong>（如颜色、间距、字体等），避免在插件中硬编码值，确保样式与项目配置统一。</p>
+<h3><span id="示例">示例</span></h3>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 假设 tailwind.config.js 中配置了自定义颜色</span></span><br><span class="line"><span class="comment">// module.exports = &#123; theme: &#123; colors: &#123; primary: '#165DFF' &#125; &#125; &#125;</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">export</span> <span class="keyword">default</span> plugin(<span class="function"><span class="keyword">function</span>(<span class="params">&#123; addComponents, theme &#125;</span>) </span>&#123;</span><br><span class="line">  addComponents(&#123;</span><br><span class="line">    <span class="string">'.card'</span>: &#123;</span><br><span class="line">      <span class="comment">// 读取配置中的 primary 颜色</span></span><br><span class="line">      borderColor: theme(<span class="string">'colors.primary'</span>),</span><br><span class="line">      <span class="comment">// 读取配置中的间距（如预设的 1rem = 4）</span></span><br><span class="line">      padding: theme(<span class="string">'spacing.4'</span>),</span><br><span class="line">      <span class="comment">// 读取嵌套配置（如字体大小）</span></span><br><span class="line">      fontSize: theme(<span class="string">'fontSize.base[0]'</span>) <span class="comment">// base 对应的字体大小（默认 1rem）</span></span><br><span class="line">    &#125;</span><br><span class="line">  &#125;);</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+<h2><span id="7-config获取完整的-tailwind-配置">7. <code>config</code>：获取完整的 Tailwind 配置</span></h2>
+<p>与 <code>theme</code> 仅读取 <code>theme</code> 节点不同，<code>config</code> 函数可以<strong>获取整个 tailwind.config.js 的配置对象</strong>（包括 <code>purge</code>、<code>plugins</code>、<code>corePlugins</code> 等所有节点），适合需要读取非 <code>theme</code> 配置的场景。</p>
+<h3><span id="示例">示例</span></h3>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">export</span> <span class="keyword">default</span> plugin(<span class="function"><span class="keyword">function</span>(<span class="params">&#123; config &#125;</span>) </span>&#123;</span><br><span class="line">  <span class="comment">// 读取 purge 配置（清除未使用样式的路径）</span></span><br><span class="line">  <span class="keyword">const</span> purgePaths = config(<span class="string">'purge.content'</span>);</span><br><span class="line">  <span class="built_in">console</span>.log(<span class="string">'Purge 路径：'</span>, purgePaths); <span class="comment">// 输出配置的 purge 路径</span></span><br><span class="line"></span><br><span class="line">  <span class="comment">// 读取 corePlugins 配置（是否禁用某些核心插件）</span></span><br><span class="line">  <span class="keyword">const</span> isFlexDisabled = config(<span class="string">'corePlugins.flex'</span>) === <span class="literal">false</span>;</span><br><span class="line">  <span class="keyword">if</span> (isFlexDisabled) &#123;</span><br><span class="line">    <span class="built_in">console</span>.warn(<span class="string">'flex 核心插件已禁用'</span>);</span><br><span class="line">  &#125;</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+<h2><span id="8-postcss操作-css-ast-结构">8. <code>postcss</code>：操作 CSS AST 结构</span></h2>
+<p><code>postcss</code> 参数是 PostCSS 库的实例，允许你直接<strong>创建和修改 CSS 的抽象语法树（AST）</strong>，例如生成 <code>@keyframes</code> 动画、<code>@font-face</code> 字体规则等复杂 CSS 结构，是实现高级插件功能的核心工具。</p>
+<h3><span id="示例生成自定义动画">示例：生成自定义动画</span></h3>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">export</span> <span class="keyword">default</span> plugin(<span class="function"><span class="keyword">function</span>(<span class="params">&#123; addUtilities, postcss &#125;</span>) </span>&#123;</span><br><span class="line">  <span class="comment">// 1. 创建 @keyframes 动画规则</span></span><br><span class="line">  <span class="keyword">const</span> keyframes = postcss.atRule(&#123;</span><br><span class="line">    name: <span class="string">'keyframes'</span>,</span><br><span class="line">    params: <span class="string">'fadeIn'</span> <span class="comment">// 动画名称</span></span><br><span class="line">  &#125;);</span><br><span class="line">  <span class="comment">// 添加动画关键帧</span></span><br><span class="line">  keyframes.append(</span><br><span class="line">    postcss.rule(&#123; <span class="attr">selector</span>: <span class="string">'0%'</span> &#125;).append(&#123; <span class="attr">prop</span>: <span class="string">'opacity'</span>, <span class="attr">value</span>: <span class="string">'0'</span> &#125;),</span><br><span class="line">    postcss.rule(&#123; <span class="attr">selector</span>: <span class="string">'100%'</span> &#125;).append(&#123; <span class="attr">prop</span>: <span class="string">'opacity'</span>, <span class="attr">value</span>: <span class="string">'1'</span> &#125;)</span><br><span class="line">  );</span><br><span class="line"></span><br><span class="line">  <span class="comment">// 2. 添加动画工具类</span></span><br><span class="line">  addUtilities(&#123;</span><br><span class="line">    <span class="string">'.animate-fade-in'</span>: &#123;</span><br><span class="line">      animation: <span class="string">'fadeIn 0.5s ease-in-out'</span></span><br><span class="line">    &#125;</span><br><span class="line">  &#125;);</span><br><span class="line"></span><br><span class="line">  <span class="comment">// 3. 将 @keyframes 插入到 CSS 根节点</span></span><br><span class="line">  <span class="keyword">return</span> <span class="function"><span class="keyword">function</span>(<span class="params">&#123; addBase &#125;</span>) </span>&#123;</span><br><span class="line">    addBase(keyframes);</span><br><span class="line">  &#125;;</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+<h3><span id="使用效果">使用效果</span></h3>
+<p>通过工具类直接调用自定义动画：</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">&lt;!-- 元素会以 0.5s 淡入 --&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">"animate-fade-in bg-green-500 p-4"</span>&gt;</span>淡入效果<span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<h2><span id="常用参数总结表">常用参数总结表</span></h2>
+<p>为了方便快速查阅，整理了各参数的核心作用与典型用法：</p>
+<table>
+<thead>
+<tr>
+<th>参数名</th>
+<th>核心作用</th>
+<th>典型场景/示例</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>addUtilities</code></td>
+<td>添加单一功能的自定义工具类</td>
+<td><code>.skew-10deg</code>、<code>.rotate-15</code></td>
+</tr>
+<tr>
+<td><code>addComponents</code></td>
+<td>封装复合样式的组件类</td>
+<td><code>.btn</code>、<code>.card</code>、<code>.nav-bar</code></td>
+</tr>
+<tr>
+<td><code>addBase</code></td>
+<td>注入全局基础样式（标签级）</td>
+<td>重置 <code>body</code> 样式、统一 <code>h1</code> 字号</td>
+</tr>
+<tr>
+<td><code>addVariant</code></td>
+<td>创建自定义变体前缀</td>
+<td><code>child:text-red-500</code>、<code>mobile:hidden</code></td>
+</tr>
+<tr>
+<td><code>e</code></td>
+<td>转义特殊字符的类名</td>
+<td><code>e('1/3')</code> → 生成 <code>.w-1\/3</code></td>
+</tr>
+<tr>
+<td><code>theme</code></td>
+<td>读取 tailwind.config 的 theme 配置</td>
+<td><code>theme('colors.primary')</code>、<code>theme('spacing.4')</code></td>
+</tr>
+<tr>
+<td><code>config</code></td>
+<td>读取完整的 Tailwind 配置</td>
+<td><code>config('purge.content')</code>、<code>config('plugins')</code></td>
+</tr>
+<tr>
+<td><code>postcss</code></td>
+<td>操作 CSS AST（创建复杂规则）</td>
+<td>生成 <code>@keyframes</code>、<code>@media</code>、<code>@font-face</code></td>
+</tr>
+</tbody>
+</table>
+<h2><span id="总结">总结</span></h2>
+<p>Tailwind 插件的这 8 个常用参数，覆盖了从「基础样式」到「高级变体」的全场景定制需求：</p>
+<ul>
+<li>若需扩展单一样式 → 用 <code>addUtilities</code>；</li>
+<li>若需封装复用组件 → 用 <code>addComponents</code>；</li>
+<li>若需统一全局基础 → 用 <code>addBase</code>；</li>
+<li>若需特殊样式触发 → 用 <code>addVariant</code>；</li>
+<li>若涉及配置读取 → 用 <code>theme</code>/<code>config</code>；</li>
+<li>若涉及特殊字符 → 用 <code>e</code>；</li>
+<li>若涉及复杂 CSS 规则 → 用 <code>postcss</code>。</li>
+</ul>
+<p>掌握这些参数后，你可以轻松打造贴合项目需求的 Tailwind 扩展，让样式开发更高效、更灵活。</p>
+
+                
+
+                <hr>
+                <!-- Pager -->
+                <ul class="pager">
+                    
+                    
+                        <li class="next">
+                            <a href="/jtblogs/article/深入理解-Tailwind-CSS-与-PostCSS-工作流：从原理到实践/" data-toggle="tooltip" data-placement="top" title="深入理解 Tailwind CSS 与 PostCSS 工作流：从原理到实践">Next Post &rarr;</a>
+                        </li>
+                    
+                </ul>
+
+                <br>
+
+                <!--打赏-->
+                
+                <!--打赏-->
+
+                <br>
+                <!--分享-->
+                
+                    <div class="social-share"  data-wechat-qrcode-helper="" align="center"></div>
+                    <!--  css & js -->
+                    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/social-share.js/1.0.16/css/share.min.css">
+                    <script src="https://cdnjs.cloudflare.com/ajax/libs/social-share.js/1.0.16/js/social-share.min.js"></script>
+                
+                <!--分享-->
+                <br>                       
+                
+                <!-- require APlayer -->
+                
+
+                <!-- duoshuo Share start -->
+                
+                <!-- 多说 Share end-->
+
+                <!-- 多说评论框 start -->
+                
+                <!-- 多说评论框 end -->
+
+                <!-- disqus comment start -->
+                
+                <!-- disqus comment end -->
+
+                
+
+            </div>
+            
+            <!-- Tabe of Content -->
+            <!-- Table of Contents -->
+
+  
+    <style>
+      span.toc-nav-number{
+        display: none
+      }
+    </style>
+  
+    
+      <aside id="sidebar">
+        <div id="toc" class="toc-article">
+        <strong class="toc-title">Contents</strong>
+        
+          <ol class="toc-nav"><li class="toc-nav-item toc-nav-level-1"><a class="toc-nav-link" href="#null"><span class="toc-nav-number">1.</span> <span class="toc-nav-text">深入理解 Tailwind CSS 插件：常用参数解析与实战示例</span></a><ol class="toc-nav-child"><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#null"><span class="toc-nav-number">1.1.</span> <span class="toc-nav-text">1. addUtilities：添加自定义工具类</span></a><ol class="toc-nav-child"><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#null"><span class="toc-nav-number">1.1.1.</span> <span class="toc-nav-text">示例</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#null"><span class="toc-nav-number">1.1.2.</span> <span class="toc-nav-text">使用效果</span></a></li></ol></li><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#null"><span class="toc-nav-number">1.2.</span> <span class="toc-nav-text">2. addComponents：封装复用性组件类</span></a><ol class="toc-nav-child"><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#null"><span class="toc-nav-number">1.2.1.</span> <span class="toc-nav-text">示例</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#null"><span class="toc-nav-number">1.2.2.</span> <span class="toc-nav-text">使用效果</span></a></li></ol></li><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#null"><span class="toc-nav-number">1.3.</span> <span class="toc-nav-text">3. addBase：配置全局基础样式</span></a><ol class="toc-nav-child"><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#null"><span class="toc-nav-number">1.3.1.</span> <span class="toc-nav-text">示例</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#null"><span class="toc-nav-number">1.3.2.</span> <span class="toc-nav-text">使用效果</span></a></li></ol></li><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#null"><span class="toc-nav-number">1.4.</span> <span class="toc-nav-text">4. addVariant：创建自定义变体</span></a><ol class="toc-nav-child"><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#null"><span class="toc-nav-number">1.4.1.</span> <span class="toc-nav-text">示例 1：子元素变体</span></a><ol class="toc-nav-child"><li class="toc-nav-item toc-nav-level-4"><a class="toc-nav-link" href="#null"><span class="toc-nav-number">1.4.1.1.</span> <span class="toc-nav-text">使用效果</span></a></li></ol></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#null"><span class="toc-nav-number">1.4.2.</span> <span class="toc-nav-text">示例 2：自定义响应式变体</span></a><ol class="toc-nav-child"><li class="toc-nav-item toc-nav-level-4"><a class="toc-nav-link" href="#null"><span class="toc-nav-number">1.4.2.1.</span> <span class="toc-nav-text">使用效果</span></a></li></ol></li></ol></li><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#null"><span class="toc-nav-number">1.5.</span> <span class="toc-nav-text">5. e：转义特殊字符的类名</span></a><ol class="toc-nav-child"><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#null"><span class="toc-nav-number">1.5.1.</span> <span class="toc-nav-text">示例</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#null"><span class="toc-nav-number">1.5.2.</span> <span class="toc-nav-text">效果解析</span></a></li></ol></li><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#null"><span class="toc-nav-number">1.6.</span> <span class="toc-nav-text">6. theme：读取 Tailwind 配置值</span></a><ol class="toc-nav-child"><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#null"><span class="toc-nav-number">1.6.1.</span> <span class="toc-nav-text">示例</span></a></li></ol></li><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#null"><span class="toc-nav-number">1.7.</span> <span class="toc-nav-text">7. config：获取完整的 Tailwind 配置</span></a><ol class="toc-nav-child"><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#null"><span class="toc-nav-number">1.7.1.</span> <span class="toc-nav-text">示例</span></a></li></ol></li><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#null"><span class="toc-nav-number">1.8.</span> <span class="toc-nav-text">8. postcss：操作 CSS AST 结构</span></a><ol class="toc-nav-child"><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#null"><span class="toc-nav-number">1.8.1.</span> <span class="toc-nav-text">示例：生成自定义动画</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#null"><span class="toc-nav-number">1.8.2.</span> <span class="toc-nav-text">使用效果</span></a></li></ol></li><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#null"><span class="toc-nav-number">1.9.</span> <span class="toc-nav-text">常用参数总结表</span></a></li><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#null"><span class="toc-nav-number">1.10.</span> <span class="toc-nav-text">总结</span></a></li></ol></li></ol>
+        
+        </div>
+      </aside>
+    
+
+                
+            <!-- Sidebar Container -->
+            <div class="
+                col-lg-8 col-lg-offset-2
+                col-md-10 col-md-offset-1
+                sidebar-container">
+
+                <!-- Featured Tags -->
+                
+                <section>
+                    <!-- no hr -->
+                    <h5><a href="/jtblogs/tags/">FEATURED TAGS</a></h5>
+                    <div class="tags">
+                       
+                          <a class="tag" href="/jtblogs/tags/#CSS" title="CSS">CSS</a>
+                        
+                    </div>
+                </section>
+                
+
+                <!-- Friends Blog -->
+                
+                <hr>
+                <h5>FRIENDS</h5>
+                <ul class="list-inline">
+
+                    
+                </ul>
+                
+            </div>
+        </div>
+    </div>
+</article>
+
+
+
+
+
+
+
+
+<!-- async load function -->
+<script>
+    function async(u, c) {
+      var d = document, t = 'script',
+          o = d.createElement(t),
+          s = d.getElementsByTagName(t)[0];
+      o.src = u;
+      if (c) { o.addEventListener('load', function (e) { c(null, e); }, false); }
+      s.parentNode.insertBefore(o, s);
+    }
+</script>
+<!-- anchor-js, Doc:http://bryanbraun.github.io/anchorjs/ -->
+<script>
+    async("https://cdn.bootcss.com/anchor-js/1.1.1/anchor.min.js",function(){
+        anchors.options = {
+          visible: 'hover',
+          placement: 'left',
+          icon: 'ℬ'
+        };
+        anchors.add().remove('.intro-header h1').remove('.subheading').remove('.sidebar-container h5');
+    })
+</script>
+<style>
+    /* place left on bigger screen */
+    @media all and (min-width: 800px) {
+        .anchorjs-link{
+            position: absolute;
+            left: -0.75em;
+            font-size: 1.1em;
+            margin-top : -0.1em;
+        }
+    }
+</style>
+
+
+<!-- chrome Firefox 中文锚点定位失效-->
+<script src="https://cdn.bootcss.com/jquery/3.3.1/jquery.js"></script>
+<!-- smooth scroll behavior polyfill  -->
+<script type="text/javascript" src="/js/smoothscroll.js"></script>
+<script>
+        $('#toc').on('click','a',function(a){
+            // var isChrome = window.navigator.userAgent.indexOf("Chrome") !== -1;
+            // console.log(window.navigator.userAgent,isChrome)
+                // if(isChrome) {
+                    // console.log(a.currentTarget.outerHTML);
+                    // console.log($(a.currentTarget).attr("href"));
+                    //跳转到指定锚点
+                    // document.getElementById(a.target.innerText.toLowerCase()).scrollIntoView(true);
+                    document.getElementById($(a.currentTarget).attr("href").replace("#","")).scrollIntoView({behavior: 'smooth' });
+                // }
+        })  
+</script>
+
+
+    <!-- Footer -->
+    <!-- Footer -->
+<footer>
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+                <ul class="list-inline text-center">
+                    
+                            
+                                    
+
+                                            
+
+                                                    
+
+                                                            
+                                                                <li>
+                                                                    <a target="_blank"
+                                                                        href="https://github.com/taojiangcb">
+                                                                        <span class="fa-stack fa-lg">
+                                                                            <i class="fa fa-circle fa-stack-2x"></i>
+                                                                            <i
+                                                                                class="fa fa-github fa-stack-1x fa-inverse"></i>
+                                                                        </span>
+                                                                    </a>
+                                                                </li>
+                                                                
+
+                                                                    
+
+                </ul>
+
+                <p class="copyright text-muted">
+                    Copyright &copy; 江涛
+                        2025
+                            <br>
+                            Theme by <a href="http://beantech.org">BeanTech</a>
+                            <span style="display: inline-block; margin: 0 5px;">
+                                <i class="fa fa-heart"></i>
+                            </span>
+                            re-Ported by <a href="https://taojiangcb.github.io/jtblogs">江涛</a> |
+                            <iframe style="margin-left: 2px; margin-bottom:-5px;" frameborder="0" scrolling="0"
+                                width="91px" height="20px"
+                                src="https://ghbtns.com/github-btn.html?user=taojiangcb&repo=jtblogs&type=star&count=true">
+                            </iframe>
+                </p>
+                <p class="copyright text-muted" style="margin:0">
+                    <script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+                    <span id="busuanzi_container_site_pv">
+                        总访问量<span id="busuanzi_value_site_pv"></span>次
+                    </span>
+                    <span id="busuanzi_container_site_uv">
+                        总访客数<span id="busuanzi_value_site_uv"></span>人
+                    </span>
+                </p>
+            </div>
+        </div>
+    </div>
+</footer>
+
+<!-- jQuery -->
+<script src="/jtblogs/js/jquery.min.js"></script>
+
+    <!-- Bootstrap Core JavaScript -->
+    <script src="/jtblogs/js/bootstrap.min.js"></script>
+
+        <!-- Custom Theme JavaScript -->
+        <script src="/jtblogs/js/hux-blog.min.js"></script>
+
+
+            <!-- async load function -->
+            <script>
+                function async(u, c) {
+                    var d = document, t = 'script',
+                        o = d.createElement(t),
+                        s = d.getElementsByTagName(t)[0];
+                    o.src = u;
+                    if (c) { o.addEventListener('load', function (e) { c(null, e); }, false); }
+                    s.parentNode.insertBefore(o, s);
+                }
+            </script>
+
+            <!-- 
+     Because of the native support for backtick-style fenced code blocks 
+     right within the Markdown is landed in Github Pages, 
+     From V1.6, There is no need for Highlight.js, 
+     so Huxblog drops it officially.
+
+     - https://github.com/blog/2100-github-pages-now-faster-and-simpler-with-jekyll-3-0  
+     - https://help.github.com/articles/creating-and-highlighting-code-blocks/    
+-->
+            <!--
+    <script>
+        async("http://cdn.bootcss.com/highlight.js/8.6/highlight.min.js", function(){
+            hljs.initHighlightingOnLoad();
+        })
+    </script>
+    <link href="http://cdn.bootcss.com/highlight.js/8.6/styles/github.min.css" rel="stylesheet">
+-->
+
+
+            <!-- jquery.tagcloud.js -->
+            <script>
+                // only load tagcloud.js in tag.html
+                if ($('#tag_cloud').length !== 0) {
+                    async("https://taojiangcb.github.io/jtblogs/js/jquery.tagcloud.js", function () {
+                        $.fn.tagcloud.defaults = {
+                            //size: {start: 1, end: 1, unit: 'em'},
+                            color: { start: '#bbbbee', end: '#0085a1' },
+                        };
+                        $('#tag_cloud a').tagcloud();
+                    })
+                }
+            </script>
+
+            <!--fastClick.js -->
+            <script>
+                async("https://cdn.bootcss.com/fastclick/1.0.6/fastclick.min.js", function () {
+                    var $nav = document.querySelector("nav");
+                    if ($nav) FastClick.attach($nav);
+                })
+            </script>
+
+
+            <!-- Google Analytics -->
+
+            
+                <script>
+                    // dynamic User by Hux
+                    var _gaId = 'UA-XXXXXXXX-X';
+                    var _gaDomain = 'yoursite';
+
+                    // Originial
+                    (function (i, s, o, g, r, a, m) {
+                        i['GoogleAnalyticsObject'] = r; i[r] = i[r] || function () {
+                            (i[r].q = i[r].q || []).push(arguments)
+                        }, i[r].l = 1 * new Date(); a = s.createElement(o),
+                            m = s.getElementsByTagName(o)[0]; a.async = 1; a.src = g; m.parentNode.insertBefore(a, m)
+                    })(window, document, 'script', '//www.google-analytics.com/analytics.js', 'ga');
+
+                    ga('create', _gaId, _gaDomain);
+                    ga('send', 'pageview');
+                </script>
+
+                
+
+
+                    <!-- Baidu Tongji -->
+                    
+                        <script>
+                            // dynamic User by Hux
+                            var _baId = 'xxx';
+
+                            // Originial
+                            var _hmt = _hmt || [];
+                            (function () {
+                                var hm = document.createElement("script");
+                                hm.src = "//hm.baidu.com/hm.js?" + _baId;
+                                var s = document.getElementsByTagName("script")[0];
+                                s.parentNode.insertBefore(hm, s);
+                            })();
+                        </script>
+                        
+
+
+	<a id="rocket" href="#top" class=""></a>
+	<script type="text/javascript" src="/jtblogs/js/totop.js?v=1.0.0" async=""></script>
+    <script type="text/javascript" src="/jtblogs/js/toc.js?v=1.0.0" async=""></script>
+<!-- Image to hack wechat -->
+<img src="https://taojiangcb.github.io/jtblogs/img/icon_wechat.png" width="0" height="0" />
+<!-- Migrate from head to bottom, no longer block render and still work -->
+
+</body>
+
+</html>

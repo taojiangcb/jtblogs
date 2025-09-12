@@ -35,6 +35,13 @@
     </url>
     
     <url>
+        <loc>https://taojiangcb.github.io/jtblogs/EIP-1193.html</loc>
+        <lastmod>2025-06-11T01:54:23.285Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.8</priority>
+    </url>
+    
+    <url>
         <loc>https://taojiangcb.github.io/jtblogs/EPI-1102.html</loc>
         <lastmod>2025-06-11T01:54:23.285Z</lastmod>
         <changefreq>weekly</changefreq>
@@ -43,13 +50,6 @@
     
     <url>
         <loc>https://taojiangcb.github.io/jtblogs/EPI-3085.html</loc>
-        <lastmod>2025-06-11T01:54:23.285Z</lastmod>
-        <changefreq>weekly</changefreq>
-        <priority>0.8</priority>
-    </url>
-    
-    <url>
-        <loc>https://taojiangcb.github.io/jtblogs/EIP-1193.html</loc>
         <lastmod>2025-06-11T01:54:23.285Z</lastmod>
         <changefreq>weekly</changefreq>
         <priority>0.8</priority>

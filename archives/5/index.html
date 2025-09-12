@@ -18,7 +18,7 @@
         
     </title>
 
-    <link rel="canonical" href="https://taojiangcb.github.io/jtblogs/jtblogs/EPI-1102.html">
+    <link rel="canonical" href="https://taojiangcb.github.io/jtblogs/jtblogs/archives/5/">
 
     <!-- Bootstrap Core CSS -->
     <link rel="stylesheet" href="/jtblogs/css/bootstrap.min.css">
@@ -71,8 +71,8 @@
 <style type="text/css">
     header.intro-header{
         
-            background-image: url('/jtblogs/img/header_img/archives-widget.jpg')
-            /*page*/
+            background-image: url('/jtblogs/img/header_img/home.jpg') 
+            /*config*/
         
     }
     
@@ -221,33 +221,317 @@
                 post-container
             ">
             
-                <p>EIP-1102 是一项以太坊改进提案，旨在解决以太坊浏览器与用户隐私之间的平衡问题。它提出了一种新的方法，让用户在使用 DApp（去中心化应用）时，更加透明地控制和授权哪些信息可以被访问，尤其是在涉及浏览器本地存储的情况下。</p>
-<h3><span id="核心目标">核心目标</span></h3>
-<p>EIP-1102 的目标是 <strong>改善用户隐私控制</strong>，尤其是在用户与以太坊浏览器（例如 MetaMask）互动时，确保用户能够明确知道哪些数据正在被访问，以及它们可以控制是否允许这些访问。</p>
-<h3><span id="关键内容">关键内容</span></h3>
-<ol>
-<li>
-<p><strong>明确授权</strong>：<br>
-EIP-1102 提出，用户与 DApp 进行交互时，必须明确地同意浏览器扩展程序（如 MetaMask）访问他们的以太坊账户。这样，DApp 就能明确获知用户的授权，避免未经授权的访问。</p>
-</li>
-<li>
-<p><strong>权限管理</strong>：<br>
-EIP-1102 强调，DApp 应该要求用户授予权限来访问其账户信息，而不是在后台隐性地执行操作。例如，用户应该能够在 DApp 界面上看到他们的账户信息被哪些 DApp 访问，并允许用户随时取消权限。</p>
-</li>
-<li>
-<p><strong>隐私保护</strong>：<br>
-通过这种改进，用户可以避免 DApp 不当使用或滥用他们的个人数据（如地址、交易历史等）。该提案的目的是增强用户隐私，并为用户提供更好的隐私保护措施。</p>
-</li>
-<li>
-<p><strong>用户交互改进</strong>：<br>
-在与 DApp 交互时，用户应能够清楚地看到请求的权限，并通过简单明了的界面来管理这些权限。这样可以避免用户无意中暴露更多的个人信息，增加透明度。</p>
-</li>
-</ol>
-<h3><span id="背景">背景</span></h3>
-<p>随着以太坊生态的扩展，越来越多的去中心化应用（DApps）开始连接到用户的钱包。为了提高安全性和隐私保护，EIP-1102 提出了这个建议，旨在通过加强用户控制来避免过度数据共享。MetaMask 等钱包扩展在提供方便的同时，也可能引发隐私泄漏问题，因此，这项提案旨在通过用户授权管理，减轻此类风险。</p>
-<h3><span id="目前状态">目前状态</span></h3>
-<p>EIP-1102 仍处于讨论阶段，尚未正式实施。不过，类似的隐私保护问题已经引起了以太坊社区的广泛关注，未来可能会在以太坊浏览器和 DApp 之间实现更严格的隐私控制。</p>
-<p>总结来说，EIP-1102 主要是围绕提高去中心化应用中的隐私保护进行优化，尤其关注用户如何授权和控制对自己以太坊账户的访问权限。如果你对这个提案有更多的兴趣，或者有其他问题，随时告诉我！</p>
+                <!-- Main Content -->
+
+
+<div class="post-preview">
+
+    <a href="/jtblogs/article/Webpack中的hash值/">
+        <h2 class="post-title">
+                                 
+            Webpack中的hash值
+        </h2>
+        <h3 class="post-subtitle">
+            
+        </h3>
+        <div class="post-content-preview">
+            ⽂件哈希值
+⽂件哈希值就是打包后输出的⽂件名的后缀
+例如：3.bfb2172c.js app.d3635098.js
+⽂件哈希值如何⽣成
+
+
+Hash：和整个项⽬的构建相关，只要项⽬⽂件有修改，整个项⽬构建的 hash 值就会更改
+
+
+Chunkhash：和 webpack 打包的 chunk 有关，不同的 entry 会⽣成不同的 chunkhash 值
+
+
+Contenthash：根据⽂......
+        </div>
+    </a>
+    
+        <p class="post-meta" style="margin: 10px 0;">
+            Posted by 江涛 on
+            2019-12-30
+        </p>
+        <div class="tags">
+            
+              <a href="/jtblogs/tags/#Webpack" title="Webpack">Webpack</a>
+            
+        </div>
+    
+
+</div>
+<hr>
+
+<div class="post-preview">
+
+    <a href="/jtblogs/article/Webpack-核心概念/">
+        <h2 class="post-title">
+                                 
+            Webpack - 核心概念
+        </h2>
+        <h3 class="post-subtitle">
+            
+        </h3>
+        <div class="post-content-preview">
+            核心概念之 Entry
+Entry 用来指定 webpack 的打包⼊口
+Entry 的⽤法
+单⼊⼝：entry 是⼀个字符串
+123module.exports = &#123;    entry: &apos;./src/index.js&apos;&#125;;
+多⼊⼝：entry 是⼀个对象
+123456module.exports = &#123;    entry: &#123;......
+        </div>
+    </a>
+    
+        <p class="post-meta" style="margin: 10px 0;">
+            Posted by 江涛 on
+            2019-12-30
+        </p>
+        <div class="tags">
+            
+              <a href="/jtblogs/tags/#Webpack" title="Webpack">Webpack</a>
+            
+        </div>
+    
+
+</div>
+<hr>
+
+<div class="post-preview">
+
+    <a href="/jtblogs/article/自己撸的koa-ioc-插件/">
+        <h2 class="post-title">
+                                 
+            自己撸的koa-ioc 插件
+        </h2>
+        <h3 class="post-subtitle">
+            
+        </h3>
+        <div class="post-content-preview">
+            koa-ioc
+
+ioc middleware for koa
+
+
+指定一个服务目录,在启动服务app时,自动灌入服务路由
+基于koa-router二次封装 app.get,app.post,app.put 等均可使用。
+
+
+installation
+unsing npm :
+1npm install kao-ioc
+API Reference
+
+ioc_dir( path : string......
+        </div>
+    </a>
+    
+        <p class="post-meta" style="margin: 10px 0;">
+            Posted by 江涛 on
+            2019-12-30
+        </p>
+        <div class="tags">
+            
+              <a href="/jtblogs/tags/#nodejs" title="nodejs">nodejs</a>
+            
+        </div>
+    
+
+</div>
+<hr>
+
+<div class="post-preview">
+
+    <a href="/jtblogs/article/Webpack-优化/">
+        <h2 class="post-title">
+                                 
+            Webpack 优化
+        </h2>
+        <h3 class="post-subtitle">
+            
+        </h3>
+        <div class="post-content-preview">
+            webpack 慢的原因
+
+string -&gt; ast -&gt; string/buff,文件过多 n *  string -&gt; ast -&gt; string/buff
+entry 过多 复杂 繁杂 fonts css js
+async import(/***/‘xxx.js’) entry
+
+解决方案
+
+async 插件 speed-measure-webpack-plu......
+        </div>
+    </a>
+    
+        <p class="post-meta" style="margin: 10px 0;">
+            Posted by 江涛 on
+            2019-12-30
+        </p>
+        <div class="tags">
+            
+              <a href="/jtblogs/tags/#Webpack" title="Webpack">Webpack</a>
+            
+        </div>
+    
+
+</div>
+<hr>
+
+<div class="post-preview">
+
+    <a href="/jtblogs/article/JS中的错误捕获/">
+        <h2 class="post-title">
+                                 
+            JS中的错误捕获
+        </h2>
+        <h3 class="post-subtitle">
+            
+        </h3>
+        <div class="post-content-preview">
+            try catch 捕获
+可以捕获到同步代码的错误，但是异步的微任务或这宏任务就不可以了。
+window.error
+可以捕获到异步队列的任务异常，但是网络请求之类的异常捕获不到。get 请求捕获不到哦。 网络请求捕获不到，io错误之类的。
+1234567&lt;img src =&apos;./a.jpg&apos;&gt; get 请求捕获不到window.onerror = funct......
+        </div>
+    </a>
+    
+        <p class="post-meta" style="margin: 10px 0;">
+            Posted by 江涛 on
+            2019-12-30
+        </p>
+        <div class="tags">
+            
+              <a href="/jtblogs/tags/#js" title="js">js</a>
+            
+        </div>
+    
+
+</div>
+<hr>
+
+<div class="post-preview">
+
+    <a href="/jtblogs/article/看透matrix3/">
+        <h2 class="post-title">
+                                 
+            看透matrix3
+        </h2>
+        <h3 class="post-subtitle">
+            
+        </h3>
+        <div class="post-content-preview">
+            先看我之前的一个例子:http://47.100.202.222/splitball/
+可以看下工具调试，满屏的matrix3 跳动的热血沸腾的。
+123456789101112131415161718192021222324252627282930/**   a = 控制 X 的宽度*　　b = 控制 Y 的倾斜*　　c = 控制 X 的倾斜*　　d = 控制 Y 的高度*　　tx = 控......
+        </div>
+    </a>
+    
+        <p class="post-meta" style="margin: 10px 0;">
+            Posted by 江涛 on
+            2019-12-29
+        </p>
+        <div class="tags">
+            
+              <a href="/jtblogs/tags/#css" title="css">css</a>
+            
+        </div>
+    
+
+</div>
+<hr>
+
+<div class="post-preview">
+
+    <a href="/jtblogs/article/css专业素养/">
+        <h2 class="post-title">
+                                 
+            css专业素养
+        </h2>
+        <h3 class="post-subtitle">
+            
+        </h3>
+        <div class="post-content-preview">
+            cascading style sheet
+层叠样式表
+1.引入css
+1234567891011121314151617181920212223&lt;html lang=&quot;en&quot;&gt;   &lt;head&gt;       &lt;meta charset=&quot;UTF-8&quot;&gt;       &lt;title&gt;Document&lt;......
+        </div>
+    </a>
+    
+        <p class="post-meta" style="margin: 10px 0;">
+            Posted by 江涛 on
+            2019-12-29
+        </p>
+        <div class="tags">
+            
+              <a href="/jtblogs/tags/#css" title="css">css</a>
+            
+        </div>
+    
+
+</div>
+<hr>
+
+<div class="post-preview">
+
+    <a href="/jtblogs/article/IFC-BFC-FFC-GFC/">
+        <h2 class="post-title">
+                                 
+            IFC BFC FFC GFC
+        </h2>
+        <h3 class="post-subtitle">
+            
+        </h3>
+        <div class="post-content-preview">
+            BFC
+BFC（Block Formatting Context）格式化上下文，是Web页面中盒模型布局的CSS渲染模式，指一个独立的渲染区域或者说是一个隔离的独立容器。
+BFC 应用
+
+防止margin重叠
+清除内部浮动
+自适应两（多）栏布局
+防止字体环绕
+
+触发BFC条件
+
+根元素
+float的值不为none
+overflow的值不为visible
+display的值为inline-bl......
+        </div>
+    </a>
+    
+        <p class="post-meta" style="margin: 10px 0;">
+            Posted by 江涛 on
+            2019-12-29
+        </p>
+        <div class="tags">
+            
+              <a href="/jtblogs/tags/#css" title="css">css</a>
+            
+        </div>
+    
+
+</div>
+<hr>
+
+
+
+<!-- Pager -->
+
+<ul class="pager">
+    
+        <li class="previous">
+            <a href="/jtblogs/archives/4/">&larr; Newer Posts</a>
+        </li>
+    
+    
+</ul>
+
 
 
                 <br>
@@ -256,21 +540,6 @@ EIP-1102 强调，DApp 应该要求用户授予权限来访问其账户信息，
                 
 
                 <!-- 如果开启评论功能 -->
-                
-                    <hr>
-
-                    
-
-                    
-
-                    
-
-                    
-
-                    
-
-                    
-
                 
             </div>
 
