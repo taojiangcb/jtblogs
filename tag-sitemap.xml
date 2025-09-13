@@ -37,13 +37,6 @@
     </url>
 
     <url>
-        <loc>https://taojiangcb.github.io/jtblogs/tags/React/</loc>
-        <lastmod>2025-09-13T04:45:50.635Z</lastmod>
-        <changefreq>weekly</changefreq>
-        <priority>0.2</priority>
-    </url>
-
-    <url>
         <loc>https://taojiangcb.github.io/jtblogs/tags/js/</loc>
         <lastmod>2025-09-13T04:45:50.636Z</lastmod>
         <changefreq>weekly</changefreq>
@@ -72,13 +65,6 @@
     </url>
 
     <url>
-        <loc>https://taojiangcb.github.io/jtblogs/tags/CSS/</loc>
-        <lastmod>2025-09-13T04:45:50.690Z</lastmod>
-        <changefreq>weekly</changefreq>
-        <priority>0.2</priority>
-    </url>
-
-    <url>
         <loc>https://taojiangcb.github.io/jtblogs/tags/css/</loc>
         <lastmod>2025-09-13T04:45:50.700Z</lastmod>
         <changefreq>weekly</changefreq>
@@ -94,7 +80,21 @@
 
     <url>
         <loc>https://taojiangcb.github.io/jtblogs/tags/react/</loc>
-        <lastmod>2025-09-13T04:45:50.701Z</lastmod>
+        <lastmod>2025-09-13T05:04:56.257Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.2</priority>
+    </url>
+
+    <url>
+        <loc>https://taojiangcb.github.io/jtblogs/tags/CSS/</loc>
+        <lastmod>2025-09-13T05:05:01.724Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.2</priority>
+    </url>
+
+    <url>
+        <loc>https://taojiangcb.github.io/jtblogs/tags/React/</loc>
+        <lastmod>2025-09-13T05:05:01.724Z</lastmod>
         <changefreq>weekly</changefreq>
         <priority>0.2</priority>
     </url>
