@@ -4,9 +4,9 @@
 
 favicon: /favicon.ico
 # Site
-title: 江涛 
+title: Panda's Blog 
 subtitle: 个人博客
-author: 江涛
+author: Panda
 language:
 timezone:
 
@@ -22,7 +22,7 @@ permalink_defaults:
 #Custom Setting Start
 
 # Site settings
-SEOTitle: 江涛 | Blog
+SEOTitle: Panda | Blog
 email: e-mail_address
 description: ""
 keyword: ""
