@@ -277,7 +277,7 @@ export default {
 **切换逻辑建议**：
 - 在 React/Vue 等框架中，可通过状态管理（如 useState、Pinia）控制根元素属性；
 - 示例（React）：
-  ```tsx
+  ```jsx
   import { useEffect, useState } from 'react';
 
   function App() {
@@ -309,7 +309,7 @@ export default {
 
 直接在 HTML/JSX 中使用插件生成的工具类，无需手写 CSS：
 
-```tsx
+```jsx
 // 示例：一个带交互的按钮组件
 function Button() {
   return (
