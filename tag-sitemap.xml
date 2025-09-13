@@ -51,13 +51,6 @@
     </url>
 
     <url>
-        <loc>https://taojiangcb.github.io/jtblogs/tags/css/</loc>
-        <lastmod>2025-06-11T01:54:23.337Z</lastmod>
-        <changefreq>weekly</changefreq>
-        <priority>0.2</priority>
-    </url>
-
-    <url>
         <loc>https://taojiangcb.github.io/jtblogs/tags/nodejs/</loc>
         <lastmod>2025-06-11T01:54:23.338Z</lastmod>
         <changefreq>weekly</changefreq>
@@ -95,6 +88,13 @@
     <url>
         <loc>https://taojiangcb.github.io/jtblogs/tags/CSS/</loc>
         <lastmod>2025-09-13T04:20:29.129Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.2</priority>
+    </url>
+
+    <url>
+        <loc>https://taojiangcb.github.io/jtblogs/tags/css/</loc>
+        <lastmod>2025-09-13T04:42:09.841Z</lastmod>
         <changefreq>weekly</changefreq>
         <priority>0.2</priority>
     </url>
