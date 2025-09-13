@@ -1,0 +1,691 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<!-- Head tag -->
+<head><meta name="generator" content="Hexo 3.9.0">
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="google-site-verification" content="xBT4GhYoi5qRD5tr338pgPM5OWHHIDR6mNg1a3euekI">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content>
+    <meta name="keyword" content>
+    <link rel="shortcut icon" href="/jtblogs/favicon.ico">
+    <!-- Place this tag in your head or just before your close body tag. -->
+    <script async defer src="https://buttons.github.io/buttons.js"></script>
+    <title>
+        
+          从零搭建 Tailwind CSS 多模式颜色系统：自动生成主题色工具类的实践方案 - 江涛 | Blog
+        
+    </title>
+
+    <link rel="canonical" href="https://taojiangcb.github.io/jtblogs/jtblogs/article/从零搭建-Tailwind-CSS-多模式颜色系统：自动生成主题色工具类的实践方案/">
+
+    <!-- Bootstrap Core CSS -->
+    <link rel="stylesheet" href="/jtblogs/css/bootstrap.min.css">
+
+    <!-- Custom CSS --> 
+    <link rel="stylesheet" href="/jtblogs/css/beantech.min.css">
+
+    <link rel="stylesheet" href="/jtblogs/css/donate.css">
+    
+    <!-- Pygments Highlight CSS -->
+    <link rel="stylesheet" href="/jtblogs/css/highlight.css">
+
+    <link rel="stylesheet" href="/jtblogs/css/widget.css">
+
+    <link rel="stylesheet" href="/jtblogs/css/rocket.css">
+
+    <link rel="stylesheet" href="/jtblogs/css/signature.css">
+
+    <link rel="stylesheet" href="/jtblogs/css/toc.css">
+
+    <!-- Custom Fonts -->
+    <!-- <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css" rel="stylesheet" type="text/css"> -->
+    <!-- Hux change font-awesome CDN to qiniu -->
+    <link href="https://cdn.staticfile.org/font-awesome/4.5.0/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+
+
+    <!-- Hux Delete, sad but pending in China
+    <link href='http://fonts.googleapis.com/css?family=Lora:400,700,400italic,700italic' rel='stylesheet' type='text/css'>
+    <link href='http://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800' rel='stylesheet' type='text/
+    css'>
+    -->
+
+
+    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+        <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+        <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+    <![endif]-->
+
+    <!-- ga & ba script hoook -->
+    <script></script>
+</head>
+
+
+<!-- hack iOS CSS :active style -->
+<body ontouchstart="">
+	<!-- Modified by Yu-Hsuan Yen -->
+<!-- Post Header -->
+<style type="text/css">
+    header.intro-header{
+        
+            background-image: url('/jtblogs/img/article_header/article_bg.jpg')
+            /*post*/
+        
+    }
+    
+</style>
+
+<header class="intro-header" >
+    <!-- Signature -->
+    <div id="signature">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+                
+                    <div class="post-heading">
+                        <div class="tags">
+                            
+                              <a class="tag" href="/jtblogs/tags/#CSS" title="CSS">CSS</a>
+                            
+                        </div>
+                        <h1>从零搭建 Tailwind CSS 多模式颜色系统：自动生成主题色工具类的实践方案</h1>
+                        <h2 class="subheading"></h2>
+                        <span class="meta">
+                            Posted by 江涛 on
+                            2025-09-13
+                        </span>
+                    </div>
+                
+
+
+                </div>
+            </div>
+        </div>
+    </div>
+</header>
+
+	
+    <!-- Navigation -->
+<nav class="navbar navbar-default navbar-custom navbar-fixed-top">
+    <div class="container-fluid">
+        <!-- Brand and toggle get grouped for better mobile display -->
+        <div class="navbar-header page-scroll">
+            <button type="button" class="navbar-toggle">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href="/jtblogs/">江涛</a>
+        </div>
+
+        <!-- Collect the nav links, forms, and other content for toggling -->
+        <!-- Known Issue, found by Hux:
+            <nav>'s height woule be hold on by its content.
+            so, when navbar scale out, the <nav> will cover tags.
+            also mask any touch event of tags, unfortunately.
+        -->
+        <div id="huxblog_navbar">
+            <div class="navbar-collapse">
+                <ul class="nav navbar-nav navbar-right">
+                    <li>
+                        <a href="/jtblogs/">Home</a>
+                    </li>
+
+                    
+
+                        
+                    
+
+                        
+                    
+
+                        
+                    
+
+                        
+                    
+
+                        
+                    
+
+                        
+                    
+
+                        
+                        <li>
+                            <a href="/jtblogs/about/">About</a>
+                        </li>
+                        
+                    
+
+                        
+                        <li>
+                            <a href="/jtblogs/archive/">Archives</a>
+                        </li>
+                        
+                    
+
+                        
+                        <li>
+                            <a href="/jtblogs/tags/">Tags</a>
+                        </li>
+                        
+                    
+                    
+                </ul>
+            </div>
+        </div>
+        <!-- /.navbar-collapse -->
+    </div>
+    <!-- /.container -->
+</nav>
+<script>
+    // Drop Bootstarp low-performance Navbar
+    // Use customize navbar with high-quality material design animation
+    // in high-perf jank-free CSS3 implementation
+    var $body   = document.body;
+    var $toggle = document.querySelector('.navbar-toggle');
+    var $navbar = document.querySelector('#huxblog_navbar');
+    var $collapse = document.querySelector('.navbar-collapse');
+
+    $toggle.addEventListener('click', handleMagic)
+    function handleMagic(e){
+        if ($navbar.className.indexOf('in') > 0) {
+        // CLOSE
+            $navbar.className = " ";
+            // wait until animation end.
+            setTimeout(function(){
+                // prevent frequently toggle
+                if($navbar.className.indexOf('in') < 0) {
+                    $collapse.style.height = "0px"
+                }
+            },400)
+        }else{
+        // OPEN
+            $collapse.style.height = "auto"
+            $navbar.className += " in";
+        }
+    }
+</script>
+
+
+    <!-- Main Content -->
+    <!-- Modify by Yu-Hsuan Yen -->
+
+<!-- Post Content -->
+<article>
+    <div class="container">
+        <div class="row">
+
+            <!-- Post Container -->
+            <div class="
+                col-lg-8 col-lg-offset-2
+                col-md-10 col-md-offset-1
+                post-container">
+
+                <h1><span id="从零搭建-tailwind-css-多模式颜色系统自动生成主题色工具类的实践方案">从零搭建 Tailwind CSS 多模式颜色系统：自动生成主题色工具类的实践方案</span></h1>
+<p>在前端开发中，颜色系统是 UI 一致性的核心，尤其在需要支持「亮色/暗色模式」「品牌色/经典色切换」的场景下，手动维护 CSS 变量和工具类不仅效率低下，还容易出现不一致问题。本文将分享一套基于 Tailwind CSS 插件的解决方案，通过一份配置自动生成多模式颜色变量与工具类，彻底解放重复劳动。</p>
+<h2><span id="一-方案背景为什么需要自动化颜色系统">一、方案背景：为什么需要自动化颜色系统？</span></h2>
+<p>在传统开发模式中，处理多主题颜色往往面临以下痛点：</p>
+<ol>
+<li><strong>重复编写 CSS</strong>：为亮色/暗色模式分别写 <code>.text-primary-light</code>、<code>.text-primary-dark</code> 等类，代码冗余；</li>
+<li><strong>变量管理混乱</strong>：手动维护大量 CSS 变量，新增颜色时需同步更新变量、工具类和文档；</li>
+<li><strong>切换逻辑复杂</strong>：主题切换时需手动控制多个类名或变量，易漏改；</li>
+<li><strong>一致性难保障</strong>：团队协作中，颜色使用规范依赖人工遵守，难以统一。</li>
+</ol>
+<p>而本文的方案通过 <strong>「一份配置 + 一个插件」</strong>，可实现：</p>
+<ul>
+<li>自动生成亮色/暗色模式的 CSS 变量；</li>
+<li>自动生成 <code>text-xxx</code>/<code>bg-xxx</code>/<code>border-xxx</code> 系列工具类；</li>
+<li>支持「品牌色/经典色」双色系切换；</li>
+<li>提供固定模式（不随主题变化）的工具类兜底。</li>
+</ul>
+<h2><span id="二-核心实现两大核心文件解析">二、核心实现：两大核心文件解析</span></h2>
+<p>整个方案由「颜色配置文件」和「Tailwind 插件」两部分组成，前者定义颜色规则，后者负责自动化生成。</p>
+<h3><span id="1-颜色配置文件colortokenconfigts">1. 颜色配置文件：<code>colorTokenConfig.ts</code></span></h3>
+<p>配置文件是整个颜色系统的「数据源」，按「颜色用途」分类（如品牌色、文本色、背景色），每个颜色项包含「亮色值」「暗色值」和「描述」，结构清晰且易于维护。</p>
+<figure class="highlight ts"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// colorTokenConfig.ts：定义所有颜色的基础规则</span></span><br><span class="line"><span class="keyword">export</span> <span class="keyword">const</span> colorTokenConfig = &#123;</span><br><span class="line">  <span class="comment">// 品牌色：产品主色调，包含默认、悬停、点击等状态</span></span><br><span class="line">  <span class="string">"Brand"</span>: &#123;</span><br><span class="line">    <span class="string">"Normal-1"</span>: &#123; <span class="string">"light"</span>: <span class="string">"#A7E315"</span>, <span class="string">"dark"</span>: <span class="string">"#ABE127"</span>, <span class="string">"dsc"</span>: <span class="string">"品牌色"</span> &#125;,</span><br><span class="line">    <span class="string">"Hover-2"</span>: &#123; <span class="string">"light"</span>: <span class="string">"#BCE752"</span>, <span class="string">"dark"</span>: <span class="string">"#BCE752"</span>, <span class="string">"dsc"</span>: <span class="string">"品牌色-悬停"</span> &#125;,</span><br><span class="line">    <span class="string">"Click-3"</span>: &#123; <span class="string">"light"</span>: <span class="string">"#9ACA23"</span>, <span class="string">"dark"</span>: <span class="string">"#9ACA23"</span>, <span class="string">"dsc"</span>: <span class="string">"品牌色-点击"</span> &#125;,</span><br><span class="line">    <span class="string">"Disable-4"</span>: &#123; <span class="string">"light"</span>: <span class="string">"#A7E31566"</span>, <span class="string">"dark"</span>: <span class="string">"#ABE12766"</span>, <span class="string">"dsc"</span>: <span class="string">"品牌色-禁用"</span> &#125;,</span><br><span class="line">    <span class="string">"Container-5"</span>: &#123; <span class="string">"light"</span>: <span class="string">"#A7E31526"</span>, <span class="string">"dark"</span>: <span class="string">"#ABE12726"</span>, <span class="string">"dsc"</span>: <span class="string">"品牌色-容器底"</span> &#125;</span><br><span class="line">  &#125;,</span><br><span class="line">  <span class="comment">// 文本&amp;图标色：按层级区分（一级/二级/禁用等）</span></span><br><span class="line">  <span class="string">"Text_Icon"</span>: &#123;</span><br><span class="line">    <span class="string">"Primary-1"</span>: &#123; <span class="string">"light"</span>: <span class="string">"#1B1C23"</span>, <span class="string">"dark"</span>: <span class="string">"#FAFAFA"</span>, <span class="string">"dsc"</span>: <span class="string">"一级文字&amp;icon"</span> &#125;,</span><br><span class="line">    <span class="string">"Secondary-2"</span>: &#123; <span class="string">"light"</span>: <span class="string">"#6F727C"</span>, <span class="string">"dark"</span>: <span class="string">"#A5A6AC"</span>, <span class="string">"dsc"</span>: <span class="string">"二级文字&amp;icon"</span> &#125;,</span><br><span class="line">    <span class="string">"Tertiary-3"</span>: &#123; <span class="string">"light"</span>: <span class="string">"#9EA0A8"</span>, <span class="string">"dark"</span>: <span class="string">"#71737A"</span>, <span class="string">"dsc"</span>: <span class="string">"三级文字&amp;icon"</span> &#125;,</span><br><span class="line">    <span class="string">"Disabled-4"</span>: &#123; <span class="string">"light"</span>: <span class="string">"#C2C3C9"</span>, <span class="string">"dark"</span>: <span class="string">"#53555A"</span>, <span class="string">"dsc"</span>: <span class="string">"文字&amp;icon禁用"</span> &#125;,</span><br><span class="line">    <span class="comment">// ... 其他文本色状态</span></span><br><span class="line">  &#125;,</span><br><span class="line">  <span class="comment">// 背景色：按层级区分（整体背景、一级背景、二级背景）</span></span><br><span class="line">  <span class="string">"Bg"</span>: &#123;</span><br><span class="line">    <span class="string">"Whole-1"</span>: &#123; <span class="string">"light"</span>: <span class="string">"#FFFFFF"</span>, <span class="string">"dark"</span>: <span class="string">"#101113"</span>, <span class="string">"dsc"</span>: <span class="string">"整体/交易页面背景"</span> &#125;,</span><br><span class="line">    <span class="string">"First-1"</span>: &#123; <span class="string">"light"</span>: <span class="string">"#F4F5F6"</span>, <span class="string">"dark"</span>: <span class="string">"#1A1C1E"</span>, <span class="string">"dsc"</span>: <span class="string">"一级背景（卡片/模块）"</span> &#125;,</span><br><span class="line">    <span class="string">"First-2"</span>: &#123; <span class="string">"light"</span>: <span class="string">"#FFFFFF"</span>, <span class="string">"dark"</span>: <span class="string">"#1A1C1E"</span>, <span class="string">"dsc"</span>: <span class="string">"一级背景（弹窗/下拉框）"</span> &#125;,</span><br><span class="line">    <span class="string">"Second-3"</span>: &#123; <span class="string">"light"</span>: <span class="string">"#FFFFFF"</span>, <span class="string">"dark"</span>: <span class="string">"#26272B"</span>, <span class="string">"dsc"</span>: <span class="string">"二级背景（子模块）"</span> &#125;</span><br><span class="line">  &#125;,</span><br><span class="line">  <span class="comment">// 功能色：成功/错误/警告（支持品牌/经典双色系）</span></span><br><span class="line">  <span class="string">"Success"</span>: &#123;</span><br><span class="line">    <span class="string">"Normal-1"</span>: &#123;</span><br><span class="line">      <span class="string">"light"</span>: &#123; <span class="string">"classic"</span>: <span class="string">"#31CAA1"</span>, <span class="string">"brand"</span>: <span class="string">"#72CC29"</span> &#125;, <span class="comment">// 亮色模式：经典色/品牌色</span></span><br><span class="line">      <span class="string">"dark"</span>: &#123; <span class="string">"classic"</span>: <span class="string">"#31CAA1"</span>, <span class="string">"brand"</span>: <span class="string">"#ABE127"</span> &#125;,  <span class="comment">// 暗色模式：经典色/品牌色</span></span><br><span class="line">      <span class="string">"dsc"</span>: <span class="string">"成功色"</span></span><br><span class="line">    &#125;,</span><br><span class="line">    <span class="string">"Hover-2"</span>: &#123;</span><br><span class="line">      <span class="string">"light"</span>: &#123; <span class="string">"classic"</span>: <span class="string">"#5AD5B4"</span>, <span class="string">"brand"</span>: <span class="string">"#80D13E"</span> &#125;,</span><br><span class="line">      <span class="string">"dark"</span>: &#123; <span class="string">"classic"</span>: <span class="string">"#5AD5B4"</span>, <span class="string">"brand"</span>: <span class="string">"#BCE752"</span> &#125;,</span><br><span class="line">      <span class="string">"dsc"</span>: <span class="string">"成功色-悬停"</span></span><br><span class="line">    &#125;,</span><br><span class="line">    <span class="comment">// ... 其他成功色状态</span></span><br><span class="line">  &#125;,</span><br><span class="line">  <span class="comment">// ... 其他分类（Fill填充色、Border边框色、Others特殊色、Tab标签色等）</span></span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+<p><strong>配置设计思路</strong>：</p>
+<ul>
+<li>按「用途」分类（Brand/Text_Icon/Bg），避免颜色混用；</li>
+<li>每个颜色项带「状态后缀」（Normal/Hover/Click/Disable），覆盖交互全场景；</li>
+<li>关键功能色（Success/Error）支持「双色系」（brand/classic），满足不同品牌需求；</li>
+<li>每个项带 <code>dsc</code> 描述，便于团队理解和维护。</li>
+</ul>
+<h3><span id="2-tailwind-插件colorplugints">2. Tailwind 插件：<code>colorPlugin.ts</code></span></h3>
+<p>插件是自动化的「核心引擎」，通过解析 <code>colorTokenConfig</code>，自动生成：</p>
+<ul>
+<li>亮色/暗色模式的 CSS 变量；</li>
+<li>双色系（品牌/经典）的切换变量；</li>
+<li><code>text-xxx</code>/<code>bg-xxx</code>/<code>border-xxx</code> 工具类；</li>
+<li>固定模式（不随主题变化）的工具类。</li>
+</ul>
+<figure class="highlight ts"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// colorPlugin.ts：Tailwind 插件，自动生成变量和工具类</span></span><br><span class="line"><span class="keyword">import</span> plugin <span class="keyword">from</span> <span class="string">'tailwindcss/plugin'</span>;</span><br><span class="line"><span class="keyword">import</span> &#123; CSSRuleObject &#125; <span class="keyword">from</span> <span class="string">'tailwindcss/types/config'</span>;</span><br><span class="line"><span class="keyword">import</span> &#123; safeName &#125; <span class="keyword">from</span> <span class="string">'../utils'</span>; <span class="comment">// 辅助函数：处理类名特殊字符（如斜杠、连字符）</span></span><br><span class="line"><span class="keyword">import</span> &#123; colorTokenConfig &#125; <span class="keyword">from</span> <span class="string">"./colorTokenConfig"</span>;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 定义支持的色系（品牌色/经典色）</span></span><br><span class="line"><span class="keyword">type</span> ColorVariant = <span class="string">'brand'</span> | <span class="string">'classic'</span>;</span><br><span class="line"><span class="comment">// 定义颜色模式结构（支持单颜色值或双色系）</span></span><br><span class="line"><span class="keyword">type</span> ColorMode = Record&lt;ColorVariant, <span class="built_in">string</span>&gt;;</span><br><span class="line"><span class="keyword">type</span> ColorItem = Record&lt;<span class="built_in">string</span>, &#123; light: <span class="built_in">string</span> | ColorMode; dark: <span class="built_in">string</span> | ColorMode; dsc: <span class="built_in">string</span> &#125;&gt;;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 插件配置项</span></span><br><span class="line"><span class="keyword">export</span> <span class="keyword">interface</span> ColorProps &#123;</span><br><span class="line">  respectPrefix?: <span class="built_in">boolean</span>; <span class="comment">// 是否尊重 Tailwind 前缀（如自定义 prefix: 'tw-' 时生效）</span></span><br><span class="line">  defaultVariant?: ColorVariant; <span class="comment">// 默认色系（默认 brand）</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">export</span> <span class="keyword">default</span> plugin.withOptions(</span><br><span class="line">  <span class="function"><span class="keyword">function</span> (<span class="params">options: ColorProps = &#123;</span></span></span><br><span class="line"><span class="function"><span class="params">    respectPrefix: <span class="literal">false</span>,</span></span></span><br><span class="line"><span class="function"><span class="params">    defaultVariant: 'brand',</span></span></span><br><span class="line"><span class="function"><span class="params">  &#125;</span>) </span>&#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="function"><span class="keyword">function</span> (<span class="params">&#123; addBase, addUtilities &#125;</span>) </span>&#123;</span><br><span class="line">      <span class="comment">// 1. 初始化变量存储容器</span></span><br><span class="line">      <span class="keyword">const</span> lightVars: Record&lt;<span class="built_in">string</span>, <span class="built_in">string</span>&gt; = &#123;&#125;; <span class="comment">// 亮色模式变量</span></span><br><span class="line">      <span class="keyword">const</span> darkVars: Record&lt;<span class="built_in">string</span>, <span class="built_in">string</span>&gt; = &#123;&#125;;  <span class="comment">// 暗色模式变量</span></span><br><span class="line">      <span class="keyword">const</span> reverseVariantVars: Record&lt;<span class="built_in">string</span>, <span class="built_in">string</span>&gt; = &#123;&#125;; <span class="comment">// 反向色系（如默认brand时，reverse为classic）变量</span></span><br><span class="line">      <span class="keyword">const</span> reverseVariantDarkVars: Record&lt;<span class="built_in">string</span>, <span class="built_in">string</span>&gt; = &#123;&#125;; <span class="comment">// 反向色系-暗色模式变量</span></span><br><span class="line">      <span class="keyword">const</span> utilities: CSSRuleObject = &#123;&#125;; <span class="comment">// 工具类存储</span></span><br><span class="line"></span><br><span class="line">      <span class="keyword">const</span> colors = colorTokenConfig <span class="keyword">as</span> unknown <span class="keyword">as</span> Record&lt;<span class="built_in">string</span>, ColorItem&gt;;</span><br><span class="line">      <span class="keyword">const</span> reverseVariant: ColorVariant = options.defaultVariant === <span class="string">'brand'</span> ? <span class="string">'classic'</span> : <span class="string">'brand'</span>;</span><br><span class="line"></span><br><span class="line">      <span class="comment">// 2. 遍历配置，生成变量和工具类</span></span><br><span class="line">      <span class="built_in">Object</span>.entries(colors).forEach(<span class="function">(<span class="params">[category, colorGroup]</span>) =&gt;</span> &#123;</span><br><span class="line">        <span class="built_in">Object</span>.entries(colorGroup).forEach(<span class="function">(<span class="params">[name, colorItem]</span>) =&gt;</span> &#123;</span><br><span class="line">          <span class="comment">// 生成类名和变量名（如 Brand/Normal-1 → brand-normal-1）</span></span><br><span class="line">          <span class="keyword">const</span> className = <span class="string">`<span class="subst">$&#123;category&#125;</span>/<span class="subst">$&#123;name&#125;</span>`</span>;</span><br><span class="line">          <span class="keyword">const</span> varName = <span class="string">`--<span class="subst">$&#123;safeName(className, <span class="literal">true</span>)&#125;</span>`</span>; <span class="comment">// 变量名：--brand-normal-1</span></span><br><span class="line"></span><br><span class="line">          <span class="comment">// 2.1 处理颜色值（区分单颜色值和双色系）</span></span><br><span class="line">          <span class="comment">// 亮色模式颜色值</span></span><br><span class="line">          <span class="keyword">const</span> lightColor = <span class="keyword">typeof</span> colorItem.light === <span class="string">'string'</span> </span><br><span class="line">            ? colorItem.light </span><br><span class="line">            : colorItem.light[options.defaultVariant];</span><br><span class="line">          <span class="comment">// 暗色模式颜色值</span></span><br><span class="line">          <span class="keyword">const</span> darkColor = <span class="keyword">typeof</span> colorItem.dark === <span class="string">'string'</span> </span><br><span class="line">            ? colorItem.dark </span><br><span class="line">            : colorItem.dark[options.defaultVariant];</span><br><span class="line"></span><br><span class="line">          <span class="comment">// 2.2 存储基础变量（随主题切换）</span></span><br><span class="line">          lightVars[varName] = <span class="string">`<span class="subst">$&#123;lightColor&#125;</span> /* <span class="subst">$&#123;colorItem.dsc&#125;</span> */`</span>;</span><br><span class="line">          darkVars[varName] = <span class="string">`<span class="subst">$&#123;darkColor&#125;</span> /* <span class="subst">$&#123;colorItem.dsc&#125;</span> */`</span>;</span><br><span class="line"></span><br><span class="line">          <span class="comment">// 2.3 生成基础工具类（text-xxx/bg-xxx/border-xxx）</span></span><br><span class="line">          utilities[<span class="string">`.text-<span class="subst">$&#123;safeName(className)&#125;</span>`</span>] = &#123; color: <span class="string">`var(<span class="subst">$&#123;varName&#125;</span>)`</span> &#125;;</span><br><span class="line">          utilities[<span class="string">`.bg-<span class="subst">$&#123;safeName(className)&#125;</span>`</span>] = &#123; backgroundColor: <span class="string">`var(<span class="subst">$&#123;varName&#125;</span>)`</span> &#125;;</span><br><span class="line">          utilities[<span class="string">`.border-<span class="subst">$&#123;safeName(className)&#125;</span>`</span>] = &#123; borderColor: <span class="string">`var(<span class="subst">$&#123;varName&#125;</span>)`</span> &#125;;</span><br><span class="line"></span><br><span class="line">          <span class="comment">// 2.4 处理双色系：生成反向色系变量（如品牌色→经典色）</span></span><br><span class="line">          <span class="keyword">if</span> (<span class="keyword">typeof</span> colorItem.light !== <span class="string">'string'</span>) &#123;</span><br><span class="line">            reverseVariantVars[varName] = <span class="string">`<span class="subst">$&#123;colorItem.light[reverseVariant]&#125;</span> /* <span class="subst">$&#123;reverseVariant&#125;</span>模式: <span class="subst">$&#123;colorItem.dsc&#125;</span> */`</span>;</span><br><span class="line">          &#125;</span><br><span class="line">          <span class="keyword">if</span> (<span class="keyword">typeof</span> colorItem.dark !== <span class="string">'string'</span>) &#123;</span><br><span class="line">            reverseVariantDarkVars[varName] = <span class="string">`<span class="subst">$&#123;colorItem.dark[reverseVariant]&#125;</span> /* <span class="subst">$&#123;reverseVariant&#125;</span>模式: <span class="subst">$&#123;colorItem.dsc&#125;</span> */`</span>;</span><br><span class="line">          &#125;</span><br><span class="line"></span><br><span class="line">          <span class="comment">// 2.5 生成固定模式工具类（不随主题切换，如 .text-light-brand-normal-1）</span></span><br><span class="line">          [<span class="string">'light'</span>, <span class="string">'dark'</span>].forEach(<span class="function">(<span class="params">mode</span>) =&gt;</span> &#123;</span><br><span class="line">            <span class="keyword">const</span> fixedColor = colorItem[mode <span class="keyword">as</span> keyof <span class="keyword">typeof</span> colorItem];</span><br><span class="line">            <span class="keyword">const</span> fixedClassName = <span class="string">`.text-<span class="subst">$&#123;mode&#125;</span>-<span class="subst">$&#123;safeName(className)&#125;</span>`</span>;</span><br><span class="line">            <span class="keyword">const</span> fixedBgClassName = <span class="string">`.bg-<span class="subst">$&#123;mode&#125;</span>-<span class="subst">$&#123;safeName(className)&#125;</span>`</span>;</span><br><span class="line">            <span class="keyword">const</span> fixedBorderClassName = <span class="string">`.border-<span class="subst">$&#123;mode&#125;</span>-<span class="subst">$&#123;safeName(className)&#125;</span>`</span>;</span><br><span class="line"></span><br><span class="line">            <span class="comment">// 固定模式颜色值（区分单颜色值和双色系）</span></span><br><span class="line">            <span class="keyword">const</span> fixedColorValue = <span class="keyword">typeof</span> fixedColor === <span class="string">'string'</span> </span><br><span class="line">              ? fixedColor </span><br><span class="line">              : fixedColor[options.defaultVariant];</span><br><span class="line"></span><br><span class="line">            <span class="comment">// 存储固定模式工具类</span></span><br><span class="line">            utilities[fixedClassName] = &#123; color: fixedColorValue &#125;;</span><br><span class="line">            utilities[fixedBgClassName] = &#123; backgroundColor: fixedColorValue &#125;;</span><br><span class="line">            utilities[fixedBorderClassName] = &#123; borderColor: fixedColorValue &#125;;</span><br><span class="line"></span><br><span class="line">            <span class="comment">// 存储固定模式变量（如 --light-brand-normal-1）</span></span><br><span class="line">            <span class="keyword">const</span> staticVarName = <span class="string">`--<span class="subst">$&#123;mode&#125;</span>-<span class="subst">$&#123;safeName(className, <span class="literal">true</span>)&#125;</span>`</span>;</span><br><span class="line">            lightVars[staticVarName] = <span class="string">`<span class="subst">$&#123;fixedColorValue&#125;</span> /* <span class="subst">$&#123;mode&#125;</span>模式固定颜色：<span class="subst">$&#123;colorItem.dsc&#125;</span> */`</span>;</span><br><span class="line"></span><br><span class="line">            <span class="comment">// 双色系场景：生成反向色系的固定变量</span></span><br><span class="line">            <span class="keyword">if</span> (<span class="keyword">typeof</span> fixedColor !== <span class="string">'string'</span>) &#123;</span><br><span class="line">              reverseVariantVars[staticVarName] = <span class="string">`<span class="subst">$&#123;fixedColor[reverseVariant]&#125;</span> /* <span class="subst">$&#123;mode&#125;</span>模式-<span class="subst">$&#123;reverseVariant&#125;</span>色系：<span class="subst">$&#123;colorItem.dsc&#125;</span> */`</span>;</span><br><span class="line">            &#125;</span><br><span class="line">          &#125;);</span><br><span class="line">        &#125;);</span><br><span class="line">      &#125;);</span><br><span class="line"></span><br><span class="line">      <span class="comment">// 3. 注入变量到全局（addBase：添加基础样式，如 :root、[data-theme=dark]）</span></span><br><span class="line">      addBase(&#123;</span><br><span class="line">        <span class="string">':root'</span>: lightVars, <span class="comment">// 亮色模式（默认）</span></span><br><span class="line">        <span class="string">'[data-theme=dark]'</span>: darkVars, <span class="comment">// 暗色模式（通过 data-theme="dark" 激活）</span></span><br><span class="line">        [<span class="string">`[data-variant=<span class="subst">$&#123;reverseVariant&#125;</span>]`</span>]: reverseVariantVars, <span class="comment">// 反向色系（默认品牌色时，激活经典色）</span></span><br><span class="line">        [<span class="string">`[data-variant=<span class="subst">$&#123;reverseVariant&#125;</span>][data-theme=dark]`</span>]: reverseVariantDarkVars, <span class="comment">// 反向色系+暗色模式</span></span><br><span class="line">      &#125;);</span><br><span class="line"></span><br><span class="line">      <span class="comment">// 4. 注入工具类到 Tailwind（addUtilities：添加自定义工具类）</span></span><br><span class="line">      addUtilities(utilities, &#123;</span><br><span class="line">        respectPrefix: options.respectPrefix, <span class="comment">// 尊重 Tailwind 前缀配置</span></span><br><span class="line">      &#125;);</span><br><span class="line">    &#125;;</span><br><span class="line">  &#125;</span><br><span class="line">);</span><br></pre></td></tr></table></figure>
+<p><strong>插件核心逻辑</strong>：</p>
+<ol>
+<li><strong>变量生成</strong>：遍历配置，为每个颜色项生成 <code>--xxx</code> 格式的 CSS 变量，区分亮色/暗色/反向色系；</li>
+<li><strong>工具类生成</strong>：基于变量生成 <code>text-xxx</code>/<code>bg-xxx</code>/<code>border-xxx</code> 工具类，直接映射变量值；</li>
+<li><strong>固定模式处理</strong>：生成 <code>text-light-xxx</code>/<code>bg-dark-xxx</code> 等固定模式工具类，避免主题切换影响；</li>
+<li><strong>双色系支持</strong>：通过 <code>data-variant</code> 属性切换反向色系，无需修改工具类。</li>
+</ol>
+<h2><span id="三-实际使用3-步上手多模式颜色系统">三、实际使用：3 步上手多模式颜色系统</span></h2>
+<p>配置和插件开发完成后，前端项目中只需 3 步即可使用多模式颜色系统。</p>
+<h3><span id="1-注册插件到-tailwind-配置">1. 注册插件到 Tailwind 配置</span></h3>
+<p>在 <code>tailwind.config.ts</code> 中引入插件，完成注册：</p>
+<figure class="highlight ts"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// tailwind.config.ts</span></span><br><span class="line"><span class="keyword">import</span> <span class="keyword">type</span> &#123; Config &#125; <span class="keyword">from</span> <span class="string">'tailwindcss'</span>;</span><br><span class="line"><span class="keyword">import</span> colorPlugin <span class="keyword">from</span> <span class="string">'./plugins/colorPlugin'</span>; <span class="comment">// 引入自定义颜色插件</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">export</span> <span class="keyword">default</span> &#123;</span><br><span class="line">  content: [<span class="string">"./src/**/*.&#123;html,js,jsx,ts,tsx&#125;"</span>], <span class="comment">// 扫描文件范围</span></span><br><span class="line">  theme: &#123;</span><br><span class="line">    extend: &#123;&#125;,</span><br><span class="line">  &#125;,</span><br><span class="line">  plugins: [</span><br><span class="line">    colorPlugin(&#123; <span class="comment">// 注册插件，可配置默认参数</span></span><br><span class="line">      respectPrefix: <span class="literal">false</span>,</span><br><span class="line">      defaultVariant: <span class="string">'brand'</span>, <span class="comment">// 默认使用品牌色</span></span><br><span class="line">    &#125;),</span><br><span class="line">  ],</span><br><span class="line">  darkMode: <span class="string">'class'</span>, <span class="comment">// 启用 class 模式的暗色支持（与 data-theme 配合）</span></span><br><span class="line">&#125; satisfies Config;</span><br></pre></td></tr></table></figure>
+<h3><span id="2-切换主题模式">2. 切换主题模式</span></h3>
+<p>通过给根元素（如 <code>&lt;html&gt;</code> 或 <code>&lt;body&gt;</code>）添加 <code>data-theme</code> 和 <code>data-variant</code> 属性，即可切换主题：</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">&lt;!-- 1. 默认模式：亮色 + 品牌色 --&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">html</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">"text-Brand/Normal-1 bg-Bg/Whole-1"</span>&gt;</span>默认样式<span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">html</span>&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="comment">&lt;!-- 2. 暗色模式：暗色 + 品牌色 --&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">html</span> <span class="attr">data-theme</span>=<span class="string">"dark"</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">"text-Brand/Normal-1 bg-Bg/Whole-1"</span>&gt;</span>暗色样式<span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">html</span>&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="comment">&lt;!-- 3. 经典色模式：亮色 + 经典色 --&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">html</span> <span class="attr">data-variant</span>=<span class="string">"classic"</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">"text-Success/Normal-1"</span>&gt;</span>经典色-成功文本<span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">html</span>&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="comment">&lt;!-- 4. 暗色+经典色模式 --&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">html</span> <span class="attr">data-theme</span>=<span class="string">"dark"</span> <span class="attr">data-variant</span>=<span class="string">"classic"</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">"text-Success/Normal-1 bg-Bg/Whole-1"</span>&gt;</span>暗色+经典色样式<span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">html</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<p><strong>切换逻辑建议</strong>：</p>
+<ul>
+<li>在 React/Vue 等框架中，可通过状态管理（如 useState、Pinia）控制根元素属性；</li>
+<li>示例（React）：<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line">import &#123; useEffect, useState &#125; from &apos;react&apos;;</span><br><span class="line"></span><br><span class="line">function App() &#123;</span><br><span class="line">  const [isDark, setIsDark] = useState(false);</span><br><span class="line">  const [isClassic, setIsClassic] = useState(false);</span><br><span class="line"></span><br><span class="line">  // 监听状态变化，更新根元素属性</span><br><span class="line">  useEffect(() =&gt; &#123;</span><br><span class="line">    const html = document.documentElement;</span><br><span class="line">    if (isDark) html.setAttribute(&apos;data-theme&apos;, &apos;dark&apos;);</span><br><span class="line">    else html.removeAttribute(&apos;data-theme&apos;);</span><br><span class="line"></span><br><span class="line">    if (isClassic) html.setAttribute(&apos;data-variant&apos;, &apos;classic&apos;);</span><br><span class="line">    else html.removeAttribute(&apos;data-variant&apos;);</span><br><span class="line">  &#125;, [isDark, isClassic]);</span><br><span class="line"></span><br><span class="line">  return (</span><br><span class="line">    &lt;div&gt;</span><br><span class="line">      &lt;button onClick=&#123;() =&gt; setIsDark(!isDark)&#125;&gt;切换明暗&lt;/button&gt;</span><br><span class="line">      &lt;button onClick=&#123;() =&gt; setIsClassic(!isClassic)&#125;&gt;切换色系&lt;/button&gt;</span><br><span class="line">      &lt;div class=&quot;text-Brand/Normal-1 bg-Bg/Whole-1 p-4&quot;&gt;内容区域&lt;/div&gt;</span><br><span class="line">    &lt;/div&gt;</span><br><span class="line">  );</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<h3><span id="3-使用工具类编写样式">3. 使用工具类编写样式</span></h3>
+<p>直接在 HTML/JSX 中使用插件生成的工具类，无需手写 CSS：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br></pre></td><td class="code"><pre><span class="line">// 示例：一个带交互的按钮组件</span><br><span class="line">function Button() &#123;</span><br><span class="line">  return (</span><br><span class="line">    &lt;button className=&quot;</span><br><span class="line">      text-Text_Icon/Button_Normal-8 </span><br><span class="line">      bg-Brand/Normal-1 </span><br><span class="line">      hover:bg-Brand/Hover-2 </span><br><span class="line">      active:bg-Brand/Click-3 </span><br><span class="line">      disabled:bg-Brand/Disable-4 </span><br><span class="line">      disabled:text-Text_Icon/Button_Disabled-9</span><br><span class="line">      border-none </span><br><span class="line">      px-4</span><br><span class="line">      py-2 </span><br><span class="line">      rounded-md</span><br><span class="line">    &quot;&gt;</span><br><span class="line">      确认按钮</span><br><span class="line">    &lt;/button&gt;</span><br><span class="line">  );</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">// 示例：带状态提示的卡片</span><br><span class="line">function StatusCard(&#123; isSuccess &#125;) &#123;</span><br><span class="line">  return (</span><br><span class="line">    &lt;div className=&quot;</span><br><span class="line">      bg-Bg/First-1 </span><br><span class="line">      border border-Border/Normal-1 </span><br><span class="line">      rounded-lg </span><br><span class="line">      p-4</span><br><span class="line">    &quot;&gt;</span><br><span class="line">      &lt;div className=&#123;`</span><br><span class="line">        text-Text_Icon/Primary-1 </span><br><span class="line">        mb-2</span><br><span class="line">      `&#125;&gt;</span><br><span class="line">        操作结果</span><br><span class="line">      &lt;/div&gt;</span><br><span class="line">      &lt;div className=&#123;`</span><br><span class="line">        text-$&#123;isSuccess ? &apos;Success/Normal-1&apos; : &apos;Error/Normal-1&apos;&#125;</span><br><span class="line">      `&#125;&gt;</span><br><span class="line">        &#123;isSuccess ? &apos;操作成功&apos; : &apos;操作失败，请重试&apos;&#125;</span><br><span class="line">      &lt;/div&gt;</span><br><span class="line">    &lt;/div&gt;</span><br><span class="line">  );</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p><strong>工具类使用规则</strong>：</p>
+<ul>
+<li>基础格式：<code>text-【分类名】/【颜色名】</code>、<code>bg-【分类名】/【颜色名】</code>、<code>border-【分类名】/【颜色名】</code>（如 <code>text-Brand/Normal-1</code>）；</li>
+<li>固定模式：在分类名前加 <code>light-</code> 或 <code>dark-</code>，强制使用对应模式颜色（如 <code>text-light-Text_Icon/Primary-1</code>，即使切换到暗色模式仍保持亮色文本）；</li>
+<li>交互状态：结合 Tailwind 原生 <code>hover:</code>/<code>active:</code>/<code>disabled:</code> 前缀，实现状态切换（如 <code>hover:bg-Brand/Hover-2</code>）。</li>
+</ul>
+<h2><span id="四-方案优势为什么值得用">四、方案优势：为什么值得用？</span></h2>
+<p>相比传统手动维护颜色的方式，这套自动化方案有 4 个核心优势：</p>
+<h3><span id="1-一致性从源头统一颜色规范">1. 一致性：从源头统一颜色规范</span></h3>
+<ul>
+<li>所有颜色都来自 <code>colorTokenConfig</code> 单一数据源，避免团队成员随意使用色值；</li>
+<li>工具类命名遵循「分类+用途」规则（如 <code>text-Text_Icon/Primary-1</code> 明确是「文本图标类-一级文本」），新人也能快速理解颜色用途，减少「凭感觉选色」的问题。</li>
+</ul>
+<h3><span id="2-效率减少-80-重复工作">2. 效率：减少 80% 重复工作</span></h3>
+<ul>
+<li>新增颜色时，只需在 <code>colorTokenConfig</code> 中添加一条配置，插件自动生成变量和工具类，无需手动写 CSS；</li>
+<li>切换主题/色系时，只需修改根元素的 <code>data-theme</code>/<code>data-variant</code> 属性，全局样式自动同步，无需逐个组件调整。</li>
+</ul>
+<h3><span id="3-灵活性支持多场景定制">3. 灵活性：支持多场景定制</span></h3>
+<ul>
+<li>双色系切换：通过 <code>data-variant</code> 轻松实现「品牌色」与「经典色」的切换，满足不同业务场景（如白标产品、活动专题）；</li>
+<li>固定模式兜底：提供 <code>light-</code>/<code>dark-</code> 前缀工具类，应对「局部不随主题变化」的特殊需求（如 Logo 文本、品牌标识）。</li>
+</ul>
+<h3><span id="4-可维护性降低后期迭代成本">4. 可维护性：降低后期迭代成本</span></h3>
+<ul>
+<li>文档自解释：<code>colorTokenConfig</code> 中每个颜色项都有 <code>dsc</code> 描述，相当于内置了颜色文档，无需额外维护独立文档；</li>
+<li>修改成本低：若需调整某个颜色（如品牌色从 <code>#A7E315</code> 改为 <code>#A0D911</code>），只需修改 <code>colorTokenConfig</code> 中 <code>Brand/Normal-1</code> 的值，全局所有使用该颜色的地方自动更新，避免漏改。</li>
+</ul>
+<h2><span id="五-扩展场景让颜色系统更强大">五、扩展场景：让颜色系统更强大</span></h2>
+<p>这套方案还能根据业务需求扩展，满足更复杂的场景：</p>
+<h3><span id="1-支持更多色系如活动色">1. 支持更多色系（如「活动色」）</span></h3>
+<p>若需要临时添加「活动专题色系」，只需两步：</p>
+<ol>
+<li>
+<p>在 <code>colorTokenConfig</code> 中新增支持多色系的颜色项（参考 <code>Success</code> 分类）：</p>
+<figure class="highlight ts"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="string">"Promotion"</span>: &#123;</span><br><span class="line">  <span class="string">"Normal-1"</span>: &#123;</span><br><span class="line">    <span class="string">"light"</span>: &#123; <span class="string">"brand"</span>: <span class="string">"#A7E315"</span>, <span class="string">"promo"</span>: <span class="string">"#FF4500"</span> &#125;,</span><br><span class="line">    <span class="string">"dark"</span>: &#123; <span class="string">"brand"</span>: <span class="string">"#ABE127"</span>, <span class="string">"promo"</span>: <span class="string">"#FF6347"</span> &#125;,</span><br><span class="line">    <span class="string">"dsc"</span>: <span class="string">"活动色"</span></span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
+<li>
+<p>在插件配置中扩展 <code>ColorVariant</code> 类型：</p>
+<figure class="highlight ts"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">type</span> ColorVariant = <span class="string">'brand'</span> | <span class="string">'classic'</span> | <span class="string">'promo'</span>;</span><br></pre></td></tr></table></figure>
+</li>
+<li>
+<p>切换时添加 <code>data-variant=&quot;promo&quot;</code> 即可激活活动色系。</p>
+</li>
+</ol>
+<h3><span id="2-生成渐变色工具类">2. 生成渐变色工具类</span></h3>
+<p>若需要支持渐变色，可在插件中扩展逻辑，解析配置中的渐变色规则并生成工具类：</p>
+<figure class="highlight ts"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 1. 在 colorTokenConfig 中添加渐变色配置</span></span><br><span class="line"><span class="string">"Gradient"</span>: &#123;</span><br><span class="line">  <span class="string">"Brand-1"</span>: &#123;</span><br><span class="line">    <span class="string">"light"</span>: <span class="string">"linear-gradient(90deg, #A7E315, #ABE127)"</span>,</span><br><span class="line">    <span class="string">"dark"</span>: <span class="string">"linear-gradient(90deg, #ABE127, #BCE752)"</span>,</span><br><span class="line">    <span class="string">"dsc"</span>: <span class="string">"品牌渐变色"</span></span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 2. 在插件中添加渐变色工具类生成逻辑</span></span><br><span class="line">utilities[<span class="string">`.bg-gradient-<span class="subst">$&#123;safeName(className)&#125;</span>`</span>] = &#123; backgroundImage: <span class="string">`var(<span class="subst">$&#123;varName&#125;</span>)`</span> &#125;;</span><br></pre></td></tr></table></figure>
+<p>使用时直接调用：<code>bg-gradient-Gradient/Brand-1</code>。</p>
+<h3><span id="3-结合设计-tokens-工具">3. 结合设计 tokens 工具</span></h3>
+<p>若团队使用 Figma 等设计工具，可通过「设计 tokens 同步工具」（如 <a href="https://amzn.github.io/style-dictionary/" target="_blank" rel="noopener">Style Dictionary</a>）将 Figma 中的颜色 tokens 自动同步到 <code>colorTokenConfig.ts</code>，实现「设计-开发」颜色无缝衔接，彻底避免「设计稿与代码色值不一致」的问题。</p>
+<h2><span id="六-总结从-0-到-1-搭建颜色系统的关键">六、总结：从 0 到 1 搭建颜色系统的关键</span></h2>
+<p>搭建一套可靠的多模式颜色系统，核心不是写复杂的代码，而是遵循「<strong>单一数据源 + 自动化生成 + 场景化设计</strong>」的思路：</p>
+<ol>
+<li><strong>单一数据源</strong>：用 <code>colorTokenConfig</code> 统一管理所有颜色，避免分散维护；</li>
+<li><strong>自动化生成</strong>：用 Tailwind 插件将配置转化为可直接使用的工具类，减少重复劳动；</li>
+<li><strong>场景化设计</strong>：按「用途+状态+模式」设计配置结构，满足交互、主题切换等实际需求。</li>
+</ol>
+<p>这套方案不仅能解决当前多主题颜色维护的痛点，还能随着业务增长灵活扩展，是前端工程化中「样式统一」的重要实践。如果你的项目需要支持亮色/暗色模式、多品牌色系，不妨试试这套方案！</p>
+
+                
+
+                <hr>
+                <!-- Pager -->
+                <ul class="pager">
+                    
+                    
+                        <li class="next">
+                            <a href="/jtblogs/article/深入理解-Tailwind-CSS-插件：常用参数解析与实战示例/" data-toggle="tooltip" data-placement="top" title="深入理解 Tailwind CSS 插件：常用参数解析与实战示例">Next Post &rarr;</a>
+                        </li>
+                    
+                </ul>
+
+                <br>
+
+                <!--打赏-->
+                
+                <!--打赏-->
+
+                <br>
+                <!--分享-->
+                
+                    <div class="social-share"  data-wechat-qrcode-helper="" align="center"></div>
+                    <!--  css & js -->
+                    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/social-share.js/1.0.16/css/share.min.css">
+                    <script src="https://cdnjs.cloudflare.com/ajax/libs/social-share.js/1.0.16/js/social-share.min.js"></script>
+                
+                <!--分享-->
+                <br>                       
+                
+                <!-- require APlayer -->
+                
+
+                <!-- duoshuo Share start -->
+                
+                <!-- 多说 Share end-->
+
+                <!-- 多说评论框 start -->
+                
+                <!-- 多说评论框 end -->
+
+                <!-- disqus comment start -->
+                
+                <!-- disqus comment end -->
+
+                
+
+            </div>
+            
+            <!-- Tabe of Content -->
+            <!-- Table of Contents -->
+
+  
+    <style>
+      span.toc-nav-number{
+        display: none
+      }
+    </style>
+  
+    
+      <aside id="sidebar">
+        <div id="toc" class="toc-article">
+        <strong class="toc-title">Contents</strong>
+        
+          <ol class="toc-nav"><li class="toc-nav-item toc-nav-level-1"><a class="toc-nav-link" href="#null"><span class="toc-nav-number">1.</span> <span class="toc-nav-text">从零搭建 Tailwind CSS 多模式颜色系统：自动生成主题色工具类的实践方案</span></a><ol class="toc-nav-child"><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#null"><span class="toc-nav-number">1.1.</span> <span class="toc-nav-text">一、方案背景：为什么需要自动化颜色系统？</span></a></li><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#null"><span class="toc-nav-number">1.2.</span> <span class="toc-nav-text">二、核心实现：两大核心文件解析</span></a><ol class="toc-nav-child"><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#null"><span class="toc-nav-number">1.2.1.</span> <span class="toc-nav-text">1. 颜色配置文件：colorTokenConfig.ts</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#null"><span class="toc-nav-number">1.2.2.</span> <span class="toc-nav-text">2. Tailwind 插件：colorPlugin.ts</span></a></li></ol></li><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#null"><span class="toc-nav-number">1.3.</span> <span class="toc-nav-text">三、实际使用：3 步上手多模式颜色系统</span></a><ol class="toc-nav-child"><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#null"><span class="toc-nav-number">1.3.1.</span> <span class="toc-nav-text">1. 注册插件到 Tailwind 配置</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#null"><span class="toc-nav-number">1.3.2.</span> <span class="toc-nav-text">2. 切换主题模式</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#null"><span class="toc-nav-number">1.3.3.</span> <span class="toc-nav-text">3. 使用工具类编写样式</span></a></li></ol></li><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#null"><span class="toc-nav-number">1.4.</span> <span class="toc-nav-text">四、方案优势：为什么值得用？</span></a><ol class="toc-nav-child"><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#null"><span class="toc-nav-number">1.4.1.</span> <span class="toc-nav-text">1. 一致性：从源头统一颜色规范</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#null"><span class="toc-nav-number">1.4.2.</span> <span class="toc-nav-text">2. 效率：减少 80% 重复工作</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#null"><span class="toc-nav-number">1.4.3.</span> <span class="toc-nav-text">3. 灵活性：支持多场景定制</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#null"><span class="toc-nav-number">1.4.4.</span> <span class="toc-nav-text">4. 可维护性：降低后期迭代成本</span></a></li></ol></li><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#null"><span class="toc-nav-number">1.5.</span> <span class="toc-nav-text">五、扩展场景：让颜色系统更强大</span></a><ol class="toc-nav-child"><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#null"><span class="toc-nav-number">1.5.1.</span> <span class="toc-nav-text">1. 支持更多色系（如「活动色」）</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#null"><span class="toc-nav-number">1.5.2.</span> <span class="toc-nav-text">2. 生成渐变色工具类</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#null"><span class="toc-nav-number">1.5.3.</span> <span class="toc-nav-text">3. 结合设计 tokens 工具</span></a></li></ol></li><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#null"><span class="toc-nav-number">1.6.</span> <span class="toc-nav-text">六、总结：从 0 到 1 搭建颜色系统的关键</span></a></li></ol></li></ol>
+        
+        </div>
+      </aside>
+    
+
+                
+            <!-- Sidebar Container -->
+            <div class="
+                col-lg-8 col-lg-offset-2
+                col-md-10 col-md-offset-1
+                sidebar-container">
+
+                <!-- Featured Tags -->
+                
+                <section>
+                    <!-- no hr -->
+                    <h5><a href="/jtblogs/tags/">FEATURED TAGS</a></h5>
+                    <div class="tags">
+                       
+                          <a class="tag" href="/jtblogs/tags/#CSS" title="CSS">CSS</a>
+                        
+                    </div>
+                </section>
+                
+
+                <!-- Friends Blog -->
+                
+                <hr>
+                <h5>FRIENDS</h5>
+                <ul class="list-inline">
+
+                    
+                </ul>
+                
+            </div>
+        </div>
+    </div>
+</article>
+
+
+
+
+
+
+
+
+<!-- async load function -->
+<script>
+    function async(u, c) {
+      var d = document, t = 'script',
+          o = d.createElement(t),
+          s = d.getElementsByTagName(t)[0];
+      o.src = u;
+      if (c) { o.addEventListener('load', function (e) { c(null, e); }, false); }
+      s.parentNode.insertBefore(o, s);
+    }
+</script>
+<!-- anchor-js, Doc:http://bryanbraun.github.io/anchorjs/ -->
+<script>
+    async("https://cdn.bootcss.com/anchor-js/1.1.1/anchor.min.js",function(){
+        anchors.options = {
+          visible: 'hover',
+          placement: 'left',
+          icon: 'ℬ'
+        };
+        anchors.add().remove('.intro-header h1').remove('.subheading').remove('.sidebar-container h5');
+    })
+</script>
+<style>
+    /* place left on bigger screen */
+    @media all and (min-width: 800px) {
+        .anchorjs-link{
+            position: absolute;
+            left: -0.75em;
+            font-size: 1.1em;
+            margin-top : -0.1em;
+        }
+    }
+</style>
+
+
+<!-- chrome Firefox 中文锚点定位失效-->
+<script src="https://cdn.bootcss.com/jquery/3.3.1/jquery.js"></script>
+<!-- smooth scroll behavior polyfill  -->
+<script type="text/javascript" src="/js/smoothscroll.js"></script>
+<script>
+        $('#toc').on('click','a',function(a){
+            // var isChrome = window.navigator.userAgent.indexOf("Chrome") !== -1;
+            // console.log(window.navigator.userAgent,isChrome)
+                // if(isChrome) {
+                    // console.log(a.currentTarget.outerHTML);
+                    // console.log($(a.currentTarget).attr("href"));
+                    //跳转到指定锚点
+                    // document.getElementById(a.target.innerText.toLowerCase()).scrollIntoView(true);
+                    document.getElementById($(a.currentTarget).attr("href").replace("#","")).scrollIntoView({behavior: 'smooth' });
+                // }
+        })  
+</script>
+
+
+    <!-- Footer -->
+    <!-- Footer -->
+<footer>
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+                <ul class="list-inline text-center">
+                    
+                            
+                                    
+
+                                            
+
+                                                    
+
+                                                            
+                                                                <li>
+                                                                    <a target="_blank"
+                                                                        href="https://github.com/taojiangcb">
+                                                                        <span class="fa-stack fa-lg">
+                                                                            <i class="fa fa-circle fa-stack-2x"></i>
+                                                                            <i
+                                                                                class="fa fa-github fa-stack-1x fa-inverse"></i>
+                                                                        </span>
+                                                                    </a>
+                                                                </li>
+                                                                
+
+                                                                    
+
+                </ul>
+
+                <p class="copyright text-muted">
+                    Copyright &copy; 江涛
+                        2025
+                            <br>
+                            Theme by <a href="http://beantech.org">BeanTech</a>
+                            <span style="display: inline-block; margin: 0 5px;">
+                                <i class="fa fa-heart"></i>
+                            </span>
+                            re-Ported by <a href="https://taojiangcb.github.io/jtblogs">Panda</a> |
+                            <iframe style="margin-left: 2px; margin-bottom:-5px;" frameborder="0" scrolling="0"
+                                width="91px" height="20px"
+                                src="https://ghbtns.com/github-btn.html?user=taojiangcb&repo=jtblogs&type=star&count=true">
+                            </iframe>
+                </p>
+                <p class="copyright text-muted" style="margin:0">
+                    <script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+                    <span id="busuanzi_container_site_pv">
+                        总访问量<span id="busuanzi_value_site_pv"></span>次
+                    </span>
+                    <span id="busuanzi_container_site_uv">
+                        总访客数<span id="busuanzi_value_site_uv"></span>人
+                    </span>
+                </p>
+            </div>
+        </div>
+    </div>
+</footer>
+
+<!-- jQuery -->
+<script src="/jtblogs/js/jquery.min.js"></script>
+
+    <!-- Bootstrap Core JavaScript -->
+    <script src="/jtblogs/js/bootstrap.min.js"></script>
+
+        <!-- Custom Theme JavaScript -->
+        <script src="/jtblogs/js/hux-blog.min.js"></script>
+
+
+            <!-- async load function -->
+            <script>
+                function async(u, c) {
+                    var d = document, t = 'script',
+                        o = d.createElement(t),
+                        s = d.getElementsByTagName(t)[0];
+                    o.src = u;
+                    if (c) { o.addEventListener('load', function (e) { c(null, e); }, false); }
+                    s.parentNode.insertBefore(o, s);
+                }
+            </script>
+
+            <!-- 
+     Because of the native support for backtick-style fenced code blocks 
+     right within the Markdown is landed in Github Pages, 
+     From V1.6, There is no need for Highlight.js, 
+     so Huxblog drops it officially.
+
+     - https://github.com/blog/2100-github-pages-now-faster-and-simpler-with-jekyll-3-0  
+     - https://help.github.com/articles/creating-and-highlighting-code-blocks/    
+-->
+            <!--
+    <script>
+        async("http://cdn.bootcss.com/highlight.js/8.6/highlight.min.js", function(){
+            hljs.initHighlightingOnLoad();
+        })
+    </script>
+    <link href="http://cdn.bootcss.com/highlight.js/8.6/styles/github.min.css" rel="stylesheet">
+-->
+
+
+            <!-- jquery.tagcloud.js -->
+            <script>
+                // only load tagcloud.js in tag.html
+                if ($('#tag_cloud').length !== 0) {
+                    async("https://taojiangcb.github.io/jtblogs/js/jquery.tagcloud.js", function () {
+                        $.fn.tagcloud.defaults = {
+                            //size: {start: 1, end: 1, unit: 'em'},
+                            color: { start: '#bbbbee', end: '#0085a1' },
+                        };
+                        $('#tag_cloud a').tagcloud();
+                    })
+                }
+            </script>
+
+            <!--fastClick.js -->
+            <script>
+                async("https://cdn.bootcss.com/fastclick/1.0.6/fastclick.min.js", function () {
+                    var $nav = document.querySelector("nav");
+                    if ($nav) FastClick.attach($nav);
+                })
+            </script>
+
+
+            <!-- Google Analytics -->
+
+            
+                <script>
+                    // dynamic User by Hux
+                    var _gaId = 'UA-XXXXXXXX-X';
+                    var _gaDomain = 'yoursite';
+
+                    // Originial
+                    (function (i, s, o, g, r, a, m) {
+                        i['GoogleAnalyticsObject'] = r; i[r] = i[r] || function () {
+                            (i[r].q = i[r].q || []).push(arguments)
+                        }, i[r].l = 1 * new Date(); a = s.createElement(o),
+                            m = s.getElementsByTagName(o)[0]; a.async = 1; a.src = g; m.parentNode.insertBefore(a, m)
+                    })(window, document, 'script', '//www.google-analytics.com/analytics.js', 'ga');
+
+                    ga('create', _gaId, _gaDomain);
+                    ga('send', 'pageview');
+                </script>
+
+                
+
+
+                    <!-- Baidu Tongji -->
+                    
+                        <script>
+                            // dynamic User by Hux
+                            var _baId = 'xxx';
+
+                            // Originial
+                            var _hmt = _hmt || [];
+                            (function () {
+                                var hm = document.createElement("script");
+                                hm.src = "//hm.baidu.com/hm.js?" + _baId;
+                                var s = document.getElementsByTagName("script")[0];
+                                s.parentNode.insertBefore(hm, s);
+                            })();
+                        </script>
+                        
+
+
+	<a id="rocket" href="#top" class=""></a>
+	<script type="text/javascript" src="/jtblogs/js/totop.js?v=1.0.0" async=""></script>
+    <script type="text/javascript" src="/jtblogs/js/toc.js?v=1.0.0" async=""></script>
+<!-- Image to hack wechat -->
+<img src="https://taojiangcb.github.io/jtblogs/img/icon_wechat.png" width="0" height="0" />
+<!-- Migrate from head to bottom, no longer block render and still work -->
+
+</body>
+
+</html>
