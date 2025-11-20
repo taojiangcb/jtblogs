@@ -2,7 +2,7 @@
 title: 解锁版本管理新姿势：standard-version 深度探秘
 catalog: true
 tags:
-  - NodeJs
+  - nodejs
 date: 2025-11-19 23:49:57
 subtitle:
 header-img:
