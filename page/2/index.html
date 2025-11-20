@@ -18,7 +18,7 @@
         
     </title>
 
-    <link rel="canonical" href="https://taojiangcb.github.io/jtblogs/jtblogs/archives/5/">
+    <link rel="canonical" href="https://taojiangcb.github.io/jtblogs/jtblogs/page/2/">
 
     <!-- Bootstrap Core CSS -->
     <link rel="stylesheet" href="/jtblogs/css/bootstrap.min.css">
@@ -226,135 +226,29 @@
 
 <div class="post-preview">
 
-    <a href="/jtblogs/article/Grid-网格布局/">
+    <a href="/jtblogs/article/Webpack-sideEffect/">
         <h2 class="post-title">
                                  
-            Grid 网格布局
+            Webpack sideEffect
         </h2>
         <h3 class="post-subtitle">
             
         </h3>
         <div class="post-content-preview">
-            网格布局
-Flex 布局是轴线布局，只能指定&quot;项目&quot;针对轴线的位置，可以看作是一维布局。Grid 布局则是将容器划分成&quot;行&quot;和&quot;列&quot;，产生单元格，然后指定&quot;项目所在&quot;的单元格，可以看作是二维布局。Grid 布局远比 Flex 布局强大。
-display: grid
-display: grid指定一个容器采用网格布......
+            直观感受 sideEffects 到底起了什么作用，特别是它和 Tree Shaking 是怎么配合的。
+
+✅ 目标：对比有无 sideEffects 配置时，Tree Shaking 的行为差异
+
+🔧 项目结构
+123456demo/├── package.json├── src/│   ├── index.js│   ├── utils.js│   └── style.css
+
+📦 ......
         </div>
     </a>
     
         <p class="post-meta" style="margin: 10px 0;">
             Posted by Panda on
-            2020-01-01
-        </p>
-        <div class="tags">
-            
-              <a href="/jtblogs/tags/#css" title="css">css</a>
-            
-        </div>
-    
-
-</div>
-<hr>
-
-<div class="post-preview">
-
-    <a href="/jtblogs/article/react-的生命周期/">
-        <h2 class="post-title">
-                                 
-            react 的生命周期
-        </h2>
-        <h3 class="post-subtitle">
-            
-        </h3>
-        <div class="post-content-preview">
-            React 组件生命周期
-
-static getDerivedStateFromProps()
-1static getDerivedStateFromProps(props, state)
-getDerivedStateFromProps 会在调用 render 方法之前调用，并且在初始挂载及后续更新时都会被调用。它应返回一个对象来更新 state，如果返回 null 则不更新任何内容。
-此......
-        </div>
-    </a>
-    
-        <p class="post-meta" style="margin: 10px 0;">
-            Posted by Panda on
-            2019-12-31
-        </p>
-        <div class="tags">
-            
-              <a href="/jtblogs/tags/#react" title="react">react</a>
-            
-        </div>
-    
-
-</div>
-<hr>
-
-<div class="post-preview">
-
-    <a href="/jtblogs/article/react-中的api/">
-        <h2 class="post-title">
-                                 
-            react 中的api
-        </h2>
-        <h3 class="post-subtitle">
-            
-        </h3>
-        <div class="post-content-preview">
-            组件
-
-React.Component
-React.PureCompoent
-
-React.PureComponent 与 React.Component 很相似。两者的区别在于 React.Component 并未实现 shouldComponentUpdate()，而 React.PureComponent 中以浅层对比 prop 和 state 的方式来实现了该函数。
-如果赋予 Rea......
-        </div>
-    </a>
-    
-        <p class="post-meta" style="margin: 10px 0;">
-            Posted by Panda on
-            2019-12-31
-        </p>
-        <div class="tags">
-            
-              <a href="/jtblogs/tags/#react" title="react">react</a>
-            
-        </div>
-    
-
-</div>
-<hr>
-
-<div class="post-preview">
-
-    <a href="/jtblogs/article/Webpack中的hash值/">
-        <h2 class="post-title">
-                                 
-            Webpack中的hash值
-        </h2>
-        <h3 class="post-subtitle">
-            
-        </h3>
-        <div class="post-content-preview">
-            ⽂件哈希值
-⽂件哈希值就是打包后输出的⽂件名的后缀
-例如：3.bfb2172c.js app.d3635098.js
-⽂件哈希值如何⽣成
-
-
-Hash：和整个项⽬的构建相关，只要项⽬⽂件有修改，整个项⽬构建的 hash 值就会更改
-
-
-Chunkhash：和 webpack 打包的 chunk 有关，不同的 entry 会⽣成不同的 chunkhash 值
-
-
-Contenthash：根据⽂......
-        </div>
-    </a>
-    
-        <p class="post-meta" style="margin: 10px 0;">
-            Posted by Panda on
-            2019-12-30
+            2025-04-10
         </p>
         <div class="tags">
             
@@ -368,28 +262,27 @@ Contenthash：根据⽂......
 
 <div class="post-preview">
 
-    <a href="/jtblogs/article/Webpack-核心概念/">
+    <a href="/jtblogs/article/Webpack-中的shaking/">
         <h2 class="post-title">
                                  
-            Webpack - 核心概念
+            Webpack 中的shaking
         </h2>
         <h3 class="post-subtitle">
             
         </h3>
         <div class="post-content-preview">
-            核心概念之 Entry
-Entry 用来指定 webpack 的打包⼊口
-Entry 的⽤法
-单⼊⼝：entry 是⼀个字符串
-123module.exports = &#123;    entry: &apos;./src/index.js&apos;&#125;;
-多⼊⼝：entry 是⼀个对象
-123456module.exports = &#123;    entry: &#123;......
+            这是个非常核心的问题！Webpack 的 Tree Shaking 是现代前端构建优化的关键特性之一，我们可以从 策略、实现原理、优化决策依据 三个维度来回答这个问题：
+
+一、🌲 Tree Shaking 是什么？
+Tree Shaking（摇树优化）是指在构建过程中移除 JavaScript 中未使用（dead code）的代码，从而减小打包体积、提升运行效率。
+
+二、Webpack 中......
         </div>
     </a>
     
         <p class="post-meta" style="margin: 10px 0;">
             Posted by Panda on
-            2019-12-30
+            2025-04-10
         </p>
         <div class="tags">
             
@@ -403,36 +296,187 @@ Entry 的⽤法
 
 <div class="post-preview">
 
-    <a href="/jtblogs/article/自己撸的koa-ioc-插件/">
+    <a href="/jtblogs/article/以太坊-EIP-3085/">
         <h2 class="post-title">
                                  
-            自己撸的koa-ioc 插件
+            以太坊-EIP-3085
         </h2>
         <h3 class="post-subtitle">
             
         </h3>
         <div class="post-content-preview">
-            koa-ioc
-
-ioc middleware for koa
-
-
-指定一个服务目录,在启动服务app时,自动灌入服务路由
-基于koa-router二次封装 app.get,app.post,app.put 等均可使用。
+            EIP-3085 是一项关于以太坊的改进提案，旨在为以太坊钱包提供一种新的标准化机制，使得用户能够更加方便和安全地进行 加密货币交易的签名操作，同时增强用户对 签名消息 的理解和控制。
+核心目标
+EIP-3085 的主要目标是通过改进以太坊钱包中的 消息签名 机制，使得用户在与 DApp 或其他服务交互时，可以更加明确地看到自己签名的内容，从而更好地控制和保护自己的隐私。
+关键内容
 
 
-installation
-unsing npm :
-1npm install kao-ioc
-API Reference
-
-ioc_dir( path : string......
+消息......
         </div>
     </a>
     
         <p class="post-meta" style="margin: 10px 0;">
             Posted by Panda on
-            2019-12-30
+            2025-04-10
+        </p>
+        <div class="tags">
+            
+              <a href="/jtblogs/tags/#Web3" title="Web3">Web3</a>
+            
+        </div>
+    
+
+</div>
+<hr>
+
+<div class="post-preview">
+
+    <a href="/jtblogs/article/以太坊-EIP-1102/">
+        <h2 class="post-title">
+                                 
+            以太坊-EIP-1102
+        </h2>
+        <h3 class="post-subtitle">
+            
+        </h3>
+        <div class="post-content-preview">
+            EIP-1102 是一项以太坊改进提案，旨在解决以太坊浏览器与用户隐私之间的平衡问题。它提出了一种新的方法，让用户在使用 DApp（去中心化应用）时，更加透明地控制和授权哪些信息可以被访问，尤其是在涉及浏览器本地存储的情况下。
+核心目标
+EIP-1102 的目标是 改善用户隐私控制，尤其是在用户与以太坊浏览器（例如 MetaMask）互动时，确保用户能够明确知道哪些数据正在被访问，以及它们可......
+        </div>
+    </a>
+    
+        <p class="post-meta" style="margin: 10px 0;">
+            Posted by Panda on
+            2025-04-10
+        </p>
+        <div class="tags">
+            
+              <a href="/jtblogs/tags/#Web3" title="Web3">Web3</a>
+            
+        </div>
+    
+
+</div>
+<hr>
+
+<div class="post-preview">
+
+    <a href="/jtblogs/article/以太坊-EIP-707/">
+        <h2 class="post-title">
+                                 
+            以太坊-EIP-707
+        </h2>
+        <h3 class="post-subtitle">
+            
+        </h3>
+        <div class="post-content-preview">
+            EIP 707 是以太坊改进提案（Ethereum Improvement Proposal）中的一部分，旨在为以太坊引入一种新的 “验证者奖励” 机制。其主要目标是优化和改进以太坊网络的共识机制，以激励更多的验证者参与到网络的共识中，并提升网络的安全性。
+EIP 707 提出的机制可以大致理解为在以太坊的权益证明（PoS）机制中，为参与网络验证的节点提供更多的激励。具体来说，这个提案在以下......
+        </div>
+    </a>
+    
+        <p class="post-meta" style="margin: 10px 0;">
+            Posted by Panda on
+            2025-04-10
+        </p>
+        <div class="tags">
+            
+              <a href="/jtblogs/tags/#Web3" title="Web3">Web3</a>
+            
+        </div>
+    
+
+</div>
+<hr>
+
+<div class="post-preview">
+
+    <a href="/jtblogs/article/EIP-1193/">
+        <h2 class="post-title">
+                                 
+            以太坊 EIP-1193
+        </h2>
+        <h3 class="post-subtitle">
+            
+        </h3>
+        <div class="post-content-preview">
+            EIP-1193 提供的标准化接口可以广泛应用于各种与以太坊相关的 Web 应用中，特别是在去中心化应用（DApp）中。以下是一些常见的使用场景：
+1. 连接以太坊钱包
+最常见的应用场景是通过 Web 应用与用户的钱包（如 MetaMask）进行连接。通过 eth_requestAccounts 方法，Web 应用可以请求用户的账户信息，并在用户授权后建立连接。
+场景示例：
+
+在去中心化交易......
+        </div>
+    </a>
+    
+        <p class="post-meta" style="margin: 10px 0;">
+            Posted by Panda on
+            2025-04-10
+        </p>
+        <div class="tags">
+            
+              <a href="/jtblogs/tags/#Web3" title="Web3">Web3</a>
+            
+        </div>
+    
+
+</div>
+<hr>
+
+<div class="post-preview">
+
+    <a href="/jtblogs/article/以太坊-EIP-747/">
+        <h2 class="post-title">
+                                 
+            以太坊 EIP-747
+        </h2>
+        <h3 class="post-subtitle">
+            
+        </h3>
+        <div class="post-content-preview">
+            EIP-747 是一项以太坊改进提案，旨在为以太坊账户引入 Human-Readable（可读性强的） Ethereum Name System (ENS) 地址 的支持。它的核心目标是简化和改善以太坊地址的使用，特别是通过 ENS 的集成，使得地址更具可读性，从而减少用户在处理和输入地址时可能出现的错误。
+核心目标
+EIP-747 的目标是让 以太坊地址 变得更加 用户友好，特别是在需要输......
+        </div>
+    </a>
+    
+        <p class="post-meta" style="margin: 10px 0;">
+            Posted by Panda on
+            2025-04-02
+        </p>
+        <div class="tags">
+            
+              <a href="/jtblogs/tags/#Web3" title="Web3">Web3</a>
+            
+        </div>
+    
+
+</div>
+<hr>
+
+<div class="post-preview">
+
+    <a href="/jtblogs/article/从-MonoRepo-到私仓-Verdaccio/">
+        <h2 class="post-title">
+                                 
+            从MonoRepo到私仓Verdaccio：实战指南
+        </h2>
+        <h3 class="post-subtitle">
+            
+        </h3>
+        <div class="post-content-preview">
+            从MonoRepo到私仓Verdaccio：实战指南
+一、引言
+在当今软件开发的复杂生态中，高效的代码管理和依赖包管理是构建可维护、可扩展项目的关键。MonoRepo作为一种集中式的代码管理模式，以及Verdaccio这样的私有包仓库工具，为开发者提供了强大的解决方案。本文将深入探讨MonoRepo和Verdaccio，并结合实际项目目录结构进行全面的实战演示。
+二、什么是MonoRepo
+......
+        </div>
+    </a>
+    
+        <p class="post-meta" style="margin: 10px 0;">
+            Posted by Panda on
+            2025-01-21
         </p>
         <div class="tags">
             
@@ -446,34 +490,30 @@ ioc_dir( path : string......
 
 <div class="post-preview">
 
-    <a href="/jtblogs/article/Webpack-优化/">
+    <a href="/jtblogs/article/深入理解装饰器、reflect-metadata-与-IOC-控制反转/">
         <h2 class="post-title">
                                  
-            Webpack 优化
+            深入理解装饰器、reflect-metadata 与 IOC 控制反转
         </h2>
         <h3 class="post-subtitle">
             
         </h3>
         <div class="post-content-preview">
-            webpack 慢的原因
-
-string -&gt; ast -&gt; string/buff,文件过多 n *  string -&gt; ast -&gt; string/buff
-entry 过多 复杂 繁杂 fonts css js
-async import(/***/‘xxx.js’) entry
-
-解决方案
-
-async 插件 speed-measure-webpack-plu......
+            深入理解装饰器、reflect-metadata 与 IOC 控制反转
+在现代的 JavaScript 和 TypeScript 开发中，装饰器、reflect-metadata 以及 IOC（控制反转）是构建强大、灵活且可维护软件系统的关键技术。让我们逐步深入探讨这些概念，并着重关注装饰器的输出及其在不同场景中的作用。
+一、装饰器：提升代码功能的强大工具
+装饰器的基础概念
+装饰器是一种使用......
         </div>
     </a>
     
         <p class="post-meta" style="margin: 10px 0;">
             Posted by Panda on
-            2019-12-30
+            2025-01-16
         </p>
         <div class="tags">
             
-              <a href="/jtblogs/tags/#Webpack" title="Webpack">Webpack</a>
+              <a href="/jtblogs/tags/#nodejs" title="nodejs">nodejs</a>
             
         </div>
     
@@ -483,93 +523,26 @@ async 插件 speed-measure-webpack-plu......
 
 <div class="post-preview">
 
-    <a href="/jtblogs/article/JS中的错误捕获/">
+    <a href="/jtblogs/article/前端模块化全解析：从-CommonJS-到-Module-Federation/">
         <h2 class="post-title">
                                  
-            JS中的错误捕获
+            前端模块化全解析：从 CommonJS 到 Module Federation
         </h2>
         <h3 class="post-subtitle">
             
         </h3>
         <div class="post-content-preview">
-            try catch 捕获
-可以捕获到同步代码的错误，但是异步的微任务或这宏任务就不可以了。
-window.error
-可以捕获到异步队列的任务异常，但是网络请求之类的异常捕获不到。get 请求捕获不到哦。 网络请求捕获不到，io错误之类的。
-1234567&lt;img src =&apos;./a.jpg&apos;&gt; get 请求捕获不到window.onerror = funct......
+            在前端工程化的漫长演进旅程中，模块化技术宛如一座不断翻新的灯塔，持续照亮着开发者前行的道路，引领着开发模式的革新。从最初崭露头角的CommonJS，到功能强大、成为行业标配的Webpack，再到代表前沿趋势的Module Federation，每一次技术的迭代都精准地瞄准并攻克了特定时期所面临的技术难题。其中，Module Federation所独具的共享作用域机制，犹如一颗璀璨的明珠，在微......
         </div>
     </a>
     
         <p class="post-meta" style="margin: 10px 0;">
             Posted by Panda on
-            2019-12-30
+            2025-01-13
         </p>
         <div class="tags">
             
-              <a href="/jtblogs/tags/#js" title="js">js</a>
-            
-        </div>
-    
-
-</div>
-<hr>
-
-<div class="post-preview">
-
-    <a href="/jtblogs/article/看透matrix3/">
-        <h2 class="post-title">
-                                 
-            看透matrix3
-        </h2>
-        <h3 class="post-subtitle">
-            
-        </h3>
-        <div class="post-content-preview">
-            先看我之前的一个例子:http://47.100.202.222/splitball/
-可以看下工具调试，满屏的matrix3 跳动的热血沸腾的。
-123456789101112131415161718192021222324252627282930/**   a = 控制 X 的宽度*　　b = 控制 Y 的倾斜*　　c = 控制 X 的倾斜*　　d = 控制 Y 的高度*　　tx = 控......
-        </div>
-    </a>
-    
-        <p class="post-meta" style="margin: 10px 0;">
-            Posted by Panda on
-            2019-12-29
-        </p>
-        <div class="tags">
-            
-              <a href="/jtblogs/tags/#css" title="css">css</a>
-            
-        </div>
-    
-
-</div>
-<hr>
-
-<div class="post-preview">
-
-    <a href="/jtblogs/article/css专业素养/">
-        <h2 class="post-title">
-                                 
-            css专业素养
-        </h2>
-        <h3 class="post-subtitle">
-            
-        </h3>
-        <div class="post-content-preview">
-            cascading style sheet
-层叠样式表
-1.引入css
-1234567891011121314151617181920212223&lt;html lang=&quot;en&quot;&gt;   &lt;head&gt;       &lt;meta charset=&quot;UTF-8&quot;&gt;       &lt;title&gt;Document&lt;......
-        </div>
-    </a>
-    
-        <p class="post-meta" style="margin: 10px 0;">
-            Posted by Panda on
-            2019-12-29
-        </p>
-        <div class="tags">
-            
-              <a href="/jtblogs/tags/#css" title="css">css</a>
+              <a href="/jtblogs/tags/#webpack" title="webpack">webpack</a>
             
         </div>
     
@@ -584,12 +557,12 @@ window.error
 <ul class="pager">
     
         <li class="previous">
-            <a href="/jtblogs/archives/4/">&larr; Newer Posts</a>
+            <a href="/jtblogs/">&larr; Newer Posts</a>
         </li>
     
     
         <li class="next">
-            <a href="/jtblogs/archives/6/">Older Posts &rarr;</a>
+            <a href="/jtblogs/page/3/">Older Posts &rarr;</a>
         </li>
     
 </ul>
@@ -638,15 +611,15 @@ window.error
             
         
             
+            <a href="/jtblogs/tags/#HTTP" title="HTTP" rel="1">HTTP</a>
+            
+        
+            
             <a href="/jtblogs/tags/#Webpack" title="Webpack" rel="7">Webpack</a>
             
         
             
             <a href="/jtblogs/tags/#node" title="node" rel="1">node</a>
-            
-        
-            
-            <a href="/jtblogs/tags/#HTTP" title="HTTP" rel="1">HTTP</a>
             
         
             
@@ -666,11 +639,11 @@ window.error
             
         
             
-            <a href="/jtblogs/tags/#webpack" title="webpack" rel="2">webpack</a>
+            <a href="/jtblogs/tags/#性能优化" title="性能优化" rel="1">性能优化</a>
             
         
             
-            <a href="/jtblogs/tags/#性能优化" title="性能优化" rel="1">性能优化</a>
+            <a href="/jtblogs/tags/#webpack" title="webpack" rel="2">webpack</a>
             
         
             

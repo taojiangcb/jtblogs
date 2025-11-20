@@ -18,7 +18,7 @@
         
     </title>
 
-    <link rel="canonical" href="https://taojiangcb.github.io/jtblogs/jtblogs/archives/2/">
+    <link rel="canonical" href="https://taojiangcb.github.io/jtblogs/jtblogs/page/3/">
 
     <!-- Bootstrap Core CSS -->
     <link rel="stylesheet" href="/jtblogs/css/bootstrap.min.css">
@@ -226,257 +226,25 @@
 
 <div class="post-preview">
 
-    <a href="/jtblogs/article/Webpack-sideEffect/">
+    <a href="/jtblogs/article/Node-js-模块加载与执行流程/">
         <h2 class="post-title">
                                  
-            Webpack sideEffect
+            Node.js 模块加载与执行流程
         </h2>
         <h3 class="post-subtitle">
             
         </h3>
         <div class="post-content-preview">
-            直观感受 sideEffects 到底起了什么作用，特别是它和 Tree Shaking 是怎么配合的。
-
-✅ 目标：对比有无 sideEffects 配置时，Tree Shaking 的行为差异
-
-🔧 项目结构
-123456demo/├── package.json├── src/│   ├── index.js│   ├── utils.js│   └── style.css
-
-📦 ......
+            Node.js 模块加载与执行流程
+Node.js 是一个基于事件驱动、非阻塞 I/O 模型的 JavaScript 运行时环境，它使用 CommonJS 模块系统来管理模块。模块的加载和执行在 Node.js 中是一个重要的过程，涉及从文件系统读取文件、解析文件内容到在虚拟机 (vm) 中运行代码。下面我们将详细探讨这个过程。
+1. 模块缓存
+Node.js 在加载模块时首先会检查模块是否......
         </div>
     </a>
     
         <p class="post-meta" style="margin: 10px 0;">
             Posted by Panda on
-            2025-04-10
-        </p>
-        <div class="tags">
-            
-              <a href="/jtblogs/tags/#Webpack" title="Webpack">Webpack</a>
-            
-        </div>
-    
-
-</div>
-<hr>
-
-<div class="post-preview">
-
-    <a href="/jtblogs/article/Webpack-中的shaking/">
-        <h2 class="post-title">
-                                 
-            Webpack 中的shaking
-        </h2>
-        <h3 class="post-subtitle">
-            
-        </h3>
-        <div class="post-content-preview">
-            这是个非常核心的问题！Webpack 的 Tree Shaking 是现代前端构建优化的关键特性之一，我们可以从 策略、实现原理、优化决策依据 三个维度来回答这个问题：
-
-一、🌲 Tree Shaking 是什么？
-Tree Shaking（摇树优化）是指在构建过程中移除 JavaScript 中未使用（dead code）的代码，从而减小打包体积、提升运行效率。
-
-二、Webpack 中......
-        </div>
-    </a>
-    
-        <p class="post-meta" style="margin: 10px 0;">
-            Posted by Panda on
-            2025-04-10
-        </p>
-        <div class="tags">
-            
-              <a href="/jtblogs/tags/#Webpack" title="Webpack">Webpack</a>
-            
-        </div>
-    
-
-</div>
-<hr>
-
-<div class="post-preview">
-
-    <a href="/jtblogs/article/以太坊-EIP-3085/">
-        <h2 class="post-title">
-                                 
-            以太坊-EIP-3085
-        </h2>
-        <h3 class="post-subtitle">
-            
-        </h3>
-        <div class="post-content-preview">
-            EIP-3085 是一项关于以太坊的改进提案，旨在为以太坊钱包提供一种新的标准化机制，使得用户能够更加方便和安全地进行 加密货币交易的签名操作，同时增强用户对 签名消息 的理解和控制。
-核心目标
-EIP-3085 的主要目标是通过改进以太坊钱包中的 消息签名 机制，使得用户在与 DApp 或其他服务交互时，可以更加明确地看到自己签名的内容，从而更好地控制和保护自己的隐私。
-关键内容
-
-
-消息......
-        </div>
-    </a>
-    
-        <p class="post-meta" style="margin: 10px 0;">
-            Posted by Panda on
-            2025-04-10
-        </p>
-        <div class="tags">
-            
-              <a href="/jtblogs/tags/#Web3" title="Web3">Web3</a>
-            
-        </div>
-    
-
-</div>
-<hr>
-
-<div class="post-preview">
-
-    <a href="/jtblogs/article/以太坊-EIP-1102/">
-        <h2 class="post-title">
-                                 
-            以太坊-EIP-1102
-        </h2>
-        <h3 class="post-subtitle">
-            
-        </h3>
-        <div class="post-content-preview">
-            EIP-1102 是一项以太坊改进提案，旨在解决以太坊浏览器与用户隐私之间的平衡问题。它提出了一种新的方法，让用户在使用 DApp（去中心化应用）时，更加透明地控制和授权哪些信息可以被访问，尤其是在涉及浏览器本地存储的情况下。
-核心目标
-EIP-1102 的目标是 改善用户隐私控制，尤其是在用户与以太坊浏览器（例如 MetaMask）互动时，确保用户能够明确知道哪些数据正在被访问，以及它们可......
-        </div>
-    </a>
-    
-        <p class="post-meta" style="margin: 10px 0;">
-            Posted by Panda on
-            2025-04-10
-        </p>
-        <div class="tags">
-            
-              <a href="/jtblogs/tags/#Web3" title="Web3">Web3</a>
-            
-        </div>
-    
-
-</div>
-<hr>
-
-<div class="post-preview">
-
-    <a href="/jtblogs/article/以太坊-EIP-707/">
-        <h2 class="post-title">
-                                 
-            以太坊-EIP-707
-        </h2>
-        <h3 class="post-subtitle">
-            
-        </h3>
-        <div class="post-content-preview">
-            EIP 707 是以太坊改进提案（Ethereum Improvement Proposal）中的一部分，旨在为以太坊引入一种新的 “验证者奖励” 机制。其主要目标是优化和改进以太坊网络的共识机制，以激励更多的验证者参与到网络的共识中，并提升网络的安全性。
-EIP 707 提出的机制可以大致理解为在以太坊的权益证明（PoS）机制中，为参与网络验证的节点提供更多的激励。具体来说，这个提案在以下......
-        </div>
-    </a>
-    
-        <p class="post-meta" style="margin: 10px 0;">
-            Posted by Panda on
-            2025-04-10
-        </p>
-        <div class="tags">
-            
-              <a href="/jtblogs/tags/#Web3" title="Web3">Web3</a>
-            
-        </div>
-    
-
-</div>
-<hr>
-
-<div class="post-preview">
-
-    <a href="/jtblogs/article/EIP-1193/">
-        <h2 class="post-title">
-                                 
-            以太坊 EIP-1193
-        </h2>
-        <h3 class="post-subtitle">
-            
-        </h3>
-        <div class="post-content-preview">
-            EIP-1193 提供的标准化接口可以广泛应用于各种与以太坊相关的 Web 应用中，特别是在去中心化应用（DApp）中。以下是一些常见的使用场景：
-1. 连接以太坊钱包
-最常见的应用场景是通过 Web 应用与用户的钱包（如 MetaMask）进行连接。通过 eth_requestAccounts 方法，Web 应用可以请求用户的账户信息，并在用户授权后建立连接。
-场景示例：
-
-在去中心化交易......
-        </div>
-    </a>
-    
-        <p class="post-meta" style="margin: 10px 0;">
-            Posted by Panda on
-            2025-04-10
-        </p>
-        <div class="tags">
-            
-              <a href="/jtblogs/tags/#Web3" title="Web3">Web3</a>
-            
-        </div>
-    
-
-</div>
-<hr>
-
-<div class="post-preview">
-
-    <a href="/jtblogs/article/以太坊-EIP-747/">
-        <h2 class="post-title">
-                                 
-            以太坊 EIP-747
-        </h2>
-        <h3 class="post-subtitle">
-            
-        </h3>
-        <div class="post-content-preview">
-            EIP-747 是一项以太坊改进提案，旨在为以太坊账户引入 Human-Readable（可读性强的） Ethereum Name System (ENS) 地址 的支持。它的核心目标是简化和改善以太坊地址的使用，特别是通过 ENS 的集成，使得地址更具可读性，从而减少用户在处理和输入地址时可能出现的错误。
-核心目标
-EIP-747 的目标是让 以太坊地址 变得更加 用户友好，特别是在需要输......
-        </div>
-    </a>
-    
-        <p class="post-meta" style="margin: 10px 0;">
-            Posted by Panda on
-            2025-04-02
-        </p>
-        <div class="tags">
-            
-              <a href="/jtblogs/tags/#Web3" title="Web3">Web3</a>
-            
-        </div>
-    
-
-</div>
-<hr>
-
-<div class="post-preview">
-
-    <a href="/jtblogs/article/从-MonoRepo-到私仓-Verdaccio/">
-        <h2 class="post-title">
-                                 
-            从MonoRepo到私仓Verdaccio：实战指南
-        </h2>
-        <h3 class="post-subtitle">
-            
-        </h3>
-        <div class="post-content-preview">
-            从MonoRepo到私仓Verdaccio：实战指南
-一、引言
-在当今软件开发的复杂生态中，高效的代码管理和依赖包管理是构建可维护、可扩展项目的关键。MonoRepo作为一种集中式的代码管理模式，以及Verdaccio这样的私有包仓库工具，为开发者提供了强大的解决方案。本文将深入探讨MonoRepo和Verdaccio，并结合实际项目目录结构进行全面的实战演示。
-二、什么是MonoRepo
-......
-        </div>
-    </a>
-    
-        <p class="post-meta" style="margin: 10px 0;">
-            Posted by Panda on
-            2025-01-21
+            2025-01-09
         </p>
         <div class="tags">
             
@@ -490,26 +258,117 @@ EIP-747 的目标是让 以太坊地址 变得更加 用户友好，特别是在
 
 <div class="post-preview">
 
-    <a href="/jtblogs/article/深入理解装饰器、reflect-metadata-与-IOC-控制反转/">
+    <a href="/jtblogs/article/解决-React-状态撕裂问题：Jotai-原理及实现/">
         <h2 class="post-title">
                                  
-            深入理解装饰器、reflect-metadata 与 IOC 控制反转
+            解决 React 状态撕裂问题：Jotai 原理及实现
         </h2>
         <h3 class="post-subtitle">
             
         </h3>
         <div class="post-content-preview">
-            深入理解装饰器、reflect-metadata 与 IOC 控制反转
-在现代的 JavaScript 和 TypeScript 开发中，装饰器、reflect-metadata 以及 IOC（控制反转）是构建强大、灵活且可维护软件系统的关键技术。让我们逐步深入探讨这些概念，并着重关注装饰器的输出及其在不同场景中的作用。
-一、装饰器：提升代码功能的强大工具
-装饰器的基础概念
-装饰器是一种使用......
+            解决 React 状态撕裂问题：Jotai 原理及实现
+在开发 React 应用时，状态管理是一个核心问题，尤其是当应用规模增大，多个组件之间的状态依赖关系复杂时。React 提供了多种状态管理方式，但随着组件和状态的增加，可能会遇到 状态撕裂 问题。本文将通过具体示例介绍什么是 React 状态撕裂，如何使用 Jotai 来解决这一问题，并复刻 Jotai 的简单实现来帮助大家理解其内部原......
         </div>
     </a>
     
         <p class="post-meta" style="margin: 10px 0;">
             Posted by Panda on
-            2025-01-16
+            2025-01-08
+        </p>
+        <div class="tags">
+            
+              <a href="/jtblogs/tags/#react" title="react">react</a>
+            
+        </div>
+    
+
+</div>
+<hr>
+
+<div class="post-preview">
+
+    <a href="/jtblogs/article/Web-安全：深入理解同源策略与常见安全机制/">
+        <h2 class="post-title">
+                                 
+            Web 安全：深入理解同源策略与常见安全机制
+        </h2>
+        <h3 class="post-subtitle">
+            
+        </h3>
+        <div class="post-content-preview">
+            引言
+在现代Web开发中，安全性是一个不可忽视的重点。前端开发者需要理解和掌握多种安全策略和机制，以保护用户数据和防止潜在攻击。本文将围绕同源策略、CORS、XSS防护和跨文档消息机制展开讨论，并提供相关示例，帮助开发者更好地理解这些概念。
+同源策略 (Same-Origin Policy)
+什么是同源策略？
+同源策略是一种Web安全机制，旨在防止不同源之间的互相访问，以保护用户数据。所谓“......
+        </div>
+    </a>
+    
+        <p class="post-meta" style="margin: 10px 0;">
+            Posted by Panda on
+            2025-01-08
+        </p>
+        <div class="tags">
+            
+              <a href="/jtblogs/tags/#HTTP" title="HTTP">HTTP</a>
+            
+        </div>
+    
+
+</div>
+<hr>
+
+<div class="post-preview">
+
+    <a href="/jtblogs/article/提升-React-应用性能：结合使用-welldone-software-why-did-you-render-和-immer/">
+        <h2 class="post-title">
+                                 
+            提升 React 应用性能：结合使用 @welldone-software/why-did-you-render 和 immer
+        </h2>
+        <h3 class="post-subtitle">
+            
+        </h3>
+        <div class="post-content-preview">
+            提升 React 应用性能：结合使用 @welldone-software/why-did-you-render 和 immer
+在现代 Web 开发中，性能优化是提升用户体验的关键因素之一。对于使用 React 的开发者来说，识别和解决不必要的组件重新渲染是优化性能的重要一步。今天，我们将介绍两个强大的工具，@welldone-software/why-did-you-render 和 i......
+        </div>
+    </a>
+    
+        <p class="post-meta" style="margin: 10px 0;">
+            Posted by Panda on
+            2025-01-07
+        </p>
+        <div class="tags">
+            
+              <a href="/jtblogs/tags/#react" title="react">react</a>
+            
+        </div>
+    
+
+</div>
+<hr>
+
+<div class="post-preview">
+
+    <a href="/jtblogs/article/使用-GraphQL-和-AWS-AppSync-结合-Next-js-和-AWS-Lambda-构建现代全栈应用/">
+        <h2 class="post-title">
+                                 
+            使用 GraphQL 和 AWS AppSync 结合 Next.js 和 AWS Lambda 构建现代全栈应用
+        </h2>
+        <h3 class="post-subtitle">
+            
+        </h3>
+        <div class="post-content-preview">
+            使用 GraphQL 和 AWS AppSync 结合 Next.js 和 AWS Lambda 构建现代全栈应用
+介绍
+GraphQL 是一种用于 API 的查询语言，它允许客户端请求仅所需的数据，而不是像 REST API 那样返回固定的数据结构。AWS AppSync 是 Amazon 提供的一种完全托管的 GraphQL 服务，它简化了构建数据驱动应用的方式，使得开发者可以轻松地与不......
+        </div>
+    </a>
+    
+        <p class="post-meta" style="margin: 10px 0;">
+            Posted by Panda on
+            2025-01-06
         </p>
         <div class="tags">
             
@@ -523,26 +382,156 @@ EIP-747 的目标是让 以太坊地址 变得更加 用户友好，特别是在
 
 <div class="post-preview">
 
-    <a href="/jtblogs/article/前端模块化全解析：从-CommonJS-到-Module-Federation/">
+    <a href="/jtblogs/article/Service-Workers-本地缓存：性能优化与架构演进/">
         <h2 class="post-title">
                                  
-            前端模块化全解析：从 CommonJS 到 Module Federation
+            Service Workers 本地缓存：性能优化与架构演进
         </h2>
         <h3 class="post-subtitle">
             
         </h3>
         <div class="post-content-preview">
-            在前端工程化的漫长演进旅程中，模块化技术宛如一座不断翻新的灯塔，持续照亮着开发者前行的道路，引领着开发模式的革新。从最初崭露头角的CommonJS，到功能强大、成为行业标配的Webpack，再到代表前沿趋势的Module Federation，每一次技术的迭代都精准地瞄准并攻克了特定时期所面临的技术难题。其中，Module Federation所独具的共享作用域机制，犹如一颗璀璨的明珠，在微......
+            Service Workers 本地缓存：性能优化与架构演进
+一、本地缓存的重要性与价值
+在现代网络环境下，网络的不稳定和高延迟成为影响用户体验的关键因素。本地缓存作为一种重要的技术手段，能够有效提升应用的性能和用户体验。其核心价值在于将应用所需的资源存储在本地，减少对网络的依赖，从而实现快速响应。
+
+（一）提升用户体验
+1. 减少等待时间
+在网络状况不佳或离线状态下，本地缓存能够快速响应用......
         </div>
     </a>
     
         <p class="post-meta" style="margin: 10px 0;">
             Posted by Panda on
-            2025-01-13
+            2025-01-04
+        </p>
+        <div class="tags">
+            
+              <a href="/jtblogs/tags/#nodejs" title="nodejs">nodejs</a>
+            
+        </div>
+    
+
+</div>
+<hr>
+
+<div class="post-preview">
+
+    <a href="/jtblogs/article/CSS-技术演进之路：从基础到前沿的创新之旅/">
+        <h2 class="post-title">
+                                 
+            CSS 技术演进之路：从基础到前沿的创新之旅
+        </h2>
+        <h3 class="post-subtitle">
+            
+        </h3>
+        <div class="post-content-preview">
+            CSS 技术演进之路：从基础到前沿的创新之旅
+在网页设计的浩瀚星空中，CSS（层叠样式表）始终是那颗最为璀璨的恒星，照亮了网页从单调走向绚丽的征程。今天，让我们一同穿越时光隧道，探寻 CSS 技术近年来从传统到现代的发展脉络，感受每一次变革所带来的强大力量。
+
+一、CSS：网页样式的基石
+曾经，在互联网的洪荒时代，网页只是简单的 HTML 文本堆砌，毫无美感可言。页面布局混乱，文字样式单一，......
+        </div>
+    </a>
+    
+        <p class="post-meta" style="margin: 10px 0;">
+            Posted by Panda on
+            2025-01-03
+        </p>
+        <div class="tags">
+            
+              <a href="/jtblogs/tags/#css" title="css">css</a>
+            
+        </div>
+    
+
+</div>
+<hr>
+
+<div class="post-preview">
+
+    <a href="/jtblogs/article/探秘-Prepack-与-Webpack：从原理到融合发展/">
+        <h2 class="post-title">
+                                 
+            探秘 Prepack 与 Webpack：从原理到融合发展
+        </h2>
+        <h3 class="post-subtitle">
+            
+        </h3>
+        <div class="post-content-preview">
+            探秘 Prepack 与 Webpack：从原理到融合发展
+在前端工程化的浩瀚星空中，Prepack 和 Webpack 犹如两颗相互辉映、推动行业变革的璀璨星辰。Prepack 以其独特的优化绝技革新 JavaScript 运行时效率，而 Webpack 则凭借强大的生态整合能力，巧妙借鉴 Prepack 之所长，持续进化。今天，就让我们一同深入探究它们的奥秘，为开发者们呈现一场技术的饕餮......
+        </div>
+    </a>
+    
+        <p class="post-meta" style="margin: 10px 0;">
+            Posted by Panda on
+            2025-01-02
         </p>
         <div class="tags">
             
               <a href="/jtblogs/tags/#webpack" title="webpack">webpack</a>
+            
+        </div>
+    
+
+</div>
+<hr>
+
+<div class="post-preview">
+
+    <a href="/jtblogs/article/现代前端框架对比：React、Svelte、HTMX、Million-js-和-Vue-深度解析/">
+        <h2 class="post-title">
+                                 
+            现代前端框架对比：React、Svelte、HTMX、Million.js 和 Vue 深度解析
+        </h2>
+        <h3 class="post-subtitle">
+            
+        </h3>
+        <div class="post-content-preview">
+            现代前端框架对比：React、Svelte、HTMX、Million.js 和 Vue 深度解析
+随着前端技术的快速发展，各种现代前端框架和库相继问世，每个框架都在不同的开发需求和场景下提供了独特的解决方案。如何选择适合自己项目的前端框架，成为开发者面临的一大挑战。本文将深入对比 React、Svelte、HTMX、Million.js 和 Vue 这五大主流框架，从特性、优势、适用场景等方......
+        </div>
+    </a>
+    
+        <p class="post-meta" style="margin: 10px 0;">
+            Posted by Panda on
+            2025-01-01
+        </p>
+        <div class="tags">
+            
+              <a href="/jtblogs/tags/#react" title="react">react</a>
+            
+        </div>
+    
+
+</div>
+<hr>
+
+<div class="post-preview">
+
+    <a href="/jtblogs/article/深度剖析-Cloudflare：性能、安全与全球分发的解决方案/">
+        <h2 class="post-title">
+                                 
+            深度剖析 Cloudflare：性能、安全与全球分发的解决方案
+        </h2>
+        <h3 class="post-subtitle">
+            
+        </h3>
+        <div class="post-content-preview">
+            深度剖析 Cloudflare：性能、安全与全球分发的解决方案
+在今天的互联网世界中，网站和应用程序的性能与安全性越来越受到重视。随着全球化和数据流量的不断增加，如何确保网站在全球范围内的快速加载和安全性成为了开发者和企业面临的重要挑战。Cloudflare，这个领先的互联网安全和性能优化服务平台，已经成为了众多企业和开发者的首选解决方案。
+本文将从技术角度深入探讨 Cloudflare 的......
+        </div>
+    </a>
+    
+        <p class="post-meta" style="margin: 10px 0;">
+            Posted by Panda on
+            2024-12-30
+        </p>
+        <div class="tags">
+            
+              <a href="/jtblogs/tags/#nodejs" title="nodejs">nodejs</a>
             
         </div>
     
@@ -557,12 +546,12 @@ EIP-747 的目标是让 以太坊地址 变得更加 用户友好，特别是在
 <ul class="pager">
     
         <li class="previous">
-            <a href="/jtblogs/">&larr; Newer Posts</a>
+            <a href="/jtblogs/page/2/">&larr; Newer Posts</a>
         </li>
     
     
         <li class="next">
-            <a href="/jtblogs/archives/3/">Older Posts &rarr;</a>
+            <a href="/jtblogs/page/4/">Older Posts &rarr;</a>
         </li>
     
 </ul>
@@ -611,15 +600,15 @@ EIP-747 的目标是让 以太坊地址 变得更加 用户友好，特别是在
             
         
             
+            <a href="/jtblogs/tags/#HTTP" title="HTTP" rel="1">HTTP</a>
+            
+        
+            
             <a href="/jtblogs/tags/#Webpack" title="Webpack" rel="7">Webpack</a>
             
         
             
             <a href="/jtblogs/tags/#node" title="node" rel="1">node</a>
-            
-        
-            
-            <a href="/jtblogs/tags/#HTTP" title="HTTP" rel="1">HTTP</a>
             
         
             
@@ -639,11 +628,11 @@ EIP-747 的目标是让 以太坊地址 变得更加 用户友好，特别是在
             
         
             
-            <a href="/jtblogs/tags/#webpack" title="webpack" rel="2">webpack</a>
+            <a href="/jtblogs/tags/#性能优化" title="性能优化" rel="1">性能优化</a>
             
         
             
-            <a href="/jtblogs/tags/#性能优化" title="性能优化" rel="1">性能优化</a>
+            <a href="/jtblogs/tags/#webpack" title="webpack" rel="2">webpack</a>
             
         
             
